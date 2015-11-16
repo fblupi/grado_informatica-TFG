@@ -1,2 +1,5 @@
 # 3DCurator
-Un visor 3D de TACs de esculturas
+
+> Francisco Javier Bolívar Lupiáñez
+
+Software para visualizar e interactuar con los datos DICOM de esculturas.

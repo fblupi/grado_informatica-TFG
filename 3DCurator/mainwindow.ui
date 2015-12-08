@@ -6,35 +6,45 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>589</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>3DCurator</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QVTKWidget" name="widget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>381</width>
-      <height>491</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="labelFolder">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>510</y>
-      <width>381</width>
+      <y>690</y>
+      <width>491</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QVTKWidget" name="leftWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>491</width>
+      <height>671</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QVTKWidget" name="rightWidget">
+    <property name="geometry">
+     <rect>
+      <x>519</x>
+      <y>10</y>
+      <width>491</width>
+      <height>671</height>
+     </rect>
     </property>
    </widget>
   </widget>
@@ -43,8 +53,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
-     <height>20</height>
+     <width>1024</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivo">
@@ -58,6 +68,12 @@
    <addaction name="menuArchivo"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -76,6 +92,9 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WindowShortcut</enum>
    </property>
   </action>
   <action name="actionExit">

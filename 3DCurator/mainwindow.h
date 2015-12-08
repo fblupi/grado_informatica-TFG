@@ -1,10 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <vtkAutoInit.h>
-VTK_MODULE_INIT(vtkRenderingOpenGL)
-VTK_MODULE_INIT(vtkRenderingVolumeOpenGL)
-
 #include <QMainWindow>
 #include <QFileDialog>
 
@@ -17,7 +13,6 @@ VTK_MODULE_INIT(vtkRenderingVolumeOpenGL)
 #include "vtkPiecewiseFunction.h"
 #include "vtkRenderer.h"
 #include "vtkRenderWindow.h"
-#include "vtkRenderWindowInteractor.h"
 #include "vtkSmartPointer.h"
 #include "vtkVolume.h"
 #include "vtkVolumeProperty.h"
@@ -37,6 +32,7 @@ private slots:
     void on_actionOpenDICOM_triggered();
     void on_actionExit_triggered();
 
+    void connectComponents();
     void setDICOMFolder(std::string s);
     void setProperties();
     void setTransferFunction();

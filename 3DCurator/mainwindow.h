@@ -30,10 +30,12 @@ public:
     ~MainWindow();
 
 private slots:
+	// ui events
     void on_actionOpenDICOM_triggered();
     void on_actionExit_triggered();
 	void on_slices_sliderMoved(int pos);
 
+	// funcs
     void connectComponents();
     void setDICOMFolder(std::string s);
     void setProperties();
@@ -50,7 +52,6 @@ private:
     vtkSmartPointer<vtkPiecewiseFunction> opacityFun;
     vtkSmartPointer<vtkVolumeProperty> property;
 	vtkSmartPointer<vtkRenderer> leftRen;
-	vtkSmartPointer<vtkRenderer> rightRen;
 	vtkSmartPointer<vtkImageViewer2> viewer;
 };
 

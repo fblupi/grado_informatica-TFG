@@ -13,9 +13,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     property = vtkSmartPointer<vtkVolumeProperty>::New();
     mapper = vtkSmartPointer<vtkFixedPointVolumeRayCastMapper>::New();
     volume = vtkSmartPointer<vtkVolume>::New();
-    ren = vtkSmartPointer<vtkRenderer>::New();
+	leftRen = vtkSmartPointer<vtkRenderer>::New();
+	//rightRen = vtkSmartPointer<vtkRenderer>::New();
+	viewer = vtkSmartPointer<vtkImageViewer2>::New();
 
-	ren->SetBackground(.1, .2, .3);
+	leftRen->SetBackground(.1, .2, .3);
 
     connectComponents();
 }
@@ -25,13 +27,18 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::connectComponents() {
-    ui->leftWidget->GetRenderWindow()->AddRenderer(ren);
+	ui->leftWidget->GetRenderWindow()->AddRenderer(leftRen);
+	ui->rightWidget->SetRenderWindow(viewer->GetRenderWindow());
+	viewer->SetupInteractor(ui->rightWidget->GetInteractor());
 }
 
 void MainWindow::setDICOMFolder(std::string s) {
     dicomReader->SetDirectoryName(s.c_str());
     dicomReader->Update();
     mapper->SetInputConnection(reader->GetOutputPort());
+	viewer->SetInputConnection(reader->GetOutputPort());
+	ui->slices->setMinimum(viewer->GetSliceMin());
+	ui->slices->setMaximum(viewer->GetSliceMax());
 }
 
 void MainWindow::setProperties() {
@@ -59,8 +66,9 @@ void MainWindow::setTransferFunction() {
 }
 
 void MainWindow::drawVolume() {
-    ren->AddVolume(volume);
-    ren->ResetCamera();
+	leftRen->AddVolume(volume);
+	leftRen->ResetCamera();
+	viewer->Render();
 	ui->leftWidget->GetRenderWindow()->Render();
 }
 
@@ -80,6 +88,11 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 
 		drawVolume();
 	}
+}
+
+void MainWindow::on_slices_sliderMoved(int pos) {
+	viewer->SetSlice(pos);
+	viewer->Render();
 }
 
 void MainWindow::on_actionExit_triggered() {

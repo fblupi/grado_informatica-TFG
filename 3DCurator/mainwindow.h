@@ -16,6 +16,7 @@
 #include "vtkSmartPointer.h"
 #include "vtkVolume.h"
 #include "vtkVolumeProperty.h"
+#include "vtkImageViewer2.h"
 
 namespace Ui {
     class MainWindow;
@@ -31,6 +32,7 @@ public:
 private slots:
     void on_actionOpenDICOM_triggered();
     void on_actionExit_triggered();
+	void on_slices_sliderMoved(int pos);
 
     void connectComponents();
     void setDICOMFolder(std::string s);
@@ -47,7 +49,9 @@ private:
     vtkSmartPointer<vtkColorTransferFunction> colorFun;
     vtkSmartPointer<vtkPiecewiseFunction> opacityFun;
     vtkSmartPointer<vtkVolumeProperty> property;
-    vtkSmartPointer<vtkRenderer> ren;
+	vtkSmartPointer<vtkRenderer> leftRen;
+	vtkSmartPointer<vtkRenderer> rightRen;
+	vtkSmartPointer<vtkImageViewer2> viewer;
 };
 
 #endif // MAINWINDOW_H

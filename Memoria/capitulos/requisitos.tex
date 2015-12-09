@@ -83,13 +83,21 @@ Este capítulo es una Especificación de Requisitos Software para el software qu
 
 	\subsection{Interfaces}
 	
-	La GUI se construirá con Qt y contendrá los siguientes elementos:
+	La GUI se construirá con Qt y contendrá los siguientes elementos (Figura \ref{fig:basic_gui}):
 	\begin{itemize}
-		\item Barra de menú
-		\item Barras de herramientas
-		\item Widget de visualización del volumen en 3D
-		\item Widget de visualización de cortes generados
+		\item \textbf{Barra de menú}: Típica barra de menús (archivo, editar, herramientas...).
+		\item \textbf{Barras de herramientas}: Acceso rápido con los botones de las operaciones más utilizadas sobre cada \textit{widget} de visualización.
+		\item \textbf{\textit{Widget} de visualización del volumen en 3D}: Con el que se podrá interactuar para girar, hacer zoom y ver la figura desde distintas posiciones.
+		\item \textbf{\textit{Widget} de visualización de cortes}: En el que se mostrará el corte que se genera con un plano determinado.
+		\item \textbf{Menú de operaciones}: Menú organizado en pestañas donde se podrán realizar distintas operaciones como cambiar la función de transferencia y definir el plano para realizar un corte.
 	\end{itemize}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=12.5cm]{imagenes/basic_gui}
+		\caption{Boceto a mano alzada de la posible distribución de los elementos en la GUI}
+		\label{fig:basic_gui}
+	\end{figure}
 	
 	\subsection{Funciones}
 	

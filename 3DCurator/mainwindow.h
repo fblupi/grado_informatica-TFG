@@ -9,6 +9,7 @@
 #include "vtkColorTransferFunction.h"
 #include "vtkDICOMImageReader.h"
 #include "vtkFixedPointVolumeRayCastMapper.h"
+#include "vtkSmartVolumeMapper.h"
 #include "vtkImageData.h"
 #include "vtkPiecewiseFunction.h"
 #include "vtkRenderer.h"
@@ -47,12 +48,14 @@ private:
     vtkSmartPointer<vtkDICOMImageReader> dicomReader;
     vtkSmartPointer<vtkAlgorithm> reader;
     vtkSmartPointer<vtkVolume> volume;
-    vtkSmartPointer<vtkFixedPointVolumeRayCastMapper> mapper;
+	vtkSmartPointer<vtkFixedPointVolumeRayCastMapper> mapper;
+	vtkSmartPointer<vtkSmartVolumeMapper> smartMapper;
     vtkSmartPointer<vtkColorTransferFunction> colorFun;
     vtkSmartPointer<vtkPiecewiseFunction> opacityFun;
     vtkSmartPointer<vtkVolumeProperty> property;
 	vtkSmartPointer<vtkRenderer> leftRen;
 	vtkSmartPointer<vtkImageViewer2> viewer;
+
 };
 
 #endif // MAINWINDOW_H

@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     opacityFun = vtkSmartPointer<vtkPiecewiseFunction>::New();
     property = vtkSmartPointer<vtkVolumeProperty>::New();
     //mapper = vtkSmartPointer<vtkFixedPointVolumeRayCastMapper>::New();
-	smartMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
+	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
     volume = vtkSmartPointer<vtkVolume>::New();
 	leftRen = vtkSmartPointer<vtkRenderer>::New();
 	viewer = vtkSmartPointer<vtkImageViewer2>::New();
@@ -36,7 +36,7 @@ void MainWindow::setDICOMFolder(std::string s) {
     dicomReader->Update(); // read dicom files
 
     //mapper->SetInputConnection(reader->GetOutputPort()); // connect volume mapper with dicom reader
-	smartMapper->SetInputConnection(reader->GetOutputPort());
+	mapper->SetInputConnection(reader->GetOutputPort());
 	//viewer->SetInputConnection(reader->GetOutputPort()); // connect viewer with dicom reader
 
 	// update ui slider with number os slices
@@ -52,9 +52,7 @@ void MainWindow::setProperties() {
     property->ShadeOn();
     property->SetAmbient(0.1);
     property->SetDiffuse(0.9);
-    property->SetSpecular(0.2);
-    property->SetSpecularPower(10.0);
-    property->SetScalarOpacityUnitDistance(0.8919);
+    property->SetSpecular(0.1);
 }
 
 void MainWindow::setTransferFunction() {
@@ -64,35 +62,35 @@ void MainWindow::setTransferFunction() {
 		v2 = v1 + 1,
 		v3 = -350,
 		v4 = v3 + 1,
-		v5 = -100,
+		v5 = -200,
 		v6 = v5 + 1,
 		v7 = 500,
 		v8 = v7 + 1;
 
-	colorFun->AddRGBPoint(v0, 0, 0, 0, .5, 0);
-	opacityFun->AddPoint(v0, 0, .5, 0);
-	colorFun->AddRGBPoint(v1, 0, 0, 0, .5, 0);
-	opacityFun->AddPoint(v1, 0, .5, 0);
+	colorFun->AddRGBPoint(v0, 0, 0, 0);
+	opacityFun->AddPoint(v0, 0);
+	colorFun->AddRGBPoint(v1, 0, 0, 0);
+	opacityFun->AddPoint(v1, 0);
 
-	colorFun->AddRGBPoint(v2, .61, .45, .23, .49, .613);
-	opacityFun->AddPoint(v2, 1, .49, .61);
-	colorFun->AddRGBPoint(v3, .47, .29, .18, .49, .613);
-	opacityFun->AddPoint(v3, 1, .49, .61);
+	colorFun->AddRGBPoint(v2, .61, .45, .23);
+	opacityFun->AddPoint(v2, 1);
+	colorFun->AddRGBPoint(v3, .47, .29, .18);
+	opacityFun->AddPoint(v3, 1);
 
-    colorFun->AddRGBPoint(v4, 1, 1, 1, .5, 0);
-	opacityFun->AddPoint(v4, 0, .49, .61);
-	colorFun->AddRGBPoint(v5, 1, 1, 1, .5, 0);
-	opacityFun->AddPoint(v5, 0, .49, .61);
+    colorFun->AddRGBPoint(v4, 0, 0, 0);
+	opacityFun->AddPoint(v4, 0);
+	colorFun->AddRGBPoint(v5, 0, 0, 0);
+	opacityFun->AddPoint(v5, 0);
 
-	colorFun->AddRGBPoint(v6, .8, .8, .8, .5, 0);
-	opacityFun->AddPoint(v6, .5, .5, 0);
-	colorFun->AddRGBPoint(v6, .85, .85, .85, .5, 0);
-	opacityFun->AddPoint(v6, .5, .5, 0);
+	colorFun->AddRGBPoint(v6, .8, .8, .8);
+	opacityFun->AddPoint(v6, .9);
+	colorFun->AddRGBPoint(v6, .85, .85, .85);
+	opacityFun->AddPoint(v6, .9);
 
-	colorFun->AddRGBPoint(v7, 1, 1, 1, .5, 0);
-	opacityFun->AddPoint(v7, 0, .5, 0);
-	colorFun->AddRGBPoint(v8, 1, 1, 1, .5, 0);
-	opacityFun->AddPoint(v8, 0, .5, 0);
+	colorFun->AddRGBPoint(v7, 0, 0, 0);
+	opacityFun->AddPoint(v7, 0);
+	colorFun->AddRGBPoint(v8, 0, 0, 0);
+	opacityFun->AddPoint(v8, 0);
 
 }
 
@@ -119,7 +117,7 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 
 		// attach properties and mapper to volume
 		volume->SetProperty(property);
-		volume->SetMapper(smartMapper);
+		volume->SetMapper(mapper);
 
 		drawVolume();
 	}

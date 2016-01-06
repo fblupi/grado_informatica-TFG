@@ -97,8 +97,8 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenDICOM">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/assets/icons/folder.png</normaloff>:/assets/icons/folder.png</iconset>
+    <iconset resource="assets/resources.qrc">
+     <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Open...</string>
@@ -112,8 +112,8 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/assets/icons/power.png</normaloff>:/assets/icons/power.png</iconset>
+    <iconset resource="assets/resources.qrc">
+     <normaloff>:/icons/power.png</normaloff>:/icons/power.png</iconset>
    </property>
    <property name="text">
     <string>E&amp;xit</string>
@@ -133,7 +133,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="assets/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

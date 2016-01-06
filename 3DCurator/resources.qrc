@@ -1,7 +1,0 @@
-<!DOCTYPE RCC>
-<RCC version="1.0">
-<qresource>
-	<file>assets/icons/folder.png</file>
-	<file>assets/icons/power.png</file>
-</qresource>
-</RCC>

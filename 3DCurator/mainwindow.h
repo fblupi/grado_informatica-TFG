@@ -48,8 +48,8 @@ private:
     vtkSmartPointer<vtkDICOMImageReader> dicomReader;
     vtkSmartPointer<vtkAlgorithm> reader;
     vtkSmartPointer<vtkVolume> volume;
-	vtkSmartPointer<vtkFixedPointVolumeRayCastMapper> mapper;
-	vtkSmartPointer<vtkSmartVolumeMapper> smartMapper;
+	//vtkSmartPointer<vtkFixedPointVolumeRayCastMapper> mapper;
+	vtkSmartPointer<vtkSmartVolumeMapper> mapper;
     vtkSmartPointer<vtkColorTransferFunction> colorFun;
     vtkSmartPointer<vtkPiecewiseFunction> opacityFun;
     vtkSmartPointer<vtkVolumeProperty> property;

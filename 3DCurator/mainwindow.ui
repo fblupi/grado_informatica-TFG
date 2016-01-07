@@ -32,32 +32,9 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>491</width>
+      <width>1001</width>
       <height>671</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QVTKWidget" name="rightWidget">
-    <property name="geometry">
-     <rect>
-      <x>519</x>
-      <y>10</y>
-      <width>491</width>
-      <height>671</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QSlider" name="slices">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>690</y>
-      <width>491</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>
@@ -72,7 +49,7 @@
    </property>
    <widget class="QMenu" name="menuArchivo">
     <property name="title">
-     <string>&amp;File</string>
+     <string>Archivo</string>
     </property>
     <addaction name="actionOpenDICOM"/>
     <addaction name="separator"/>
@@ -101,7 +78,10 @@
      <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Open...</string>
+    <string>Abrir...</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abrir&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -116,7 +96,10 @@
      <normaloff>:/icons/power.png</normaloff>:/icons/power.png</iconset>
    </property>
    <property name="text">
-    <string>E&amp;xit</string>
+    <string>Salir</string>
+   </property>
+   <property name="toolTip">
+    <string>Salir</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>

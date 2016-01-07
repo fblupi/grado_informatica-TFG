@@ -32,7 +32,7 @@ void MainWindow::drawVolume() {
 } 
 
 void MainWindow::on_actionOpenDICOM_triggered() {
-	QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("Abrir carpeta DICOM"), QDir::currentPath(), QFileDialog::ShowDirsOnly);
+	QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("Abrir carpeta DICOM"), QDir::homePath(), QFileDialog::ShowDirsOnly);
 
 	if (dicomFolder != NULL) { // la carpeta se ha leído bien
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData());  // carga los archivos DICOM de la carpeta a la figura

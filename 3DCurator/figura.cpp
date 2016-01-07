@@ -93,52 +93,46 @@ void Figura::setProperties() {
 }
 
 void Figura::setTransferFunction() {
+	// valores de intensidad para los materiales
 	double
-		// nada
-		v0 = -1000,
-		v1 = -700,
-		// madera
-		v2 = v1 + 1,
-		v3 = -350,
-		// nada
-		v4 = v3 + 1,
-		v5 = -200,
-		// estuco
-		v6 = v5 + 1,
-		v7 = 500,
-		// nada
-		v8 = v7 + 1,
-		v9 = 3000;
+		woodValueMin = -700,
+		woodValueMax = -350,
+		stuccoValueMin = -200,
+		stuccoValueMax = 500,
+		valueMin = -10000,
+		valueMax = 10000;
 
-	Color woodColor1 = Color(0.61, 0.45, 0.23, 1.0), 
-		  woodColor2 = Color(0.47, 0.29, 0.18, 1.0), 
-		  stuccoColor1 = Color(.8, .8, .8, .9), 
-		  stuccoColor2 = Color(.7, .7, .7, .9), 
-		  transparent = Color(.0);
+	// colores y transparencia para cada material
+	Color 
+		woodColorMin = Color(0.61, 0.45, 0.23, 1.0), 
+		woodColorMax = Color(0.47, 0.29, 0.18, 1.0), 
+		stuccoColorMin = Color(.8, .8, .8, .9), 
+		stuccoColorMax = Color(.7, .7, .7, .9), 
+		transparentColor = Color(.0);
 
-	colorFun->AddRGBPoint(v0, transparent.r(), transparent.g(), transparent.b());
-	opacityFun->AddPoint(v0, transparent.a());
-	colorFun->AddRGBPoint(v1, transparent.r(), transparent.g(), transparent.b());
-	opacityFun->AddPoint(v1, transparent.a());
+	colorFun->AddRGBPoint(valueMin, transparentColor.r(), transparentColor.g(), transparentColor.b());
+	opacityFun->AddPoint(valueMin, transparentColor.a());
+	colorFun->AddRGBPoint(woodValueMin - .1, transparentColor.r(), transparentColor.g(), transparentColor.b());
+	opacityFun->AddPoint(woodValueMin - .1, transparentColor.a());
 
-	colorFun->AddRGBPoint(v2, woodColor1.r(), woodColor1.g(), woodColor1.b());
-	opacityFun->AddPoint(v2, woodColor1.a());
-	colorFun->AddRGBPoint(v3, woodColor2.r(), woodColor2.g(), woodColor2.b());
-	opacityFun->AddPoint(v3, woodColor2.a());
+	colorFun->AddRGBPoint(woodValueMin, woodColorMin.r(), woodColorMin.g(), woodColorMin.b());
+	opacityFun->AddPoint(woodValueMin, woodColorMin.a());
+	colorFun->AddRGBPoint(woodValueMax, woodColorMax.r(), woodColorMax.g(), woodColorMax.b());
+	opacityFun->AddPoint(woodValueMax, woodColorMax.a());
 
-	colorFun->AddRGBPoint(v4, transparent.r(), transparent.g(), transparent.b());
-	opacityFun->AddPoint(v4, transparent.a());
-	colorFun->AddRGBPoint(v5, transparent.r(), transparent.g(), transparent.b());
-	opacityFun->AddPoint(v5, transparent.a());;
+	colorFun->AddRGBPoint(woodValueMax + 1, transparentColor.r(), transparentColor.g(), transparentColor.b());
+	opacityFun->AddPoint(woodValueMax + 1, transparentColor.a());
+	colorFun->AddRGBPoint(stuccoValueMin - 1, transparentColor.r(), transparentColor.g(), transparentColor.b());
+	opacityFun->AddPoint(stuccoValueMin - 1, transparentColor.a());;
 
-	colorFun->AddRGBPoint(v6, stuccoColor1.r(), stuccoColor1.g(), stuccoColor1.b());
-	opacityFun->AddPoint(v6, stuccoColor1.a());
-	colorFun->AddRGBPoint(v7, stuccoColor2.r(), stuccoColor2.g(), stuccoColor2.b());
-	opacityFun->AddPoint(v7, stuccoColor2.a());
+	colorFun->AddRGBPoint(stuccoValueMin, stuccoColorMin.r(), stuccoColorMin.g(), stuccoColorMin.b());
+	opacityFun->AddPoint(stuccoValueMin, stuccoColorMin.a());
+	colorFun->AddRGBPoint(stuccoValueMax, stuccoColorMax.r(), stuccoColorMax.g(), stuccoColorMax.b());
+	opacityFun->AddPoint(stuccoValueMax, stuccoColorMax.a());
 
-	colorFun->AddRGBPoint(v8, transparent.r(), transparent.g(), transparent.b());
-	opacityFun->AddPoint(v8, transparent.a());
-	colorFun->AddRGBPoint(v9, transparent.r(), transparent.g(), transparent.b());
-	opacityFun->AddPoint(v9, transparent.a());
+	colorFun->AddRGBPoint(stuccoValueMax + 1, transparentColor.r(), transparentColor.g(), transparentColor.b());
+	opacityFun->AddPoint(stuccoValueMax + 1, transparentColor.a());
+	colorFun->AddRGBPoint(valueMax, transparentColor.r(), transparentColor.g(), transparentColor.b());
+	opacityFun->AddPoint(valueMax, transparentColor.a());
 
 }

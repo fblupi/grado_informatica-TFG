@@ -3,5 +3,6 @@
 <qresource>
 	<file>icons/folder.png</file>
 	<file>icons/power.png</file>
+	<file>icons/3DCurator.ico</file>
 </qresource>
 </RCC>

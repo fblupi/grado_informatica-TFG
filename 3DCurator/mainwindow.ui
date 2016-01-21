@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>3DCurator</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="assets/resources.qrc">
+    <normaloff>:/icons/3DCurator.ico</normaloff>:/icons/3DCurator.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="labelFolder">
     <property name="geometry">

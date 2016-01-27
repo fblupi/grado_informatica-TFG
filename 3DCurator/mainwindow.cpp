@@ -41,6 +41,58 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 	}
 }
 
+void MainWindow::on_updateTF_pressed() {
+	figura->removeTFPoints();
+
+	double value;
+	Color color;
+
+	if (ui->habilitar_1->isChecked()) {
+		value = ui->v_1->value();
+		color = Color(ui->r_1->value(), ui->g_1->value(), ui->b_1->value(), ui->a_1->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_2->isChecked()) {
+		value = ui->v_2->value();
+		color = Color(ui->r_2->value(), ui->g_2->value(), ui->b_2->value(), ui->a_2->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_3->isChecked()) {
+		value = ui->v_3->value();
+		color = Color(ui->r_3->value(), ui->g_3->value(), ui->b_3->value(), ui->a_3->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_4->isChecked()) {
+		value = ui->v_4->value();
+		color = Color(ui->r_4->value(), ui->g_4->value(), ui->b_4->value(), ui->a_4->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_5->isChecked()) {
+		value = ui->v_5->value();
+		color = Color(ui->r_5->value(), ui->g_5->value(), ui->b_5->value(), ui->a_5->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_6->isChecked()) {
+		value = ui->v_6->value();
+		color = Color(ui->r_6->value(), ui->g_6->value(), ui->b_6->value(), ui->a_6->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_7->isChecked()) {
+		value = ui->v_7->value();
+		color = Color(ui->r_7->value(), ui->g_7->value(), ui->b_7->value(), ui->a_7->value());
+		figura->addPoint(value, color);
+	}
+
+	ui->leftWidget->GetRenderWindow()->Render(); // renderiza
+}
+
+
 void MainWindow::on_actionExit_triggered() {
     exit(0);
 }

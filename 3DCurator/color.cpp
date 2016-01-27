@@ -81,6 +81,18 @@ double Color::b() const {
 	return blue;
 }
 
+double Color::h() const {
+	return red;
+}
+
+double Color::s() const {
+	return green;
+}
+
+double Color::v() const {
+	return blue;
+}
+
 double Color::a() const {
 	return alpha;
 }
@@ -105,6 +117,33 @@ void Color::b(const double blue) {
 	if (blue >= .0 && blue <= 1.0) {
 		this->blue = blue;
 	} else {
+		this->blue = 1.0; // valor máximo si se introduce mal
+	}
+}
+
+void Color::h(const double red) {
+	if (red >= .0 && red <= 1.0) {
+		this->red = red;
+	}
+	else {
+		this->red = 1.0; // valor máximo si se introduce mal
+	}
+}
+
+void Color::s(const double green) {
+	if (green >= .0 && green <= 1.0) {
+		this->green = green;
+	}
+	else {
+		this->green = 1.0; // valor máximo si se introduce mal
+	}
+}
+
+void Color::v(const double blue) {
+	if (blue >= .0 && blue <= 1.0) {
+		this->blue = blue;
+	}
+	else {
 		this->blue = 1.0; // valor máximo si se introduce mal
 	}
 }

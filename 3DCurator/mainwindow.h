@@ -25,6 +25,7 @@ private slots:
 	// eventos GUI
     void on_actionOpenDICOM_triggered();
     void on_actionExit_triggered();
+	void on_updateTF_pressed();
 
 	// funcs
     void setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b);

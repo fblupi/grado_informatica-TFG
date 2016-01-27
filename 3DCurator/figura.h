@@ -38,6 +38,8 @@ public:
     void setColorFun(const vtkSmartPointer<vtkColorTransferFunction> colorFun);
     void setOpacityFun(const vtkSmartPointer<vtkPiecewiseFunction> opacityFun);
     void setVolumeProperty(const vtkSmartPointer<vtkVolumeProperty> volumeProperty);
+	void removeTFPoints();
+	void addPoint(const double value, const Color color);
 
 	// funcs
 	void setDICOMFolder(const std::string s);

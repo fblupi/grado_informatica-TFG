@@ -14,14 +14,20 @@ public:
 	// getters
     double r() const;
     double g() const;
-    double b() const;
+	double b() const;
+	double h() const;
+	double s() const;
+	double v() const;
     double a() const;
 
 	// setters
     void r(const double red);
     void g(const double green);
     void b(const double blue);
-    void a(const double alpha);
+	void a(const double alpha);
+	void h(const double green);
+	void s(const double blue);
+	void v(const double alpha);
 
 private:
 	// atributos

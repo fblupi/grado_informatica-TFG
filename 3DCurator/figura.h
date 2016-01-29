@@ -13,6 +13,7 @@
 #include "vtkSmartPointer.h"
 #include "vtkVolume.h"
 #include "vtkVolumeProperty.h"
+#include "vtkExtractHistogram2D.h"
 
 class Figura {
 
@@ -53,6 +54,7 @@ private:
     vtkSmartPointer<vtkColorTransferFunction> colorFun;
     vtkSmartPointer<vtkPiecewiseFunction> opacityFun;
     vtkSmartPointer<vtkVolumeProperty> volumeProperty;
+	vtkSmartPointer<vtkExtractHistogram2D> histogram;
 
 	// funcs
     void setProperties();

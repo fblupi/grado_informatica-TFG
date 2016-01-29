@@ -9,6 +9,7 @@ Figura::Figura() {
     //mapper = vtkSmartPointer<vtkFixedPointVolumeRayCastMapper>::New();
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
     volume = vtkSmartPointer<vtkVolume>::New();
+	histogram = vtkSmartPointer<vtkExtractHistogram2D>::New();
     setProperties();
     setTransferFunction();
     volume->SetProperty(volumeProperty);
@@ -79,6 +80,9 @@ void Figura::setDICOMFolder(const std::string s) {
     imageReader->SetDirectoryName(s.c_str()); // asigna la carpeta al image reader
     imageReader->Update(); // lee los archivos
 	mapper->SetInputConnection(reader->GetOutputPort()); // conecta el mapper con el reader
+	
+	//histogram->SetInputConnection(reader->GetOutputPort());
+	//histogram->Update();
 }
 
 void Figura::setProperties() {
@@ -86,7 +90,7 @@ void Figura::setProperties() {
     volumeProperty->SetColor(colorFun); // función de color
     volumeProperty->SetScalarOpacity(opacityFun); // función de opacidad
     volumeProperty->SetInterpolationTypeToLinear();
-    volumeProperty->ShadeOn(); // sombras activas
+    //volumeProperty->ShadeOn(); // sombras activas
     volumeProperty->SetAmbient(0.1); // componente ambiental del material
     volumeProperty->SetDiffuse(0.9); // componente difusa del material
     volumeProperty->SetSpecular(0.1); // componente especular del material
@@ -105,44 +109,38 @@ void Figura::addPoint(double value, Color color) {
 void Figura::setTransferFunction() {
 	// valores de intensidad para los materiales
 	double
-		woodValueMin = -620,
+		woodValueMin = -750,
 		woodValueMax = -350,
 		stuccoValueMin = -200,
-		stuccoValueMax = 0,
-		valueMin = -10000,
-		valueMax = 10000;
+		stuccoValueMax = 800;
 
 	// colores y transparencia para cada material
 	Color 
-		woodColorMin = Color(0.07, 0.63, 0.5, 1.0), 
-		woodColorMax = Color(0.07, 0.63, 0.2, 1.0), 
-		stuccoColorMin = Color(0.42, 0.01, 0.59, 0.9), 
-		stuccoColorMax = Color(0.42, 0.01, 0.59, 0.9), 
+		woodColorMin = Color(0.078, 0.047, 0.031, 1.0), 
+		woodColorMax = Color(0.392, 0.251, 0.157, 1.0), 
+		stuccoColorMin = Color(0.8, 0.8, 0.8, 0.9), 
+		stuccoColorMax = Color(0.8, 0.8, 0.8, 0.9), 
 		transparentColor = Color(0.0);
 
-	colorFun->AddHSVPoint(valueMin, transparentColor.h(), transparentColor.s(), transparentColor.v());
-	opacityFun->AddPoint(valueMin, transparentColor.a());
-	colorFun->AddHSVPoint(woodValueMin - .1, transparentColor.r(), transparentColor.g(), transparentColor.b());
+	colorFun->AddRGBPoint(woodValueMin - .1, transparentColor.r(), transparentColor.g(), transparentColor.b());
 	opacityFun->AddPoint(woodValueMin - .1, transparentColor.a());
 
-	colorFun->AddHSVPoint(woodValueMin, woodColorMin.r(), woodColorMin.g(), woodColorMin.b());
+	colorFun->AddRGBPoint(woodValueMin, woodColorMin.r(), woodColorMin.g(), woodColorMin.b());
 	opacityFun->AddPoint(woodValueMin, woodColorMin.a());
-	colorFun->AddHSVPoint(woodValueMax, woodColorMax.r(), woodColorMax.g(), woodColorMax.b());
+
+	colorFun->AddRGBPoint(woodValueMax, woodColorMax.r(), woodColorMax.g(), woodColorMax.b());
 	opacityFun->AddPoint(woodValueMax, woodColorMax.a());
 
-	colorFun->AddHSVPoint(woodValueMax + 1, transparentColor.r(), transparentColor.g(), transparentColor.b());
+	colorFun->AddRGBPoint(woodValueMax + 1, transparentColor.r(), transparentColor.g(), transparentColor.b());
 	opacityFun->AddPoint(woodValueMax + 1, transparentColor.a());
-	colorFun->AddHSVPoint(stuccoValueMin - 1, transparentColor.r(), transparentColor.g(), transparentColor.b());
+
+	colorFun->AddRGBPoint(stuccoValueMin - 1, transparentColor.r(), transparentColor.g(), transparentColor.b());
 	opacityFun->AddPoint(stuccoValueMin - 1, transparentColor.a());
 
-	colorFun->AddHSVPoint(stuccoValueMin, stuccoColorMin.r(), stuccoColorMin.g(), stuccoColorMin.b());
+	colorFun->AddRGBPoint(stuccoValueMin, stuccoColorMin.r(), stuccoColorMin.g(), stuccoColorMin.b());
 	opacityFun->AddPoint(stuccoValueMin, stuccoColorMin.a());
-	colorFun->AddHSVPoint(stuccoValueMax, stuccoColorMax.r(), stuccoColorMax.g(), stuccoColorMax.b());
-	opacityFun->AddPoint(stuccoValueMax, stuccoColorMax.a());
 
-	colorFun->AddHSVPoint(stuccoValueMax + 1, transparentColor.r(), transparentColor.g(), transparentColor.b());
-	opacityFun->AddPoint(stuccoValueMax + 1, transparentColor.a());
-	colorFun->AddHSVPoint(valueMax, transparentColor.r(), transparentColor.g(), transparentColor.b());
-	opacityFun->AddPoint(valueMax, transparentColor.a());
+	colorFun->AddRGBPoint(stuccoValueMax, stuccoColorMax.r(), stuccoColorMax.g(), stuccoColorMax.b());
+	opacityFun->AddPoint(stuccoValueMax, stuccoColorMax.a());
 
 }

@@ -89,6 +89,84 @@ void MainWindow::on_updateTF_pressed() {
 		figura->addPoint(value, color);
 	}
 
+	if (ui->habilitar_8->isChecked()) {
+		value = ui->v_8->value();
+		color = Color(ui->r_8->value(), ui->g_8->value(), ui->b_8->value(), ui->a_8->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_9->isChecked()) {
+		value = ui->v_9->value();
+		color = Color(ui->r_9->value(), ui->g_9->value(), ui->b_9->value(), ui->a_9->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_10->isChecked()) {
+		value = ui->v_10->value();
+		color = Color(ui->r_10->value(), ui->g_10->value(), ui->b_10->value(), ui->a_10->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_11->isChecked()) {
+		value = ui->v_11->value();
+		color = Color(ui->r_11->value(), ui->g_11->value(), ui->b_11->value(), ui->a_11->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_12->isChecked()) {
+		value = ui->v_12->value();
+		color = Color(ui->r_12->value(), ui->g_12->value(), ui->b_12->value(), ui->a_12->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_13->isChecked()) {
+		value = ui->v_13->value();
+		color = Color(ui->r_13->value(), ui->g_13->value(), ui->b_13->value(), ui->a_13->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_14->isChecked()) {
+		value = ui->v_14->value();
+		color = Color(ui->r_14->value(), ui->g_14->value(), ui->b_14->value(), ui->a_14->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_15->isChecked()) {
+		value = ui->v_15->value();
+		color = Color(ui->r_15->value(), ui->g_15->value(), ui->b_15->value(), ui->a_15->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_16->isChecked()) {
+		value = ui->v_16->value();
+		color = Color(ui->r_16->value(), ui->g_16->value(), ui->b_16->value(), ui->a_16->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_17->isChecked()) {
+		value = ui->v_17->value();
+		color = Color(ui->r_17->value(), ui->g_17->value(), ui->b_17->value(), ui->a_17->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_18->isChecked()) {
+		value = ui->v_18->value();
+		color = Color(ui->r_18->value(), ui->g_18->value(), ui->b_18->value(), ui->a_18->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_19->isChecked()) {
+		value = ui->v_19->value();
+		color = Color(ui->r_19->value(), ui->g_19->value(), ui->b_19->value(), ui->a_19->value());
+		figura->addPoint(value, color);
+	}
+
+	if (ui->habilitar_20->isChecked()) {
+		value = ui->v_20->value();
+		color = Color(ui->r_20->value(), ui->g_20->value(), ui->b_20->value(), ui->a_20->value());
+		figura->addPoint(value, color);
+	}
+
 	ui->leftWidget->GetRenderWindow()->Render(); // renderiza
 }
 

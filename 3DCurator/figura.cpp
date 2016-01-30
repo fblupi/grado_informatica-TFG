@@ -11,7 +11,6 @@ Figura::Figura() {
     volume = vtkSmartPointer<vtkVolume>::New();
 	histogram = vtkSmartPointer<vtkExtractHistogram2D>::New();
     setProperties();
-    setTransferFunction();
     volume->SetProperty(volumeProperty);
 	volume->SetMapper(mapper);
 }
@@ -122,43 +121,4 @@ void Figura::addOpacityPoint(const double value, const double alpha) {
 
 void Figura::addRGBPoint(const double value, const double c1, const double c2, const double c3) {
 	colorFun->AddRGBPoint(value, c1, c2, c3);
-}
-
-void Figura::setTransferFunction() {
-	// valores de intensidad para los materiales
-	double
-		woodValueMin = -750,
-		woodValueMax = -350,
-		stuccoValueMin = -200,
-		stuccoValueMax = 800;
-
-	// colores y transparencia para cada material
-	Color 
-		woodColorMin = Color(0.078, 0.047, 0.031, 1.0), 
-		woodColorMax = Color(0.392, 0.251, 0.157, 1.0), 
-		stuccoColorMin = Color(0.8, 0.8, 0.8, 0.9), 
-		stuccoColorMax = Color(0.8, 0.8, 0.8, 0.9), 
-		transparentColor = Color(0.0);
-
-	colorFun->AddRGBPoint(woodValueMin - .1, transparentColor.r(), transparentColor.g(), transparentColor.b());
-	opacityFun->AddPoint(woodValueMin - .1, transparentColor.a());
-
-	colorFun->AddRGBPoint(woodValueMin, woodColorMin.r(), woodColorMin.g(), woodColorMin.b());
-	opacityFun->AddPoint(woodValueMin, woodColorMin.a());
-
-	colorFun->AddRGBPoint(woodValueMax, woodColorMax.r(), woodColorMax.g(), woodColorMax.b());
-	opacityFun->AddPoint(woodValueMax, woodColorMax.a());
-
-	colorFun->AddRGBPoint(woodValueMax + 1, transparentColor.r(), transparentColor.g(), transparentColor.b());
-	opacityFun->AddPoint(woodValueMax + 1, transparentColor.a());
-
-	colorFun->AddRGBPoint(stuccoValueMin - 1, transparentColor.r(), transparentColor.g(), transparentColor.b());
-	opacityFun->AddPoint(stuccoValueMin - 1, transparentColor.a());
-
-	colorFun->AddRGBPoint(stuccoValueMin, stuccoColorMin.r(), stuccoColorMin.g(), stuccoColorMin.b());
-	opacityFun->AddPoint(stuccoValueMin, stuccoColorMin.a());
-
-	colorFun->AddRGBPoint(stuccoValueMax, stuccoColorMax.r(), stuccoColorMax.g(), stuccoColorMax.b());
-	opacityFun->AddPoint(stuccoValueMax, stuccoColorMax.a());
-
 }

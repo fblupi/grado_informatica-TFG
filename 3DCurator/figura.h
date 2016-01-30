@@ -1,8 +1,6 @@
 #ifndef FIGURA_H
 #define FIGURA_H
 
-#include "color.h"
-
 #include "vtkAlgorithm.h"
 #include "vtkColorTransferFunction.h"
 #include "vtkDICOMImageReader.h"
@@ -42,12 +40,12 @@ public:
     void setColorFun(const vtkSmartPointer<vtkColorTransferFunction> colorFun);
     void setOpacityFun(const vtkSmartPointer<vtkPiecewiseFunction> opacityFun);
     void setVolumeProperty(const vtkSmartPointer<vtkVolumeProperty> volumeProperty);
-	void removeTFPoints();
-	void addOpacityPoint(const double value, const double alpha);
-	void addRGBPoint(const double value, const double c1, const double c2, const double c3);
 
 	// funcs
 	void setDICOMFolder(const std::string s);
+	void removeTFPoints();
+	void addOpacityPoint(const double value, const double alpha);
+	void addRGBPoint(const double value, const double c1, const double c2, const double c3);
 
 private:
 	// atributos
@@ -62,7 +60,6 @@ private:
 
 	// funcs
     void setProperties();
-    void setTransferFunction();
 };
 
 #endif // FIGURA_H

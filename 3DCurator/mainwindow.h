@@ -33,6 +33,7 @@ private slots:
     void setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b);
     void connectComponents();
     void drawVolume();
+	void updateTF();
 
 private:
 	// atributos

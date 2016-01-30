@@ -104,7 +104,6 @@ void Figura::setProperties() {
     volumeProperty->SetColor(colorFun); // función de color
     volumeProperty->SetScalarOpacity(opacityFun); // función de opacidad
     volumeProperty->SetInterpolationTypeToLinear();
-    //volumeProperty->ShadeOn(); // sombras activas
     volumeProperty->SetAmbient(0.1); // componente ambiental del material
     volumeProperty->SetDiffuse(0.9); // componente difusa del material
     volumeProperty->SetSpecular(0.1); // componente especular del material
@@ -121,4 +120,12 @@ void Figura::addOpacityPoint(const double value, const double alpha) {
 
 void Figura::addRGBPoint(const double value, const double c1, const double c2, const double c3) {
 	colorFun->AddRGBPoint(value, c1, c2, c3);
+}
+
+void Figura::enableShadow() {
+	volumeProperty->ShadeOn();
+}
+
+void Figura::disableShadow() {
+	volumeProperty->ShadeOff();
 }

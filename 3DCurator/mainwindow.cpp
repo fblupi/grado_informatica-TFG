@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	histogramRen = vtkSmartPointer<vtkRenderer>::New();
 
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
-	ui->volumeWidget->GetRenderWindow()->Render(); // renderiza para ver la ventana del color asignado
+	renderVolume();
     connectComponents(); // conecta los renderers con los widgets
 
     figura = new Figura(); // crea una instancia de Figura
@@ -32,7 +32,7 @@ void MainWindow::connectComponents() {
 void MainWindow::drawVolume() {
 	volumeRen->AddVolume(figura->getVolume()); // añade el volumen al renderer
 	volumeRen->ResetCamera(); // resetea la cámera
-	ui->volumeWidget->GetRenderWindow()->Render(); // renderiza
+	renderVolume();
 }
 
 void MainWindow::updateTF() {
@@ -68,7 +68,17 @@ void MainWindow::updateTF() {
 			}
 		}
 	}
+}
 
+void MainWindow::updateShadow() {
+	if (ui->enableShadow->isChecked()) {
+		figura->enableShadow();
+	} else {
+		figura->disableShadow();
+	}
+}
+
+void MainWindow::renderVolume() {
 	ui->volumeWidget->GetRenderWindow()->Render(); // renderiza
 }
 
@@ -79,6 +89,7 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData());  // carga los archivos DICOM de la carpeta a la figura
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		updateTF(); // actualiza función de transferencia con los valores de la GUI
+		updateShadow(); // actualiza sombreado
 		
 		//plot->AddDataSetInputConnection(figura->getHistogram()->GetOutputPort());
 
@@ -90,8 +101,14 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 
 void MainWindow::on_updateTF_pressed() {
 	updateTF();
+	renderVolume();
 }
 
 void MainWindow::on_actionExit_triggered() {
     exit(0);
+}
+
+void MainWindow::on_updateProperties_pressed() {
+	updateShadow();
+	renderVolume();
 }

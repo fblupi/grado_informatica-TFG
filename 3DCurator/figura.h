@@ -46,6 +46,8 @@ public:
 	void removeTFPoints();
 	void addOpacityPoint(const double value, const double alpha);
 	void addRGBPoint(const double value, const double c1, const double c2, const double c3);
+	void enableShadow();
+	void disableShadow();
 
 private:
 	// atributos

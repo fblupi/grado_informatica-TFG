@@ -28,12 +28,15 @@ private slots:
     void on_actionOpenDICOM_triggered();
     void on_actionExit_triggered();
 	void on_updateTF_pressed();
+	void on_updateProperties_pressed();
 
 	// funcs
+	void renderVolume();
     void setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b);
     void connectComponents();
     void drawVolume();
 	void updateTF();
+	void updateShadow();
 
 private:
 	// atributos

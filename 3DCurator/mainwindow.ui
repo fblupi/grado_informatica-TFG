@@ -2844,6 +2844,40 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tabProperties">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <attribute name="title">
+        <string>Propiedades</string>
+       </attribute>
+       <widget class="QCheckBox" name="enableShadow">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>141</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Habilitar sombreado</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="updateProperties">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>740</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Actualizar</string>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </item>
     <item row="1" column="0">

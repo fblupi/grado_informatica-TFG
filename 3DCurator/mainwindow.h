@@ -4,10 +4,12 @@
 #include <QMainWindow>
 #include <QFileDialog>
 
+#include "utils.h"
 #include "figura.h"
 #include "vtkRenderer.h"
 #include "vtkRenderWindow.h"
 #include "vtkSmartPointer.h"
+#include "vtkXYPlotActor.h"
 
 namespace Ui {
     class MainWindow;
@@ -36,7 +38,9 @@ private:
 	// atributos
     Ui::MainWindow *ui;
     Figura *figura;
-	vtkSmartPointer<vtkRenderer> leftRen;
+	vtkSmartPointer<vtkRenderer> volumeRen;
+	vtkSmartPointer<vtkRenderer> histogramRen;
+	vtkSmartPointer<vtkXYPlotActor> plot;
 
 };
 

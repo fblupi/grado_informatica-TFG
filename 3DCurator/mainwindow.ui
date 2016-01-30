@@ -62,27 +62,27 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QGroupBox" name="opacityP">
+             <widget class="QGroupBox" name="opacityP_1">
               <property name="title">
                <string>Punto 1</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_22">
                <item row="0" column="0">
-                <widget class="QLabel" name="opacityLabelValueP">
+                <widget class="QLabel" name="opacityLabelValueP_1">
                  <property name="text">
                   <string>Valor</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLabel" name="opacityLabelAP">
+                <widget class="QLabel" name="opacityLabelAP_1">
                  <property name="text">
                   <string>Opacidad</string>
                  </property>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QDoubleSpinBox" name="opacityValueP">
+                <widget class="QDoubleSpinBox" name="opacityValueP_1">
                  <property name="minimum">
                   <double>-9024.000000000000000</double>
                  </property>
@@ -95,14 +95,14 @@
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QDoubleSpinBox" name="opacityAP">
+                <widget class="QDoubleSpinBox" name="opacityAP_1">
                  <property name="maximum">
                   <double>1.000000000000000</double>
                  </property>
                 </widget>
                </item>
                <item row="2" column="0">
-                <widget class="QCheckBox" name="opacityEnableP">
+                <widget class="QCheckBox" name="opacityEnableP_1">
                  <property name="text">
                   <string>Habilitar</string>
                  </property>
@@ -143,7 +143,7 @@
                   <double>10976.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>-780.000000000000000</double>
+                  <double>-750.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -199,7 +199,7 @@
                   <double>10976.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>-500.000000000000000</double>
+                  <double>-350.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -255,7 +255,7 @@
                   <double>10976.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>-480.000000000000000</double>
+                  <double>-300.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -308,7 +308,7 @@
                   <double>10976.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>-300.000000000000000</double>
+                  <double>-200.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -361,7 +361,7 @@
                   <double>10976.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>100.000000000000000</double>
+                  <double>-100.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -1523,8 +1523,7 @@
              </widget>
             </item>
            </layout>
-           <zorder>opacityP</zorder>
-           <zorder>colorTF</zorder>
+           <zorder>opacityP_1</zorder>
            <zorder>opacityP_2</zorder>
            <zorder>opacityP_3</zorder>
            <zorder>opacityP_4</zorder>
@@ -1579,27 +1578,27 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QGroupBox" name="colorP">
+             <widget class="QGroupBox" name="colorP_1">
               <property name="title">
                <string>Punto 1</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_2">
                <item row="0" column="0">
-                <widget class="QLabel" name="colorLabelValueP">
+                <widget class="QLabel" name="colorLabelValueP_1">
                  <property name="text">
                   <string>Valor</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLabel" name="colorLabelRGBP">
+                <widget class="QLabel" name="colorLabelRGBP_1">
                  <property name="text">
                   <string>RGB</string>
                  </property>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QDoubleSpinBox" name="colorValueP">
+                <widget class="QDoubleSpinBox" name="colorValueP_1">
                  <property name="minimum">
                   <double>-9024.000000000000000</double>
                  </property>
@@ -1607,12 +1606,12 @@
                   <double>10976.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>-800.000000000000000</double>
+                  <double>-750.000000000000000</double>
                  </property>
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QDoubleSpinBox" name="colorRP">
+                <widget class="QDoubleSpinBox" name="colorRP_1">
                  <property name="maximum">
                   <double>1.000000000000000</double>
                  </property>
@@ -1622,7 +1621,7 @@
                 </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QDoubleSpinBox" name="colorGP">
+                <widget class="QDoubleSpinBox" name="colorGP_1">
                  <property name="maximum">
                   <double>1.000000000000000</double>
                  </property>
@@ -1632,7 +1631,7 @@
                 </widget>
                </item>
                <item row="3" column="0">
-                <widget class="QCheckBox" name="colorEnableP">
+                <widget class="QCheckBox" name="colorEnableP_1">
                  <property name="text">
                   <string>Habilitar</string>
                  </property>
@@ -1642,7 +1641,7 @@
                 </widget>
                </item>
                <item row="3" column="1">
-                <widget class="QDoubleSpinBox" name="colorBP">
+                <widget class="QDoubleSpinBox" name="colorBP_1">
                  <property name="maximum">
                   <double>1.000000000000000</double>
                  </property>
@@ -1683,7 +1682,7 @@
                   <double>10976.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>-300.000000000000000</double>
+                  <double>-350.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -1759,7 +1758,7 @@
                   <double>10976.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>200.000000000000000</double>
+                  <double>-200.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -1769,7 +1768,7 @@
                   <double>1.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>1.000000000000000</double>
+                  <double>0.800000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -1779,7 +1778,7 @@
                   <double>1.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>1.000000000000000</double>
+                  <double>0.800000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -1799,7 +1798,7 @@
                   <double>1.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>1.000000000000000</double>
+                  <double>0.800000000000000</double>
                  </property>
                 </widget>
                </item>

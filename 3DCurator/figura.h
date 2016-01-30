@@ -14,6 +14,8 @@
 #include "vtkVolume.h"
 #include "vtkVolumeProperty.h"
 #include "vtkExtractHistogram2D.h"
+#include "vtkPointData.h"
+#include "vtkDataArray.h"
 
 class Figura {
 
@@ -30,6 +32,7 @@ public:
     vtkSmartPointer<vtkColorTransferFunction> getColorFun() const;
     vtkSmartPointer<vtkPiecewiseFunction> getOpacityFun() const;
     vtkSmartPointer<vtkVolumeProperty> getVolumeProperty() const;
+	vtkSmartPointer<vtkExtractHistogram2D> getHistogram() const;
 
 	// setters
     void setImageReader(const vtkSmartPointer<vtkDICOMImageReader> imageReader);
@@ -40,7 +43,8 @@ public:
     void setOpacityFun(const vtkSmartPointer<vtkPiecewiseFunction> opacityFun);
     void setVolumeProperty(const vtkSmartPointer<vtkVolumeProperty> volumeProperty);
 	void removeTFPoints();
-	void addPoint(const double value, const Color color);
+	void addOpacityPoint(const double value, const double alpha);
+	void addRGBPoint(const double value, const double c1, const double c2, const double c3);
 
 	// funcs
 	void setDICOMFolder(const std::string s);

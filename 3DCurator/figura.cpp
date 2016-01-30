@@ -48,6 +48,10 @@ vtkSmartPointer<vtkVolumeProperty> Figura::getVolumeProperty() const {
 	return volumeProperty;
 }
 
+vtkSmartPointer<vtkExtractHistogram2D> Figura::getHistogram() const {
+	return histogram;
+}
+
 void Figura::setImageReader(const vtkSmartPointer<vtkDICOMImageReader> imageReader) {
 	this->imageReader = imageReader;
 }
@@ -83,6 +87,17 @@ void Figura::setDICOMFolder(const std::string s) {
 	
 	//histogram->SetInputConnection(reader->GetOutputPort());
 	//histogram->Update();
+/*
+	vtkSmartPointer<vtkImageData> output = vtkSmartPointer<vtkImageData>::New();
+	output->ShallowCopy(imageReader->GetOutput());
+
+	vtkSmartPointer<vtkDataArray> scalars = output->GetPointData()->GetScalars();
+
+	int ijk[3] = {31, -244, 429};
+	int pointId = output->ComputePointId(ijk);
+
+	cout << scalars->GetTuple1(pointId) << endl;
+*/
 }
 
 void Figura::setProperties() {
@@ -101,9 +116,12 @@ void Figura::removeTFPoints() {
 	opacityFun->RemoveAllPoints();
 }
 
-void Figura::addPoint(double value, Color color) {
-	colorFun->AddRGBPoint(value, color.r(), color.g(), color.b());
-	opacityFun->AddPoint(value, color.a());
+void Figura::addOpacityPoint(const double value, const double alpha) {
+	opacityFun->AddPoint(value, alpha);
+}
+
+void Figura::addRGBPoint(const double value, const double c1, const double c2, const double c3) {
+	colorFun->AddRGBPoint(value, c1, c2, c3);
 }
 
 void Figura::setTransferFunction() {

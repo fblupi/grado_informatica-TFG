@@ -14,7 +14,7 @@ Podemos, por tanto, diferenciar dos partes fundamentales en la función de trans
 
 \subsection{Color}
 
-Para definir esta función, hay que agregar puntos para valores de intensidad a los que se les asignará un color. VTK se encargará de interpolar entre un punto y otro (Figura \ref{fig:color_tf}). 
+Para definir esta función (\texttt{vtkColorTransferFunction}), hay que agregar puntos para valores de intensidad a los que se les asignará un color. VTK se encargará de interpolar entre un punto y otro (Figura \ref{fig:color_tf}). 
 
 Por defecto, cuando no hay ningún punto, a todos los valores de intensidad les corresponderá un color negro. De forma parecida se comporta cuando solo hay un punto pero en lugar de negro, les corresponderá el color del punto que se ha definido.
 
@@ -23,9 +23,21 @@ VTK permite trabajar tanto con HSV como con RGB y para añadir un punto hay que 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=10cm]{imagenes/color_tf}
-	\caption{Función de transferencia de color del \textit{preset} \textit{CT-Cardiac} extraído del software Slicer \cite{slicer}}
+	\caption{Parte de color de la función de transferencia del \textit{preset} \textit{CT-Cardiac} extraído del software Slicer \cite{slicer} donde se puede ver que hay 6 puntos definidos y los valores intermedios se obtienen interpolando}
 	\label{fig:color_tf}
 \end{figure}
 
 \subsection{Opacidad}
 
+Con el color no bastaría, pues si comprobásemos ahora añadiéndole tan solo el \texttt{vtkColorTransferFunction} al \texttt{vtkVolumeProperty} observaríamos que no se pinta nada en pantalla. Esto es porque por defecto, al no tener ningún punto la función de opacidad (\texttt{vtkPiecewiseFunction}) es una constante con valor 0 (transparente). 
+
+Para definir esta función se trabaja de forma parecida a como se hace con el color, añadiendo puntos. El método que hay que utilizar es \texttt{AddPoint} al que se le pasan dos parámetros en coma flotante. El primero con el valor de intensidad y el segundo con la opacidad en ese punto. Para obtener los valores en puntos intermedios, se interpola entre los dos puntos en los que está. De forma que si para el valor de intensidad 100 hemos definido una opacidad de 0.5 y para el de 200 1, al valor de intensidad 150 le corresponderá 0.75.
+
+Combinando color y opacidad podemos obtener la función de transferencia para nuestro volumen (Figura \ref{fig:opacity_tf}). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{imagenes/opacity_tf}
+	\caption{Función de transferencia del \textit{preset} \textit{CT-Cardiac} extraído del software Slicer \cite{slicer}. Se pueden ver los cuatro puntos que definen la función de opacidad y de fondo la función de color anterior}
+	\label{fig:opacity_tf}
+\end{figure}

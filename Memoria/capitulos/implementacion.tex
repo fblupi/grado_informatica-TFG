@@ -1,0 +1,20 @@
+\chapter{Implementación}
+
+\section{Función de transferencia}
+
+La función de transferencia es la encargada de dar a un valor de intensidad las propiedades de color y opacidad que le corresponden para la visualización del volumen.
+
+En VTK la función de transferencia forma parte de la clase \texttt{vtkVolumeProperty}. Para ello proporciona otras dos clases:
+\begin{itemize}
+	\item \texttt{vtkColorTransferFunction}: Para definir el color. Se enlaza a \texttt{vtkVolumeProperty} con el método \texttt{SetColor}.
+	\item \texttt{vtkPiecewiseFunction}: Para definir el color. Se enlaza a \texttt{vtkVolumeProperty} con el método \texttt{SetScalarOpacity}.
+\end{itemize}
+
+Podemos, por tanto, diferenciar dos partes fundamentales en la función de transferencia, la encargada de dar la propiedad de color y la de dar la propiedad de opacidad.
+
+\subsection{Color}
+
+
+
+\subsection{Opacidad}
+

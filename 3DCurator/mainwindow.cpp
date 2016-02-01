@@ -2,7 +2,8 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
-    ui->setupUi(this);
+	ui->setupUi(this);
+	defaultTF();
 
 	plot = vtkSmartPointer<vtkXYPlotActor>::New();
 
@@ -33,6 +34,97 @@ void MainWindow::drawVolume() {
 	volumeRen->AddVolume(figura->getVolume()); // añade el volumen al renderer
 	volumeRen->ResetCamera(); // resetea la cámera
 	renderVolume();
+}
+
+void MainWindow::defaultTF() {
+	QObjectList colorList = ui->colorTFContents->children(); // Guarda todos los hijos de colorTFContents (incluyenda las propiedades del layout)
+	QObjectList opacityList = ui->opacityTFContents->children(); // Guarda todos los hijos de opacityTFContents (incluyenda las propiedades del layout)
+
+	// Colores
+	Q_FOREACH(QObject* obj, colorList) { // Recorre todos los colores
+		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
+			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
+			switch (atoi(id.c_str())) {
+				case 1:
+					obj->findChild<QCheckBox *>(QString((std::string("colorEnableP_" + id)).c_str()))->setChecked(true);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorValueP_" + id)).c_str()))->setValue(-750);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorRP_" + id)).c_str()))->setValue(0.08);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorGP_" + id)).c_str()))->setValue(0.05);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorBP_" + id)).c_str()))->setValue(0.03);
+					break;
+				case 2:
+					obj->findChild<QCheckBox *>(QString((std::string("colorEnableP_" + id)).c_str()))->setChecked(true);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorValueP_" + id)).c_str()))->setValue(-350);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorRP_" + id)).c_str()))->setValue(0.39);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorGP_" + id)).c_str()))->setValue(0.25);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorBP_" + id)).c_str()))->setValue(0.16);
+					break;
+				case 3:
+					obj->findChild<QCheckBox *>(QString((std::string("colorEnableP_" + id)).c_str()))->setChecked(true);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorValueP_" + id)).c_str()))->setValue(-200);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorRP_" + id)).c_str()))->setValue(0.8);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorGP_" + id)).c_str()))->setValue(0.8);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorBP_" + id)).c_str()))->setValue(0.8);
+					break;
+				default:
+					obj->findChild<QCheckBox *>(QString((std::string("colorEnableP_" + id)).c_str()))->setChecked(false);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorValueP_" + id)).c_str()))->setValue(0);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorRP_" + id)).c_str()))->setValue(0);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorGP_" + id)).c_str()))->setValue(0);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorBP_" + id)).c_str()))->setValue(0);
+					break;
+			}
+		}
+	}
+
+	// Opacidades
+	Q_FOREACH(QObject* obj, opacityList) { // Recorre todas las opacidades
+		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
+			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
+			switch (atoi(id.c_str())) {
+				case 1:
+					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-800);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
+					break;
+				case 2:
+					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-750);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(1);
+					break;
+				case 3:
+					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-350);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(1);
+					break;
+				case 4:
+					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-300);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
+					break;
+				case 5:
+					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-200);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
+					break;
+				case 6:
+					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-100);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(1);
+					break;
+				case 7:
+					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(1000);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
+					break;
+				default:
+					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(false);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(0);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
+					break;
+			}
+		}
+	}
 }
 
 void MainWindow::updateTF() {
@@ -100,6 +192,12 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 }
 
 void MainWindow::on_updateTF_pressed() {
+	updateTF();
+	renderVolume();
+}
+
+void MainWindow::on_restoreTF_pressed() {
+	defaultTF();
 	updateTF();
 	renderVolume();
 }

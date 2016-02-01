@@ -1,13 +1,32 @@
 \chapter{Implementación}
 
+\section{Volume Mapper}
+
+Para poder visualizar un volumen con VTK mediante \textit{Direct Volume Rendering}, necesitamos un \textit{Volume Mapper}. La librería nos ofrece varias alternativas:
+\begin{itemize}
+	\item \texttt{vtkAMRVolumeMapper}
+	\item \texttt{vtkFixedVolumeRayCastMapper}
+	\item \texttt{vtkGPUVolumeRayCastMapper}
+	\item \texttt{vtkSmartVolumeMapper}
+	\item \texttt{vtkVolumeRayCastMapper}
+	\item \texttt{vtkVolumeTextureMapper}
+	\item \texttt{vtkVolumeTextureMapper3D}
+\end{itemize}
+
+Entre esta lista tenemos algunos que utilizan o texturas o \textit{ray casting}, o la CPU o la GPU. Pero hay uno que es especial con respecto al resto. Se trata de \texttt{vtkSmartVolumeMapper}.
+
+Este \textit{Volume Mapper} es una versión mejorada del \texttt{vtkGPUVolumeRayCast Mapper} por lo que utiliza la GPU (si el dispositivo cuenta con una) y la técnica de \textit{ray casting}. Además cuenta con nuevas características con respecto al resto, como el poder definir infinitos planos de corte para poder ver el interior del volumen \cite{smart_volume_mapper}.
+
+Por tanto, el \textit{Volume Mapper} utilizado será el \texttt{vtkSmartVolumeMapper}.
+
 \section{Función de transferencia}
 
 La función de transferencia es la encargada de dar a un valor de intensidad las propiedades de color y opacidad que le corresponden para la visualización del volumen.
 
-En VTK la función de transferencia forma parte de la clase \texttt{vtkVolumeProperty}. Para ello proporciona otras dos clases:
+En VTK la función de transferencia forma parte de la clase \texttt{vtkVolume Property}. Para ello proporciona otras dos clases:
 \begin{itemize}
-	\item \texttt{vtkColorTransferFunction}: Para definir el color. Se enlaza a \texttt{vtkVolumeProperty} con el método \texttt{SetColor}.
-	\item \texttt{vtkPiecewiseFunction}: Para definir el color. Se enlaza a \texttt{vtkVolumeProperty} con el método \texttt{SetScalarOpacity}.
+	\item \texttt{vtkColorTransferFunction}: Para definir el color. Se enlaza a \texttt{vtk VolumeProperty} con el método \texttt{SetColor}.
+	\item \texttt{vtkPiecewiseFunction}: Para definir el color. Se enlaza a \texttt{vtkVolume Property} con el método \texttt{SetScalarOpacity}.
 \end{itemize}
 
 Podemos, por tanto, diferenciar dos partes fundamentales en la función de transferencia, la encargada de dar la propiedad de color y la de dar la propiedad de opacidad. Ambas trabajan de forma independiente. Es decir, cuando se define un punto en una de ellas, no tiene por qué definirse en la otra.

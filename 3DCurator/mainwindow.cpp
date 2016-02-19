@@ -39,6 +39,7 @@ void MainWindow::drawVolume() {
 void MainWindow::defaultTF() {
 	QObjectList colorList = ui->colorTFContents->children(); // Guarda todos los hijos de colorTFContents (incluyenda las propiedades del layout)
 	QObjectList opacityList = ui->opacityTFContents->children(); // Guarda todos los hijos de opacityTFContents (incluyenda las propiedades del layout)
+	QObjectList gradientList = ui->gradientTFContents->children(); // Guarda todos los hijos de opacityTFContents (incluyenda las propiedades del layout)
 
 	// Colores
 	Q_FOREACH(QObject* obj, colorList) { // Recorre todos los colores
@@ -84,7 +85,7 @@ void MainWindow::defaultTF() {
 		}
 	}
 
-	// Opacidades
+	// Opacidades escalares
 	Q_FOREACH(QObject* obj, opacityList) { // Recorre todas las opacidades
 		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
 			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
@@ -147,6 +148,16 @@ void MainWindow::defaultTF() {
 			}
 		}
 	}
+
+	// Opacidades gradientes
+	Q_FOREACH(QObject* obj, gradientList) { // Recorre todas las opacidades
+		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
+			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
+			obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(false);
+			obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(0);
+			obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(0);
+		}
+	}
 }
 
 void MainWindow::updateTF() {
@@ -154,6 +165,7 @@ void MainWindow::updateTF() {
 
 	QObjectList colorList = ui->colorTFContents->children(); // Guarda todos los hijos de colorTFContents (incluyenda las propiedades del layout)
 	QObjectList opacityList = ui->opacityTFContents->children(); // Guarda todos los hijos de opacityTFContents (incluyenda las propiedades del layout)
+	QObjectList gradientList = ui->gradientTFContents->children(); // Guarda todos los hijos de opacityTFContents (incluyenda las propiedades del layout)
 
 	// Colores
 	Q_FOREACH(QObject* obj, colorList) { // Recorre todos los colores
@@ -170,7 +182,7 @@ void MainWindow::updateTF() {
 		}
 	}
 
-	// Opacidades
+	// Opacidades escalares
 	Q_FOREACH(QObject* obj, opacityList) { // Recorre todas las opacidades
 		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
 			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
@@ -178,6 +190,19 @@ void MainWindow::updateTF() {
 				figura->addOpacityPoint(
 					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->value(),
 					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->value()
+					);
+			}
+		}
+	}
+
+	// Opacidades gradientes
+	Q_FOREACH(QObject* obj, gradientList) { // Recorre todas las opacidades
+		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
+			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
+			if (obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->isChecked()) { // Comprueba si está activado y añade punto
+				figura->addGradientPoint(
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->value(),
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->value()
 					);
 			}
 		}

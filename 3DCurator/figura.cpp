@@ -4,7 +4,8 @@ Figura::Figura() {
 	imageReader = vtkSmartPointer<vtkDICOMImageReader>::New();
     reader = imageReader;
     colorFun = vtkSmartPointer<vtkColorTransferFunction>::New();
-    opacityFun = vtkSmartPointer<vtkPiecewiseFunction>::New();
+	opacityFun = vtkSmartPointer<vtkPiecewiseFunction>::New();
+	gradientFun = vtkSmartPointer<vtkPiecewiseFunction>::New();
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
     //mapper = vtkSmartPointer<vtkFixedPointVolumeRayCastMapper>::New();
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
@@ -102,7 +103,8 @@ void Figura::setDICOMFolder(const std::string s) {
 void Figura::setProperties() {
     volumeProperty->SetIndependentComponents(true);
     volumeProperty->SetColor(colorFun); // función de color
-    volumeProperty->SetScalarOpacity(opacityFun); // función de opacidad
+    volumeProperty->SetScalarOpacity(opacityFun); // función de opacidad escalar
+	volumeProperty->SetGradientOpacity(gradientFun); // función de opacidad gradiente
     volumeProperty->SetInterpolationTypeToLinear();
     volumeProperty->SetAmbient(0.1); // componente ambiental del material
     volumeProperty->SetDiffuse(0.9); // componente difusa del material
@@ -116,6 +118,10 @@ void Figura::removeTFPoints() {
 
 void Figura::addOpacityPoint(const double value, const double alpha) {
 	opacityFun->AddPoint(value, alpha);
+}
+
+void Figura::addGradientPoint(const double value, const double alpha) {
+	gradientFun->AddPoint(value, alpha);
 }
 
 void Figura::addRGBPoint(const double value, const double c1, const double c2, const double c3) {

@@ -52,6 +52,30 @@ vtkSmartPointer<vtkExtractHistogram2D> Figura::getHistogram() const {
 	return histogram;
 }
 
+double Figura::getMinXBound() const {
+	return volume->GetMinXBound();
+}
+
+double Figura::getMinYBound() const {
+	return volume->GetMinYBound();
+}
+
+double Figura::getMinZBound() const {
+	return volume->GetMinZBound();
+}
+
+double Figura::getMaxXBound() const {
+	return volume->GetMaxXBound();
+}
+
+double Figura::getMaxYBound() const {
+	return volume->GetMaxYBound();
+}
+
+double Figura::getMaxZBound() const {
+	return volume->GetMaxZBound();
+}
+
 void Figura::setImageReader(const vtkSmartPointer<vtkDICOMImageReader> imageReader) {
 	this->imageReader = imageReader;
 }

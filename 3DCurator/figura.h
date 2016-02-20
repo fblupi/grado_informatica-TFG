@@ -31,6 +31,12 @@ public:
     vtkSmartPointer<vtkPiecewiseFunction> getOpacityFun() const;
     vtkSmartPointer<vtkVolumeProperty> getVolumeProperty() const;
 	vtkSmartPointer<vtkExtractHistogram2D> getHistogram() const;
+	double getMinXBound() const;
+	double getMinYBound() const;
+	double getMinZBound() const;
+	double getMaxXBound() const;
+	double getMaxYBound() const;
+	double getMaxZBound() const;
 
 	// setters
     void setImageReader(const vtkSmartPointer<vtkDICOMImageReader> imageReader);

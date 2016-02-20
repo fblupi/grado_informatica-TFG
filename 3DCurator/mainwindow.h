@@ -8,6 +8,8 @@
 #include "figura.h"
 #include "vtkRenderer.h"
 #include "vtkRenderWindow.h"
+#include "vtkInteractorStyleTrackballCamera.h"
+#include "vtkImagePlaneWidget.h"
 #include "vtkSmartPointer.h"
 #include "vtkXYPlotActor.h"
 
@@ -45,6 +47,9 @@ private:
     Ui::MainWindow *ui;
     Figura *figura;
 	vtkSmartPointer<vtkRenderer> volumeRen;
+	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
+	vtkSmartPointer<vtkImagePlaneWidget> plane;
+
 	vtkSmartPointer<vtkRenderer> histogramRen;
 	vtkSmartPointer<vtkXYPlotActor> plot;
 

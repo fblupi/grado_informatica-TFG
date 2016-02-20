@@ -5,14 +5,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	ui->setupUi(this);
 	defaultTF();
 
-	plot = vtkSmartPointer<vtkXYPlotActor>::New();
+	//plot = vtkSmartPointer<vtkXYPlotActor>::New();
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
-	histogramRen = vtkSmartPointer<vtkRenderer>::New();
+	//histogramRen = vtkSmartPointer<vtkRenderer>::New();
+	style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+
+	plane = vtkSmartPointer<vtkImagePlaneWidget>::New();
+
+	double origin[3] = { 0, 1, 0 };
+	plane->SetOrigin(origin);
+	plane->UpdatePlacement();
 
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
-	renderVolume();
     connectComponents(); // conecta los renderers con los widgets
+
+	renderVolume();
+	plane->On();
 
     figura = new Figura(); // crea una instancia de Figura
 }
@@ -27,6 +36,8 @@ void MainWindow::setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, f
 
 void MainWindow::connectComponents() {
 	ui->volumeWidget->GetRenderWindow()->AddRenderer(volumeRen); // asigna el renderer donde se visualizará en 3D el volumen al widget izquierdo
+	ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(style);
+	plane->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor());
 	//ui->histogramWidget->GetRenderWindow()->AddRenderer(histogramRen);
 }
 

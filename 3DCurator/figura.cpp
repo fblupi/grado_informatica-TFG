@@ -114,6 +114,7 @@ void Figura::setProperties() {
 void Figura::removeTFPoints() {
 	colorFun->RemoveAllPoints();
 	opacityFun->RemoveAllPoints();
+	gradientFun->RemoveAllPoints();
 }
 
 void Figura::addOpacityPoint(const double value, const double alpha) {

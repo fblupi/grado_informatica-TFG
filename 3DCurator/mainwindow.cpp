@@ -224,6 +224,14 @@ void MainWindow::updateShadow() {
 	}
 }
 
+void MainWindow::defaultPlanePosition() {
+	if (figura->getVolume() != NULL) {
+		double xSize = figura->getMaxXBound() - figura->getMinXBound(), ySize = figura->getMaxYBound() - figura->getMinYBound(), zSize = figura->getMaxZBound() - figura->getMinZBound();
+		plane->SetOrigin(xSize / 2, ySize / 2, zSize / 2);
+		plane->PlaceWidget(figura->getMinXBound(), figura->getMaxXBound(), figura->getMinYBound(), figura->getMaxYBound(), figura->getMinZBound(), figura->getMaxZBound());
+	}
+}
+
 void MainWindow::renderVolume() {
 	ui->volumeWidget->GetRenderWindow()->Render(); // renderiza
 }
@@ -236,12 +244,7 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		updateTF(); // actualiza función de transferencia con los valores de la GUI
 		updateShadow(); // actualiza sombreado
-
-		double xSize = figura->getMaxXBound() - figura->getMinXBound(),
-			ySize = figura->getMaxYBound() - figura->getMinYBound(),
-			zSize = figura->getMaxZBound() - figura->getMinZBound();
-		plane->SetOrigin(xSize / 2, ySize / 2, zSize / 2);
-		plane->PlaceWidget(figura->getMinXBound(), figura->getMaxXBound(), figura->getMinYBound(), figura->getMaxYBound(), figura->getMinZBound(), figura->getMaxZBound());
+		defaultPlanePosition();
 		
 		//plot->AddDataSetInputConnection(figura->getHistogram()->GetOutputPort());
 

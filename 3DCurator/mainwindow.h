@@ -41,6 +41,7 @@ private slots:
 	void defaultTF();
 	void updateTF();
 	void updateShadow();
+	void defaultPlanePosition();
 
 private:
 	// atributos

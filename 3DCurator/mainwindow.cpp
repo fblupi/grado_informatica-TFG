@@ -5,21 +5,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	ui->setupUi(this);
 	defaultTF();
 
-	//plot = vtkSmartPointer<vtkXYPlotActor>::New();
-
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
-	//histogramRen = vtkSmartPointer<vtkRenderer>::New();
 	style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 
-	plane = vtkSmartPointer<vtkImagePlaneWidget>::New();
+	plano = new Plano(); // crea una instancia de Plano
+	figura = new Figura(); // crea una instancia de Figura
 
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
     connectComponents(); // conecta los renderers con los widgets
 
 	renderVolume();
-	plane->On();
 
-    figura = new Figura(); // crea una instancia de Figura
+	plano->enable(true);
 }
 
 MainWindow::~MainWindow() {
@@ -33,8 +30,7 @@ void MainWindow::setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, f
 void MainWindow::connectComponents() {
 	ui->volumeWidget->GetRenderWindow()->AddRenderer(volumeRen); // asigna el renderer donde se visualizará en 3D el volumen al widget izquierdo
 	ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(style);
-	plane->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor());
-	//ui->histogramWidget->GetRenderWindow()->AddRenderer(histogramRen);
+	plano->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor());
 }
 
 void MainWindow::drawVolume() {
@@ -227,8 +223,8 @@ void MainWindow::updateShadow() {
 void MainWindow::defaultPlanePosition() {
 	if (figura->getVolume() != NULL) {
 		double xSize = figura->getMaxXBound() - figura->getMinXBound(), ySize = figura->getMaxYBound() - figura->getMinYBound(), zSize = figura->getMaxZBound() - figura->getMinZBound();
-		plane->SetOrigin(xSize / 2, ySize / 2, zSize / 2);
-		plane->PlaceWidget(figura->getMinXBound(), figura->getMaxXBound(), figura->getMinYBound(), figura->getMaxYBound(), figura->getMinZBound(), figura->getMaxZBound());
+		plano->setOrigin(xSize / 2, ySize / 2, zSize / 2); // Coloca el centro del plano en el centro de la figura
+		plano->placeWidget(figura->getMinXBound(), figura->getMaxXBound(), figura->getMinYBound(), figura->getMaxYBound(), figura->getMinZBound(), figura->getMaxZBound()); // Ajusta el tamaño del plano al de la figura
 	}
 }
 
@@ -244,12 +240,7 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		updateTF(); // actualiza función de transferencia con los valores de la GUI
 		updateShadow(); // actualiza sombreado
-		defaultPlanePosition();
-		
-		//plot->AddDataSetInputConnection(figura->getHistogram()->GetOutputPort());
-
-		//histogramRen->AddActor(plot);
-		
+		defaultPlanePosition(); // coloca el plano en una posición inicial
 		drawVolume(); // dibuja
 	}
 }

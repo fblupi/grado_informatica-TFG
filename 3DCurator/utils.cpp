@@ -9,7 +9,6 @@ std::string splitAndGetLast(std::string s, const std::string delimiter) {
 	return s;
 }
 
-
 double max(const double numbers[]) {
 	double result = std::numeric_limits<double>::min();
 	int size = (int) (sizeof(numbers) / sizeof(numbers[0]));

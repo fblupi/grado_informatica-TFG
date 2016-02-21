@@ -6,6 +6,7 @@
 
 #include "utils.h"
 #include "figura.h"
+#include "plano.h"
 #include "vtkRenderer.h"
 #include "vtkRenderWindow.h"
 #include "vtkInteractorStyleTrackballCamera.h"
@@ -47,9 +48,9 @@ private:
 	// atributos
     Ui::MainWindow *ui;
     Figura *figura;
+	Plano *plano;
 	vtkSmartPointer<vtkRenderer> volumeRen;
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
-	vtkSmartPointer<vtkImagePlaneWidget> plane;
 
 	vtkSmartPointer<vtkRenderer> histogramRen;
 	vtkSmartPointer<vtkXYPlotActor> plot;

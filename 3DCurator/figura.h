@@ -23,29 +23,13 @@ public:
     ~Figura();
 
 	// getters
-    vtkSmartPointer<vtkDICOMImageReader> getImageReader() const;
-    vtkSmartPointer<vtkAlgorithm> getReader() const;
     vtkSmartPointer<vtkVolume> getVolume() const;
-    vtkSmartPointer<vtkSmartVolumeMapper> getMapper() const;
-    vtkSmartPointer<vtkColorTransferFunction> getColorFun() const;
-    vtkSmartPointer<vtkPiecewiseFunction> getOpacityFun() const;
-    vtkSmartPointer<vtkVolumeProperty> getVolumeProperty() const;
-	vtkSmartPointer<vtkExtractHistogram2D> getHistogram() const;
 	double getMinXBound() const;
 	double getMinYBound() const;
 	double getMinZBound() const;
 	double getMaxXBound() const;
 	double getMaxYBound() const;
 	double getMaxZBound() const;
-
-	// setters
-    void setImageReader(const vtkSmartPointer<vtkDICOMImageReader> imageReader);
-    void setReader(const vtkSmartPointer<vtkAlgorithm> reader);
-    void setVolume(const vtkSmartPointer<vtkVolume> volume);
-    void setMapper(const vtkSmartPointer<vtkSmartVolumeMapper> mapper);
-    void setColorFun(const vtkSmartPointer<vtkColorTransferFunction> colorFun);
-    void setOpacityFun(const vtkSmartPointer<vtkPiecewiseFunction> opacityFun);
-    void setVolumeProperty(const vtkSmartPointer<vtkVolumeProperty> volumeProperty);
 
 	// funcs
 	void setDICOMFolder(const std::string s);
@@ -66,7 +50,6 @@ private:
 	vtkSmartPointer<vtkPiecewiseFunction> opacityFun;
 	vtkSmartPointer<vtkPiecewiseFunction> gradientFun;
     vtkSmartPointer<vtkVolumeProperty> volumeProperty;
-	vtkSmartPointer<vtkExtractHistogram2D> histogram;
 
 	// funcs
     void setProperties();

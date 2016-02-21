@@ -61,7 +61,8 @@ void Figura::setProperties() {
     volumeProperty->SetColor(colorFun); // función de color
     volumeProperty->SetScalarOpacity(opacityFun); // función de opacidad escalar
 	volumeProperty->SetGradientOpacity(gradientFun); // función de opacidad gradiente
-    volumeProperty->SetInterpolationTypeToLinear();
+	volumeProperty->SetInterpolationTypeToLinear();
+	volumeProperty->ShadeOn();
     volumeProperty->SetAmbient(0.1); // componente ambiental del material
     volumeProperty->SetDiffuse(0.9); // componente difusa del material
     volumeProperty->SetSpecular(0.2); // componente especular del material

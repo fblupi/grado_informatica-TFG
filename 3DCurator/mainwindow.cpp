@@ -6,14 +6,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	defaultTF();
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
-	slicesRen = vtkSmartPointer<vtkRenderer>::New();
 	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
 	style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
-
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
-
+/*
+	sliceViewer->GetWindowLevel()->SetOutputFormatToRGB();
+	vtkSmartPointer<vtkLookupTable> lut = vtkSmartPointer<vtkLookupTable>::New();
+	lut->SetHueRange(0.66667, 0.0);
+	lut->SetSaturationRange(1, 1);
+	lut->SetValueRange(1, 1);
+	lut->SetAlphaRange(1, 1);
+	lut->SetNumberOfColors(256);
+	lut->Build();
+	sliceViewer->GetWindowLevel()->SetLookupTable(lut);
+*/
+	sliceViewer->SetColorLevel(-200);
+	sliceViewer->SetColorWindow(1000);
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
+
     connectComponents(); // conecta los renderers con los widgets
 
 	renderVolume();

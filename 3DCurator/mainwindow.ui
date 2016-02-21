@@ -39,7 +39,7 @@
     <item row="0" column="1">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabTF">
        <attribute name="title">
@@ -4341,6 +4341,16 @@
          <string>Actualizar</string>
         </property>
        </widget>
+      </widget>
+      <widget class="QWidget" name="tabSlices">
+       <attribute name="title">
+        <string>Cortes</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_83">
+        <item row="0" column="0">
+         <widget class="QVTKWidget" name="slicesWidget"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

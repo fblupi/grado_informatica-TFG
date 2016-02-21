@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	defaultTF();
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
+	slicesRen = vtkSmartPointer<vtkRenderer>::New();
+	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
 	style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 
 	plano = new Plano(); // crea una instancia de Plano
@@ -31,6 +33,10 @@ void MainWindow::connectComponents() {
 	ui->volumeWidget->GetRenderWindow()->AddRenderer(volumeRen); // asigna el renderer donde se visualizará en 3D el volumen al widget izquierdo
 	ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(style);
 	plano->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor());
+
+	sliceViewer->SetInputData(plano->getPlane()->GetResliceOutput());
+	ui->slicesWidget->SetRenderWindow(sliceViewer->GetRenderWindow());
+	sliceViewer->SetupInteractor(ui->slicesWidget->GetInteractor());
 }
 
 void MainWindow::drawVolume() {
@@ -237,11 +243,13 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 
 	if (dicomFolder != NULL) { // la carpeta se ha leído bien
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData());  // carga los archivos DICOM de la carpeta a la figura
+		plano->setInputConnection(figura->getReader());
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		updateTF(); // actualiza función de transferencia con los valores de la GUI
 		updateShadow(); // actualiza sombreado
 		defaultPlanePosition(); // coloca el plano en una posición inicial
 		drawVolume(); // dibuja
+		sliceViewer->Render();
 	}
 }
 

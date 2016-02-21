@@ -10,9 +10,8 @@
 #include "vtkRenderer.h"
 #include "vtkRenderWindow.h"
 #include "vtkInteractorStyleTrackballCamera.h"
-#include "vtkImagePlaneWidget.h"
+#include "vtkImageViewer2.h"
 #include "vtkSmartPointer.h"
-#include "vtkXYPlotActor.h"
 
 namespace Ui {
     class MainWindow;
@@ -50,11 +49,9 @@ private:
     Figura *figura;
 	Plano *plano;
 	vtkSmartPointer<vtkRenderer> volumeRen;
+	vtkSmartPointer<vtkRenderer> slicesRen;
+	vtkSmartPointer<vtkImageViewer2> sliceViewer;
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
-
-	vtkSmartPointer<vtkRenderer> histogramRen;
-	vtkSmartPointer<vtkXYPlotActor> plot;
-
 };
 
 #endif // MAINWINDOW_H

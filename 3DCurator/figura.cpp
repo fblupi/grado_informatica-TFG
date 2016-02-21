@@ -22,6 +22,10 @@ vtkSmartPointer<vtkVolume> Figura::getVolume() const {
 	return volume;
 }
 
+vtkSmartPointer<vtkAlgorithm> Figura::getReader() const {
+	return reader;
+}
+
 double Figura::getMinXBound() const {
 	return volume->GetMinXBound();
 }

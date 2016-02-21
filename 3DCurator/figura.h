@@ -24,6 +24,7 @@ public:
 
 	// getters
     vtkSmartPointer<vtkVolume> getVolume() const;
+	vtkSmartPointer<vtkAlgorithm> getReader() const;
 	double getMinXBound() const;
 	double getMinYBound() const;
 	double getMinZBound() const;

@@ -60,7 +60,8 @@ void Figura::setProperties() {
     volumeProperty->SetInterpolationTypeToLinear();
     volumeProperty->SetAmbient(0.1); // componente ambiental del material
     volumeProperty->SetDiffuse(0.9); // componente difusa del material
-    volumeProperty->SetSpecular(0.1); // componente especular del material
+    volumeProperty->SetSpecular(0.2); // componente especular del material
+	volumeProperty->SetSpecularPower(10.0); // componente de potencia especular del material
 }
 
 void Figura::removeTFPoints() {

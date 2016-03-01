@@ -37,6 +37,7 @@ private slots:
 	void on_sagitalPlane_pressed();
 	void on_coronalPlane_pressed();
 	void on_axialPlane_pressed();
+	void on_enablePlane_stateChanged();
 
 	// funcs
 	void renderVolume();

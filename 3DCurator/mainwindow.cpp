@@ -317,3 +317,12 @@ void MainWindow::on_axialPlane_pressed() {
 	plano->setAxial();
 	renderVolume();
 }
+
+void MainWindow::on_enablePlane_stateChanged() {
+	if (ui->enablePlane->isChecked()) {
+		plano->enable(true);
+	} else {
+		plano->enable(false);
+	}
+	renderVolume();
+}

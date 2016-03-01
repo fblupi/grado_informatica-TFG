@@ -173,9 +173,28 @@ void MainWindow::defaultTF() {
 	Q_FOREACH(QObject* obj, gradientList) { // Recorre todas las opacidades
 		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
 			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
-			obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(false);
-			obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(0);
-			obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(0);
+			switch (atoi(id.c_str())) {
+			case 1:
+				obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(true);
+				obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(0);
+				obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(0.0);
+				break;
+			case 2:
+				obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(true);
+				obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(90);
+				obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(0.5);
+				break;
+			case 3:
+				obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(true);
+				obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(100);
+				obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(1.0);
+				break;
+			default:
+				obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(false);
+				obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(0);
+				obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(0);
+				break;
+			}
 		}
 	}
 }
@@ -241,7 +260,7 @@ void MainWindow::defaultPlanePosition() {
 	if (figura->getVolume() != NULL) {
 		double xSize = figura->getMaxXBound() - figura->getMinXBound(), ySize = figura->getMaxYBound() - figura->getMinYBound(), zSize = figura->getMaxZBound() - figura->getMinZBound();
 		plano->setOrigin(xSize / 2, ySize / 2, zSize / 2); // Coloca el centro del plano en el centro de la figura
-		plano->placeWidget(figura->getMinXBound(), figura->getMaxXBound(), figura->getMinYBound(), figura->getMaxYBound(), figura->getMinZBound(), figura->getMaxZBound()); // Ajusta el tamaño del plano al de la figura
+		plano->setAxial();
 	}
 }
 
@@ -282,4 +301,16 @@ void MainWindow::on_actionExit_triggered() {
 void MainWindow::on_updateProperties_pressed() {
 	updateShadow();
 	renderVolume();
+}
+
+void MainWindow::on_sagitalPlane_pressed() {
+	plano->setSagital();
+}
+
+void MainWindow::on_coronalPlane_pressed() {
+	plano->setCoronal();
+}
+
+void MainWindow::on_axialPlane_pressed() {
+	plano->setAxial();
 }

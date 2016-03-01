@@ -27,3 +27,15 @@ void Plano::setInputConnection(vtkSmartPointer<vtkAlgorithm> reader) {
 void Plano::placeWidget(const double xMin, const double xMax, const double yMin, const double yMax, const double zMin, const double zMax) {
 	plane->PlaceWidget(xMin, xMax, yMin, yMax, zMin, zMax);
 }
+
+void Plano::setSagital() {
+	plane->SetPlaneOrientationToXAxes();
+}
+
+void Plano::setCoronal() {
+	plane->SetPlaneOrientationToYAxes();
+}
+
+void Plano::setAxial() {
+	plane->SetPlaneOrientationToZAxes();
+}

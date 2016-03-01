@@ -34,6 +34,9 @@ private slots:
 	void on_updateTF_pressed();
 	void on_restoreTF_pressed();
 	void on_updateProperties_pressed();
+	void on_sagitalPlane_pressed();
+	void on_coronalPlane_pressed();
+	void on_axialPlane_pressed();
 
 	// funcs
 	void renderVolume();

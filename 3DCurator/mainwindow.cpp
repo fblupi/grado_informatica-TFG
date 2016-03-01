@@ -1,13 +1,40 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+vtkStandardNewMacro(MouseInteractorStyle);
+
+void MouseInteractorStyle::SetViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
+	this->viewer = viewer;
+}
+
+void MouseInteractorStyle::OnMouseMove() {
+	if (moving) {
+		viewer->Render();
+	}
+	vtkInteractorStyleTrackballCamera::OnMouseMove(); // forward events
+}
+
+void MouseInteractorStyle::OnMiddleButtonDown() {
+	moving = true;
+	vtkInteractorStyleTrackballCamera::OnMiddleButtonDown(); // forward events
+}
+
+void MouseInteractorStyle::OnMiddleButtonUp() {
+	moving = false;
+	vtkInteractorStyleTrackballCamera::OnMiddleButtonUp(); // forward events
+}
+
+/*************************************************************************************/
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 	defaultTF();
+	defaultMaterial();
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
 	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
-	style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+	style = vtkSmartPointer<MouseInteractorStyle>::New();
+	style->SetViewer(sliceViewer);
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
 /*
@@ -256,6 +283,13 @@ void MainWindow::updateShadow() {
 	}
 }
 
+void MainWindow::defaultMaterial() {
+	ui->ambientValue->setValue(0.1);
+	ui->diffuseValue->setValue(0.9);
+	ui->specularValue->setValue(0.2);
+	ui->powerValue->setValue(10.0);
+}
+
 void MainWindow::updateMaterial() {
 	figura->setMaterial(
 		ui->ambientValue->value(),
@@ -305,6 +339,10 @@ void MainWindow::on_restoreTF_pressed() {
 	defaultTF();
 	updateTF();
 	renderVolume();
+}
+
+void MainWindow::on_restoreMaterial_pressed() {
+	defaultMaterial();
 }
 
 void MainWindow::on_updateProperties_pressed() {

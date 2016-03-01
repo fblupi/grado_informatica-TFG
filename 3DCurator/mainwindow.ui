@@ -27,8 +27,6 @@
         <height>800</height>
        </size>
       </property>
-      <zorder>tabWidget</zorder>
-      <zorder>tabWidget</zorder>
      </widget>
     </item>
     <item row="1" column="0">
@@ -41,7 +39,7 @@
     <item row="0" column="1">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabTF">
        <attribute name="title">
@@ -58,7 +56,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>263</width>
+             <width>162</width>
              <height>3042</height>
             </rect>
            </property>
@@ -1574,7 +1572,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>264</width>
+             <width>168</width>
              <height>2612</height>
             </rect>
            </property>
@@ -2861,7 +2859,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>264</width>
+             <width>162</width>
              <height>3042</height>
             </rect>
            </property>
@@ -4324,17 +4322,17 @@
            <string>Material</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_86">
-           <item row="0" column="1">
-            <widget class="QLabel" name="ambientLabel">
-             <property name="text">
-              <string>Ambiente</string>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="1">
             <widget class="QLabel" name="diffuseLabel">
              <property name="text">
               <string>Difusa</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="ambientLabel">
+             <property name="text">
+              <string>Ambiente</string>
              </property>
             </widget>
            </item>
@@ -4344,7 +4342,7 @@
               <double>1.000000000000000</double>
              </property>
              <property name="value">
-              <double>0.300000000000000</double>
+              <double>0.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -4361,7 +4359,7 @@
               <double>1.000000000000000</double>
              </property>
              <property name="value">
-              <double>0.600000000000000</double>
+              <double>0.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -4371,14 +4369,7 @@
               <double>1.000000000000000</double>
              </property>
              <property name="value">
-              <double>0.500000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="powerLabel">
-             <property name="text">
-              <string>Potencia especular</string>
+              <double>0.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -4391,12 +4382,25 @@
               <double>50.000000000000000</double>
              </property>
              <property name="value">
-              <double>20.000000000000000</double>
+              <double>1.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="powerLabel">
+             <property name="text">
+              <string>Potencia especular</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QPushButton" name="restoreMaterial">
+             <property name="text">
+              <string>Restaurar</string>
              </property>
             </widget>
            </item>
           </layout>
-          <zorder>label</zorder>
           <zorder>ambientLabel</zorder>
           <zorder>ambientValue</zorder>
           <zorder>diffuseLabel</zorder>
@@ -4405,6 +4409,7 @@
           <zorder>specularValue</zorder>
           <zorder>powerLabel</zorder>
           <zorder>powerValue</zorder>
+          <zorder>restoreMaterial</zorder>
          </widget>
         </item>
         <item row="0" column="1">

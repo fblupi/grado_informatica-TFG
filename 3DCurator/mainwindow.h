@@ -7,6 +7,7 @@
 #include "utils.h"
 #include "figura.h"
 #include "plano.h"
+#include "vtkObjectFactory.h"
 #include "vtkRenderer.h"
 #include "vtkRenderWindow.h"
 #include "vtkInteractorStyleTrackballCamera.h"
@@ -18,6 +19,22 @@
 namespace Ui {
     class MainWindow;
 }
+
+class MouseInteractorStyle : public vtkInteractorStyleTrackballCamera {
+public:
+	static MouseInteractorStyle* New();
+	vtkTypeMacro(MouseInteractorStyle, vtkInteractorStyleTrackballCamera);
+
+	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
+
+	virtual void OnMouseMove();
+	virtual void OnMiddleButtonDown();
+	virtual void OnMiddleButtonUp();
+
+private:
+	bool moving = false;
+	vtkSmartPointer<vtkImageViewer2> viewer;
+};
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -34,6 +51,7 @@ private slots:
 	void on_updateTF_pressed();
 	void on_restoreTF_pressed();
 	void on_updateProperties_pressed();
+	void on_restoreMaterial_pressed();
 	void on_sagitalPlane_pressed();
 	void on_coronalPlane_pressed();
 	void on_axialPlane_pressed();
@@ -47,6 +65,7 @@ private slots:
 	void defaultTF();
 	void updateTF();
 	void updateShadow();
+	void defaultMaterial();
 	void updateMaterial();
 	void defaultPlanePosition();
 
@@ -57,7 +76,7 @@ private:
 	Plano *plano;
 	vtkSmartPointer<vtkRenderer> volumeRen;
 	vtkSmartPointer<vtkImageViewer2> sliceViewer;
-	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
+	vtkSmartPointer<MouseInteractorStyle> style;
 };
 
 #endif // MAINWINDOW_H

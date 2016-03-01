@@ -305,12 +305,15 @@ void MainWindow::on_updateProperties_pressed() {
 
 void MainWindow::on_sagitalPlane_pressed() {
 	plano->setSagital();
+	renderVolume();
 }
 
 void MainWindow::on_coronalPlane_pressed() {
 	plano->setCoronal();
+	renderVolume();
 }
 
 void MainWindow::on_axialPlane_pressed() {
 	plano->setAxial();
+	renderVolume();
 }

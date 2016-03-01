@@ -2,6 +2,7 @@
 
 Plano::Plano() {
 	plane = vtkSmartPointer<vtkImagePlaneWidget>::New();
+	centers[0] = centers[1] = centers[2] = 0.0;
 }
 
 vtkSmartPointer<vtkImagePlaneWidget> Plano::getPlane() const {
@@ -18,24 +19,26 @@ void Plano::enable(const bool onOff) {
 
 void Plano::setOrigin(const double x, const double y, const double z) {
 	plane->SetOrigin(x, y, z);
+	centers[0] = x;
+	centers[1] = y;
+	centers[2] = z;
 }
 
 void Plano::setInputConnection(vtkSmartPointer<vtkAlgorithm> reader) {
 	plane->SetInputConnection(reader->GetOutputPort());
 }
 
-void Plano::placeWidget(const double xMin, const double xMax, const double yMin, const double yMax, const double zMin, const double zMax) {
-	plane->PlaceWidget(xMin, xMax, yMin, yMax, zMin, zMax);
-}
-
 void Plano::setSagital() {
 	plane->SetPlaneOrientationToXAxes();
+	plane->SetSlicePosition(centers[0]);
 }
 
 void Plano::setCoronal() {
 	plane->SetPlaneOrientationToYAxes();
+	plane->SetSlicePosition(centers[1]);
 }
 
 void Plano::setAxial() {
 	plane->SetPlaneOrientationToZAxes();
+	plane->SetSlicePosition(centers[2]);
 }

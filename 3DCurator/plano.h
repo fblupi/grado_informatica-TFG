@@ -15,10 +15,9 @@ public:
 	vtkSmartPointer<vtkImagePlaneWidget> getPlane() const;
 
 	// funcs
+	void setInputConnection(vtkSmartPointer<vtkAlgorithm> reader);
 	void enable(const bool onOff);
 	void setOrigin(const double x, const double y, const double z);
-	void placeWidget(const double xMin, const double xMax, const double yMin, const double yMax, const double zMin, const double zMax);
-	void setInputConnection(vtkSmartPointer<vtkAlgorithm> reader);
 	void setSagital();
 	void setCoronal();
 	void setAxial();
@@ -26,6 +25,7 @@ public:
 private:
 	// atributos
 	vtkSmartPointer<vtkImagePlaneWidget> plane;
+	double centers[3]; // posiciones centrales para los planos sagital, coronal y axial
 };
 
 #endif // PLANO_H

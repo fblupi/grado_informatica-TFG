@@ -300,7 +300,7 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 
 	if (dicomFolder != NULL) { // la carpeta se ha leído bien
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
-		plano->setInputConnection(figura->getReader());
+		plano->setInputConnection(figura->getReader()); // conecta el plano con los datos del volumen
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		updateTF(); // actualiza función de transferencia con los valores de la GUI
 		updateShadow(); // actualiza sombreado

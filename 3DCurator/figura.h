@@ -4,7 +4,6 @@
 #include "vtkAlgorithm.h"
 #include "vtkColorTransferFunction.h"
 #include "vtkDICOMImageReader.h"
-#include "vtkFixedPointVolumeRayCastMapper.h"
 #include "vtkSmartVolumeMapper.h"
 #include "vtkImageData.h"
 #include "vtkPiecewiseFunction.h"

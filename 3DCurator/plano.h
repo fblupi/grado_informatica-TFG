@@ -1,27 +1,12 @@
 #ifndef PLANO_H
 #define PLANO_H
 
+#include "imagePlaneWidget.h"
 #include "vtkObjectFactory.h"
 #include "vtkSmartPointer.h"
 #include "vtkAlgorithm.h"
 #include "vtkImagePlaneWidget.h"
 #include "vtkImageViewer2.h"
-
-class ImagePlaneWidget : public vtkImagePlaneWidget {
-public:
-	static ImagePlaneWidget* New();
-	vtkTypeMacro(vtkImagePlaneWidget, ImagePlaneWidget);
-
-	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
-
-	virtual void OnMouseMove();
-	virtual void OnMiddleButtonDown();
-	virtual void OnMiddleButtonUp();
-
-private:
-	bool moving = false;
-	vtkSmartPointer<vtkImageViewer2> viewer;
-};
 
 class Plano {
 public:

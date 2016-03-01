@@ -7,7 +7,6 @@
 #include "utils.h"
 #include "figura.h"
 #include "plano.h"
-#include "vtkObjectFactory.h"
 #include "vtkRenderer.h"
 #include "vtkRenderWindow.h"
 #include "vtkInteractorStyleTrackballCamera.h"
@@ -19,22 +18,6 @@
 namespace Ui {
     class MainWindow;
 }
-
-class MouseInteractorStyle : public vtkInteractorStyleTrackballCamera {
-public:
-	static MouseInteractorStyle* New();
-	vtkTypeMacro(MouseInteractorStyle, vtkInteractorStyleTrackballCamera);
-
-	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
-
-	virtual void OnMouseMove();
-	virtual void OnMiddleButtonDown();
-	virtual void OnMiddleButtonUp();
-
-private:
-	bool moving = false;
-	vtkSmartPointer<vtkImageViewer2> viewer;
-};
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -59,6 +42,7 @@ private slots:
 
 	// funcs
 	void renderVolume();
+	void renderSlice();
     void setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b);
     void connectComponents();
     void drawVolume();
@@ -76,7 +60,7 @@ private:
 	Plano *plano;
 	vtkSmartPointer<vtkRenderer> volumeRen;
 	vtkSmartPointer<vtkImageViewer2> sliceViewer;
-	vtkSmartPointer<MouseInteractorStyle> style;
+	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
 };
 
 #endif // MAINWINDOW_H

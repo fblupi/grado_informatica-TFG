@@ -1,31 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-vtkStandardNewMacro(MouseInteractorStyle);
-
-void MouseInteractorStyle::SetViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
-	this->viewer = viewer;
-}
-
-void MouseInteractorStyle::OnMouseMove() {
-	if (moving) {
-		viewer->Render();
-	}
-	vtkInteractorStyleTrackballCamera::OnMouseMove(); // forward events
-}
-
-void MouseInteractorStyle::OnMiddleButtonDown() {
-	moving = true;
-	vtkInteractorStyleTrackballCamera::OnMiddleButtonDown(); // forward events
-}
-
-void MouseInteractorStyle::OnMiddleButtonUp() {
-	moving = false;
-	vtkInteractorStyleTrackballCamera::OnMiddleButtonUp(); // forward events
-}
-
-/*************************************************************************************/
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 	defaultTF();
@@ -33,8 +8,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
 	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
-	style = vtkSmartPointer<MouseInteractorStyle>::New();
-	style->SetViewer(sliceViewer);
+	style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
 /*
@@ -75,6 +49,8 @@ void MainWindow::connectComponents() {
 	sliceViewer->SetInputData(plano->getPlane()->GetResliceOutput());
 	ui->slicesWidget->SetRenderWindow(sliceViewer->GetRenderWindow());
 	sliceViewer->SetupInteractor(ui->slicesWidget->GetInteractor());
+
+	plano->setViewer(sliceViewer);
 }
 
 void MainWindow::drawVolume() {
@@ -311,6 +287,10 @@ void MainWindow::renderVolume() {
 	ui->volumeWidget->GetRenderWindow()->Render(); // renderiza
 }
 
+void MainWindow::renderSlice() {
+	sliceViewer->Render();
+}
+
 void MainWindow::on_actionExit_triggered() {
 	exit(0);
 }
@@ -319,14 +299,14 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 	QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("Abrir carpeta DICOM"), QDir::homePath(), QFileDialog::ShowDirsOnly);
 
 	if (dicomFolder != NULL) { // la carpeta se ha leído bien
-		figura->setDICOMFolder(dicomFolder.toUtf8().constData());  // carga los archivos DICOM de la carpeta a la figura
+		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
 		plano->setInputConnection(figura->getReader());
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		updateTF(); // actualiza función de transferencia con los valores de la GUI
 		updateShadow(); // actualiza sombreado
 		defaultPlanePosition(); // coloca el plano en una posición inicial
-		drawVolume(); // dibuja
-		sliceViewer->Render();
+		drawVolume(); // dibuja volumen
+		renderSlice(); // dibuja el corte
 	}
 }
 
@@ -354,16 +334,19 @@ void MainWindow::on_updateProperties_pressed() {
 void MainWindow::on_sagitalPlane_pressed() {
 	plano->setSagital();
 	renderVolume();
+	renderSlice();
 }
 
 void MainWindow::on_coronalPlane_pressed() {
 	plano->setCoronal();
 	renderVolume();
+	renderSlice();
 }
 
 void MainWindow::on_axialPlane_pressed() {
 	plano->setAxial();
 	renderVolume();
+	renderSlice();
 }
 
 void MainWindow::on_enablePlane_stateChanged() {

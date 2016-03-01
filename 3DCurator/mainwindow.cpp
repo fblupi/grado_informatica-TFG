@@ -54,7 +54,7 @@ void MainWindow::connectComponents() {
 }
 
 void MainWindow::drawVolume() {
-	volumeRen->AddVolume(figura->getVolume()); // añade el volumen al renderer
+	volumeRen->AddViewProp(figura->getVolume()); // añade el volumen al renderer
 	volumeRen->ResetCamera(); // resetea la cámera
 	renderVolume();
 }
@@ -299,6 +299,13 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 	QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("Abrir carpeta DICOM"), QDir::homePath(), QFileDialog::ShowDirsOnly);
 
 	if (dicomFolder != NULL) { // la carpeta se ha leído bien
+
+		QProgressDialog progressDialog(this);
+		progressDialog.setWindowTitle(QString("Cargando ..."));
+		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
+		progressDialog.setCancelButton(0);
+		progressDialog.show();
+
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
 		plano->setInputConnection(figura->getReader()); // conecta el plano con los datos del volumen
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
@@ -307,6 +314,8 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 		defaultPlanePosition(); // coloca el plano en una posición inicial
 		drawVolume(); // dibuja volumen
 		renderSlice(); // dibuja el corte
+
+		progressDialog.close();
 	}
 }
 

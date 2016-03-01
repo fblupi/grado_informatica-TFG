@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
+#include <QProgressDialog>
 
 #include "utils.h"
 #include "figura.h"

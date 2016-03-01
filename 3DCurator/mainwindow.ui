@@ -39,7 +39,7 @@
     <item row="0" column="1">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabTF">
        <attribute name="title">
@@ -56,7 +56,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>263</width>
+             <width>162</width>
              <height>3042</height>
             </rect>
            </property>
@@ -1572,7 +1572,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>264</width>
+             <width>168</width>
              <height>2612</height>
             </rect>
            </property>
@@ -2859,7 +2859,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>264</width>
+             <width>162</width>
              <height>3042</height>
             </rect>
            </property>
@@ -4333,6 +4333,9 @@
          <widget class="QCheckBox" name="enableShadow">
           <property name="text">
            <string>Habilitar sombreado</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

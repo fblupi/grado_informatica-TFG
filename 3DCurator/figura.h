@@ -38,8 +38,8 @@ public:
 	void addOpacityPoint(const double value, const double alpha);
 	void addGradientPoint(const double value, const double alpha);
 	void addRGBPoint(const double value, const double c1, const double c2, const double c3);
-	void enableShadow();
-	void disableShadow();
+	void enableShadow(const bool onOff);
+	void setMaterial(const double ambient, const double diffuse, const double specular, const double power);
 
 private:
 	// atributos

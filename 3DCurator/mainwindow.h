@@ -47,6 +47,7 @@ private slots:
 	void defaultTF();
 	void updateTF();
 	void updateShadow();
+	void updateMaterial();
 	void defaultPlanePosition();
 
 private:

@@ -62,11 +62,13 @@ void Figura::setProperties() {
     volumeProperty->SetScalarOpacity(opacityFun); // función de opacidad escalar
 	volumeProperty->SetGradientOpacity(gradientFun); // función de opacidad gradiente
 	volumeProperty->SetInterpolationTypeToLinear();
+	/*
 	volumeProperty->ShadeOn();
-    volumeProperty->SetAmbient(0.1); // componente ambiental del material
-    volumeProperty->SetDiffuse(0.9); // componente difusa del material
-    volumeProperty->SetSpecular(0.2); // componente especular del material
+	volumeProperty->SetAmbient(0.1); // componente ambiental del material
+	volumeProperty->SetDiffuse(0.9); // componente difusa del material
+	volumeProperty->SetSpecular(0.2); // componente especular del material
 	volumeProperty->SetSpecularPower(10.0); // componente de potencia especular del material
+	*/
 }
 
 void Figura::removeTFPoints() {
@@ -87,10 +89,17 @@ void Figura::addRGBPoint(const double value, const double c1, const double c2, c
 	colorFun->AddRGBPoint(value, c1, c2, c3);
 }
 
-void Figura::enableShadow() {
-	volumeProperty->ShadeOn();
+void Figura::enableShadow(const bool onOff) {
+	if (onOff) {
+		volumeProperty->ShadeOn();
+	} else {
+		volumeProperty->ShadeOff();
+	}
 }
 
-void Figura::disableShadow() {
-	volumeProperty->ShadeOff();
+void Figura::setMaterial(const double ambient, const double diffuse, const double specular, const double power) {
+	volumeProperty->SetAmbient(ambient); // componente ambiental del material
+	volumeProperty->SetDiffuse(diffuse); // componente difusa del material
+	volumeProperty->SetSpecular(specular); // componente especular del material
+	volumeProperty->SetSpecularPower(power); // componente de potencia especular del material
 }

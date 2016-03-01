@@ -250,10 +250,19 @@ void MainWindow::updateTF() {
 
 void MainWindow::updateShadow() {
 	if (ui->enableShadow->isChecked()) {
-		figura->enableShadow();
+		figura->enableShadow(true);
 	} else {
-		figura->disableShadow();
+		figura->enableShadow(false);
 	}
+}
+
+void MainWindow::updateMaterial() {
+	figura->setMaterial(
+		ui->ambientValue->value(),
+		ui->diffuseValue->value(),
+		ui->specularValue->value(),
+		ui->powerValue->value()
+		);
 }
 
 void MainWindow::defaultPlanePosition() {
@@ -266,6 +275,10 @@ void MainWindow::defaultPlanePosition() {
 
 void MainWindow::renderVolume() {
 	ui->volumeWidget->GetRenderWindow()->Render(); // renderiza
+}
+
+void MainWindow::on_actionExit_triggered() {
+	exit(0);
 }
 
 void MainWindow::on_actionOpenDICOM_triggered() {
@@ -294,12 +307,9 @@ void MainWindow::on_restoreTF_pressed() {
 	renderVolume();
 }
 
-void MainWindow::on_actionExit_triggered() {
-    exit(0);
-}
-
 void MainWindow::on_updateProperties_pressed() {
 	updateShadow();
+	updateMaterial();
 	renderVolume();
 }
 

@@ -301,7 +301,7 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 	if (dicomFolder != NULL) { // la carpeta se ha leído bien
 
 		QProgressDialog progressDialog(this);
-		progressDialog.setWindowTitle(QString("Cargando ..."));
+		progressDialog.setWindowTitle(QString("Cargando..."));
 		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog.setCancelButton(0);
 		progressDialog.show();

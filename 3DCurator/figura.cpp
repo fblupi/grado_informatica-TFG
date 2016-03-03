@@ -9,9 +9,9 @@ Figura::Figura() {
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
     volume = vtkSmartPointer<vtkVolume>::New();
-    setProperties();
-    volume->SetProperty(volumeProperty);
+	setProperties();
 	volume->SetMapper(mapper);
+    volume->SetProperty(volumeProperty);
 }
 
 Figura::~Figura() {
@@ -57,18 +57,12 @@ void Figura::setDICOMFolder(const std::string s) {
 }
 
 void Figura::setProperties() {
-    volumeProperty->SetIndependentComponents(true);
-    volumeProperty->SetColor(colorFun); // función de color
-    volumeProperty->SetScalarOpacity(opacityFun); // función de opacidad escalar
+	mapper->SetRequestedRenderModeToRayCast(); // no usa GPU pero se le aplica la opacidad gradiente
+	mapper->SetBlendModeToComposite(); // renderiza con composición
+	volumeProperty->SetInterpolationTypeToLinear(); // interpolación linear
 	volumeProperty->SetGradientOpacity(gradientFun); // función de opacidad gradiente
-	volumeProperty->SetInterpolationTypeToLinear();
-	/*
-	volumeProperty->ShadeOn();
-	volumeProperty->SetAmbient(0.1); // componente ambiental del material
-	volumeProperty->SetDiffuse(0.9); // componente difusa del material
-	volumeProperty->SetSpecular(0.2); // componente especular del material
-	volumeProperty->SetSpecularPower(10.0); // componente de potencia especular del material
-	*/
+    volumeProperty->SetScalarOpacity(opacityFun); // función de opacidad escalar
+	volumeProperty->SetColor(colorFun); // función de color
 }
 
 void Figura::removeTFPoints() {

@@ -97,3 +97,16 @@ void Figura::setMaterial(const double ambient, const double diffuse, const doubl
 	volumeProperty->SetSpecular(specular); // componente especular del material
 	volumeProperty->SetSpecularPower(power); // componente de potencia especular del material
 }
+
+void Figura::setRenderMode(const int mode) {
+	switch (mode) {
+	case 0:
+		mapper->SetRequestedRenderModeToRayCast();
+		break;
+	case 1:
+		mapper->SetRequestedRenderModeToGPU();
+		break;
+	default:
+		mapper->SetRequestedRenderModeToDefault();
+	}
+}

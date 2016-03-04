@@ -52,6 +52,7 @@ private slots:
 	void updateShadow();
 	void defaultMaterial();
 	void updateMaterial();
+	void updateRenderMode();
 	void defaultPlanePosition();
 
 private:

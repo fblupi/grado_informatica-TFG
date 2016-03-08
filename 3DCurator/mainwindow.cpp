@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	renderVolume();
 
+	plano->show(false);
 	plano->enable(true);
 }
 
@@ -307,12 +308,14 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 		progressDialog.setCancelButton(0);
 		progressDialog.show();
 
+		plano->show(false);
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
 		plano->setInputConnection(figura->getReader()); // conecta el plano con los datos del volumen
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		updateTF(); // actualiza función de transferencia con los valores de la GUI
 		updateShadow(); // actualiza sombreado
 		defaultPlanePosition(); // coloca el plano en una posición inicial
+		plano->show(true);
 		drawVolume(); // dibuja volumen
 		renderSlice(); // dibuja el corte
 

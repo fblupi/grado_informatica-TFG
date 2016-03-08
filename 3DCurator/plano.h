@@ -21,6 +21,7 @@ public:
 	void setInputConnection(vtkSmartPointer<vtkAlgorithm> reader);
 	void setViewer(vtkSmartPointer<vtkImageViewer2> viewer);
 	void enable(const bool onOff);
+	void show(const bool onOff);
 	void setOrigin(const double x, const double y, const double z);
 	void setSagital();
 	void setCoronal();

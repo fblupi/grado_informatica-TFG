@@ -56,7 +56,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>162</width>
+             <width>263</width>
              <height>3042</height>
             </rect>
            </property>
@@ -1572,7 +1572,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>168</width>
+             <width>264</width>
              <height>2612</height>
             </rect>
            </property>
@@ -2859,7 +2859,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>162</width>
+             <width>264</width>
              <height>3042</height>
             </rect>
            </property>
@@ -4330,12 +4330,12 @@
          <widget class="QComboBox" name="renderMode">
           <item>
            <property name="text">
-            <string>VTK CPU RayCasting</string>
+            <string>VTK GPU RayCasting</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>VTK GPU RayCasting</string>
+            <string>VTK CPU RayCasting</string>
            </property>
           </item>
          </widget>

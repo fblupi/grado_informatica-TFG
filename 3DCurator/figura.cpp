@@ -57,7 +57,6 @@ void Figura::setDICOMFolder(const std::string s) {
 }
 
 void Figura::setProperties() {
-	mapper->SetRequestedRenderModeToRayCast(); // no usa GPU pero se le aplica la opacidad gradiente
 	mapper->SetBlendModeToComposite(); // renderiza con composición
 	volumeProperty->SetInterpolationTypeToLinear(); // interpolación linear
 	volumeProperty->SetGradientOpacity(gradientFun); // función de opacidad gradiente
@@ -101,10 +100,10 @@ void Figura::setMaterial(const double ambient, const double diffuse, const doubl
 void Figura::setRenderMode(const int mode) {
 	switch (mode) {
 	case 0:
-		mapper->SetRequestedRenderModeToRayCast();
+		mapper->SetRequestedRenderModeToGPU();
 		break;
 	case 1:
-		mapper->SetRequestedRenderModeToGPU();
+		mapper->SetRequestedRenderModeToRayCast();
 		break;
 	default:
 		mapper->SetRequestedRenderModeToDefault();

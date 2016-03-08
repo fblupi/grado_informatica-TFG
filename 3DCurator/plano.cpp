@@ -18,11 +18,11 @@ void Plano::setViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
 }
 
 void Plano::enable(const bool onOff) {
-	if (onOff) {
-		plane->On();
-	} else {
-		plane->Off();
-	}
+	plane->SetEnabled(onOff);
+}
+
+void Plano::show(const bool onOff) {
+	plane->SetTextureVisibility(onOff); // muestra la imagen del corte
 }
 
 void Plano::setOrigin(const double x, const double y, const double z) {

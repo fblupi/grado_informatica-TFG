@@ -131,7 +131,7 @@ sudo ./qt-opensource-linux-x64-5.5.1.run
 * Instalar en `/opt/Qt5.5.1`.
 * Una vez instalado añadir la siguiente línea al archivo `.bashrc` que se encuentra en el home:
 ```
-PATH=.:/opt/Qt5.4.1/5.4/gcc_64/bin:$PATH
+PATH=.:/opt/Qt5.5.1/5.5/gcc_64/bin:$PATH
 ```
 
 ##### Instalar VTK6.3.0

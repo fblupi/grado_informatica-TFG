@@ -337,7 +337,7 @@ void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> re
 		filter = vtkSmartPointer<vtkWindowToImageFilter>::New();
 		filter->SetInput(renWin);
 		filter->Update();
-		if (getFileExtension(filename.toUtf8().constData()) == "png") {
+		if (toUpper(getFileExtension(filename.toUtf8().constData())) == "PNG") {
 			writer = vtkSmartPointer<vtkPNGWriter>::New();
 			writer->SetFileName(filename.toUtf8().constData());
 			writer->SetInputConnection(filter->GetOutputPort());

@@ -1,4 +1,5 @@
 #include "utils.h"
+#include <algorithm>
 #include <limits>
 
 std::string splitAndGetLast(std::string s, const std::string delimiter) {
@@ -11,6 +12,11 @@ std::string splitAndGetLast(std::string s, const std::string delimiter) {
 
 std::string getFileExtension(std::string s) {
 	return splitAndGetLast(s, ".");
+}
+
+std::string toUpper(std::string s) {
+	std::transform(s.begin(), s.end(), s.begin(), ::toupper);
+	return s;
 }
 
 double max(const double numbers[]) {

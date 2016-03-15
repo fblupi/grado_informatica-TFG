@@ -26,10 +26,10 @@ La función de transferencia es la encargada de dar a un valor de intensidad las
 En VTK la función de transferencia forma parte de la clase \texttt{vtkVolume Property}. Para ello proporciona otras dos clases:
 \begin{itemize}
 	\item \texttt{vtkColorTransferFunction}: Para definir el color. Se enlaza a \texttt{vtk VolumeProperty} con el método \texttt{SetColor}.
-	\item \texttt{vtkPiecewiseFunction}: Para definir el color. Se enlaza a \texttt{vtkVolume Property} con el método \texttt{SetScalarOpacity}.
+	\item \texttt{vtkPiecewiseFunction}: Para definir la opacidad (tanto escalar como gradiente). La opacidad escalar se enlaza a \texttt{vtkVolumeProperty} con el método \texttt{SetScalarOpacity} y la gradiente con \texttt{SetGradientOpacity}.
 \end{itemize}
 
-Podemos, por tanto, diferenciar dos partes fundamentales en la función de transferencia, la encargada de dar la propiedad de color y la de dar la propiedad de opacidad. Ambas trabajan de forma independiente. Es decir, cuando se define un punto en una de ellas, no tiene por qué definirse en la otra.
+Podemos, por tanto, diferenciar tres partes fundamentales en la función de transferencia, la encargada de dar la propiedad de color y las dos de dar la propiedad de opacidad. Ambas trabajan de forma independiente. Es decir, cuando se define un punto en una de ellas, no tiene por qué definirse en la otra.
 
 \subsection{Color}
 
@@ -48,6 +48,8 @@ VTK permite trabajar tanto con HSV como con RGB y para añadir un punto hay que 
 
 \subsection{Opacidad}
 
+\subsubsection{Opacidad escalar}
+
 Con el color no bastaría, pues si comprobásemos ahora añadiéndole tan solo el \texttt{vtkColorTransferFunction} al \texttt{vtkVolumeProperty} observaríamos que no se pinta nada en pantalla. Esto es porque por defecto, al no tener ningún punto la función de opacidad (\texttt{vtkPiecewiseFunction}) es una constante con valor 0 (transparente). 
 
 Para definir esta función se trabaja de forma parecida a como se hace con el color, añadiendo puntos. El método que hay que utilizar es \texttt{AddPoint} al que se le pasan dos parámetros en coma flotante. El primero con el valor de intensidad y el segundo con la opacidad en ese punto. Para obtener los valores en puntos intermedios, se interpola entre los dos puntos en los que está. De forma que si para el valor de intensidad 100 hemos definido una opacidad de 0.5 y para el de 200 1, al valor de intensidad 150 le corresponderá 0.75.
@@ -60,3 +62,7 @@ Combinando color y opacidad podemos obtener la función de transferencia para nu
 	\caption{Función de transferencia del \textit{preset} \textit{CT-Cardiac} extraído del software Slicer \cite{slicer}. Se pueden ver los cuatro puntos que definen la función de opacidad y de fondo la función de color anterior}
 	\label{fig:opacity_tf}
 \end{figure}
+
+\subsubsection{Opacidad gradiente}
+
+

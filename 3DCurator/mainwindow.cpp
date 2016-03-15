@@ -301,7 +301,6 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 	QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("Abrir carpeta DICOM"), QDir::homePath(), QFileDialog::ShowDirsOnly);
 
 	if (dicomFolder != NULL) { // la carpeta se ha leído bien
-
 		QProgressDialog progressDialog(this);
 		progressDialog.setWindowTitle(QString("Cargando..."));
 		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
@@ -320,6 +319,27 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 		renderSlice(); // dibuja el corte
 
 		progressDialog.close();
+	}
+}
+
+void MainWindow::on_actionExport_triggered() {
+	QString filename = QFileDialog::getSaveFileName(this, tr("Exportar imagen"), QDir::homePath(), "PNG (*.png);;JPG (*.jpg)");
+
+	if (filename != NULL) {
+		filter = vtkSmartPointer<vtkWindowToImageFilter>::New();
+		filter->SetInput(ui->volumeWidget->GetRenderWindow());
+		filter->Update();
+		if (getFileExtension(filename.toUtf8().constData()) == "png") {
+			writer = vtkSmartPointer<vtkPNGWriter>::New();
+			writer->SetFileName(filename.toUtf8().constData());
+			writer->SetInputConnection(filter->GetOutputPort());
+			writer->Write();
+		} else {
+			writer = vtkSmartPointer<vtkJPEGWriter>::New();
+			writer->SetFileName(filename.toUtf8().constData());
+			writer->SetInputConnection(filter->GetOutputPort());
+			writer->Write();
+		}
 	}
 }
 

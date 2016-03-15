@@ -15,6 +15,10 @@
 #include "vtkSmartPointer.h"
 #include "vtkImageMapToWindowLevelColors.h"
 #include "vtkLookupTable.h"
+#include "vtkWindowToImageFilter.h"
+#include "vtkImageWriter.h"
+#include "vtkPNGWriter.h"
+#include "vtkJPEGWriter.h"
 
 namespace Ui {
     class MainWindow;
@@ -30,7 +34,8 @@ public:
 
 private slots:
 	// eventos GUI
-    void on_actionOpenDICOM_triggered();
+	void on_actionOpenDICOM_triggered();
+	void on_actionExport_triggered();
     void on_actionExit_triggered();
 	void on_updateTF_pressed();
 	void on_restoreTF_pressed();
@@ -63,6 +68,8 @@ private:
 	vtkSmartPointer<vtkRenderer> volumeRen;
 	vtkSmartPointer<vtkImageViewer2> sliceViewer;
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
+	vtkSmartPointer<vtkWindowToImageFilter> filter;
+	vtkSmartPointer<vtkImageWriter> writer;
 };
 
 #endif // MAINWINDOW_H

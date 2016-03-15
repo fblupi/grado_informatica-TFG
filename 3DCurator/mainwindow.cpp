@@ -333,21 +333,18 @@ void MainWindow::on_actionExportSliceImage_triggered() {
 void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin) {
 	QString filename = QFileDialog::getSaveFileName(this, tr("Exportar imagen"), QDir::homePath(), "PNG (*.png);;JPG (*.jpg)");
 
-	if (filename != NULL) {
-		filter = vtkSmartPointer<vtkWindowToImageFilter>::New();
-		filter->SetInput(renWin);
-		filter->Update();
-		if (toUpper(getFileExtension(filename.toUtf8().constData())) == "PNG") {
-			writer = vtkSmartPointer<vtkPNGWriter>::New();
-			writer->SetFileName(filename.toUtf8().constData());
-			writer->SetInputConnection(filter->GetOutputPort());
-			writer->Write();
-		} else {
-			writer = vtkSmartPointer<vtkJPEGWriter>::New();
-			writer->SetFileName(filename.toUtf8().constData());
-			writer->SetInputConnection(filter->GetOutputPort());
-			writer->Write();
+	if (filename != NULL) { // el archivo se ha leído bien
+		filter = vtkSmartPointer<vtkWindowToImageFilter>::New(); // crea el filter
+		filter->SetInput(renWin); // conecta el filter al widget
+		filter->Update(); // actualiza el filter
+		if (toUpper(getFileExtension(filename.toUtf8().constData())) == "PNG") { // comprueba si es PNG
+			writer = vtkSmartPointer<vtkPNGWriter>::New(); // crea el writer de PNG
+		} else { // si no, es JPG
+			writer = vtkSmartPointer<vtkJPEGWriter>::New(); // crea el writer de JPG
 		}
+		writer->SetFileName(filename.toUtf8().constData()); // le pone el nombre que se había indicado
+		writer->SetInputConnection(filter->GetOutputPort()); // conecta el writer con el filter
+		writer->Write(); // crea la imagen de salida
 	}
 }
 

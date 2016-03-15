@@ -322,12 +322,20 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 	}
 }
 
-void MainWindow::on_actionExport_triggered() {
+void MainWindow::on_actionExportVolumeImage_triggered() {
+	exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow());
+}
+
+void MainWindow::on_actionExportSliceImage_triggered() {
+	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow());
+}
+
+void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin) {
 	QString filename = QFileDialog::getSaveFileName(this, tr("Exportar imagen"), QDir::homePath(), "PNG (*.png);;JPG (*.jpg)");
 
 	if (filename != NULL) {
 		filter = vtkSmartPointer<vtkWindowToImageFilter>::New();
-		filter->SetInput(ui->volumeWidget->GetRenderWindow());
+		filter->SetInput(renWin);
 		filter->Update();
 		if (getFileExtension(filename.toUtf8().constData()) == "png") {
 			writer = vtkSmartPointer<vtkPNGWriter>::New();

@@ -35,7 +35,8 @@ public:
 private slots:
 	// eventos GUI
 	void on_actionOpenDICOM_triggered();
-	void on_actionExport_triggered();
+	void on_actionExportVolumeImage_triggered();
+	void on_actionExportSliceImage_triggered();
     void on_actionExit_triggered();
 	void on_updateTF_pressed();
 	void on_restoreTF_pressed();
@@ -59,6 +60,7 @@ private slots:
 	void updateMaterial();
 	void updateRenderMode();
 	void defaultPlanePosition();
+	void exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
 
 private:
 	// atributos

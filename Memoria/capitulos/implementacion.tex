@@ -23,7 +23,7 @@ Por tanto, el \textit{Volume Mapper} utilizado será el \texttt{vtkSmartVolumeMa
 
 La función de transferencia es la encargada de dar a un valor de intensidad las propiedades de color y opacidad que le corresponden para la visualización del volumen.
 
-En VTK la función de transferencia forma parte de la clase \texttt{vtkVolume Property}. Para ello proporciona otras dos clases:
+En VTK la función de transferencia forma parte de la clase \texttt{vtkVolume Property} \cite{vtk_example_medical4}. Para ello proporciona otras dos clases:
 \begin{itemize}
 	\item \texttt{vtkColorTransferFunction}: Para definir el color. Se enlaza a \texttt{vtk VolumeProperty} con el método \texttt{SetColor}.
 	\item \texttt{vtkPiecewiseFunction}: Para definir la opacidad (tanto escalar como gradiente). La opacidad escalar se enlaza a \texttt{vtkVolumeProperty} con el método \texttt{SetScalarOpacity} y la gradiente con \texttt{SetGradientOpacity}.
@@ -48,21 +48,34 @@ VTK permite trabajar tanto con HSV como con RGB y para añadir un punto hay que 
 
 \subsection{Opacidad}
 
+El valor de opacidad se obtendría como el \textbf{producto de la opacidad escalar por la gradiente}. Si no se define alguna de las dos, se definiría como un valor constante de 1 para que solo se viese el resultado de la que sí está definida.
+
 \subsubsection{Opacidad escalar}
 
 Con el color no bastaría, pues si comprobásemos ahora añadiéndole tan solo el \texttt{vtkColorTransferFunction} al \texttt{vtkVolumeProperty} observaríamos que no se pinta nada en pantalla. Esto es porque por defecto, al no tener ningún punto la función de opacidad (\texttt{vtkPiecewiseFunction}) es una constante con valor 0 (transparente). 
 
 Para definir esta función se trabaja de forma parecida a como se hace con el color, añadiendo puntos. El método que hay que utilizar es \texttt{AddPoint} al que se le pasan dos parámetros en coma flotante. El primero con el valor de intensidad y el segundo con la opacidad en ese punto. Para obtener los valores en puntos intermedios, se interpola entre los dos puntos en los que está. De forma que si para el valor de intensidad 100 hemos definido una opacidad de 0.5 y para el de 200 1, al valor de intensidad 150 le corresponderá 0.75.
 
-Combinando color y opacidad podemos obtener la función de transferencia para nuestro volumen (Figura \ref{fig:opacity_tf}). 
+Combinando color y opacidad escalar podemos obtener una función de transferencia para visualizar nuestro volumen (Figura \ref{fig:opacity_tf}), pero para obtener mejores resultados, habrá que utilizar la opacidad gradiente. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=10cm]{imagenes/opacity_tf}
-	\caption{Función de transferencia del \textit{preset} \textit{CT-Cardiac} extraído del software Slicer \cite{slicer}. Se pueden ver los cuatro puntos que definen la función de opacidad y de fondo la función de color anterior}
+	\caption{Parte de color y opacidad escalar de la función de transferencia del \textit{preset} \textit{CT-Cardiac} extraído del software Slicer \cite{slicer}. Se pueden ver los cuatro puntos que definen la función de opacidad y de fondo la función de color anterior}
 	\label{fig:opacity_tf}
 \end{figure}
 
 \subsubsection{Opacidad gradiente}
 
+La opacidad gradiente utiliza el vector gradiente para dar el valor de opacidad. Con éste se puede conseguir \textbf{dar un mayor valor a regiones de los bordes, así como menor a regiones planas} es decir, donde no varía el valor de intensidad de sus vecinos de alrededor.
 
+El gradiente se mide como la cantidad que varía la intensidad en una unidad de distancia. Este cálculo del gradiente lo realiza VTK cuando genera el volumen de forma transparente sin que haya que añadir nada al código.
+
+Para poder definir la función de la opacidad gradiente, al igual que con las demás, hay que añadir puntos con la misma función que se usaba con la opacidad escalar (\texttt{AddPoint}). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{imagenes/gradient_tf}
+	\caption{Parte de opacidad gradiente de la función de transferencia del \textit{preset} \textit{CT-Cardiac} extraído del software Slicer \cite{slicer}. En este \textit{preset} no se define la opacidad gradiente, por lo que se tiene una constante en 1.}
+	\label{fig:gradient_tf}
+\end{figure}

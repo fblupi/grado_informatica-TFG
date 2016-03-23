@@ -40,6 +40,7 @@ public:
 	void enableShadow(const bool onOff);
 	void setMaterial(const double ambient, const double diffuse, const double specular, const double power);
 	void setRenderMode(const int mode);
+	vtkSmartPointer<vtkColorTransferFunction> getColorFun() const;
 
 private:
 	// atributos

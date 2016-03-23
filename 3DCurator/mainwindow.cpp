@@ -12,15 +12,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
 
-	vtkSmartPointer<vtkColorTransferFunction> ctf = vtkSmartPointer<vtkColorTransferFunction>::New();
-	ctf->AddRGBPoint(-750, 0.08, 0.05, 0.03);
-	ctf->AddRGBPoint(-350, 0.39, 0.25, 0.16);
-	ctf->AddRGBPoint(-200, 0.8, 0.8, 0.8);
-	ctf->AddRGBPoint(3000, 0.5, 0.5, 0.5);
-	//sliceViewer->GetWindowLevel()->SetLookupTable(ctf);
-
+	sliceViewer->GetWindowLevel()->SetLookupTable(figura->getColorFun());
 	sliceViewer->SetColorLevel(-600);
 	sliceViewer->SetColorWindow(400);
+
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
 
     connectComponents(); // conecta los renderers con los widgets
@@ -252,7 +247,6 @@ void MainWindow::updateShadow() {
 	} else {
 		figura->enableShadow(false);
 	}
-	cout << sliceViewer->GetColorLevel() << endl << sliceViewer->GetColorWindow() << endl << endl;
 }
 
 void MainWindow::updateRenderMode() {

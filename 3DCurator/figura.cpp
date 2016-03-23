@@ -109,3 +109,7 @@ void Figura::setRenderMode(const int mode) {
 		mapper->SetRequestedRenderModeToDefault();
 	}
 }
+
+vtkSmartPointer<vtkColorTransferFunction> Figura::getColorFun() const {
+	return colorFun;
+}

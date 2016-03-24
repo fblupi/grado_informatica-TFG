@@ -54,8 +54,8 @@ void Plano::setSagital() {
 	};
 
 	// Hace un giro de 180º sobre el eje X
-	plane->SetPoint1(p1[0], p1[2], p2[2]);
-	plane->SetPoint2(p2[0], p1[1], p2[1]);
+	plane->SetPoint1(p1[0], p2[1], p2[2]);
+	plane->SetPoint2(p2[0], p1[1], p1[2]);
 	plane->SetOrigin(o[0],  p1[1], p2[2]);
 
 	plane->UpdatePlacement();

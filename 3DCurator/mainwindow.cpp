@@ -8,11 +8,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
 	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
-	style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+	volumeStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
 
-	sliceViewer->GetWindowLevel()->SetLookupTable(figura->getColorFun());
+	sliceViewer->GetWindowLevel()->SetLookupTable(figura->getColorFun()); // usa los mismo colores en el slice viewer que los usados en la TF
 	sliceViewer->SetColorLevel(-600);
 	sliceViewer->SetColorWindow(400);
 
@@ -35,15 +36,18 @@ void MainWindow::setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, f
 }
 
 void MainWindow::connectComponents() {
-	ui->volumeWidget->GetRenderWindow()->AddRenderer(volumeRen); // asigna el renderer donde se visualizará en 3D el volumen al widget izquierdo
-	ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(style);
-	plano->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor());
+	ui->volumeWidget->GetRenderWindow()->AddRenderer(volumeRen); // conecta el volume widget con el renderer
 
-	sliceViewer->SetInputData(plano->getPlane()->GetResliceOutput());
-	ui->slicesWidget->SetRenderWindow(sliceViewer->GetRenderWindow());
-	sliceViewer->SetupInteractor(ui->slicesWidget->GetInteractor());
+	ui->slicesWidget->SetRenderWindow(sliceViewer->GetRenderWindow()); // conecta el slice widget con el viewer
+	sliceViewer->SetInputData(plano->getPlane()->GetResliceOutput()); // asigna el flujo de salida de los cortes del plano al slice viewer
 
-	plano->setViewer(sliceViewer);
+	ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle); // asigna el estilo al interactor del volume widget
+	plano->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor()); // asigna el interactor al plano para poder verlo y moverlo
+
+	sliceViewer->SetupInteractor(ui->slicesWidget->GetInteractor()); // asigna el interactor al viewer
+	ui->slicesWidget->GetInteractor()->SetInteractorStyle(sliceStyle); // asigna el estilo al interactor del slice widget
+
+	plano->setViewer(sliceViewer); // asigna el slice viewer al plano para que pueda renderizar cuando se de el evento de mover el plano
 }
 
 void MainWindow::drawVolume() {
@@ -282,7 +286,7 @@ void MainWindow::renderVolume() {
 }
 
 void MainWindow::renderSlice() {
-	sliceViewer->Render();
+	sliceViewer->Render(); // renderiza
 }
 
 void MainWindow::on_actionExit_triggered() {

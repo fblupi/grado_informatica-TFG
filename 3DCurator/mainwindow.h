@@ -8,6 +8,8 @@
 #include "utils.h"
 #include "figura.h"
 #include "plano.h"
+#include "interactorStyleImage.h"
+
 #include "vtkRenderer.h"
 #include "vtkRenderWindow.h"
 #include "vtkInteractorStyleTrackballCamera.h"
@@ -69,7 +71,8 @@ private:
 	Plano *plano;
 	vtkSmartPointer<vtkRenderer> volumeRen;
 	vtkSmartPointer<vtkImageViewer2> sliceViewer;
-	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
+	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle;
+	vtkSmartPointer<InteractorStyleImage> sliceStyle;
 	vtkSmartPointer<vtkWindowToImageFilter> filter;
 	vtkSmartPointer<vtkImageWriter> writer;
 };

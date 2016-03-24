@@ -35,6 +35,30 @@ void Plano::setOrigin(const double x, const double y, const double z) {
 void Plano::setSagital() {
 	plane->SetPlaneOrientationToXAxes();
 	plane->SetSlicePosition(centers[0]);
+
+	// Obtiene los puntos y el origen del plano sagital
+	double p1[3] = {
+		plane->GetPoint1()[0],
+		plane->GetPoint1()[1],
+		plane->GetPoint1()[2]
+	};
+	double p2[3] = {
+		plane->GetPoint2()[0],
+		plane->GetPoint2()[1],
+		plane->GetPoint2()[2]
+	};
+	double o[3] = {
+		plane->GetOrigin()[0],
+		plane->GetOrigin()[1],
+		plane->GetOrigin()[2]
+	};
+
+	// Hace un giro de 180º sobre el eje X
+	plane->SetPoint1(p1[0], p1[2], p2[2]);
+	plane->SetPoint2(p2[0], p1[1], p2[1]);
+	plane->SetOrigin(o[0],  p1[1], p2[2]);
+
+	plane->UpdatePlacement();
 }
 
 void Plano::setCoronal() {

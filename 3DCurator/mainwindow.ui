@@ -19,6 +19,13 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_52">
+    <item row="1" column="0">
+     <widget class="QLabel" name="labelFolder">
+      <property name="text">
+       <string>Carpeta</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0">
      <widget class="QVTKWidget" name="volumeWidget">
       <property name="minimumSize">
@@ -27,13 +34,9 @@
         <height>800</height>
        </size>
       </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="labelFolder">
-      <property name="text">
-       <string>Carpeta</string>
-      </property>
+      <zorder>tabWidget</zorder>
+      <zorder>tabWidget</zorder>
+      <zorder>tabWidget</zorder>
      </widget>
     </item>
     <item row="0" column="1">
@@ -56,7 +59,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>162</width>
+             <width>263</width>
              <height>3042</height>
             </rect>
            </property>
@@ -1572,7 +1575,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>168</width>
+             <width>264</width>
              <height>2612</height>
             </rect>
            </property>
@@ -2859,7 +2862,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>162</width>
+             <width>264</width>
              <height>3042</height>
             </rect>
            </property>
@@ -4315,18 +4318,34 @@
        <attribute name="title">
         <string>Propiedades</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_85">
-        <item row="0" column="1">
-         <widget class="QCheckBox" name="enableShadow">
-          <property name="text">
-           <string>Habilitar sombreado</string>
+       <layout class="QGridLayout" name="gridLayout_83">
+        <item row="3" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="checked">
-           <bool>true</bool>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
           </property>
-         </widget>
+         </spacer>
         </item>
-        <item row="1" column="2" colspan="2">
+        <item row="4" column="0" colspan="2">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="1">
          <widget class="QComboBox" name="renderMode">
           <item>
            <property name="text">
@@ -4340,7 +4359,44 @@
           </item>
          </widget>
         </item>
-        <item row="2" column="1" colspan="2">
+        <item row="1" column="0">
+         <widget class="QLabel" name="renderModeLabel">
+          <property name="text">
+           <string>Modo de renderizado</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QCheckBox" name="enableShadow">
+          <property name="text">
+           <string>Habilitar sombreado</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="3">
+         <widget class="QPushButton" name="updateProperties">
+          <property name="text">
+           <string>Actualizar</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="0" colspan="2">
          <widget class="QGroupBox" name="materialProperties">
           <property name="title">
            <string>Material</string>
@@ -4436,73 +4492,46 @@
           <zorder>restoreMaterial</zorder>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="renderModeLabel">
-          <property name="text">
-           <string>Modo de renderizado</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="4">
-         <widget class="QPushButton" name="updateProperties">
-          <property name="text">
-           <string>Actualizar</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tabSlices">
        <attribute name="title">
         <string>Cortes</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_83">
-        <item row="0" column="0">
-         <widget class="QVTKWidget" name="slicesWidget"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tabPlaneOptions">
-       <attribute name="title">
-        <string>Plano</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_84">
-        <item row="2" column="0">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QGroupBox" name="planeOptions">
+          <property name="maximumSize">
            <size>
-            <width>20</width>
-            <height>40</height>
+            <width>16777215</width>
+            <height>60</height>
            </size>
           </property>
-         </spacer>
-        </item>
-        <item row="1" column="2">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="1" column="0">
-         <widget class="QGroupBox" name="groupBox">
           <property name="title">
-           <string>Posición</string>
+           <string>Plano</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QCheckBox" name="enablePlane">
+             <property name="text">
+              <string>Habilitar</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
            <item>
             <widget class="QPushButton" name="sagitalPlane">
              <property name="text">
               <string>Sagital</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="axialPlane">
+             <property name="text">
+              <string>Axial</string>
              </property>
             </widget>
            </item>
@@ -4514,24 +4543,23 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="axialPlane">
-             <property name="text">
-              <string>Axial</string>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
-            </widget>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QCheckBox" name="enablePlane">
-          <property name="text">
-           <string>Habilitar</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
+        <item>
+         <widget class="QVTKWidget" name="slicesWidget"/>
         </item>
        </layout>
       </widget>

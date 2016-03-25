@@ -14,11 +14,27 @@ void ImagePlaneWidget::OnMouseMove() {
 }
 
 void ImagePlaneWidget::OnMiddleButtonDown() {
+	// idle
+}
+
+void ImagePlaneWidget::OnMiddleButtonUp() {
+	// idle
+}
+
+void ImagePlaneWidget::OnLeftButtonDown() {
+	// idle
+}
+
+void ImagePlaneWidget::OnLeftButtonUp() {
+	// idle
+}
+
+void ImagePlaneWidget::OnRightButtonDown() {
 	moving = true;
 	vtkImagePlaneWidget::OnMiddleButtonDown(); // forward events
 }
 
-void ImagePlaneWidget::OnMiddleButtonUp() {
+void ImagePlaneWidget::OnRightButtonUp() {
 	moving = false;
 	vtkImagePlaneWidget::OnMiddleButtonUp(); // forward events
 }

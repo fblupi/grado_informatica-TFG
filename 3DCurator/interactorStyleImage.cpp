@@ -3,4 +3,5 @@
 vtkStandardNewMacro(InteractorStyleImage);
 
 void InteractorStyleImage::OnLeftButtonDown() {
+	// idle
 }

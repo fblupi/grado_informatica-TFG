@@ -16,6 +16,10 @@ public:
 	virtual void OnMouseMove();
 	virtual void OnMiddleButtonDown();
 	virtual void OnMiddleButtonUp();
+	virtual void OnLeftButtonDown();
+	virtual void OnLeftButtonUp();
+	virtual void OnRightButtonDown();
+	virtual void OnRightButtonUp();
 
 private:
 	bool moving = false;

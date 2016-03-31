@@ -392,3 +392,7 @@ void MainWindow::on_enablePlane_stateChanged() {
 	}
 	renderVolume();
 }
+
+void MainWindow::on_exportSliceImage_pressed() {
+	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow());
+}

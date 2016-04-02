@@ -319,16 +319,18 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 }
 
 void MainWindow::on_actionExportVolumeImage_triggered() {
-	exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow());
+	exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_actionExportSliceImage_triggered() {
-	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow());
+	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportFilename(QString::fromStdString(getCurrentDate())));
 }
 
-void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin) {
-	QString filename = QFileDialog::getSaveFileName(this, tr("Exportar imagen"), QDir::homePath(), "PNG (*.png);;JPG (*.jpg)");
+QString MainWindow::getExportFilename(const QString defaultFilename) {
+	return QFileDialog::getSaveFileName(this, tr("Exportar imagen"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)");
+}
 
+void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename) {
 	if (filename != NULL) { // el archivo se ha leído bien
 		filter = vtkSmartPointer<vtkWindowToImageFilter>::New(); // crea el filter
 		filter->SetInput(renWin); // conecta el filter al widget
@@ -394,5 +396,9 @@ void MainWindow::on_enablePlane_stateChanged() {
 }
 
 void MainWindow::on_exportSliceImage_pressed() {
-	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow());
+	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), QDir(QDir::homePath()).filePath(QString::fromStdString(getCurrentDate() + ".png")));
+}
+
+void MainWindow::on_exportSliceImageAs_pressed() {
+	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportFilename(QString::fromStdString(getCurrentDate())));
 }

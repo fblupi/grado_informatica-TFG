@@ -19,11 +19,14 @@ std::string toUpper(std::string s) {
 	return s;
 }
 
-double max(const double numbers[]) {
-	double result = std::numeric_limits<double>::min();
-	int size = (int) (sizeof(numbers) / sizeof(numbers[0]));
-	for (int i = 0; i < size; i++)
-		if (numbers[i] > result)
-			result = numbers[i];
-	return result;
+std::string getCurrentDate() {
+	time_t t = time(0); // Obtiene fecha actual
+	struct tm now;
+	localtime_s(&now, &t); // Obtiene el struct para obtener los distintos componentes
+	return std::to_string(now.tm_year + 1900)
+		+ std::to_string(now.tm_mon + 1)
+		+ std::to_string(now.tm_mday)
+		+ std::to_string(now.tm_hour)
+		+ std::to_string(now.tm_min)
+		+ std::to_string(now.tm_sec);
 }

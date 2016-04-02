@@ -48,6 +48,7 @@ private slots:
 	void on_coronalPlane_pressed();
 	void on_axialPlane_pressed();
 	void on_exportSliceImage_pressed();
+	void on_exportSliceImageAs_pressed();
 	void on_enablePlane_stateChanged();
 
 	// funcs
@@ -63,7 +64,8 @@ private slots:
 	void updateMaterial();
 	void updateRenderMode();
 	void defaultPlanePosition();
-	void exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
+	void exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename);
+	QString getExportFilename(const QString defaultFilename);
 
 private:
 	// atributos

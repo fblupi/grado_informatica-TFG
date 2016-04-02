@@ -56,7 +56,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>162</width>
+             <width>263</width>
              <height>3042</height>
             </rect>
            </property>
@@ -1572,7 +1572,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>168</width>
+             <width>264</width>
              <height>2612</height>
             </rect>
            </property>
@@ -2859,7 +2859,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>162</width>
+             <width>264</width>
              <height>3042</height>
             </rect>
            </property>
@@ -4563,8 +4563,25 @@
              </property>
              <property name="iconSize">
               <size>
-               <width>32</width>
-               <height>32</height>
+               <width>21</width>
+               <height>21</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="exportSliceImageAs">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="assets/resources.qrc">
+               <normaloff>:/icons/save-as.png</normaloff>:/icons/save-as.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>21</width>
+               <height>21</height>
               </size>
              </property>
             </widget>

@@ -12,6 +12,7 @@ Software para visualizar e interactuar con los datos DICOM de esculturas.
 * Visual Studio Community 2013
 * Qt5.5.1
 * VTK 7.0.0
+* Boost 1.60.0
 
 ### Instalación y configuración
 
@@ -35,7 +36,7 @@ Software para visualizar e interactuar con los datos DICOM de esculturas.
 
 ##### Compilar librerías
 
-###### Estructura de directorios. 
+###### Estructura de directorios
 
 Recomiendo usar la siguiente estructura de directorios:
 
@@ -97,6 +98,16 @@ De esta forma es más fácil organizar versiones para una u otra plataforma de d
 * Construir en modo *Debug*.
 * Crear una nueva variable de entorno con nombre: `VTK_DIR` y valor: `C:\VTK\7.0.0\build\vs12`.
 * Agregar al Path la siguiente dirección: `C:\VTK\7.0.0\build\vs12\bin\Release`
+
+###### Boost 1.60.0
+
+* Descargar Boost 1.60.0 desde [este enlace](http://sourceforge.net/projects/boost/files/boost/1.60.0/) de su web oficial.
+* Descomprimir en cualquier lugar, abrir la consola de comandos de Visual Studio y moverse al lugar donde ha sido extraído.
+* Escribir `boostrap.bat` para generar el Boost.Build.
+* Compilar con: `b2 toolset=msvc-12.0 --build-type=complete --abbreviate-paths architecture=x86 address-model=64 install -j4`.
+* Agregar al proyecto de Visual Studio:
+  + En *Project Properties* ir a *Configuration Properties > C/C++ > General > Additional Include Directories* y añadir el directorio `C:\Boost\include\boost-1_60`.
+  + En *Project Properties* ir a *Configuration Properties > Linker > Additional Library Directories* y añadir el directorio `C:\Boost\lib`.
 
 #### Linux
 

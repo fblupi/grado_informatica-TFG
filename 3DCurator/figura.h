@@ -14,6 +14,8 @@
 #include "vtkPointData.h"
 #include "vtkDataArray.h"
 
+#include "transferFunction.h"
+
 class Figura {
 
 public:
@@ -48,10 +50,8 @@ private:
     vtkSmartPointer<vtkAlgorithm> reader;
     vtkSmartPointer<vtkVolume> volume;
 	vtkSmartPointer<vtkSmartVolumeMapper> mapper;
-    vtkSmartPointer<vtkColorTransferFunction> colorFun;
-	vtkSmartPointer<vtkPiecewiseFunction> opacityFun;
-	vtkSmartPointer<vtkPiecewiseFunction> gradientFun;
     vtkSmartPointer<vtkVolumeProperty> volumeProperty;
+	TransferFunction *tf;
 
 	// funcs
     void setProperties();

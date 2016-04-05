@@ -1,11 +1,9 @@
 #include "figura.h"
 
 Figura::Figura() {
+	tf = new TransferFunction();
 	imageReader = vtkSmartPointer<vtkDICOMImageReader>::New();
     reader = imageReader;
-    colorFun = vtkSmartPointer<vtkColorTransferFunction>::New();
-	opacityFun = vtkSmartPointer<vtkPiecewiseFunction>::New();
-	gradientFun = vtkSmartPointer<vtkPiecewiseFunction>::New();
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
     volume = vtkSmartPointer<vtkVolume>::New();
@@ -59,27 +57,25 @@ void Figura::setDICOMFolder(const std::string s) {
 void Figura::setProperties() {
 	mapper->SetBlendModeToComposite(); // renderiza con composición
 	volumeProperty->SetInterpolationTypeToLinear(); // interpolación linear
-	volumeProperty->SetGradientOpacity(gradientFun); // función de opacidad gradiente
-    volumeProperty->SetScalarOpacity(opacityFun); // función de opacidad escalar
-	volumeProperty->SetColor(colorFun); // función de color
+	volumeProperty->SetGradientOpacity(tf->getGradientFun()); // función de opacidad gradiente
+	volumeProperty->SetScalarOpacity(tf->getScalarFun()); // función de opacidad escalar
+	volumeProperty->SetColor(tf->getColorFun()); // función de color
 }
 
 void Figura::removeTFPoints() {
-	colorFun->RemoveAllPoints();
-	opacityFun->RemoveAllPoints();
-	gradientFun->RemoveAllPoints();
-}
-
-void Figura::addOpacityPoint(const double value, const double alpha) {
-	opacityFun->AddPoint(value, alpha);
-}
-
-void Figura::addGradientPoint(const double value, const double alpha) {
-	gradientFun->AddPoint(value, alpha);
+	tf->clear();
 }
 
 void Figura::addRGBPoint(const double value, const double c1, const double c2, const double c3) {
-	colorFun->AddRGBPoint(value, c1, c2, c3);
+	tf->addColorPoint(value, c1, c2, c3);
+}
+
+void Figura::addOpacityPoint(const double value, const double alpha) {
+	tf->addScalarPoint(value, alpha);
+}
+
+void Figura::addGradientPoint(const double value, const double alpha) {
+	tf->addGradientPoint(value, alpha);
 }
 
 void Figura::enableShadow(const bool onOff) {
@@ -111,5 +107,5 @@ void Figura::setRenderMode(const int mode) {
 }
 
 vtkSmartPointer<vtkColorTransferFunction> Figura::getColorFun() const {
-	return colorFun;
+	return tf->getColorFun();
 }

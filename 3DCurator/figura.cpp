@@ -16,6 +16,10 @@ Figura::~Figura() {
 
 }
 
+TransferFunction * Figura::getTransferFunction() const {
+	return tf;
+}
+
 vtkSmartPointer<vtkVolume> Figura::getVolume() const {
 	return volume;
 }
@@ -104,8 +108,4 @@ void Figura::setRenderMode(const int mode) {
 	default:
 		mapper->SetRequestedRenderModeToDefault();
 	}
-}
-
-vtkSmartPointer<vtkColorTransferFunction> Figura::getColorFun() const {
-	return tf->getColorFun();
 }

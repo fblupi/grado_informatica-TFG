@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
 
-	sliceViewer->GetWindowLevel()->SetLookupTable(figura->getColorFun()); // usa los mismo colores en el slice viewer que los usados en la TF
+	sliceViewer->GetWindowLevel()->SetLookupTable(figura->getTransferFunction()->getColorFun()); // usa los mismo colores en el slice viewer que los usados en la TF
 	sliceViewer->SetColorLevel(-600);
 	sliceViewer->SetColorWindow(400);
 
@@ -319,15 +319,20 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 }
 
 void MainWindow::on_actionExportVolumeImage_triggered() {
-	exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportFilename(QString::fromStdString(getCurrentDate())));
+	exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_actionExportSliceImage_triggered() {
-	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportFilename(QString::fromStdString(getCurrentDate())));
+	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
-QString MainWindow::getExportFilename(const QString defaultFilename) {
+QString MainWindow::getExportImageFilename(const QString defaultFilename) {
 	return QFileDialog::getSaveFileName(this, tr("Exportar imagen"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)");
+}
+
+
+QString MainWindow::getExportPresetFilename(const QString defaultFilename) {
+	return QFileDialog::getSaveFileName(this, tr("Exportar preset"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
 }
 
 void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename) {
@@ -400,5 +405,17 @@ void MainWindow::on_exportSliceImage_pressed() {
 }
 
 void MainWindow::on_exportSliceImageAs_pressed() {
-	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportFilename(QString::fromStdString(getCurrentDate())));
+	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+}
+
+void MainWindow::on_actionImportPreset_triggered() {
+	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath());
+	std::string s = presetFile.toUtf8().constData();
+	figura->getTransferFunction()->read(s);
+}
+
+void MainWindow::on_actionExportPreset_triggered() {
+	QString presetFile = getExportPresetFilename("miPreset");
+	std::string s = presetFile.toUtf8().constData();
+	figura->getTransferFunction()->write(s);
 }

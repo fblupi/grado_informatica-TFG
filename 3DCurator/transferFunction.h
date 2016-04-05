@@ -13,9 +13,6 @@
 #include "vtkColorTransferFunction.h"
 #include "vtkPiecewiseFunction.h"
 
-#include "colorPointTF.h"
-#include "opacityPointTF.h"
-
 struct ColorPoint {
 	double x;
 	double r;
@@ -56,8 +53,8 @@ public:
 	vtkSmartPointer<vtkPiecewiseFunction> getGradientFun() const;
 
 	// funcs
-	void read(std::istream &is);
-	void write(std::ostream &os);
+	void read(std::string &filename);
+	void write(std::string &filename);
 	void update();
 	void clear();
 	void addColorPoint(const double x, const double r, const double g, const double b);

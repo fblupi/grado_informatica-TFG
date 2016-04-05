@@ -4,12 +4,14 @@ TransferFunction::TransferFunction() {
 	colorFun = vtkSmartPointer<vtkColorTransferFunction>::New();
 	scalarFun = vtkSmartPointer<vtkPiecewiseFunction>::New();
 	gradientFun = vtkSmartPointer<vtkPiecewiseFunction>::New();
+	tf.name = "tf";
+	tf.description = "";
 }
 
-void TransferFunction::read(std::istream &is) {
+void TransferFunction::read(std::string &filename) {
 	using boost::property_tree::ptree;
 	ptree pt;
-	read_xml(is, pt);
+	read_xml(filename, pt);
 
 	TF tf;
 	tf.name = pt.get<std::string>("<xmlattr>.name");
@@ -54,7 +56,7 @@ void TransferFunction::read(std::istream &is) {
 	update();
 }
 
-void TransferFunction::write(std::ostream &os) {
+void TransferFunction::write(std::string &filename) {
 	using boost::property_tree::ptree;
 	ptree pt;
 
@@ -87,7 +89,7 @@ void TransferFunction::write(std::ostream &os) {
 		node.put("s", op.s);
 	}
 
-	write_xml(os, pt);
+	write_xml(filename, pt);
 }
 
 void TransferFunction::update() {

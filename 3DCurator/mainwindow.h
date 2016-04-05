@@ -39,6 +39,8 @@ private slots:
 	void on_actionOpenDICOM_triggered();
 	void on_actionExportVolumeImage_triggered();
 	void on_actionExportSliceImage_triggered();
+	void on_actionImportPreset_triggered();
+	void on_actionExportPreset_triggered();
     void on_actionExit_triggered();
 	void on_updateTF_pressed();
 	void on_restoreTF_pressed();
@@ -65,7 +67,8 @@ private slots:
 	void updateRenderMode();
 	void defaultPlanePosition();
 	void exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename);
-	QString getExportFilename(const QString defaultFilename);
+	QString getExportImageFilename(const QString defaultFilename);
+	QString getExportPresetFilename(const QString defaultFilename);
 
 private:
 	// atributos

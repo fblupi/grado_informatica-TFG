@@ -11,7 +11,7 @@ Software para visualizar e interactuar con los datos DICOM de esculturas.
 * CMake 3.4.1
 * Visual Studio Community 2013
 * Qt5.5.1
-* VTK 6.3.0
+* VTK 7.0.0
 
 ### Instalación y configuración
 
@@ -68,12 +68,12 @@ C:\
 
 De esta forma es más fácil organizar versiones para una u otra plataforma de distintas versiones de la librería.
 
-###### VTK 6.3.0
+###### VTK 7.0.0
 
-* Descargar VTK 6.3.0 desde [este enlace](http://www.vtk.org/files/release/6.3/VTK-6.3.0.zip) de su web oficial.
+* Descargar VTK 7.7.0 desde [este enlace](http://www.vtk.org/files/release/7.0/VTK-7.0.0.zip) de su web oficial.
 * Abrir CMake y completar:
-  + src: `C:\VTK\6.3.0\src`
-  + build: `C:\VTK\6.3.0\src\build\vs12`
+  + src: `C:\VTK\7.0.0\src`
+  + build: `C:\VTK\7.0.0\src\build\vs12`
 * Elegir como generador `Visual Studio 12 2013`.
 * Presionar en configurar.
 * Una vez haya generado seleccionar los siguientes campos:
@@ -90,13 +90,13 @@ De esta forma es más fácil organizar versiones para una u otra plataforma de d
   + `CMAKE_PREFIX_PATH:PATH=C:/Qt/Qt5.5.1/5.5/msvc2013/`
 * Presionar en configurar y aparecerá un error, habrá que elegir como versión de Qt la 5. Elegirla y volver a configurar.
 * Configurar hasta que no aparezca ningún campo en rojo.
-* Una vez configurado todo, pulsar en generar. Esto creará una serie de archivos en `C:\VTK\6.3.0\build\vs12`.
+* Una vez configurado todo, pulsar en generar. Esto creará una serie de archivos en `C:\VTK\7.0.0\build\vs12`.
 * Abrir `VTK.sln`.
 * Construir en modo *Release* y esperar unos minutos a que termine (en mi caso tardó unos 20 minutos).
-* Copiar los archivos `QVTKWidgetPlugin.lib` y `QVTKWidgetPlugin.dll` que se encuentran en `C:\VTK\6.3.0\build\vs12\lib\Release` y  `C:\VTK\6.3.0\build\vs12\bin\Release` respectivamente en `C:\Qt\Qt5.5.1\5.5\msvc2013\plugins\designer` (Si no se encuentran los archivos, comprobar que en CMake se marcó la opción `BUILD_SHARED_LIBS`) . Esto hará que desde Qt Designer se pueda crea un `QVTKWidget`.´
+* Copiar los archivos `QVTKWidgetPlugin.lib` y `QVTKWidgetPlugin.dll` que se encuentran en `C:\VTK\7.0.0\build\vs12\lib\Release` y  `C:\VTK\7.0.0\build\vs12\bin\Release` respectivamente en `C:\Qt\Qt5.5.1\5.5\msvc2013\plugins\designer` (Si no se encuentran los archivos, comprobar que en CMake se marcó la opción `BUILD_SHARED_LIBS`) . Esto hará que desde Qt Designer se pueda crea un `QVTKWidget`.´
 * Construir en modo *Debug*.
-* Crear una nueva variable de entorno con nombre: `VTK_DIR` y valor: `C:\VTK\6.3.0\build\vs12`.
-* Agregar al Path la siguiente dirección: `C:\VTK\6.3.0\build\vs12\bin\Release`
+* Crear una nueva variable de entorno con nombre: `VTK_DIR` y valor: `C:\VTK\7.0.0\build\vs12`.
+* Agregar al Path la siguiente dirección: `C:\VTK\7.0.0\build\vs12\bin\Release`
 
 #### Linux
 
@@ -134,32 +134,32 @@ sudo ./qt-opensource-linux-x64-5.5.1.run
 PATH=.:/opt/Qt5.5.1/5.5/gcc_64/bin:$PATH
 ```
 
-##### Instalar VTK6.3.0
+##### Instalar VTK7.0.0
 
-* Descargar VTK desde [este enlace](http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz).
+* Descargar VTK desde [este enlace](http://www.vtk.org/files/release/7.0/VTK-7.0.0.tar.gz).
 * Extraer, por ejemplo, en el directorio de descargas del usuario.
 * Con permisos de superusuario, crear un directorio para compilar la librería y compilarla con `ccmake` habilitando las siguientes opciones `BUILD_SHARED_LIBS`, `VTK_Group_Rendering`, y `VTK_Group_StandAlone`.
 ```
 sudo su
 mkdir /opt/VTK-build
 cd /opt/VTK-build
-ccmake /home/me/Descargas/VTK-6.3.0
+ccmake /home/me/Descargas/VTK-7.0.0
 ```
   + Para compilar pulsar "c" para configurar y "g" para generar una vez se hayan configurado todas las opciones.
 * Crear un directorio *release* y generar el Makefile:
 ```
-mkdir /opt/VTK6.3
-cd /opt/VTK6.3
-cmake -DCMAKE_BUILD_TYPE:STRING=Release /home/me/Descargas/VTK-6.3.0
+mkdir /opt/VTK7.0
+cd /opt/VTK7.0
+cmake -DCMAKE_BUILD_TYPE:STRING=Release /home/me/Descargas/VTK-7.0.0
 ```
 * Integrar Qt:
 ```
-cd /opt/VTK6.3
+cd /opt/VTK7.0
 cmake -DVTK_QT_VERSION:STRING=5 \
       -DQT_QMAKE_EXECUTABLE:PATH=/opt/Qt5.5.1/5.5/gcc_64/bin/qmake \
       -DVTK_Group_Qt:BOOL=ON \
       -DCMAKE_PREFIX_PATH:PATH=/opt/Qt5.5.1/5.5/gcc_64/lib/cmake \
-      -DBUILD_SHARED_LIBS:BOOL=ON /opt/VTK6.3
+      -DBUILD_SHARED_LIBS:BOOL=ON /opt/VTK7.0
 ```
 * Una vez generado terminar ejecutando:
 ```

@@ -74,7 +74,7 @@ void Figura::addRGBPoint(const double value, const double c1, const double c2, c
 	tf->addColorPoint(value, c1, c2, c3);
 }
 
-void Figura::addOpacityPoint(const double value, const double alpha) {
+void Figura::addScalarPoint(const double value, const double alpha) {
 	tf->addScalarPoint(value, alpha);
 }
 

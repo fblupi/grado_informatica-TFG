@@ -62,12 +62,14 @@ void TransferFunction::write(std::string &filename) {
 	using boost::property_tree::ptree;
 	ptree pt;
 
+	cout << tf.colorTF.size() << endl;
+
 	pt.put("tf.<xmlattr>.name", tf.name);
 	pt.put("tf.<xmlattr>.description", tf.description);
 
 	ptree &color = pt.add("tf.color", "");
 	BOOST_FOREACH(ColorPoint cp, tf.colorTF) {
-		ptree &node = color.add("tf.color.point", "");
+		ptree &node = color.add("point", "");
 		node.put("x", cp.x);
 		node.put("r", cp.r);
 		node.put("g", cp.g);
@@ -78,7 +80,7 @@ void TransferFunction::write(std::string &filename) {
 
 	ptree &scalar = pt.add("tf.scalar", "");
 	BOOST_FOREACH(OpacityPoint op, tf.scalarTF) {
-		ptree &node = scalar.add("tf.scalar.point", "");
+		ptree &node = scalar.add("point", "");
 		node.put("x", op.x);
 		node.put("y", op.y);
 		node.put("m", op.m);
@@ -87,7 +89,7 @@ void TransferFunction::write(std::string &filename) {
 
 	ptree &gradient = pt.add("tf.gradient", "");
 	BOOST_FOREACH(OpacityPoint op, tf.gradientTF) {
-		ptree &node = gradient.add("tf.gradient.point", "");
+		ptree &node = gradient.add("point", "");
 		node.put("x", op.x);
 		node.put("y", op.y);
 		node.put("m", op.m);

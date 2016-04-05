@@ -3,8 +3,6 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
-	defaultTF();
-	defaultMaterial();
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
 	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
@@ -12,6 +10,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
+
+	defaultTF();
+	defaultMaterial();
+	updateTF();
 
 	sliceViewer->GetWindowLevel()->SetLookupTable(figura->getTransferFunction()->getColorFun()); // usa los mismo colores en el slice viewer que los usados en la TF
 	sliceViewer->SetColorLevel(-600);
@@ -223,7 +225,7 @@ void MainWindow::updateTF() {
 		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
 			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
 			if (obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->isChecked()) { // Comprueba si está activado y añade punto
-				figura->addOpacityPoint(
+				figura->addScalarPoint(
 					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->value(),
 					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->value()
 					);
@@ -307,7 +309,6 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
 		plano->setInputConnection(figura->getReader()); // conecta el plano con los datos del volumen
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
-		updateTF(); // actualiza función de transferencia con los valores de la GUI
 		updateShadow(); // actualiza sombreado
 		defaultPlanePosition(); // coloca el plano en una posición inicial
 		plano->show(true);

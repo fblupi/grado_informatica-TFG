@@ -37,7 +37,7 @@ public:
 	// funcs
 	void setDICOMFolder(const std::string s);
 	void removeTFPoints();
-	void addOpacityPoint(const double value, const double alpha);
+	void addScalarPoint(const double value, const double alpha);
 	void addGradientPoint(const double value, const double alpha);
 	void addRGBPoint(const double value, const double c1, const double c2, const double c3);
 	void enableShadow(const bool onOff);

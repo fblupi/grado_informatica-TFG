@@ -114,3 +114,19 @@ void TransferFunction::addScalarPoint(const double x, const double y) {
 void TransferFunction::addGradientPoint(const double x, const double y) {
 	gradientFun->AddPoint(x, y);
 }
+
+void TransferFunction::setName(const std::string name) {
+	this->name = name;
+}
+
+void TransferFunction::setDescription(const std::string description) {
+	this->description = description;
+}
+
+std::string TransferFunction::getName() const {
+	return name;
+}
+
+std::string TransferFunction::getDescription() const {
+	return description;
+}

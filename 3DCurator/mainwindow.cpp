@@ -1,6 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "vtkContextView.h"
+#include "vtkTable.h"
+#include "vtkPlot.h"
+#include "vtkFloatArray.h"
+#include "vtkContextView.h"
+#include "vtkContextScene.h"
+#include "vtkPiecewiseFunctionItem.h"
+#include "vtkColorTransferFunctionItem.h"
+#include "vtkChartXY.h"
+#include "vtkColorTransferControlPointsItem.h"
+#include "vtkPiecewiseControlPointsItem.h"
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 
@@ -27,6 +39,52 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	plano->show(false);
 	plano->enable(true);
+
+
+
+	vtkSmartPointer<vtkChartXY> colorFunChart = vtkSmartPointer<vtkChartXY>::New();
+
+	vtkSmartPointer<vtkColorTransferFunctionItem> colorFunItem = vtkSmartPointer<vtkColorTransferFunctionItem>::New();
+	colorFunItem->SetColorTransferFunction(figura->getTransferFunction()->getColorFun());
+	colorFunChart->AddPlot(colorFunItem);
+
+	vtkSmartPointer<vtkColorTransferControlPointsItem> colorFunControlPoints = vtkSmartPointer<vtkColorTransferControlPointsItem>::New();
+	colorFunControlPoints->SetColorTransferFunction(figura->getTransferFunction()->getColorFun());
+	colorFunChart->AddPlot(colorFunControlPoints);
+
+	vtkSmartPointer<vtkContextView> colorFunView = vtkSmartPointer<vtkContextView>::New();
+	colorFunView->SetRenderWindow(ui->colorTFWidget->GetRenderWindow());
+	colorFunView->GetScene()->AddItem(colorFunChart);
+
+
+	vtkSmartPointer<vtkChartXY> scalarFunChart = vtkSmartPointer<vtkChartXY>::New();
+
+	vtkSmartPointer<vtkPiecewiseFunctionItem> scalarFunItem = vtkSmartPointer<vtkPiecewiseFunctionItem>::New();
+	scalarFunItem->SetPiecewiseFunction(figura->getTransferFunction()->getScalarFun());
+	scalarFunChart->AddPlot(scalarFunItem);
+
+	vtkSmartPointer<vtkPiecewiseControlPointsItem> scalarFunControlPoints = vtkSmartPointer<vtkPiecewiseControlPointsItem>::New();
+	scalarFunControlPoints->SetPiecewiseFunction(figura->getTransferFunction()->getScalarFun());
+	scalarFunChart->AddPlot(scalarFunControlPoints);
+
+	vtkSmartPointer<vtkContextView> scalarFunView = vtkSmartPointer<vtkContextView>::New();
+	scalarFunView->SetRenderWindow(ui->scalarTFWidget->GetRenderWindow());
+	scalarFunView->GetScene()->AddItem(scalarFunChart);
+
+
+	vtkSmartPointer<vtkChartXY> gradientFunChart = vtkSmartPointer<vtkChartXY>::New();
+
+	vtkSmartPointer<vtkPiecewiseFunctionItem> gradientFunItem = vtkSmartPointer<vtkPiecewiseFunctionItem>::New();
+	gradientFunItem->SetPiecewiseFunction(figura->getTransferFunction()->getGradientFun());
+	gradientFunChart->AddPlot(gradientFunItem);
+
+	vtkSmartPointer<vtkPiecewiseControlPointsItem> gradientFunControlPoints = vtkSmartPointer<vtkPiecewiseControlPointsItem>::New();
+	gradientFunControlPoints->SetPiecewiseFunction(figura->getTransferFunction()->getGradientFun());
+	gradientFunChart->AddPlot(gradientFunControlPoints);
+
+	vtkSmartPointer<vtkContextView> gradientFunView = vtkSmartPointer<vtkContextView>::New();
+	gradientFunView->SetRenderWindow(ui->gradientTFWidget->GetRenderWindow());
+	gradientFunView->GetScene()->AddItem(gradientFunChart);
 }
 
 MainWindow::~MainWindow() {
@@ -411,12 +469,24 @@ void MainWindow::on_exportSliceImageAs_pressed() {
 
 void MainWindow::on_actionImportPreset_triggered() {
 	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath());
-	std::string s = presetFile.toUtf8().constData();
-	figura->getTransferFunction()->read(s);
+
+	if (presetFile != NULL) {
+		std::string s = presetFile.toUtf8().constData();
+		figura->getTransferFunction()->read(s);
+
+		ui->tfName->setText(QString::fromUtf8(figura->getTransferFunction()->getName().c_str()));
+		ui->tfDescription->setText(QString::fromUtf8(figura->getTransferFunction()->getDescription().c_str()));
+	}
 }
 
 void MainWindow::on_actionExportPreset_triggered() {
-	QString presetFile = getExportPresetFilename("miPreset");
-	std::string s = presetFile.toUtf8().constData();
-	figura->getTransferFunction()->write(s);
+	QString presetFile = getExportPresetFilename(ui->tfName->text().toUtf8().constData());
+
+	if (presetFile != NULL) {
+		figura->getTransferFunction()->setName(ui->tfName->text().toUtf8().constData());
+		figura->getTransferFunction()->setDescription(ui->tfDescription->text().toUtf8().constData());
+
+		std::string s = presetFile.toUtf8().constData();
+		figura->getTransferFunction()->write(s);
+	}
 }

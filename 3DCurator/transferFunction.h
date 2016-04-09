@@ -18,16 +18,22 @@ class TransferFunction {
 public:
 	// constructor/destructor
 	TransferFunction();
+	~TransferFunction();
 
 	// getter
 	vtkSmartPointer<vtkColorTransferFunction> getColorFun() const;
 	vtkSmartPointer<vtkPiecewiseFunction> getScalarFun() const;
 	vtkSmartPointer<vtkPiecewiseFunction> getGradientFun() const;
+	std::string getName() const;
+	std::string getDescription() const;
+
+	// setter
+	void setName(const std::string name);
+	void setDescription(const std::string description);
 
 	// funcs
 	void read(std::string &filename);
 	void write(std::string &filename);
-	void update();
 	void clear();
 	void addColorPoint(const double x, const double r, const double g, const double b);
 	void addScalarPoint(const double x, const double y);

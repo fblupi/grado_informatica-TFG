@@ -19,13 +19,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_52">
-    <item row="1" column="0">
-     <widget class="QLabel" name="labelFolder">
-      <property name="text">
-       <string>Carpeta</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QVTKWidget" name="volumeWidget">
       <property name="minimumSize">
@@ -36,10 +29,17 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="labelFolder">
+      <property name="text">
+       <string>Carpeta</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="1">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tabTF">
        <attribute name="title">
@@ -4591,6 +4591,56 @@
         </item>
         <item>
          <widget class="QVTKWidget" name="slicesWidget"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabTransferFunction">
+       <attribute name="title">
+        <string>Función de transferencia</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_84">
+        <item row="1" column="0" colspan="4">
+         <widget class="QVTKWidget" name="colorTFWidget"/>
+        </item>
+        <item row="2" column="0" colspan="4">
+         <widget class="QVTKWidget" name="scalarTFWidget"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="tfName">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>TF</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="labelTFName">
+          <property name="text">
+           <string>Nombre</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="labelTFDescription">
+          <property name="text">
+           <string>Descripción</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLineEdit" name="tfDescription">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="4">
+         <widget class="QVTKWidget" name="gradientTFWidget"/>
         </item>
        </layout>
       </widget>

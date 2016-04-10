@@ -45,7 +45,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	vtkSmartPointer<vtkChartXY> colorFunChart = vtkSmartPointer<vtkChartXY>::New();
 	colorFunChart->GetAxis(0)->SetTitle("");
+	colorFunChart->GetAxis(0)->SetRange(0, 1);
+	colorFunChart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);
 	colorFunChart->GetAxis(1)->SetTitle("Densidad");
+	colorFunChart->GetAxis(1)->SetRange(figura->getTransferFunction()->getColorFun()->GetRange()[0], figura->getTransferFunction()->getColorFun()->GetRange()[1]);
+	colorFunChart->GetAxis(1)->SetBehavior(vtkAxis::FIXED);
 
 	vtkSmartPointer<vtkColorTransferFunctionItem> colorFunItem = vtkSmartPointer<vtkColorTransferFunctionItem>::New();
 	colorFunItem->SetColorTransferFunction(figura->getTransferFunction()->getColorFun());
@@ -62,7 +66,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	vtkSmartPointer<vtkChartXY> scalarFunChart = vtkSmartPointer<vtkChartXY>::New();
 	scalarFunChart->GetAxis(0)->SetTitle("Opacidad");
+	scalarFunChart->GetAxis(0)->SetRange(0, 1);
+	scalarFunChart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);
 	scalarFunChart->GetAxis(1)->SetTitle("Densidad");
+	scalarFunChart->GetAxis(1)->SetRange(figura->getTransferFunction()->getScalarFun()->GetRange()[0], figura->getTransferFunction()->getScalarFun()->GetRange()[1]);
+	scalarFunChart->GetAxis(1)->SetBehavior(vtkAxis::FIXED);
 
 	vtkSmartPointer<vtkPiecewiseFunctionItem> scalarFunItem = vtkSmartPointer<vtkPiecewiseFunctionItem>::New();
 	scalarFunItem->SetPiecewiseFunction(figura->getTransferFunction()->getScalarFun());
@@ -80,7 +88,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	vtkSmartPointer<vtkChartXY> gradientFunChart = vtkSmartPointer<vtkChartXY>::New();
 	gradientFunChart->GetAxis(0)->SetTitle("Opacidad");
+	gradientFunChart->GetAxis(0)->SetRange(0, 1);
+	gradientFunChart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);
 	gradientFunChart->GetAxis(1)->SetTitle("Gradiente");
+	gradientFunChart->GetAxis(1)->SetRange(figura->getTransferFunction()->getGradientFun()->GetRange()[0], figura->getTransferFunction()->getGradientFun()->GetRange()[1]);
+	gradientFunChart->GetAxis(1)->SetBehavior(vtkAxis::FIXED);
 
 	vtkSmartPointer<vtkPiecewiseFunctionItem> gradientFunItem = vtkSmartPointer<vtkPiecewiseFunctionItem>::New();
 	gradientFunItem->SetPiecewiseFunction(figura->getTransferFunction()->getGradientFun());

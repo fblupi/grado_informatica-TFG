@@ -19,14 +19,18 @@ class ColorTFChart {
 
 public:
 	// constructor/destructor
-	ColorTFChart(vtkSmartPointer<vtkColorTransferFunction> tf, vtkSmartPointer<vtkRenderWindow> renWin, const std::string xLabel, const std::string yLabel);
+	ColorTFChart(vtkSmartPointer<vtkColorTransferFunction> tf, vtkSmartPointer<vtkRenderWindow> renWin, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
 	~ColorTFChart();
+
+	// funcs
+	void defaultRange();
 
 private:
 	vtkSmartPointer<vtkChartXY> chart;
 	vtkSmartPointer<vtkContextView> context;
 	vtkSmartPointer<vtkColorTransferFunctionItem> function;
 	vtkSmartPointer<vtkColorTransferControlPointsItem> controlPoints;
+	vtkSmartPointer<vtkColorTransferFunction> tf;
 };
 
 #endif

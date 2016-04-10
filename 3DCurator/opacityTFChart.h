@@ -19,14 +19,18 @@ class OpacityTFChart {
 
 public:
 	// constructor/destructor
-	OpacityTFChart(vtkSmartPointer<vtkPiecewiseFunction> tf, vtkSmartPointer<vtkRenderWindow> renWin, const std::string xLabel, const std::string yLabel);
+	OpacityTFChart(vtkSmartPointer<vtkPiecewiseFunction> tf, vtkSmartPointer<vtkRenderWindow> renWin, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
 	~OpacityTFChart();
+
+	// funcs
+	void defaultRange();
 
 private:
 	vtkSmartPointer<vtkChartXY> chart;
 	vtkSmartPointer<vtkContextView> context;
 	vtkSmartPointer<vtkPiecewiseFunctionItem> function;
-	vtkSmartPointer<vtkPiecewiseControlPointsItem> controlPoints;
+	vtkSmartPointer<vtkPiecewiseControlPointsItem> controlPoints; 
+	vtkSmartPointer<vtkPiecewiseFunction> tf;
 };
 
 #endif

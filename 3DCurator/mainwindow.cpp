@@ -14,6 +14,9 @@
 #include "vtkColorTransferControlPointsItem.h"
 #include "vtkPiecewiseControlPointsItem.h"
 
+#define MIN_INTENSITY -9024.0
+#define MAX_INTENSITY 10976.0
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 
@@ -31,9 +34,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceViewer->SetColorLevel(-600);
 	sliceViewer->SetColorWindow(400);
 
-	colorTFChart = new ColorTFChart(figura->getTransferFunction()->getColorFun(), ui->colorTFWidget->GetRenderWindow(), "Densidad", "");
-	scalarTFChart = new OpacityTFChart(figura->getTransferFunction()->getScalarFun(), ui->scalarTFWidget->GetRenderWindow(), "Densidad", "Opacidad");
-	gradientTFChart = new OpacityTFChart(figura->getTransferFunction()->getGradientFun(), ui->gradientTFWidget->GetRenderWindow(), "Gradiente", "Opacidad");
+	colorTFChart = new ColorTFChart(figura->getTransferFunction()->getColorFun(), ui->colorTFWidget->GetRenderWindow(), "Densidad", "", MIN_INTENSITY, MAX_INTENSITY);
+	scalarTFChart = new OpacityTFChart(figura->getTransferFunction()->getScalarFun(), ui->scalarTFWidget->GetRenderWindow(), "Densidad", "Opacidad", MIN_INTENSITY, MAX_INTENSITY);
+	gradientTFChart = new OpacityTFChart(figura->getTransferFunction()->getGradientFun(), ui->gradientTFWidget->GetRenderWindow(), "Gradiente", "Opacidad", 0, MAX_INTENSITY);
 
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
     connectComponents(); // conecta los renderers con los widgets
@@ -433,6 +436,10 @@ void MainWindow::on_actionImportPreset_triggered() {
 
 		ui->tfName->setText(QString::fromUtf8(figura->getTransferFunction()->getName().c_str()));
 		ui->tfDescription->setText(QString::fromUtf8(figura->getTransferFunction()->getDescription().c_str()));
+
+		colorTFChart->defaultRange();
+		scalarTFChart->defaultRange();
+		gradientTFChart->defaultRange();
 	}
 }
 

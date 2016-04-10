@@ -34,9 +34,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceViewer->SetColorLevel(-600);
 	sliceViewer->SetColorWindow(400);
 
-	colorTFChart = new ColorTFChart(figura->getTransferFunction()->getColorFun(), ui->colorTFWidget->GetRenderWindow(), "Densidad", "", MIN_INTENSITY, MAX_INTENSITY);
-	scalarTFChart = new OpacityTFChart(figura->getTransferFunction()->getScalarFun(), ui->scalarTFWidget->GetRenderWindow(), "Densidad", "Opacidad", MIN_INTENSITY, MAX_INTENSITY);
-	gradientTFChart = new OpacityTFChart(figura->getTransferFunction()->getGradientFun(), ui->gradientTFWidget->GetRenderWindow(), "Gradiente", "Opacidad", 0, MAX_INTENSITY);
+	colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), figura->getTransferFunction()->getColorFun(), "Densidad", "", MIN_INTENSITY, MAX_INTENSITY);
+	scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), figura->getTransferFunction()->getScalarFun(), "Densidad", "Opacidad", MIN_INTENSITY, MAX_INTENSITY);
+	gradientTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->gradientTFWidget->GetRenderWindow(), figura->getTransferFunction()->getGradientFun(), "Gradiente", "Opacidad", 0, MAX_INTENSITY);
 
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
     connectComponents(); // conecta los renderers con los widgets

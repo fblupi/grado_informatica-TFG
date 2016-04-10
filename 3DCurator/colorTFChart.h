@@ -11,15 +11,16 @@
 #include "vtkChartXY.h"
 #include "vtkColorTransferFunction.h"
 #include "vtkColorTransferFunctionItem.h"
-#include "vtkColorTransferControlPointsItem.h"
 #include "vtkSmartPointer.h"
 #include "vtkRenderWindow.h"
+
+#include "colorTransferControlPointsItem.h"
 
 class ColorTFChart {
 
 public:
 	// constructor/destructor
-	ColorTFChart(vtkSmartPointer<vtkColorTransferFunction> tf, vtkSmartPointer<vtkRenderWindow> renWin, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
+	ColorTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkColorTransferFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
 	~ColorTFChart();
 
 	// funcs
@@ -29,7 +30,7 @@ private:
 	vtkSmartPointer<vtkChartXY> chart;
 	vtkSmartPointer<vtkContextView> context;
 	vtkSmartPointer<vtkColorTransferFunctionItem> function;
-	vtkSmartPointer<vtkColorTransferControlPointsItem> controlPoints;
+	vtkSmartPointer<ColorTransferControlPointsItem> controlPoints;
 	vtkSmartPointer<vtkColorTransferFunction> tf;
 };
 

@@ -1,6 +1,6 @@
 #include "colorTFChart.h"
 
-ColorTFChart::ColorTFChart(vtkSmartPointer<vtkColorTransferFunction> tf, vtkSmartPointer<vtkRenderWindow> renWin, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound) {
+ColorTFChart::ColorTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkColorTransferFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound) {
 	this->tf = tf;
 
 	chart = vtkSmartPointer<vtkChartXY>::New();
@@ -8,19 +8,21 @@ ColorTFChart::ColorTFChart(vtkSmartPointer<vtkColorTransferFunction> tf, vtkSmar
 	chart->GetAxis(1)->SetTitle(xLabel);
 	chart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);
 	chart->GetAxis(1)->SetBehavior(vtkAxis::FIXED);
+	chart->SetZoomWithMouseWheel(false);
 	defaultRange();
 
 	function = vtkSmartPointer<vtkColorTransferFunctionItem>::New();
 	function->SetColorTransferFunction(tf);
 	chart->AddPlot(function);
 
-	controlPoints = vtkSmartPointer<vtkColorTransferControlPointsItem>::New();
+	controlPoints = vtkSmartPointer<ColorTransferControlPointsItem>::New();
+	controlPoints->SetRenderWindow(figureRenWin);
 	controlPoints->SetColorTransferFunction(tf);
 	controlPoints->SetUserBounds(minBound, maxBound, 0, 1);
 	chart->AddPlot(controlPoints);
 
 	context = vtkSmartPointer<vtkContextView>::New();
-	context->SetRenderWindow(renWin);
+	context->SetRenderWindow(chartRenWin);
 	context->GetScene()->AddItem(chart);
 }
 

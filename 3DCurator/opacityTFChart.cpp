@@ -1,6 +1,6 @@
 #include "opacityTFChart.h"
 
-OpacityTFChart::OpacityTFChart(vtkSmartPointer<vtkPiecewiseFunction> tf, vtkSmartPointer<vtkRenderWindow> renWin, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound) {
+OpacityTFChart::OpacityTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkPiecewiseFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound) {
 	this->tf = tf;
 	
 	chart = vtkSmartPointer<vtkChartXY>::New();
@@ -8,19 +8,21 @@ OpacityTFChart::OpacityTFChart(vtkSmartPointer<vtkPiecewiseFunction> tf, vtkSmar
 	chart->GetAxis(1)->SetTitle(xLabel);
 	chart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);
 	chart->GetAxis(1)->SetBehavior(vtkAxis::FIXED);
+	chart->SetZoomWithMouseWheel(false);
 	defaultRange();
 
 	function = vtkSmartPointer<vtkPiecewiseFunctionItem>::New();
 	function->SetPiecewiseFunction(tf);
 	chart->AddPlot(function);
 
-	controlPoints = vtkSmartPointer<vtkPiecewiseControlPointsItem>::New();
+	controlPoints = vtkSmartPointer<PiecewiseControlPointsItem>::New();
+	controlPoints->SetRenderWindow(figureRenWin);
 	controlPoints->SetPiecewiseFunction(tf);
 	controlPoints->SetUserBounds(minBound, maxBound, 0, 1);
 	chart->AddPlot(controlPoints);
 
 	context = vtkSmartPointer<vtkContextView>::New();
-	context->SetRenderWindow(renWin);
+	context->SetRenderWindow(chartRenWin);
 	context->GetScene()->AddItem(chart);
 }
 

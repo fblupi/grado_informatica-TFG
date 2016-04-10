@@ -35,3 +35,8 @@ void OpacityTFChart::defaultRange() {
 	chart->GetAxis(0)->SetRange(0, 1);
 	chart->GetAxis(1)->SetRange(tf->GetRange()[0], tf->GetRange()[1]);
 }
+
+void OpacityTFChart::setRange(const double min, const double max) {
+	chart->GetAxis(1)->SetRange(min, max);
+	context->Render();
+}

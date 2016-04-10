@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	figura = new Figura(); // crea una instancia de Figura
 	defaultTF();
 	defaultMaterial();
-	updateTF();
 
 	sliceViewer->GetWindowLevel()->SetLookupTable(figura->getTransferFunction()->getColorFun()); // usa los mismo colores en el slice viewer que los usados en la TF
 	sliceViewer->SetColorLevel(-600);
@@ -37,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), figura->getTransferFunction()->getColorFun(), "Densidad", "", MIN_INTENSITY, MAX_INTENSITY);
 	scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), figura->getTransferFunction()->getScalarFun(), "Densidad", "Opacidad", MIN_INTENSITY, MAX_INTENSITY);
 	gradientTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->gradientTFWidget->GetRenderWindow(), figura->getTransferFunction()->getGradientFun(), "Gradiente", "Opacidad", 0, MAX_INTENSITY);
+	
+	updateSliders();
 
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
     connectComponents(); // conecta los renderers con los widgets
@@ -50,6 +51,66 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+void MainWindow::updateSliders() {
+	// Color
+	ui->colorTFMinSlider->setMinimum((int) MIN_INTENSITY);
+	ui->colorTFMinSlider->setValue((int) figura->getTransferFunction()->getColorFun()->GetRange()[0]);
+	ui->colorTFMinSlider->setMaximum((int)figura->getTransferFunction()->getColorFun()->GetRange()[1]);
+
+	ui->colorTFMaxSlider->setMinimum((int)figura->getTransferFunction()->getColorFun()->GetRange()[0]);
+	ui->colorTFMaxSlider->setValue((int) figura->getTransferFunction()->getColorFun()->GetRange()[1]);
+	ui->colorTFMaxSlider->setMaximum((int)MAX_INTENSITY);
+
+	// Scalar
+	ui->scalarTFMinSlider->setMinimum((int)MIN_INTENSITY);
+	ui->scalarTFMinSlider->setValue((int)figura->getTransferFunction()->getScalarFun()->GetRange()[0]);
+	ui->scalarTFMinSlider->setMaximum((int)figura->getTransferFunction()->getScalarFun()->GetRange()[1]);
+
+	ui->scalarTFMaxSlider->setMinimum((int)figura->getTransferFunction()->getScalarFun()->GetRange()[0]);
+	ui->scalarTFMaxSlider->setValue((int)figura->getTransferFunction()->getScalarFun()->GetRange()[1]);
+	ui->scalarTFMaxSlider->setMaximum((int)MAX_INTENSITY);
+
+	// Gradient
+	ui->gradientTFMinSlider->setMinimum(0);
+	ui->gradientTFMinSlider->setValue((int)figura->getTransferFunction()->getGradientFun()->GetRange()[0]);
+	ui->gradientTFMinSlider->setMaximum((int)figura->getTransferFunction()->getGradientFun()->GetRange()[1]);
+
+	ui->gradientTFMaxSlider->setMinimum((int)figura->getTransferFunction()->getGradientFun()->GetRange()[0]);
+	ui->gradientTFMaxSlider->setValue((int)figura->getTransferFunction()->getGradientFun()->GetRange()[1]);
+	ui->gradientTFMaxSlider->setMaximum((int)MAX_INTENSITY);
+}
+
+void MainWindow::on_colorTFMinSlider_valueChanged() {
+	colorTFChart->setRange((double)ui->colorTFMinSlider->value(), (double)ui->colorTFMaxSlider->value());
+	ui->colorTFMaxSlider->setMinimum(ui->colorTFMinSlider->value());
+}
+
+void MainWindow::on_colorTFMaxSlider_valueChanged() {
+	colorTFChart->setRange((double)ui->colorTFMinSlider->value(), (double)ui->colorTFMaxSlider->value());
+	ui->colorTFMinSlider->setMaximum(ui->colorTFMaxSlider->value());
+}
+
+void MainWindow::on_scalarTFMinSlider_valueChanged() {
+	scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
+	ui->scalarTFMaxSlider->setMinimum(ui->scalarTFMinSlider->value());
+}
+
+void MainWindow::on_scalarTFMaxSlider_valueChanged() {
+	scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
+	ui->scalarTFMinSlider->setMaximum(ui->scalarTFMaxSlider->value());
+}
+
+void MainWindow::on_gradientTFMinSlider_valueChanged() {
+	gradientTFChart->setRange((double)ui->gradientTFMinSlider->value(), (double)ui->gradientTFMaxSlider->value());
+	ui->gradientTFMaxSlider->setMinimum(ui->gradientTFMinSlider->value());
+}
+
+void MainWindow::on_gradientTFMaxSlider_valueChanged() {
+	gradientTFChart->setRange((double)ui->gradientTFMinSlider->value(), (double)ui->gradientTFMaxSlider->value());
+	ui->gradientTFMinSlider->setMaximum(ui->gradientTFMaxSlider->value());
+}
+
 
 void MainWindow::setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b) {
 	ren->SetBackground(r, g, b);
@@ -77,192 +138,11 @@ void MainWindow::drawVolume() {
 }
 
 void MainWindow::defaultTF() {
-	QObjectList colorList = ui->colorTFContents->children(); // Guarda todos los hijos de colorTFContents (incluyenda las propiedades del layout)
-	QObjectList opacityList = ui->opacityTFContents->children(); // Guarda todos los hijos de opacityTFContents (incluyenda las propiedades del layout)
-	QObjectList gradientList = ui->gradientTFContents->children(); // Guarda todos los hijos de opacityTFContents (incluyenda las propiedades del layout)
+	std::string s = "C:/Users/FranciscoJavier/Documents/GitHub/3DCurator/3DCurator/assets/presets/ct-woodsculpture.xml";
+	figura->getTransferFunction()->read(s);
 
-	// Colores
-	Q_FOREACH(QObject* obj, colorList) { // Recorre todos los colores
-		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
-			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
-			switch (atoi(id.c_str())) {
-				case 1:
-					obj->findChild<QCheckBox *>(QString((std::string("colorEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorValueP_" + id)).c_str()))->setValue(-750);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorRP_" + id)).c_str()))->setValue(0.08);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorGP_" + id)).c_str()))->setValue(0.05);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorBP_" + id)).c_str()))->setValue(0.03);
-					break;
-				case 2:
-					obj->findChild<QCheckBox *>(QString((std::string("colorEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorValueP_" + id)).c_str()))->setValue(-350);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorRP_" + id)).c_str()))->setValue(0.39);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorGP_" + id)).c_str()))->setValue(0.25);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorBP_" + id)).c_str()))->setValue(0.16);
-					break;
-				case 3:
-					obj->findChild<QCheckBox *>(QString((std::string("colorEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorValueP_" + id)).c_str()))->setValue(-200);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorRP_" + id)).c_str()))->setValue(0.8);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorGP_" + id)).c_str()))->setValue(0.8);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorBP_" + id)).c_str()))->setValue(0.8);
-					break;
-				case 4:
-					obj->findChild<QCheckBox *>(QString((std::string("colorEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorValueP_" + id)).c_str()))->setValue(3000);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorRP_" + id)).c_str()))->setValue(0.5);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorGP_" + id)).c_str()))->setValue(0.5);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorBP_" + id)).c_str()))->setValue(0.5);
-					break;
-				default:
-					obj->findChild<QCheckBox *>(QString((std::string("colorEnableP_" + id)).c_str()))->setChecked(false);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorValueP_" + id)).c_str()))->setValue(0);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorRP_" + id)).c_str()))->setValue(0);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorGP_" + id)).c_str()))->setValue(0);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorBP_" + id)).c_str()))->setValue(0);
-			}
-		}
-	}
-
-	// Opacidades escalares
-	Q_FOREACH(QObject* obj, opacityList) { // Recorre todas las opacidades
-		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
-			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
-			switch (atoi(id.c_str())) {
-				case 1:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-800);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
-					break;
-				case 2:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-750);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(1);
-					break;
-				case 3:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-350);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(1);
-					break;
-				case 4:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-300);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
-					break;
-				case 5:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-200);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
-					break;
-				case 6:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(-100);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(1);
-					break;
-				case 7:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(1000);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
-					break;
-				case 8:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(2750);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
-					break;
-				case 9:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(2976);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(1);
-					break;
-				case 10:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(3000);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
-					break;
-				default:
-					obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->setChecked(false);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->setValue(0);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->setValue(0);
-			}
-		}
-	}
-
-	// Opacidades gradientes
-	Q_FOREACH(QObject* obj, gradientList) { // Recorre todas las opacidades
-		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
-			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
-			switch (atoi(id.c_str())) {
-				case 1:
-					obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(0);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(0.0);
-					break;
-				case 2:
-					obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(90);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(0.2);
-					break;
-				case 3:
-					obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(2000);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(1.0);
-					break;
-				default:
-					obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(false);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(0);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(0);
-			}
-		}
-	}
-}
-
-void MainWindow::updateTF() {
-	figura->removeTFPoints(); // Borra TF
-
-	QObjectList colorList = ui->colorTFContents->children(); // Guarda todos los hijos de colorTFContents (incluyenda las propiedades del layout)
-	QObjectList opacityList = ui->opacityTFContents->children(); // Guarda todos los hijos de opacityTFContents (incluyenda las propiedades del layout)
-	QObjectList gradientList = ui->gradientTFContents->children(); // Guarda todos los hijos de opacityTFContents (incluyenda las propiedades del layout)
-
-	// Colores
-	Q_FOREACH(QObject* obj, colorList) { // Recorre todos los colores
-		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
-			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
-			if (obj->findChild<QCheckBox *>(QString((std::string("colorEnableP_" + id)).c_str()))->isChecked()) { // Comprueba si está activado y añade punto
-				figura->addRGBPoint(
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorValueP_" + id)).c_str()))->value(),
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorRP_" + id)).c_str()))->value(),
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorGP_" + id)).c_str()))->value(),
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("colorBP_" + id)).c_str()))->value()
-					);
-			}
-		}
-	}
-
-	// Opacidades escalares
-	Q_FOREACH(QObject* obj, opacityList) { // Recorre todas las opacidades
-		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
-			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
-			if (obj->findChild<QCheckBox *>(QString((std::string("opacityEnableP_" + id)).c_str()))->isChecked()) { // Comprueba si está activado y añade punto
-				figura->addScalarPoint(
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityValueP_" + id)).c_str()))->value(),
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("opacityAP_" + id)).c_str()))->value()
-					);
-			}
-		}
-	}
-
-	// Opacidades gradientes
-	Q_FOREACH(QObject* obj, gradientList) { // Recorre todas las opacidades
-		if (obj->inherits("QGroupBox")) { // Comprueba que no son las propiedades del layout
-			std::string id = splitAndGetLast(obj->objectName().toUtf8().constData(), "_");
-			if (obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->isChecked()) { // Comprueba si está activado y añade punto
-				figura->addGradientPoint(
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->value(),
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->value()
-					);
-			}
-		}
-	}
+	ui->tfName->setText(QString::fromUtf8(figura->getTransferFunction()->getName().c_str()));
+	ui->tfDescription->setText(QString::fromUtf8(figura->getTransferFunction()->getDescription().c_str()));
 }
 
 void MainWindow::updateShadow() {
@@ -370,17 +250,6 @@ void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> re
 	}
 }
 
-void MainWindow::on_updateTF_pressed() {
-	updateTF();
-	renderVolume();
-}
-
-void MainWindow::on_restoreTF_pressed() {
-	defaultTF();
-	updateTF();
-	renderVolume();
-}
-
 void MainWindow::on_restoreMaterial_pressed() {
 	defaultMaterial();
 }
@@ -440,6 +309,7 @@ void MainWindow::on_actionImportPreset_triggered() {
 		colorTFChart->defaultRange();
 		scalarTFChart->defaultRange();
 		gradientTFChart->defaultRange();
+		updateSliders();
 	}
 }
 

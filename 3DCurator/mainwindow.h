@@ -44,8 +44,6 @@ private slots:
 	void on_actionImportPreset_triggered();
 	void on_actionExportPreset_triggered();
     void on_actionExit_triggered();
-	void on_updateTF_pressed();
-	void on_restoreTF_pressed();
 	void on_updateProperties_pressed();
 	void on_restoreMaterial_pressed();
 	void on_sagitalPlane_pressed();
@@ -54,6 +52,12 @@ private slots:
 	void on_exportSliceImage_pressed();
 	void on_exportSliceImageAs_pressed();
 	void on_enablePlane_stateChanged();
+	void on_colorTFMinSlider_valueChanged();
+	void on_colorTFMaxSlider_valueChanged();
+	void on_scalarTFMinSlider_valueChanged();
+	void on_scalarTFMaxSlider_valueChanged();
+	void on_gradientTFMinSlider_valueChanged();
+	void on_gradientTFMaxSlider_valueChanged();
 
 	// funcs
 	void renderVolume();
@@ -61,13 +65,13 @@ private slots:
     void setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b);
     void connectComponents();
     void drawVolume();
-	void defaultTF();
-	void updateTF();
 	void updateShadow();
+	void defaultTF();
 	void defaultMaterial();
 	void updateMaterial();
 	void updateRenderMode();
 	void defaultPlanePosition();
+	void updateSliders();
 	void exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename);
 	QString getExportImageFilename(const QString defaultFilename);
 	QString getExportPresetFilename(const QString defaultFilename);

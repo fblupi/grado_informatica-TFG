@@ -25,6 +25,7 @@ public:
 
 	// funcs
 	void defaultRange();
+	void setRange(const double min, const double max);
 
 private:
 	vtkSmartPointer<ChartXY> chart;

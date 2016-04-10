@@ -8,13 +8,13 @@
 #include "vtkFloatArray.h"
 #include "vtkContextView.h"
 #include "vtkContextScene.h"
-#include "vtkChartXY.h"
 #include "vtkPiecewiseFunction.h"
 #include "vtkPiecewiseFunctionItem.h"
 #include "vtkSmartPointer.h"
 #include "vtkRenderWindow.h"
 
 #include "piecewiseControlPointsItem.h"
+#include "chartXY.h"
 
 class OpacityTFChart {
 
@@ -27,7 +27,7 @@ public:
 	void defaultRange();
 
 private:
-	vtkSmartPointer<vtkChartXY> chart;
+	vtkSmartPointer<ChartXY> chart;
 	vtkSmartPointer<vtkContextView> context;
 	vtkSmartPointer<vtkPiecewiseFunctionItem> function;
 	vtkSmartPointer<PiecewiseControlPointsItem> controlPoints; 

@@ -8,13 +8,13 @@
 #include "vtkFloatArray.h"
 #include "vtkContextView.h"
 #include "vtkContextScene.h"
-#include "vtkChartXY.h"
 #include "vtkColorTransferFunction.h"
 #include "vtkColorTransferFunctionItem.h"
 #include "vtkSmartPointer.h"
 #include "vtkRenderWindow.h"
 
 #include "colorTransferControlPointsItem.h"
+#include "chartXY.h"
 
 class ColorTFChart {
 
@@ -27,7 +27,7 @@ public:
 	void defaultRange();
 
 private:
-	vtkSmartPointer<vtkChartXY> chart;
+	vtkSmartPointer<ChartXY> chart;
 	vtkSmartPointer<vtkContextView> context;
 	vtkSmartPointer<vtkColorTransferFunctionItem> function;
 	vtkSmartPointer<ColorTransferControlPointsItem> controlPoints;

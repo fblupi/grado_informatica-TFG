@@ -3,7 +3,7 @@
 ColorTFChart::ColorTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkColorTransferFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound) {
 	this->tf = tf;
 
-	chart = vtkSmartPointer<vtkChartXY>::New();
+	chart = vtkSmartPointer<ChartXY>::New();
 	chart->GetAxis(0)->SetTitle(yLabel);
 	chart->GetAxis(1)->SetTitle(xLabel);
 	chart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);

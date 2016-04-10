@@ -7,6 +7,7 @@
 #include "vtkImageViewer2.h"
 
 class ImagePlaneWidget : public vtkImagePlaneWidget {
+
 public:
 	static ImagePlaneWidget* New();
 	vtkTypeMacro(vtkImagePlaneWidget, ImagePlaneWidget);

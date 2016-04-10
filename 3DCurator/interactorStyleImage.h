@@ -6,6 +6,7 @@
 #include "vtkInteractorStyleImage.h"
 
 class InteractorStyleImage : public vtkInteractorStyleImage {
+
 public:
 	static InteractorStyleImage* New();
 	vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleImage);

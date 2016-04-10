@@ -9,6 +9,8 @@
 #include "figura.h"
 #include "plano.h"
 #include "interactorStyleImage.h"
+#include "colorTFChart.h"
+#include "opacityTFChart.h"
 
 #include "vtkRenderer.h"
 #include "vtkRenderWindow.h"
@@ -75,6 +77,9 @@ private:
     Ui::MainWindow *ui;
     Figura *figura;
 	Plano *plano;
+	ColorTFChart *colorTFChart;
+	OpacityTFChart *scalarTFChart;
+	OpacityTFChart *gradientTFChart;
 	vtkSmartPointer<vtkRenderer> volumeRen;
 	vtkSmartPointer<vtkImageViewer2> sliceViewer;
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle;

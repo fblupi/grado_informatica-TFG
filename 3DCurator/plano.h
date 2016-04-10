@@ -9,6 +9,7 @@
 #include "vtkImageViewer2.h"
 
 class Plano {
+
 public:
 	// constructor/destructor
 	Plano();

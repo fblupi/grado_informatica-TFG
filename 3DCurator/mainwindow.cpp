@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
-
 	defaultTF();
 	defaultMaterial();
 	updateTF();
@@ -32,80 +31,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceViewer->SetColorLevel(-600);
 	sliceViewer->SetColorWindow(400);
 
-	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
+	colorTFChart = new ColorTFChart(figura->getTransferFunction()->getColorFun(), ui->colorTFWidget->GetRenderWindow(), "Densidad", "");
+	scalarTFChart = new OpacityTFChart(figura->getTransferFunction()->getScalarFun(), ui->scalarTFWidget->GetRenderWindow(), "Densidad", "Opacidad");
+	gradientTFChart = new OpacityTFChart(figura->getTransferFunction()->getGradientFun(), ui->gradientTFWidget->GetRenderWindow(), "Gradiente", "Opacidad");
 
+	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
     connectComponents(); // conecta los renderers con los widgets
 
 	renderVolume();
 
 	plano->show(false);
 	plano->enable(true);
-
-
-
-	vtkSmartPointer<vtkChartXY> colorFunChart = vtkSmartPointer<vtkChartXY>::New();
-	colorFunChart->GetAxis(0)->SetTitle("");
-	colorFunChart->GetAxis(0)->SetRange(0, 1);
-	colorFunChart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);
-	colorFunChart->GetAxis(1)->SetTitle("Densidad");
-	colorFunChart->GetAxis(1)->SetRange(figura->getTransferFunction()->getColorFun()->GetRange()[0], figura->getTransferFunction()->getColorFun()->GetRange()[1]);
-	colorFunChart->GetAxis(1)->SetBehavior(vtkAxis::FIXED);
-
-	vtkSmartPointer<vtkColorTransferFunctionItem> colorFunItem = vtkSmartPointer<vtkColorTransferFunctionItem>::New();
-	colorFunItem->SetColorTransferFunction(figura->getTransferFunction()->getColorFun());
-	colorFunChart->AddPlot(colorFunItem);
-
-	vtkSmartPointer<vtkColorTransferControlPointsItem> colorFunControlPoints = vtkSmartPointer<vtkColorTransferControlPointsItem>::New();
-	colorFunControlPoints->SetColorTransferFunction(figura->getTransferFunction()->getColorFun());
-	colorFunControlPoints->SetUserBounds(-9024, 10976, 0, 1);
-	colorFunChart->AddPlot(colorFunControlPoints);
-
-	vtkSmartPointer<vtkContextView> colorFunView = vtkSmartPointer<vtkContextView>::New();
-	colorFunView->SetRenderWindow(ui->colorTFWidget->GetRenderWindow());
-	colorFunView->GetScene()->AddItem(colorFunChart);
-
-	vtkSmartPointer<vtkChartXY> scalarFunChart = vtkSmartPointer<vtkChartXY>::New();
-	scalarFunChart->GetAxis(0)->SetTitle("Opacidad");
-	scalarFunChart->GetAxis(0)->SetRange(0, 1);
-	scalarFunChart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);
-	scalarFunChart->GetAxis(1)->SetTitle("Densidad");
-	scalarFunChart->GetAxis(1)->SetRange(figura->getTransferFunction()->getScalarFun()->GetRange()[0], figura->getTransferFunction()->getScalarFun()->GetRange()[1]);
-	scalarFunChart->GetAxis(1)->SetBehavior(vtkAxis::FIXED);
-
-	vtkSmartPointer<vtkPiecewiseFunctionItem> scalarFunItem = vtkSmartPointer<vtkPiecewiseFunctionItem>::New();
-	scalarFunItem->SetPiecewiseFunction(figura->getTransferFunction()->getScalarFun());
-	scalarFunChart->AddPlot(scalarFunItem);
-
-	vtkSmartPointer<vtkPiecewiseControlPointsItem> scalarFunControlPoints = vtkSmartPointer<vtkPiecewiseControlPointsItem>::New();
-	scalarFunControlPoints->SetPiecewiseFunction(figura->getTransferFunction()->getScalarFun());
-	scalarFunControlPoints->SetUserBounds(-9024, 10976, 0, 1);
-	scalarFunChart->AddPlot(scalarFunControlPoints);
-
-	vtkSmartPointer<vtkContextView> scalarFunView = vtkSmartPointer<vtkContextView>::New();
-	scalarFunView->SetRenderWindow(ui->scalarTFWidget->GetRenderWindow());
-	scalarFunView->GetScene()->AddItem(scalarFunChart);
-
-
-	vtkSmartPointer<vtkChartXY> gradientFunChart = vtkSmartPointer<vtkChartXY>::New();
-	gradientFunChart->GetAxis(0)->SetTitle("Opacidad");
-	gradientFunChart->GetAxis(0)->SetRange(0, 1);
-	gradientFunChart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);
-	gradientFunChart->GetAxis(1)->SetTitle("Gradiente");
-	gradientFunChart->GetAxis(1)->SetRange(figura->getTransferFunction()->getGradientFun()->GetRange()[0], figura->getTransferFunction()->getGradientFun()->GetRange()[1]);
-	gradientFunChart->GetAxis(1)->SetBehavior(vtkAxis::FIXED);
-
-	vtkSmartPointer<vtkPiecewiseFunctionItem> gradientFunItem = vtkSmartPointer<vtkPiecewiseFunctionItem>::New();
-	gradientFunItem->SetPiecewiseFunction(figura->getTransferFunction()->getGradientFun());
-	gradientFunChart->AddPlot(gradientFunItem);
-
-	vtkSmartPointer<vtkPiecewiseControlPointsItem> gradientFunControlPoints = vtkSmartPointer<vtkPiecewiseControlPointsItem>::New();
-	gradientFunControlPoints->SetPiecewiseFunction(figura->getTransferFunction()->getGradientFun());
-	gradientFunControlPoints->SetUserBounds(0, 10976, 0, 1);
-	gradientFunChart->AddPlot(gradientFunControlPoints);
-
-	vtkSmartPointer<vtkContextView> gradientFunView = vtkSmartPointer<vtkContextView>::New();
-	gradientFunView->SetRenderWindow(ui->gradientTFWidget->GetRenderWindow());
-	gradientFunView->GetScene()->AddItem(gradientFunChart);
 }
 
 MainWindow::~MainWindow() {

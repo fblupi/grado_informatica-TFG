@@ -4,6 +4,7 @@
 #include "vtkContextView.h"
 #include "vtkTable.h"
 #include "vtkPlot.h"
+#include "vtkAxis.h"
 #include "vtkFloatArray.h"
 #include "vtkContextView.h"
 #include "vtkContextScene.h"
@@ -43,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 
 	vtkSmartPointer<vtkChartXY> colorFunChart = vtkSmartPointer<vtkChartXY>::New();
+	colorFunChart->GetAxis(0)->SetTitle("");
+	colorFunChart->GetAxis(1)->SetTitle("Densidad");
 
 	vtkSmartPointer<vtkColorTransferFunctionItem> colorFunItem = vtkSmartPointer<vtkColorTransferFunctionItem>::New();
 	colorFunItem->SetColorTransferFunction(figura->getTransferFunction()->getColorFun());
@@ -50,14 +53,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	vtkSmartPointer<vtkColorTransferControlPointsItem> colorFunControlPoints = vtkSmartPointer<vtkColorTransferControlPointsItem>::New();
 	colorFunControlPoints->SetColorTransferFunction(figura->getTransferFunction()->getColorFun());
+	colorFunControlPoints->SetUserBounds(-9024, 10976, 0, 1);
 	colorFunChart->AddPlot(colorFunControlPoints);
 
 	vtkSmartPointer<vtkContextView> colorFunView = vtkSmartPointer<vtkContextView>::New();
 	colorFunView->SetRenderWindow(ui->colorTFWidget->GetRenderWindow());
 	colorFunView->GetScene()->AddItem(colorFunChart);
 
-
 	vtkSmartPointer<vtkChartXY> scalarFunChart = vtkSmartPointer<vtkChartXY>::New();
+	scalarFunChart->GetAxis(0)->SetTitle("Opacidad");
+	scalarFunChart->GetAxis(1)->SetTitle("Densidad");
 
 	vtkSmartPointer<vtkPiecewiseFunctionItem> scalarFunItem = vtkSmartPointer<vtkPiecewiseFunctionItem>::New();
 	scalarFunItem->SetPiecewiseFunction(figura->getTransferFunction()->getScalarFun());
@@ -65,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	vtkSmartPointer<vtkPiecewiseControlPointsItem> scalarFunControlPoints = vtkSmartPointer<vtkPiecewiseControlPointsItem>::New();
 	scalarFunControlPoints->SetPiecewiseFunction(figura->getTransferFunction()->getScalarFun());
+	scalarFunControlPoints->SetUserBounds(-9024, 10976, 0, 1);
 	scalarFunChart->AddPlot(scalarFunControlPoints);
 
 	vtkSmartPointer<vtkContextView> scalarFunView = vtkSmartPointer<vtkContextView>::New();
@@ -73,6 +79,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 
 	vtkSmartPointer<vtkChartXY> gradientFunChart = vtkSmartPointer<vtkChartXY>::New();
+	gradientFunChart->GetAxis(0)->SetTitle("Opacidad");
+	gradientFunChart->GetAxis(1)->SetTitle("Gradiente");
 
 	vtkSmartPointer<vtkPiecewiseFunctionItem> gradientFunItem = vtkSmartPointer<vtkPiecewiseFunctionItem>::New();
 	gradientFunItem->SetPiecewiseFunction(figura->getTransferFunction()->getGradientFun());
@@ -80,6 +88,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	vtkSmartPointer<vtkPiecewiseControlPointsItem> gradientFunControlPoints = vtkSmartPointer<vtkPiecewiseControlPointsItem>::New();
 	gradientFunControlPoints->SetPiecewiseFunction(figura->getTransferFunction()->getGradientFun());
+	gradientFunControlPoints->SetUserBounds(0, 10976, 0, 1);
 	gradientFunChart->AddPlot(gradientFunControlPoints);
 
 	vtkSmartPointer<vtkContextView> gradientFunView = vtkSmartPointer<vtkContextView>::New();
@@ -234,7 +243,7 @@ void MainWindow::defaultTF() {
 			switch (atoi(id.c_str())) {
 				case 1:
 					obj->findChild<QCheckBox *>(QString((std::string("gradientEnableP_" + id)).c_str()))->setChecked(true);
-					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(-1000);
+					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientValueP_" + id)).c_str()))->setValue(0);
 					obj->findChild<QDoubleSpinBox *>(QString((std::string("gradientAP_" + id)).c_str()))->setValue(0.0);
 					break;
 				case 2:

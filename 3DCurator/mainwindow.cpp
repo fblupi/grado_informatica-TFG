@@ -1,22 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "vtkContextView.h"
-#include "vtkTable.h"
-#include "vtkPlot.h"
-#include "vtkAxis.h"
-#include "vtkFloatArray.h"
-#include "vtkContextView.h"
-#include "vtkContextScene.h"
-#include "vtkPiecewiseFunctionItem.h"
-#include "vtkColorTransferFunctionItem.h"
-#include "vtkChartXY.h"
-#include "vtkColorTransferControlPointsItem.h"
-#include "vtkPiecewiseControlPointsItem.h"
-
-#define MIN_INTENSITY -9024.0
-#define MAX_INTENSITY 10976.0
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 
@@ -26,26 +10,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
-	defaultTF();
-	defaultMaterial();
-
-	sliceViewer->GetWindowLevel()->SetLookupTable(figura->getTransferFunction()->getColorFun()); // usa los mismo colores en el slice viewer que los usados en la TF
-	sliceViewer->SetColorLevel(-600);
-	sliceViewer->SetColorWindow(400);
+	defaultTF(); // define la función de transferencia, necesaria para definir las gráficas y el visor de cortes
+	defaultMaterial(); // asigna un material por defecto a la figura
 
 	colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), figura->getTransferFunction()->getColorFun(), "Densidad", "", MIN_INTENSITY, MAX_INTENSITY);
 	scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), figura->getTransferFunction()->getScalarFun(), "Densidad", "Opacidad", MIN_INTENSITY, MAX_INTENSITY);
 	gradientTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->gradientTFWidget->GetRenderWindow(), figura->getTransferFunction()->getGradientFun(), "Gradiente", "Opacidad", 0, MAX_INTENSITY);
-	
-	updateSliders();
+	updateSliders(); // actualiza valores de los sliders
+
+	sliceViewer->GetWindowLevel()->SetLookupTable(figura->getTransferFunction()->getColorFun()); // usa los mismo colores en el slice viewer que los usados en la TF
+	sliceViewer->SetColorLevel(-600); 
+	sliceViewer->SetColorWindow(400);
 
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
     connectComponents(); // conecta los renderers con los widgets
 
 	renderVolume();
 
-	plano->show(false);
-	plano->enable(true);
+	plano->show(false); // No muestra el corte del plano
+	plano->enable(true); // Muestra el plano
 }
 
 MainWindow::~MainWindow() {
@@ -56,58 +39,58 @@ void MainWindow::updateSliders() {
 	// Color
 	ui->colorTFMinSlider->setMinimum((int) MIN_INTENSITY);
 	ui->colorTFMinSlider->setValue((int) figura->getTransferFunction()->getColorFun()->GetRange()[0]);
-	ui->colorTFMinSlider->setMaximum((int)figura->getTransferFunction()->getColorFun()->GetRange()[1]);
+	ui->colorTFMinSlider->setMaximum((int) figura->getTransferFunction()->getColorFun()->GetRange()[1]);
 
-	ui->colorTFMaxSlider->setMinimum((int)figura->getTransferFunction()->getColorFun()->GetRange()[0]);
+	ui->colorTFMaxSlider->setMinimum((int) figura->getTransferFunction()->getColorFun()->GetRange()[0]);
 	ui->colorTFMaxSlider->setValue((int) figura->getTransferFunction()->getColorFun()->GetRange()[1]);
-	ui->colorTFMaxSlider->setMaximum((int)MAX_INTENSITY);
+	ui->colorTFMaxSlider->setMaximum((int) MAX_INTENSITY);
 
 	// Scalar
-	ui->scalarTFMinSlider->setMinimum((int)MIN_INTENSITY);
-	ui->scalarTFMinSlider->setValue((int)figura->getTransferFunction()->getScalarFun()->GetRange()[0]);
-	ui->scalarTFMinSlider->setMaximum((int)figura->getTransferFunction()->getScalarFun()->GetRange()[1]);
+	ui->scalarTFMinSlider->setMinimum((int) MIN_INTENSITY);
+	ui->scalarTFMinSlider->setValue((int) figura->getTransferFunction()->getScalarFun()->GetRange()[0]);
+	ui->scalarTFMinSlider->setMaximum((int) figura->getTransferFunction()->getScalarFun()->GetRange()[1]);
 
-	ui->scalarTFMaxSlider->setMinimum((int)figura->getTransferFunction()->getScalarFun()->GetRange()[0]);
-	ui->scalarTFMaxSlider->setValue((int)figura->getTransferFunction()->getScalarFun()->GetRange()[1]);
-	ui->scalarTFMaxSlider->setMaximum((int)MAX_INTENSITY);
+	ui->scalarTFMaxSlider->setMinimum((int) figura->getTransferFunction()->getScalarFun()->GetRange()[0]);
+	ui->scalarTFMaxSlider->setValue((int) figura->getTransferFunction()->getScalarFun()->GetRange()[1]);
+	ui->scalarTFMaxSlider->setMaximum((int) MAX_INTENSITY);
 
 	// Gradient
 	ui->gradientTFMinSlider->setMinimum(0);
-	ui->gradientTFMinSlider->setValue((int)figura->getTransferFunction()->getGradientFun()->GetRange()[0]);
-	ui->gradientTFMinSlider->setMaximum((int)figura->getTransferFunction()->getGradientFun()->GetRange()[1]);
+	ui->gradientTFMinSlider->setValue((int) figura->getTransferFunction()->getGradientFun()->GetRange()[0]);
+	ui->gradientTFMinSlider->setMaximum((int) figura->getTransferFunction()->getGradientFun()->GetRange()[1]);
 
-	ui->gradientTFMaxSlider->setMinimum((int)figura->getTransferFunction()->getGradientFun()->GetRange()[0]);
-	ui->gradientTFMaxSlider->setValue((int)figura->getTransferFunction()->getGradientFun()->GetRange()[1]);
-	ui->gradientTFMaxSlider->setMaximum((int)MAX_INTENSITY);
+	ui->gradientTFMaxSlider->setMinimum((int) figura->getTransferFunction()->getGradientFun()->GetRange()[0]);
+	ui->gradientTFMaxSlider->setValue((int) figura->getTransferFunction()->getGradientFun()->GetRange()[1]);
+	ui->gradientTFMaxSlider->setMaximum((int) MAX_INTENSITY);
 }
 
 void MainWindow::on_colorTFMinSlider_valueChanged() {
-	colorTFChart->setRange((double)ui->colorTFMinSlider->value(), (double)ui->colorTFMaxSlider->value());
+	colorTFChart->setRange((double) ui->colorTFMinSlider->value(), (double) ui->colorTFMaxSlider->value());
 	ui->colorTFMaxSlider->setMinimum(ui->colorTFMinSlider->value());
 }
 
 void MainWindow::on_colorTFMaxSlider_valueChanged() {
-	colorTFChart->setRange((double)ui->colorTFMinSlider->value(), (double)ui->colorTFMaxSlider->value());
+	colorTFChart->setRange((double) ui->colorTFMinSlider->value(), (double) ui->colorTFMaxSlider->value());
 	ui->colorTFMinSlider->setMaximum(ui->colorTFMaxSlider->value());
 }
 
 void MainWindow::on_scalarTFMinSlider_valueChanged() {
-	scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
+	scalarTFChart->setRange((double) ui->scalarTFMinSlider->value(), (double) ui->scalarTFMaxSlider->value());
 	ui->scalarTFMaxSlider->setMinimum(ui->scalarTFMinSlider->value());
 }
 
 void MainWindow::on_scalarTFMaxSlider_valueChanged() {
-	scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
+	scalarTFChart->setRange((double) ui->scalarTFMinSlider->value(), (double) ui->scalarTFMaxSlider->value());
 	ui->scalarTFMinSlider->setMaximum(ui->scalarTFMaxSlider->value());
 }
 
 void MainWindow::on_gradientTFMinSlider_valueChanged() {
-	gradientTFChart->setRange((double)ui->gradientTFMinSlider->value(), (double)ui->gradientTFMaxSlider->value());
+	gradientTFChart->setRange((double) ui->gradientTFMinSlider->value(), (double) ui->gradientTFMaxSlider->value());
 	ui->gradientTFMaxSlider->setMinimum(ui->gradientTFMinSlider->value());
 }
 
 void MainWindow::on_gradientTFMaxSlider_valueChanged() {
-	gradientTFChart->setRange((double)ui->gradientTFMinSlider->value(), (double)ui->gradientTFMaxSlider->value());
+	gradientTFChart->setRange((double) ui->gradientTFMinSlider->value(), (double) ui->gradientTFMaxSlider->value());
 	ui->gradientTFMinSlider->setMaximum(ui->gradientTFMaxSlider->value());
 }
 

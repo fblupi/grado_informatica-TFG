@@ -5,8 +5,11 @@
 #include "vtkObjectFactory.h"
 #include "vtkContextMouseEvent.h"
 
+/**
+ * @class ChartXY
+ * Clase que hereda de la clase vtkChartXY y redefine los métodos de eventos producidos por el ratón para que no hagan nada
+ */
 class ChartXY : public vtkChartXY {
-
 public:
 	static ChartXY* New();
 	vtkTypeMacro(vtkChartXY, ChartXY);

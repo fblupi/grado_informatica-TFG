@@ -16,23 +16,49 @@
 #include "piecewiseControlPointsItem.h"
 #include "chartXY.h"
 
-class OpacityTFChart {
 
+/**
+ * @class OpacityTFChart
+ * Clase que muestra en un gráfico los puntos de control y la paleta de colores utilizada en una función de transferencia de opacidad
+ */
+class OpacityTFChart {
 public:
-	// constructor/destructor
-	OpacityTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkPiecewiseFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
+	/**
+	 * Constructor
+	 * @param	figureRenWin	RenderWindow que se actualizará al actualizar la función de opacidad
+	 * @param	chartRenWin		RenderWindow donde se colocará el gráfico
+	 * @param	tf				Función de transferencia de opacidad
+	 * @param	xLabel			Nombre para la etiqueta del eje de la X
+	 * @param	yLabel			Nombre para la etiqueta del eje de la Y
+	 * @param	minBound		Límite inferior que podrán alcanzar los puntos de control
+	 * @param	maxBound		Límite superior que podrán alcanzar los puntos de control
+	 */
+	OpacityTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkPiecewiseFunction> tf, 
+		const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
+	
+	/*
+	 * Destructor
+	 */
 	~OpacityTFChart();
 
-	// funcs
+	/**
+	 * Hace que la gráfica vaya en el eje de la Y desde el valor más pequeño de la función de transferencia al más grande
+	 */
 	void defaultRange();
+
+	/**
+	 * Hace que la gráfica vaya en el eje de la Y desde min hasta max
+	 * @param	min				Límite inferior
+	 * @param	max				Límite superior
+	 */
 	void setRange(const double min, const double max);
 
 private:
-	vtkSmartPointer<ChartXY> chart;
-	vtkSmartPointer<vtkContextView> context;
-	vtkSmartPointer<vtkPiecewiseFunctionItem> function;
-	vtkSmartPointer<PiecewiseControlPointsItem> controlPoints; 
-	vtkSmartPointer<vtkPiecewiseFunction> tf;
+	vtkSmartPointer<ChartXY> chart;  /**< Gráfica donde se dibujarán los dos Plot de la función y los puntos de control */
+	vtkSmartPointer<vtkContextView> context; /**< ContextView donde se renderizará el contenido de chart */
+	vtkSmartPointer<vtkPiecewiseFunctionItem> function; /**< Plot en el que se mostrará la función de color */
+	vtkSmartPointer<PiecewiseControlPointsItem> controlPoints; /**< Plot en el que se mostrarán los puntos de control de la función */
+	vtkSmartPointer<vtkPiecewiseFunction> tf; /**< Función de transferencia de opacidad de donde se obtendrán los dos plot */
 };
 
 #endif

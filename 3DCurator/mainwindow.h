@@ -24,16 +24,29 @@
 #include "vtkPNGWriter.h"
 #include "vtkJPEGWriter.h"
 
+#define MIN_INTENSITY -9024.0 /**< Valor mínimo de intensidad que podría tener una imagen DICOM */
+#define MAX_INTENSITY 10976.0 /**< Valor máximo de intensidad que podría tener una imagen DICOM */
+
 namespace Ui {
     class MainWindow;
 }
 
+/**
+* @class MainWIndow
+* Clase con la ventana principal
+*/
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-	// constructor/destructor
-    explicit MainWindow(QWidget *parent = 0);
+	/**
+	 * Constructor
+	 */
+	explicit MainWindow(QWidget *parent = 0);
+
+	/*
+	 * Destructor
+	 */
     ~MainWindow();
 
 private slots:
@@ -59,37 +72,105 @@ private slots:
 	void on_gradientTFMinSlider_valueChanged();
 	void on_gradientTFMaxSlider_valueChanged();
 
-	// funcs
+
+	/**
+	 * Renderiza la ventana del volumen y el plano
+	 */
 	void renderVolume();
+
+	/**
+	 * Renderiza la ventana del corte producidor por el plano en el volumen
+	 */
 	void renderSlice();
-    void setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b);
-    void connectComponents();
-    void drawVolume();
-	void updateShadow();
+
+	/**
+	 * Establece un color a un Renderer
+	 * @param	ren Renderer al que se le quiere cambiar el color
+	 * @param	r	Componente roja
+	 * @param	g	Componente verde
+	 * @param	b	Componente azul
+	 */
+	void setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b);
+
+	/**
+	 * Conecta los componentes de VTK con las interfaces
+	 */
+	void connectComponents();
+
+	/**
+	 * Añade el volumen a su respectivo visor
+	 */
+	void drawVolume();
+
+	/**
+	 * Asigna una función de trasnferencia por defecto
+	 */
 	void defaultTF();
+
+	/**
+	 * Asigna un material por defecto
+	 */
 	void defaultMaterial();
+
+	/**
+	 * Actualiza si el volumen aparece o no sombreado
+	 */
+	void updateShadow();
+
+	/**
+	 * Actualiza el material
+	 */
 	void updateMaterial();
+
+	/**
+	 * Actualiza el modo de renderizado
+	 */
 	void updateRenderMode();
-	void defaultPlanePosition();
+
+	/**
+	 * Actualiza los sliders dándole los valores según la función de transferencia
+	 */
 	void updateSliders();
+
+	/**
+	 * Coloca el plano en una posición por defecto
+	 */
+	void defaultPlanePosition();
+
+	/**
+	 * Exporta una imagen de un Render Window
+	 * @param	renWin		RenderWindow del que se quiere extraer una imagen
+	 * @param	filename	Nombre del archivo de salida
+	 */
 	void exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename);
+
+	/**
+	 * Obtiene el nombre del archivo de salida para exportar una imagen
+	 * @param	defaultFilename		Nombre que se dará por defecto (fecha y hora)
+	 * @return	Archivo de salida
+	 */
 	QString getExportImageFilename(const QString defaultFilename);
+
+	/**
+	 * Obtiene el nombre del archivo de salida para exportar un preset
+	 * @param	defaultFilename		Nombre que se dará por defecto (nombre de la función de transferencia)
+	 * @return	Archivo de salida
+	 */
 	QString getExportPresetFilename(const QString defaultFilename);
 
 private:
-	// atributos
-    Ui::MainWindow *ui;
-    Figura *figura;
-	Plano *plano;
-	ColorTFChart *colorTFChart;
-	OpacityTFChart *scalarTFChart;
-	OpacityTFChart *gradientTFChart;
-	vtkSmartPointer<vtkRenderer> volumeRen;
-	vtkSmartPointer<vtkImageViewer2> sliceViewer;
-	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle;
-	vtkSmartPointer<InteractorStyleImage> sliceStyle;
-	vtkSmartPointer<vtkWindowToImageFilter> filter;
-	vtkSmartPointer<vtkImageWriter> writer;
+	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */
+	Figura *figura; /**< Puntero a la figura */
+	Plano *plano; /**< Puntero al plano */
+	ColorTFChart *colorTFChart; /**< Puntero a la gráfica de la parte de color de la función de transferencia */
+	OpacityTFChart *scalarTFChart; /**< Puntero a la gráfica de la parte de opacida escalar de la función de transferencia */
+	OpacityTFChart *gradientTFChart; /**< Puntero a la gráfica de la parte de opacida gradiente de la función de transferencia */
+	vtkSmartPointer<vtkRenderer> volumeRen; /**< Puntero al Renderer donde estará el volumen y el plano de corte */
+	vtkSmartPointer<vtkImageViewer2> sliceViewer; /**< Puntero al ImageViewer2 donde se verá el corte producido por el plano en el volumen */
+	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle; /**< Estilo para la ventana donde se visualizará el volumen */
+	vtkSmartPointer<InteractorStyleImage> sliceStyle; /**< Estilo para la ventana donde se visualizarán los cortes de la figura con el plano */
+	vtkSmartPointer<vtkWindowToImageFilter> filter;  /**< Filtro para pasar de un RenderWindow a una imagen */
+	vtkSmartPointer<vtkImageWriter> writer; /**< Exportador de imagen */
 };
 
 #endif // MAINWINDOW_H

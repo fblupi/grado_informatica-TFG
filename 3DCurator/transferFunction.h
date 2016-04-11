@@ -13,39 +13,109 @@
 #include "vtkColorTransferFunction.h"
 #include "vtkPiecewiseFunction.h"
 
+/**
+ * Clase con la función de transferencia
+ */
 class TransferFunction {
-
 public:
-	// constructor/destructor
+	/**
+	 * Constructor
+	 */
 	TransferFunction();
+
+	/*
+	 * Destructor
+	 */
 	~TransferFunction();
 
-	// getter
+	/**
+	 * Obtener función de transferencia de color
+	 * @return	Función de transferencia de color
+	 */
 	vtkSmartPointer<vtkColorTransferFunction> getColorFun() const;
+
+	/**
+	 * Obtener función de transferencia de opacidad escalar
+	 * @return	Función de transferencia de opacidad escalar
+	 */
 	vtkSmartPointer<vtkPiecewiseFunction> getScalarFun() const;
+
+	/**
+	 * Obtener función de transferencia de opacidad gradiente
+	 * @return	Función de transferencia de opacidad gradiente
+	 */
 	vtkSmartPointer<vtkPiecewiseFunction> getGradientFun() const;
+
+	/**
+	 * Obtener el nombre de la función de transferencia
+	 * @return	Nombre
+	 */
 	std::string getName() const;
+
+	/**
+	 * Obtener la descripción de la función de transferencia
+	 * @return	Descripción
+	 */
 	std::string getDescription() const;
 
-	// setter
+	/**
+	 * Establecer el nombre de la función de transferencia
+	 * @param	name	Nombre
+	 */
 	void setName(const std::string name);
+
+	/**
+	 * Establecer la descripción de la función de transferencia
+	 * @param	description		Descripción
+	 */
 	void setDescription(const std::string description);
 
-	// funcs
+	/**
+	 * Lee la función de transferencia de un archivo XML
+	 * @param	filename	Archivo de origen
+	 */
 	void read(std::string &filename);
+
+	/**
+	 * Escribe la función de transferencia en un archivo XML
+	 * @param	filename	Archivo de salida
+	 */
 	void write(std::string &filename);
+
+	/**
+	 * Limpia todos los puntos de todas las partes de la función de transferencia
+	 */
 	void clear();
+
+	/**
+	 * Añade un punto en la parte de color de la función de transfencia
+	 * @param	x	Valor de densidad
+	 * @param	r	Componente roja
+	 * @param	g	Componente verde
+	 * @param	b	Componente azul
+	 */
 	void addColorPoint(const double x, const double r, const double g, const double b);
+
+	/**
+	 * Añade un punto en la parte de opacidad escalar de la función de transfencia
+	 * @param	x	Valor de densidad
+	 * @param	y	Opacidad
+	 */
 	void addScalarPoint(const double x, const double y);
+
+	/**
+	 * Añade un punto en la parte de opacidad gradiente de la función de transfencia
+	 * @param	x	Valor de gradiente
+	 * @param	y	Opacidad
+	 */
 	void addGradientPoint(const double x, const double y);
 
 private:
-	// atributos
-	std::string name;
-	std::string description;
-	vtkSmartPointer<vtkColorTransferFunction> colorFun;
-	vtkSmartPointer<vtkPiecewiseFunction> scalarFun;
-	vtkSmartPointer<vtkPiecewiseFunction> gradientFun;
+	std::string name; /**< Nombre de la función de transferencia */
+	std::string description; /**< Descripción de la función de transferencia */
+	vtkSmartPointer<vtkColorTransferFunction> colorFun; /**< Parte de color de la función de transferencia */
+	vtkSmartPointer<vtkPiecewiseFunction> scalarFun; /**< Parte de opacidad escalar de la función de transferencia */
+	vtkSmartPointer<vtkPiecewiseFunction> gradientFun; /**< Parte de opacidad gradiente de la función de transferencia */
 };
 
 #endif // TRANSFERFUNCTION_H

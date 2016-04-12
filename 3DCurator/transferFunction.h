@@ -13,6 +13,8 @@
 #include "vtkColorTransferFunction.h"
 #include "vtkPiecewiseFunction.h"
 
+using boost::property_tree::ptree;
+
 /**
  * Clase con la función de transferencia
  */
@@ -72,9 +74,15 @@ public:
 
 	/**
 	 * Lee la función de transferencia de un archivo XML
-	 * @param	filename	Archivo de origen
+	 * @param	filename	Ruta del archivo de origen
 	 */
 	void read(std::string &filename);
+
+	/**
+	 * Lee la función de transferencia de un archivo XML
+	 * @param	file	Archivo de origen
+	 */
+	void read(std::istream &file);
 
 	/**
 	 * Escribe la función de transferencia en un archivo XML
@@ -116,6 +124,12 @@ private:
 	vtkSmartPointer<vtkColorTransferFunction> colorFun; /**< Parte de color de la función de transferencia */
 	vtkSmartPointer<vtkPiecewiseFunction> scalarFun; /**< Parte de opacidad escalar de la función de transferencia */
 	vtkSmartPointer<vtkPiecewiseFunction> gradientFun; /**< Parte de opacidad gradiente de la función de transferencia */
+
+	/**
+	 * Escribe la función de transferencia dado un árbol extraido de un archivo XML
+	 * @param	ptree	Árbol con la función de transferencia
+	 */
+	void readData(ptree pt);
 };
 
 #endif // TRANSFERFUNCTION_H

@@ -20,9 +20,9 @@ std::string toUpper(std::string s) {
 }
 
 std::string getCurrentDate() {
-	time_t t = time(0); // Obtiene fecha actual
+	time_t t = time(0); // obtiene fecha actual
 	struct tm now;
-	localtime_s(&now, &t); // Obtiene el struct para obtener los distintos componentes
+	localtime_s(&now, &t); // obtiene el struct para obtener los distintos componentes
 	return std::to_string(now.tm_year + 1900)
 		+ std::to_string(now.tm_mon + 1)
 		+ std::to_string(now.tm_mday)

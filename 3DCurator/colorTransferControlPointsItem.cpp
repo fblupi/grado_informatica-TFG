@@ -7,32 +7,34 @@ void ColorTransferControlPointsItem::SetRenderWindow(vtkSmartPointer<vtkRenderWi
 }
 
 bool ColorTransferControlPointsItem::MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse) {
-	bool result = vtkColorTransferControlPointsItem::MouseButtonReleaseEvent(mouse);
-	if (mouse.GetButton() == vtkContextMouseEvent::LEFT_BUTTON  || mouse.GetButton() == vtkContextMouseEvent::MIDDLE_BUTTON) {
+	bool result = vtkColorTransferControlPointsItem::MouseButtonReleaseEvent(mouse); // forward events
+	if (mouse.GetButton() == vtkContextMouseEvent::LEFT_BUTTON			// si se ha soltado el botón izquierdo (añade punto)
+		|| mouse.GetButton() == vtkContextMouseEvent::MIDDLE_BUTTON) {	// o el central (borra) --> renderiza
 		renWin->Render();
 	}
 	return result;
 }
 
 bool ColorTransferControlPointsItem::KeyReleaseEvent(const vtkContextKeyEvent &key) {
-	bool result = vtkColorTransferControlPointsItem::KeyReleaseEvent(key);
-	if (key.GetInteractor()->GetKeySym() == std::string("Delete") || key.GetInteractor()->GetKeySym() == std::string("BackSpace")) {
+	bool result = vtkColorTransferControlPointsItem::KeyReleaseEvent(key); // forward events
+	if (key.GetInteractor()->GetKeySym() == std::string("Delete")			// si se ha pulsado la tecla "Delete"
+		|| key.GetInteractor()->GetKeySym() == std::string("BackSpace")) {	// o "BlackSpace" (borra punto) --> renderiza
 		renWin->Render();
 	}
 	return result;
 }
 
 bool ColorTransferControlPointsItem::MouseDoubleClickEvent(const vtkContextMouseEvent &mouse) {
-	if (mouse.GetButton() == vtkContextMouseEvent::LEFT_BUTTON) {
+	if (mouse.GetButton() == vtkContextMouseEvent::LEFT_BUTTON) { // si se hace doble click sobre el botón izquierdo --> cambia color
 		QColor color = QColorDialog::getColor();
-		if (color.isValid()) {
+		if (color.isValid()) { // se ha seleccionado un color
 			double values[6];
-			ColorTransferFunction->GetNodeValue(this->GetCurrentPoint(), values);
-			values[1] = color.redF();
-			values[2] = color.greenF();
-			values[3] = color.blueF();
-			ColorTransferFunction->SetNodeValue(this->GetCurrentPoint(), values);
+			ColorTransferFunction->GetNodeValue(this->GetCurrentPoint(), values); // obtiene los valores para el punto seleccionado
+			values[1] = color.redF();	// cambia el valor de la componente roja del color
+			values[2] = color.greenF();	// el de la componente verde
+			values[3] = color.blueF();	// y el de la azul
+			ColorTransferFunction->SetNodeValue(this->GetCurrentPoint(), values); // actualiza valores
 		}
 	}
-	return vtkColorTransferControlPointsItem::MouseDoubleClickEvent(mouse);
+	return vtkColorTransferControlPointsItem::MouseDoubleClickEvent(mouse); // forward events
 }

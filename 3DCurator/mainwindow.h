@@ -51,27 +51,29 @@ public:
 
 private slots:
 	// eventos GUI
-	void on_actionOpenDICOM_triggered();
-	void on_actionExportVolumeImage_triggered();
-	void on_actionExportSliceImage_triggered();
-	void on_actionImportPreset_triggered();
+	void on_actionExit_triggered();
 	void on_actionExportPreset_triggered();
-    void on_actionExit_triggered();
-	void on_updateProperties_pressed();
-	void on_restoreMaterial_pressed();
-	void on_sagitalPlane_pressed();
-	void on_coronalPlane_pressed();
+	void on_actionExportSliceImage_triggered();
+	void on_actionExportVolumeImage_triggered();
+	void on_actionImportPreset_triggered();
+	void on_actionOpenDICOM_triggered();
+
 	void on_axialPlane_pressed();
+	void on_coronalPlane_pressed();
 	void on_exportSliceImage_pressed();
 	void on_exportSliceImageAs_pressed();
-	void on_enablePlane_stateChanged();
-	void on_colorTFMinSlider_valueChanged();
-	void on_colorTFMaxSlider_valueChanged();
-	void on_scalarTFMinSlider_valueChanged();
-	void on_scalarTFMaxSlider_valueChanged();
-	void on_gradientTFMinSlider_valueChanged();
-	void on_gradientTFMaxSlider_valueChanged();
+	void on_restoreMaterial_pressed();
+	void on_sagitalPlane_pressed();
+	void on_updateProperties_pressed();
 
+	void on_enablePlane_stateChanged();
+
+	void on_colorTFMaxSlider_valueChanged();
+	void on_colorTFMinSlider_valueChanged();
+	void on_gradientTFMaxSlider_valueChanged();
+	void on_gradientTFMinSlider_valueChanged();
+	void on_scalarTFMaxSlider_valueChanged();
+	void on_scalarTFMinSlider_valueChanged();
 
 	/**
 	 * Renderiza la ventana del volumen y el plano

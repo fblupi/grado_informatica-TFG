@@ -16,7 +16,6 @@
 #include "piecewiseControlPointsItem.h"
 #include "chartXY.h"
 
-
 /**
  * @class OpacityTFChart
  * Clase que muestra en un gráfico los puntos de control y la paleta de colores utilizada en una función de transferencia de opacidad
@@ -33,8 +32,8 @@ public:
 	 * @param	minBound		Límite inferior que podrán alcanzar los puntos de control
 	 * @param	maxBound		Límite superior que podrán alcanzar los puntos de control
 	 */
-	OpacityTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkPiecewiseFunction> tf, 
-		const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
+	OpacityTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, 
+		vtkSmartPointer<vtkPiecewiseFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
 	
 	/*
 	 * Destructor

@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <sstream>      // std::istringstream
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 
@@ -121,11 +123,18 @@ void MainWindow::drawVolume() {
 }
 
 void MainWindow::defaultTF() {
-	std::string s = "C:/Users/FranciscoJavier/Documents/GitHub/3DCurator/3DCurator/assets/presets/ct-woodsculpture.xml";
-	figura->getTransferFunction()->read(s);
-
-	ui->tfName->setText(QString::fromUtf8(figura->getTransferFunction()->getName().c_str()));
-	ui->tfDescription->setText(QString::fromUtf8(figura->getTransferFunction()->getDescription().c_str()));
+	QFile file(":/presets/ct-woodsculpture.xml");
+	if (file.open(QIODevice::ReadOnly | QIODevice::Text)) { // se lee el archivo
+		std::istringstream ss;
+		ss.str(QString(file.readAll()).toStdString());
+		figura->getTransferFunction()->read(ss);
+		file.close(); // se cierra el archivo
+		ui->tfName->setText(QString::fromUtf8(figura->getTransferFunction()->getName().c_str()));
+		ui->tfDescription->setText(QString::fromUtf8(figura->getTransferFunction()->getDescription().c_str()));
+	} else {
+		cerr << "Error abriendo archivo por defecto de función de transferencia" << endl;
+		exit(-1); // si no lo puede leer se sale
+	}
 }
 
 void MainWindow::updateShadow() {

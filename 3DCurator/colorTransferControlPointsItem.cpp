@@ -26,10 +26,15 @@ bool ColorTransferControlPointsItem::KeyReleaseEvent(const vtkContextKeyEvent &k
 
 bool ColorTransferControlPointsItem::MouseDoubleClickEvent(const vtkContextMouseEvent &mouse) {
 	if (mouse.GetButton() == vtkContextMouseEvent::LEFT_BUTTON) { // si se hace doble click sobre el botón izquierdo --> cambia color
-		QColor color = QColorDialog::getColor();
+		double values[6];
+		ColorTransferFunction->GetNodeValue(this->GetCurrentPoint(), values); // obtiene los valores para el punto seleccionado
+		QColor color = QColor::fromRgbF( // color por defecto con el color del punto seleccionado
+			values[1],	// componente roja del punto seleccionado
+			values[2],	// verde
+			values[3]	// y azul
+			);
+		color = QColorDialog::getColor(color); // obtiene el color elegido por el usuario, dando por defecto el que tiene en ese momento
 		if (color.isValid()) { // se ha seleccionado un color
-			double values[6];
-			ColorTransferFunction->GetNodeValue(this->GetCurrentPoint(), values); // obtiene los valores para el punto seleccionado
 			values[1] = color.redF();	// cambia el valor de la componente roja del color
 			values[2] = color.greenF();	// el de la componente verde
 			values[3] = color.blueF();	// y el de la azul

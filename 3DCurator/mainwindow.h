@@ -5,6 +5,8 @@
 #include <QFileDialog>
 #include <QProgressDialog>
 
+#include <sstream>
+
 #include "utils.h"
 #include "figura.h"
 #include "plano.h"
@@ -52,18 +54,18 @@ public:
 private slots:
 	// eventos GUI
 	void on_actionExit_triggered();
-	void on_actionExportPreset_triggered();
 	void on_actionExportSliceImage_triggered();
 	void on_actionExportVolumeImage_triggered();
+	void on_actionExportPreset_triggered();
 	void on_actionImportPreset_triggered();
 	void on_actionOpenDICOM_triggered();
 
 	void on_axialPlane_pressed();
 	void on_coronalPlane_pressed();
+	void on_sagitalPlane_pressed();
 	void on_exportSliceImage_pressed();
 	void on_exportSliceImageAs_pressed();
 	void on_restoreMaterial_pressed();
-	void on_sagitalPlane_pressed();
 	void on_updateProperties_pressed();
 
 	void on_enablePlane_stateChanged();
@@ -74,16 +76,6 @@ private slots:
 	void on_gradientTFMinSlider_valueChanged();
 	void on_scalarTFMaxSlider_valueChanged();
 	void on_scalarTFMinSlider_valueChanged();
-
-	/**
-	 * Renderiza la ventana del volumen y el plano
-	 */
-	void renderVolume();
-
-	/**
-	 * Renderiza la ventana del corte producidor por el plano en el volumen
-	 */
-	void renderSlice();
 
 	/**
 	 * Establece un color a un Renderer
@@ -105,6 +97,16 @@ private slots:
 	void drawVolume();
 
 	/**
+	 * Renderiza la ventana del volumen y el plano
+	 */
+	void renderVolume();
+
+	/**
+	 * Renderiza la ventana del corte producidor por el plano en el volumen
+	 */
+	void renderSlice();
+
+	/**
 	 * Asigna una función de trasnferencia por defecto
 	 */
 	void defaultTF();
@@ -113,6 +115,11 @@ private slots:
 	 * Asigna un material por defecto
 	 */
 	void defaultMaterial();
+
+	/**
+	 * Coloca el plano en una posición por defecto
+	 */
+	void defaultPlanePosition();
 
 	/**
 	 * Actualiza si el volumen aparece o no sombreado
@@ -133,11 +140,6 @@ private slots:
 	 * Actualiza los sliders dándole los valores según la función de transferencia
 	 */
 	void updateSliders();
-
-	/**
-	 * Coloca el plano en una posición por defecto
-	 */
-	void defaultPlanePosition();
 
 	/**
 	 * Exporta una imagen de un Render Window

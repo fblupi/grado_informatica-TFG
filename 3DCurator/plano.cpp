@@ -33,11 +33,11 @@ void Plano::setOrigin(const double x, const double y, const double z) {
 }
 
 void Plano::setSagital() {
-	// Coloca el plano sobre los ejes YZ (pero hay que darle la vuelta)
+	// coloca el plano sobre los ejes YZ (pero hay que darle la vuelta)
 	plane->SetPlaneOrientationToXAxes();
 	plane->SetSlicePosition(centers[0]);
 
-	// Obtiene los puntos del plano
+	// obtiene los puntos del plano
 	double p1[3] = {
 		plane->GetPoint1()[0],
 		plane->GetPoint1()[1],
@@ -49,7 +49,7 @@ void Plano::setSagital() {
 		plane->GetPoint2()[2]
 	};
 
-	// Hace un giro de 180º sobre el eje X
+	// hace un giro de 180º sobre el eje X
 	plane->SetPoint1(p1[0], p2[1], p2[2]);
 	plane->SetPoint2(p1[0], p1[1], p1[2]);
 	plane->SetOrigin(p1[0], p1[1], p2[2]);
@@ -58,11 +58,11 @@ void Plano::setSagital() {
 }
 
 void Plano::setCoronal() {
-	// Coloca el plano sobre los ejes YZ (pero hay que darle la vuelta y ponerlo sobre el XZ)
+	// coloca el plano sobre los ejes YZ (pero hay que darle la vuelta y ponerlo sobre el XZ)
 	plane->SetPlaneOrientationToXAxes();
 	plane->SetSlicePosition(centers[0]);
 
-	// Obtiene los puntos del plano sagital
+	// obtiene los puntos del plano sagital
 	double p1[3] = {
 		plane->GetPoint1()[0],
 		plane->GetPoint1()[1],
@@ -74,7 +74,7 @@ void Plano::setCoronal() {
 		plane->GetPoint2()[2]
 	};
 
-	// Hace un giro de 180º sobre el eje X y otro de 90º sobre el eje Z
+	// hace un giro de 180º sobre el eje X y otro de 90º sobre el eje Z
 	plane->SetPoint1(p2[1], p1[0], p2[2]);
 	plane->SetPoint2(p1[1], p1[0], p1[2]);
 	plane->SetOrigin(p1[1], p1[0], p2[2]);
@@ -83,7 +83,7 @@ void Plano::setCoronal() {
 }
 
 void Plano::setAxial() {
-	// Coloca el plano sobre los ejes XY
+	// coloca el plano sobre los ejes XY
 	plane->SetPlaneOrientationToZAxes();
 	plane->SetSlicePosition(centers[2]);
 }

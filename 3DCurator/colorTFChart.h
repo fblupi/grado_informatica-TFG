@@ -32,8 +32,8 @@ public:
 	 * @param	minBound		Límite inferior que podrán alcanzar los puntos de control
 	 * @param	maxBound		Límite superior que podrán alcanzar los puntos de control
 	 */
-	ColorTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkColorTransferFunction> tf, 
-		const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
+	ColorTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, 
+		vtkSmartPointer<vtkColorTransferFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
 	
 	/*
 	 * Destructor

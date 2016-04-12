@@ -7,7 +7,7 @@ Figura::Figura() {
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
     volume = vtkSmartPointer<vtkVolume>::New();
-	setProperties();
+	setProperties(); // asigna propiedades del volumen (material, función de transferencia...)
 	volume->SetMapper(mapper);
     volume->SetProperty(volumeProperty);
 }

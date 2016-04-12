@@ -65,6 +65,9 @@ private slots:
 	void on_sagitalPlane_pressed();
 	void on_exportSliceImage_pressed();
 	void on_exportSliceImageAs_pressed();
+	void on_importPreset_pressed();
+	void on_exportPreset_pressed();
+	void on_exportPresetAs_pressed();
 	void on_restoreMaterial_pressed();
 	void on_updateProperties_pressed();
 
@@ -142,11 +145,27 @@ private slots:
 	void updateSliders();
 
 	/**
+	 * Importa archivos DICOM para representarlos
+	 */
+	void importDICOM();
+
+	/**
+	 * Importa un preset de una función de transferencia
+	 */
+	void importPreset();
+
+	/**
 	 * Exporta una imagen de un Render Window
 	 * @param	renWin		RenderWindow del que se quiere extraer una imagen
 	 * @param	filename	Nombre del archivo de salida
 	 */
 	void exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename);
+
+	/**
+	 * Exporta el preset
+	 * @param	filename	Nombre del archivo de salida
+	 */
+	void exportPreset(const QString filename);
 
 	/**
 	 * Obtiene el nombre del archivo de salida para exportar una imagen

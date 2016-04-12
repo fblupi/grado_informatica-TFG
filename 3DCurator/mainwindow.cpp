@@ -148,6 +148,48 @@ void MainWindow::updateSliders() {
 	ui->gradientTFMaxSlider->setMaximum((int)MAX_INTENSITY);
 }
 
+void MainWindow::importDICOM() {
+	QString dicomFolder = QFileDialog::getExistingDirectory(
+		this, tr("Abrir carpeta DICOM"), QDir::homePath(), QFileDialog::ShowDirsOnly);
+
+	if (dicomFolder != NULL) { // la carpeta se ha leído bien
+		QProgressDialog progressDialog(this);
+		progressDialog.setWindowTitle(QString("Cargando..."));
+		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
+		progressDialog.setCancelButton(0);
+		progressDialog.show();
+
+		plano->show(false);
+		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
+		plano->setInputConnection(figura->getReader()); // conecta el plano con los datos del volumen
+		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
+		updateShadow(); // actualiza sombreado
+		defaultPlanePosition(); // coloca el plano en una posición inicial
+		plano->show(true);
+		drawVolume(); // dibuja volumen
+		renderSlice(); // dibuja el corte
+
+		progressDialog.close();
+	}
+}
+
+void MainWindow::importPreset() {
+	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath());
+
+	if (presetFile != NULL) {
+		std::string s = presetFile.toUtf8().constData();
+		figura->getTransferFunction()->read(s);
+
+		ui->tfName->setText(QString::fromUtf8(figura->getTransferFunction()->getName().c_str()));
+		ui->tfDescription->setText(QString::fromUtf8(figura->getTransferFunction()->getDescription().c_str()));
+
+		colorTFChart->defaultRange();
+		scalarTFChart->defaultRange();
+		gradientTFChart->defaultRange();
+		updateSliders();
+	}
+}
+
 void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename) {
 	if (filename != NULL) { // el archivo se ha leído bien
 		filter = vtkSmartPointer<vtkWindowToImageFilter>::New(); // crea el filter
@@ -161,6 +203,16 @@ void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> re
 		writer->SetFileName(filename.toUtf8().constData()); // le pone el nombre que se había indicado
 		writer->SetInputConnection(filter->GetOutputPort()); // conecta el writer con el filter
 		writer->Write(); // crea la imagen de salida
+	}
+}
+
+void MainWindow::exportPreset(const QString filename) {
+	if (filename != NULL) { // el nombre del archivo es correcto
+		figura->getTransferFunction()->setName(ui->tfName->text().toUtf8().constData());
+		figura->getTransferFunction()->setDescription(ui->tfDescription->text().toUtf8().constData());
+
+		std::string s = filename.toUtf8().constData();
+		figura->getTransferFunction()->write(s);
 	}
 }
 
@@ -193,57 +245,15 @@ void MainWindow::on_actionExportVolumeImage_triggered() {
 }
 
 void MainWindow::on_actionExportPreset_triggered() {
-	QString presetFile = getExportPresetFilename(ui->tfName->text().toUtf8().constData());
-
-	if (presetFile != NULL) {
-		figura->getTransferFunction()->setName(ui->tfName->text().toUtf8().constData());
-		figura->getTransferFunction()->setDescription(ui->tfDescription->text().toUtf8().constData());
-
-		std::string s = presetFile.toUtf8().constData();
-		figura->getTransferFunction()->write(s);
-	}
+	exportPreset(getExportPresetFilename(ui->tfName->text()));
 }
 
 void MainWindow::on_actionImportPreset_triggered() {
-	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath());
-
-	if (presetFile != NULL) {
-		std::string s = presetFile.toUtf8().constData();
-		figura->getTransferFunction()->read(s);
-
-		ui->tfName->setText(QString::fromUtf8(figura->getTransferFunction()->getName().c_str()));
-		ui->tfDescription->setText(QString::fromUtf8(figura->getTransferFunction()->getDescription().c_str()));
-
-		colorTFChart->defaultRange();
-		scalarTFChart->defaultRange();
-		gradientTFChart->defaultRange();
-		updateSliders();
-	}
+	importPreset();
 }
 
 void MainWindow::on_actionOpenDICOM_triggered() {
-	QString dicomFolder = QFileDialog::getExistingDirectory(
-		this, tr("Abrir carpeta DICOM"), QDir::homePath(), QFileDialog::ShowDirsOnly);
-
-	if (dicomFolder != NULL) { // la carpeta se ha leído bien
-		QProgressDialog progressDialog(this);
-		progressDialog.setWindowTitle(QString("Cargando..."));
-		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
-		progressDialog.setCancelButton(0);
-		progressDialog.show();
-
-		plano->show(false);
-		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
-		plano->setInputConnection(figura->getReader()); // conecta el plano con los datos del volumen
-		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
-		updateShadow(); // actualiza sombreado
-		defaultPlanePosition(); // coloca el plano en una posición inicial
-		plano->show(true);
-		drawVolume(); // dibuja volumen
-		renderSlice(); // dibuja el corte
-
-		progressDialog.close();
-	}
+	importDICOM();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -278,6 +288,18 @@ void MainWindow::on_exportSliceImageAs_pressed() {
 		ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
+void MainWindow::on_importPreset_pressed() {
+	importPreset();
+}
+
+void MainWindow::on_exportPreset_pressed() {
+	exportPreset(QDir(QDir::homePath()).filePath(ui->tfName->text() + ".xml"));
+}
+
+void MainWindow::on_exportPresetAs_pressed() {
+	exportPreset(getExportPresetFilename(ui->tfName->text()));
+}
+
 void MainWindow::on_restoreMaterial_pressed() {
 	defaultMaterial();
 }
@@ -296,8 +318,7 @@ void MainWindow::on_updateProperties_pressed() {
 void MainWindow::on_enablePlane_stateChanged() {
 	if (ui->enablePlane->isChecked()) {
 		plano->enable(true);
-	}
-	else {
+	} else {
 		plano->enable(false);
 	}
 	renderVolume();

@@ -10,9 +10,9 @@
 #include "vtkSmartPointer.h"
 #include "vtkVolume.h"
 #include "vtkVolumeProperty.h"
-#include "vtkExtractHistogram2D.h"
 #include "vtkPointData.h"
 #include "vtkDataArray.h"
+#include "vtkImageAccumulate.h"
 
 #include "transferFunction.h"
 
@@ -49,6 +49,12 @@ public:
 	 * @return	Puntero al lector de datos
 	 */
 	vtkSmartPointer<vtkAlgorithm> getReader() const;
+
+	/** 
+	 * Obtiene el histograma de frecuencias de valores de intensidad
+	 * @return	Puntero al histograma
+	 */
+	vtkSmartPointer<vtkImageAccumulate> getHistogram() const;
 
 	/**
 	 * Obtiene el límite inferior de la figura en el eje X
@@ -147,6 +153,7 @@ private:
     vtkSmartPointer<vtkVolume> volume;  /**< Volumen con la figura */
 	vtkSmartPointer<vtkSmartVolumeMapper> mapper;  /**< Mapeador que usa DVR GPU-Raycasting */
     vtkSmartPointer<vtkVolumeProperty> volumeProperty;  /**< Propiedades del volumen */
+	vtkSmartPointer<vtkImageAccumulate> histogram; /**< Histograma de frecuencias de valores de intensidad */
 	TransferFunction *tf;  /**< Función de transferencia */
 
     void setProperties(); // establace las propiedades del volumen

@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "vtkXYPlotActor.h"
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 
@@ -168,6 +170,15 @@ void MainWindow::importDICOM() {
 		plano->show(true);
 		drawVolume(); // dibuja volumen
 		renderSlice(); // dibuja el corte
+
+		/* Dibuja el histograma con valores */
+		vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+		vtkSmartPointer<vtkXYPlotActor> plot = vtkSmartPointer<vtkXYPlotActor>::New();
+		plot->AddDataSetInputConnection(figura->getHistogram()->GetOutputPort());
+		plot->SetXRange(-750, 3000);
+		renderer->AddActor(plot);
+		ui->histogramWidget->GetRenderWindow()->AddRenderer(renderer);
+		/* ------------------------------- */
 
 		progressDialog.close();
 	}

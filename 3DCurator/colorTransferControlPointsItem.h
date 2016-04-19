@@ -1,14 +1,14 @@
 #ifndef COLORTRANSFERCONTROLPOINTSITEM_H
 #define COLORTRANSFERCONTROLPOINTSITEM_H
 
-#include "vtkColorTransferFunction.h"
-#include "vtkColorTransferControlPointsItem.h"
-#include "vtkSmartPointer.h"
-#include "vtkRenderWindow.h"
-#include "vtkObjectFactory.h"
-#include "vtkContextMouseEvent.h"
-#include "vtkContextKeyEvent.h"
-#include "vtkRenderWindowInteractor.h"
+#include <vtkColorTransferFunction.h>
+#include <vtkColorTransferControlPointsItem.h>
+#include <vtkSmartPointer.h>
+#include <vtkRenderWindow.h>
+#include <vtkObjectFactory.h>
+#include <vtkContextMouseEvent.h>
+#include <vtkContextKeyEvent.h>
+#include <vtkRenderWindowInteractor.h>
 
 #include <QColorDialog>
 

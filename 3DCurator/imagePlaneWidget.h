@@ -1,10 +1,10 @@
 #ifndef IMAGEPLANEWIDGET_H
 #define IMAGEPLANEWIDGET_H
 
-#include "vtkObjectFactory.h"
-#include "vtkSmartPointer.h"
-#include "vtkImagePlaneWidget.h"
-#include "vtkImageViewer2.h"
+#include <vtkObjectFactory.h>
+#include <vtkSmartPointer.h>
+#include <vtkImagePlaneWidget.h>
+#include <vtkImageViewer2.h>
 
 /**
  * @class ImagePlaneWidget

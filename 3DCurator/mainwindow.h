@@ -7,24 +7,24 @@
 
 #include <sstream>
 
+#include <vtkRenderer.h>
+#include <vtkRenderWindow.h>
+#include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkImageViewer2.h>
+#include <vtkSmartPointer.h>
+#include <vtkImageMapToWindowLevelColors.h>
+#include <vtkLookupTable.h>
+#include <vtkWindowToImageFilter.h>
+#include <vtkImageWriter.h>
+#include <vtkPNGWriter.h>
+#include <vtkJPEGWriter.h>
+
 #include "utils.h"
 #include "figura.h"
 #include "plano.h"
 #include "interactorStyleImage.h"
 #include "colorTFChart.h"
 #include "opacityTFChart.h"
-
-#include "vtkRenderer.h"
-#include "vtkRenderWindow.h"
-#include "vtkInteractorStyleTrackballCamera.h"
-#include "vtkImageViewer2.h"
-#include "vtkSmartPointer.h"
-#include "vtkImageMapToWindowLevelColors.h"
-#include "vtkLookupTable.h"
-#include "vtkWindowToImageFilter.h"
-#include "vtkImageWriter.h"
-#include "vtkPNGWriter.h"
-#include "vtkJPEGWriter.h"
 
 #define MIN_INTENSITY -9024.0 /**< Valor mínimo de intensidad que podría tener una imagen DICOM */
 #define MAX_INTENSITY 10976.0 /**< Valor máximo de intensidad que podría tener una imagen DICOM */

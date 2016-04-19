@@ -1,17 +1,17 @@
 #ifndef OPACITYTFCHART_H
 #define OPACITYTFCHART_H
 
-#include "vtkContextView.h"
-#include "vtkTable.h"
-#include "vtkPlot.h"
-#include "vtkAxis.h"
-#include "vtkFloatArray.h"
-#include "vtkContextView.h"
-#include "vtkContextScene.h"
-#include "vtkPiecewiseFunction.h"
-#include "vtkPiecewiseFunctionItem.h"
-#include "vtkSmartPointer.h"
-#include "vtkRenderWindow.h"
+#include <vtkContextView.h>
+#include <vtkTable.h>
+#include <vtkPlot.h>
+#include <vtkAxis.h>
+#include <vtkFloatArray.h>
+#include <vtkContextView.h>
+#include <vtkContextScene.h>
+#include <vtkPiecewiseFunction.h>
+#include <vtkPiecewiseFunctionItem.h>
+#include <vtkSmartPointer.h>
+#include <vtkRenderWindow.h>
 
 #include "piecewiseControlPointsItem.h"
 #include "chartXY.h"

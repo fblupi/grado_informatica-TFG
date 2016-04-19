@@ -5,13 +5,13 @@
 #include <string>
 #include <iostream>
 
-#include "boost/property_tree/xml_parser.hpp"
-#include "boost/property_tree/ptree.hpp"
-#include "boost/foreach.hpp"
+#include <boost/property_tree/xml_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/foreach.hpp>
 
-#include "vtkSmartPointer.h"
-#include "vtkColorTransferFunction.h"
-#include "vtkPiecewiseFunction.h"
+#include <vtkSmartPointer.h>
+#include <vtkColorTransferFunction.h>
+#include <vtkPiecewiseFunction.h>
 
 using boost::property_tree::ptree;
 

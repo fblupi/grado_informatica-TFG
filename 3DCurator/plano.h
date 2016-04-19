@@ -1,12 +1,13 @@
 #ifndef PLANO_H
 #define PLANO_H
 
+#include <vtkObjectFactory.h>
+#include <vtkSmartPointer.h>
+#include <vtkAlgorithm.h>
+#include <vtkImagePlaneWidget.h>
+#include <vtkImageViewer2.h>
+
 #include "imagePlaneWidget.h"
-#include "vtkObjectFactory.h"
-#include "vtkSmartPointer.h"
-#include "vtkAlgorithm.h"
-#include "vtkImagePlaneWidget.h"
-#include "vtkImageViewer2.h"
 
 /** 
  * Clase con el plano de corte con la figura

@@ -1,13 +1,13 @@
 #ifndef PIECEWISECONTROLPOINTSITEM_H
 #define PIECEWISECONTROLPOINTSITEM_H
 
-#include "vtkPiecewiseControlPointsItem.h"
-#include "vtkSmartPointer.h"
-#include "vtkRenderWindow.h"
-#include "vtkObjectFactory.h"
-#include "vtkContextMouseEvent.h"
-#include "vtkContextKeyEvent.h"
-#include "vtkRenderWindowInteractor.h"
+#include <vtkPiecewiseControlPointsItem.h>
+#include <vtkSmartPointer.h>
+#include <vtkRenderWindow.h>
+#include <vtkObjectFactory.h>
+#include <vtkContextMouseEvent.h>
+#include <vtkContextKeyEvent.h>
+#include <vtkRenderWindowInteractor.h>
 
 /**
  * @class PiecewiseControlPointsItem

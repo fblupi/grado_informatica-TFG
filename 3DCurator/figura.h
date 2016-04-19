@@ -1,18 +1,18 @@
 #ifndef FIGURA_H
 #define FIGURA_H
 
-#include "vtkAlgorithm.h"
-#include "vtkColorTransferFunction.h"
-#include "vtkDICOMImageReader.h"
-#include "vtkSmartVolumeMapper.h"
-#include "vtkImageData.h"
-#include "vtkPiecewiseFunction.h"
-#include "vtkSmartPointer.h"
-#include "vtkVolume.h"
-#include "vtkVolumeProperty.h"
-#include "vtkPointData.h"
-#include "vtkDataArray.h"
-#include "vtkImageAccumulate.h"
+#include <vtkAlgorithm.h>
+#include <vtkColorTransferFunction.h>
+#include <vtkDICOMImageReader.h>
+#include <vtkSmartVolumeMapper.h>
+#include <vtkImageData.h>
+#include <vtkPiecewiseFunction.h>
+#include <vtkSmartPointer.h>
+#include <vtkVolume.h>
+#include <vtkVolumeProperty.h>
+#include <vtkPointData.h>
+#include <vtkDataArray.h>
+#include <vtkImageAccumulate.h>
 
 #include "transferFunction.h"
 

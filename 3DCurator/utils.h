@@ -3,6 +3,8 @@
 
 #include <ctime>
 #include <string>
+#include <algorithm>
+#include <limits>
 
 std::string splitAndGetLast(std::string s, const std::string delimiter);
 std::string getFileExtension(std::string s);

@@ -1,17 +1,17 @@
 #ifndef COLORTFCHART_H
 #define COLORTFCHART_H
 
-#include "vtkContextView.h"
-#include "vtkTable.h"
-#include "vtkPlot.h"
-#include "vtkAxis.h"
-#include "vtkFloatArray.h"
-#include "vtkContextView.h"
-#include "vtkContextScene.h"
-#include "vtkColorTransferFunction.h"
-#include "vtkColorTransferFunctionItem.h"
-#include "vtkSmartPointer.h"
-#include "vtkRenderWindow.h"
+#include <vtkContextView.h>
+#include <vtkTable.h>
+#include <vtkPlot.h>
+#include <vtkAxis.h>
+#include <vtkFloatArray.h>
+#include <vtkContextView.h>
+#include <vtkContextScene.h>
+#include <vtkColorTransferFunction.h>
+#include <vtkColorTransferFunctionItem.h>
+#include <vtkSmartPointer.h>
+#include <vtkRenderWindow.h>
 
 #include "colorTransferControlPointsItem.h"
 #include "chartXY.h"

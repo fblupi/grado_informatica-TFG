@@ -1,9 +1,9 @@
 #ifndef INTERACTORSTYLEIMAGE_H
 #define INTERACTORSTYLEIMAGE_H
 
-#include "vtkObjectFactory.h"
-#include "vtkSmartPointer.h"
-#include "vtkInteractorStyleImage.h"
+#include <vtkObjectFactory.h>
+#include <vtkSmartPointer.h>
+#include <vtkInteractorStyleImage.h>
 
 /**
  * @class ImagePlaneWidget

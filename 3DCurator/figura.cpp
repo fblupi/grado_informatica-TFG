@@ -1,5 +1,4 @@
 #include "figura.h"
-#include <limits>
 
 Figura::Figura() {
 	tf = new TransferFunction();

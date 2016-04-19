@@ -1,9 +1,9 @@
 #ifndef CHARTXY_H
 #define CHARTXY_H
 
-#include "vtkChartXY.h"
-#include "vtkObjectFactory.h"
-#include "vtkContextMouseEvent.h"
+#include <vtkChartXY.h>
+#include <vtkObjectFactory.h>
+#include <vtkContextMouseEvent.h>
 
 /**
  * @class ChartXY

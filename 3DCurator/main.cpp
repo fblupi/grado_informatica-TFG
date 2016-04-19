@@ -3,11 +3,18 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 
-int main(int argc, char *argv[]) {
+#define WINAPI __stdcall
+
+//int main(int argc, char *argv[])
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd) 
+{
+	int argc = 0;
+
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     
-	QApplication a(argc, argv);
+	QApplication a(argc, 0);
+	//QApplication a(argc, argv);
 
 	a.installTranslator(&qtTranslator);
 

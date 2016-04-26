@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
 	volumeStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
+	distanceWidget = vtkSmartPointer<vtkDistanceWidget>::New();
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
 	defaultTF(); // define la función de transferencia, necesaria para definir las gráficas y el visor de cortes
@@ -54,6 +55,10 @@ void MainWindow::connectComponents() {
 	ui->slicesWidget->GetInteractor()->SetInteractorStyle(sliceStyle); // asigna el estilo al interactor del slice widget
 
 	plano->setViewer(sliceViewer); // asigna el slice viewer al plano para que pueda renderizar cuando se de el evento de mover el plano
+
+	distanceWidget->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
+	distanceWidget->CreateDefaultRepresentation(); // usa la representación por defecto
+	static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
 }
 
 void MainWindow::drawVolume() {
@@ -172,12 +177,12 @@ void MainWindow::importDICOM() {
 		renderSlice(); // dibuja el corte
 
 		/* Dibuja el histograma con valores */
-		vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
-		vtkSmartPointer<vtkXYPlotActor> plot = vtkSmartPointer<vtkXYPlotActor>::New();
-		plot->AddDataSetInputConnection(figura->getHistogram()->GetOutputPort());
-		plot->SetXRange(-750, 3000);
-		renderer->AddActor(plot);
-		ui->histogramWidget->GetRenderWindow()->AddRenderer(renderer);
+		//vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+		//vtkSmartPointer<vtkXYPlotActor> plot = vtkSmartPointer<vtkXYPlotActor>::New();
+		//plot->AddDataSetInputConnection(figura->getHistogram()->GetOutputPort());
+		//plot->SetXRange(-750, 3000);
+		//renderer->AddActor(plot);
+		//ui->histogramWidget->GetRenderWindow()->AddRenderer(renderer);
 		/* ------------------------------- */
 
 		progressDialog.close();
@@ -333,6 +338,15 @@ void MainWindow::on_enablePlane_stateChanged() {
 		plano->enable(false);
 	}
 	renderVolume();
+}
+
+void MainWindow::on_enableRule_stateChanged() {
+	if (ui->enableRule->isChecked()) {
+		distanceWidget->On();
+	} else {
+		distanceWidget->Off();
+		//distanceWidget->SetWidgetStateToStart(); // Borra los puntos actuales
+	}
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

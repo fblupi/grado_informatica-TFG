@@ -18,6 +18,8 @@
 #include <vtkImageWriter.h>
 #include <vtkPNGWriter.h>
 #include <vtkJPEGWriter.h>
+#include <vtkDistanceWidget.h>
+#include <vtkDistanceRepresentation.h>
 
 #include "utils.h"
 #include "figura.h"
@@ -72,6 +74,7 @@ private slots:
 	void on_updateProperties_pressed();
 
 	void on_enablePlane_stateChanged();
+	void on_enableRule_stateChanged();
 
 	void on_colorTFMaxSlider_valueChanged();
 	void on_colorTFMinSlider_valueChanged();
@@ -194,6 +197,7 @@ private:
 	vtkSmartPointer<InteractorStyleImage> sliceStyle; /**< Estilo para la ventana donde se visualizarán los cortes de la figura con el plano */
 	vtkSmartPointer<vtkWindowToImageFilter> filter;  /**< Filtro para pasar de un RenderWindow a una imagen */
 	vtkSmartPointer<vtkImageWriter> writer; /**< Exportador de imagen */
+	vtkSmartPointer<vtkDistanceWidget> distanceWidget; /**< Widget para realizar medidas */
 };
 
 #endif // MAINWINDOW_H

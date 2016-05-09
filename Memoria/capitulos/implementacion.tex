@@ -1,8 +1,14 @@
 \chapter{Implementación}
 
+\section{Técnicas de renderizado}
+
+A la hora de renderizar un conjunto de datos volumétricos para obtener una imagen en 3D, se pueden utilizar distintas técnicas.
+
+% Hablar de las distintas técnicas y decir por qué se ha elegido ray casting
+
 \section{Volume Mapper}
 
-Para poder visualizar un volumen con VTK mediante \textit{Direct Volume Rendering}, necesitamos un \textit{Volume Mapper}. La librería nos ofrece varias alternativas:
+Para poder visualizar un volumen con VTK mediante DVR, necesitamos un \textit{Volume Mapper}. La librería nos ofrece varias alternativas:
 \begin{itemize}
 	\item \texttt{vtkAMRVolumeMapper}
 	\item \texttt{vtkFixedVolumeRayCastMapper}
@@ -41,8 +47,8 @@ VTK permite trabajar tanto con HSV como con RGB y para añadir un punto hay que 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm]{imagenes/color_tf}
-	\caption{Parte de color de la función de transferencia del \textit{preset} \textit{CT-Cardiac} extraído del software Slicer \cite{slicer} donde se puede ver que hay 6 puntos definidos y los valores intermedios se obtienen interpolando}
+	\includegraphics[width=12.5cm]{imagenes/color_tf}
+	\caption{Parte de color de la función de transferencia del \textit{preset} \textit{CT-WoodSculpture} creado para visualizar esculturas de madera policromadas. Dos puntos definen el color. Uno en -750 con un tono más oscuro y otro en -350 con un tono más claro. El estuco se pinta con un color gris claro y también viene definido por dos puntos: -200 y 2750. Finalmente, el metal se verá con un tono gris oscuro definido con un punto en 3000.}
 	\label{fig:color_tf}
 \end{figure}
 
@@ -60,8 +66,8 @@ Combinando color y opacidad escalar podemos obtener una función de transferenci
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm]{imagenes/opacity_tf}
-	\caption{Parte de color y opacidad escalar de la función de transferencia del \textit{preset} \textit{CT-Cardiac} extraído del software Slicer \cite{slicer}. Se pueden ver los cuatro puntos que definen la función de opacidad y de fondo la función de color anterior}
+	\includegraphics[width=12.5cm]{imagenes/opacity_tf}
+	\caption{Parte de opacidad escalar de la función de transferencia del \textit{preset} \textit{CT-WoodSculpture} creado para visualizar esculturas de madera policromadas. Se pueden observar tres regiones. La primera corresponde a la madera, la segunda al estuco y la última al metal}
 	\label{fig:opacity_tf}
 \end{figure}
 
@@ -75,7 +81,7 @@ Para poder definir la función de la opacidad gradiente, al igual que con las de
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm]{imagenes/gradient_tf}
-	\caption{Parte de opacidad gradiente de la función de transferencia del \textit{preset} \textit{CT-Cardiac} extraído del software Slicer \cite{slicer}. En este \textit{preset} no se define la opacidad gradiente, por lo que se tiene una constante en 1.}
+	\includegraphics[width=12.5cm]{imagenes/gradient_tf}
+	\caption{Parte de opacidad gradiente de la función de transferencia del \textit{preset} \textit{CT-WoodSculpture} creado para visualizar esculturas de madera policromadas. Se obtendría un valor cercano a 1 en la opacidad en aquellas zonas más cercanas a los bordes entre materiales pues se ha establecido que para un gradiente 0 la opacidad sea 0, y para 2000, 1. }
 	\label{fig:gradient_tf}
 \end{figure}

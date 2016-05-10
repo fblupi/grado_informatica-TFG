@@ -73,22 +73,6 @@ void Figura::setProperties() {
 	volumeProperty->SetColor(tf->getColorFun()); // función de color
 }
 
-void Figura::removeTFPoints() {
-	tf->clear();
-}
-
-void Figura::addRGBPoint(const double value, const double c1, const double c2, const double c3) {
-	tf->addColorPoint(value, c1, c2, c3);
-}
-
-void Figura::addScalarPoint(const double value, const double alpha) {
-	tf->addScalarPoint(value, alpha);
-}
-
-void Figura::addGradientPoint(const double value, const double alpha) {
-	tf->addGradientPoint(value, alpha);
-}
-
 void Figura::enableShadow(const bool onOff) {
 	if (onOff) {
 		volumeProperty->ShadeOn();

@@ -99,34 +99,6 @@ public:
 	void setDICOMFolder(const std::string s);
 
 	/**
-	 * Borra todos los puntos de todas las partes de la función de transferencia
-	 */
-	void removeTFPoints();
-
-	/**
-	 * Añade un punto en la parte de opacidad escalar de la función de transfencia
-	 * @param	value	Valor de densidad
-	 * @param	alpha	Opacidad
-	 */
-	void addScalarPoint(const double value, const double alpha);
-
-	/**
-	 * Añade un punto en la parte de opacidad gradiente de la función de transfencia
-	 * @param	value	Valor de gradiente
-	 * @param	alpha	Opacidad
-	 */
-	void addGradientPoint(const double value, const double alpha);
-
-	/**
-	 * Añade un punto en la parte de color de la función de transfencia
-	 * @param	value	Valor de densidad
-	 * @param	r		Componente roja
-	 * @param	g		Componente verde
-	 * @param	b		Componente azul
-	 */
-	void addRGBPoint(const double value, const double r, const double g, const double b);
-
-	/**
 	 * Habilita o deshabilita la sombra en el volumen
 	 * @param	onOff	Sombra activada si true o desactivada si false
 	 */

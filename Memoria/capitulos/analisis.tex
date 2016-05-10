@@ -1,14 +1,49 @@
-\chapter{Implementación}
+\chapter{Análisis}
 
 \section{Técnicas de renderizado}
 
-A la hora de renderizar un conjunto de datos volumétricos para obtener una imagen en 3D, se pueden utilizar distintas técnicas.
+A la hora de renderizar un conjunto de datos volumétricos para obtener una imagen en 3D, se pueden utilizar distintas técnicas y VTK proporciona una serie de clases para su uso:
+\begin{itemize}
+	\item \textbf{\textit{Marching Cubes}}: Con este algoritmo se obtiene una malla poligonal de una isosuperficie a partir de un conjunto de datos volumétrico (Figura \ref{fig:marching_cubes_head}) \cite{marching_cubes}. Se puede usar en VTK con \texttt{vtkMarchingCubes}.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=6cm]{imagenes/marching_cubes_head}
+		\caption{Cabeza extraída de 150 cortes obtenidos por una IRM usando \textit{marching cubes} (sobre 150.000 triángulos). Imagen extraída de \url{https://en.wikipedia.org/wiki/File:Marchingcubes-head.png}}
+		\label{fig:marching_cubes_head}
+	\end{figure}
+	
+	\item \textbf{Texturas2D}: Se utilizan planos de corte alineados a los ejes de coordenadas. Por lo que se tendría una serie de cortes sobre el plano sagital, otra sobre el coronal y otra sobre el axial. Se realiza una interpolación bilineal para obtener la imagen final (Figura \ref{fig:texturas2d} \cite{intro_medical_vtk_bioimage}). Se puede usar en VTK con \texttt{vtkVolumeTextureMapper}.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=10cm]{imagenes/texturas2d}
+		\caption{Esquema del proceso de renderizado usando texturas 2D. Imagen extraída del apéndice B del libro \textit{An Introduction to Programming for Medical Image Analysis with the Visualization Toolkit }\cite{intro_medical_vtk_bioimage}}
+		\label{fig:texturas2d}
+	\end{figure}
+	
+	\item \textbf{Texturas3D}: Esta técnica es similar a la anterior, pero ahora los datos se cargan en una textura 3D y los cortes se dibujan paralelos a la dirección de vista. A diferencia de las texturas 2D, usa interpolación trilineal y no es necesario tener almacenado en memoria tres copias de los mismos datos (Figura \ref{fig:texturas3d}) \cite{intro_medical_vtk_bioimage}. Se puede usar en VTK con \texttt{vtkVolumeTextureMapper3D}.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=10cm]{imagenes/texturas3d}
+		\caption{Esquema del proceso de renderizado usando texturas 3D. Imagen extraída del apéndice B del libro \textit{An Introduction to Programming for Medical Image Analysis with the Visualization Toolkit} \cite{intro_medical_vtk_bioimage}}
+		\label{fig:texturas3d}
+	\end{figure}
+	
+	\item \textbf{\textit{Volume Ray Casting}}: Es una técnica en el que para cada pixel de la imagen se lanza un rayo que atraviesa el volumen. Para cada voxel se obtiene su color y opacidad usando una función de transferencia. Cuando el rayo sale del volumen se calcula el color y opacidad del pixel como el acumulado por el rayo. Existe una versión de este algoritmo que hace uso de la GPU para acelerar ostensiblemente el tiempo de la operación (Figura \ref{fig:volume_ray_casting}) \cite{intro_medical_vtk_bioimage}. Se puede usar en VTK con \texttt{vtkFixedVolumeRayCastMapper}, \texttt{vtkVolumeRayCastMapper} (usan CPU), \texttt{vtkGPUVolumeRayCastMapper} (usa GPU) y \texttt{vtkSmartVolumeMapper} (según el contexto usa CPU o GPU).
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=12.5cm]{imagenes/volume_ray_casting}
+		\caption{Esquema del proceso de \textit{ray casting}. Imagen extraída de \url{https://en.wikipedia.org/wiki/File:Volume_ray_casting.png}}
+		\label{fig:volume_ray_casting}
+	\end{figure}
+\end{itemize}
 
-% Hablar de las distintas técnicas y decir por qué se ha elegido ray casting
+De entre todas estas técnicas, se podrían descartar rápidamente la de \textit{marching cubes}: pues tan solo trabaja con isosuperficies y la de texturas 2D: pues la opción de texturas 3D es más rápida y usa menos recursos.
+
+Por tanto ya solo habría que elegir entre texturas 3D o \textit{ray casting}. Hasta hace unos años, VTK no proporcionaba un algoritmo de \textit{ray casting} que usase la GPU. Por tanto la opción habría sido sencilla, pero durante los últimos años han trabajado en esto haciendo del \textit{ray casting} la opción preferible.
 
 \section{Volume Mapper}
 
-Para poder visualizar un volumen con VTK mediante DVR, necesitamos un \textit{Volume Mapper}. La librería nos ofrece varias alternativas:
+Para poder visualizar un volumen con VTK mediante Direct Volume Rendering (DVR), necesitamos un \textit{Volume Mapper}. La librería nos ofrece varias alternativas:
 \begin{itemize}
 	\item \texttt{vtkAMRVolumeMapper}
 	\item \texttt{vtkFixedVolumeRayCastMapper}

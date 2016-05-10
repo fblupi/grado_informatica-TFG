@@ -26,7 +26,7 @@ En un archivo DICOM hay almacenado, además de metadatos, una imagen \cite{dicom
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=10cm]{imagenes/brain_dicom_serie}
-	\caption{Serie de imágenes DICOM extraídas de un TAC realizada a un cerebro}
+	\caption{Serie de imágenes DICOM extraídas de una TC realizada a un cerebro}
 	\label{fig:brain_dicom_serie}
 \end{figure}
 
@@ -38,9 +38,7 @@ Para renderizar la imagen con una técnica de Direct Volume Rendering (DVR) hay 
 
 \section{VTK} 
 
-VTK es una librería gráfica de alto nivel desarrollada por la compañía Kitware.
-
-% Hablar un poquito más de esto
+VTK es una librería gráfica orientada a objetos de alto nivel desarrollada por la compañía Kitware. Permite su uso en lenguajes compilados como C++ y Java o interpretados como Tcl y Python. Debido a los años que lleva desarrollándose, desde 1993 hasta la actualidad, se ha convertido en una librería enorme y compleja, pero al mismo tiempo potente \cite{intro_medical_vtk_bioimage}. Esto hace que su curva de aprendizaje tenga un inicio lento. Pero merece la pena su uso porque aunque cueste aprender, el tiempo invertido es mucho menor que al que habría que invertir para realizar las operaciones tan complejas que facilita.
 
 \section{Trabajos previos}
 
@@ -56,12 +54,12 @@ Se podría hacer uso de herramientas médicas como OsiriX \cite{osirix}, AMILab 
 
 También se podrían utilizar herramientas más genéricas como 3DSlicer \cite{slicer}, desarrollada por la misma compañía que VTK. No obstante, tiene muchas funcionalidades que no utilizarían los restauradores y hacen de ella una herramienta demasiado compleja.
 
-Incluso podrían hacer uso de software específico para la visualización de esculturas, aunque hay muy pocas herramientas que tengan funcionalidad para trabajar con conjuntos de datos volumétricos. La más referenciada es Hyper3D \cite{hyper3D} pero los resultados obtenidos no son buenos \ref{fig:hyper3d_results}.
+Incluso podrían hacer uso de software específico para la visualización de esculturas, aunque hay muy pocas herramientas que tengan funcionalidad para trabajar con conjuntos de datos volumétricos. La más referenciada es Hyper3D \cite{hyper3d} pero los resultados obtenidos no son buenos (Figura \ref{fig:hyper3d_results}).
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=12cm]{imagenes/inmaculada_concepcion_real}
-	\includegraphics[height=12cm]{imagenes/inmaculada_concepcion_hyper3d}
+	\includegraphics[height=9cm]{imagenes/inmaculada_concepcion_real}
+	\includegraphics[height=9cm]{imagenes/inmaculada_concepcion_hyper3d}
 	\caption{A la izquierda escultura de la Inmaculada Concepción. A la derecha su reconstrucción volumétrica usando Hyper3D y su preset para madera}
 	\label{fig:hyper3d_results}
 \end{figure}

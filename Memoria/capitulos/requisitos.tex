@@ -6,11 +6,11 @@ Este capítulo es una Especificación de Requisitos Software para el software qu
 
 	\subsection{Propósito}
 	
-	Este capítulo de especificación de requisitos tiene como objetivo definir las especificaciones funcionales y no funcionales para el desarrollo de un software que permitirá visualizar e interactuar con los datos DICOM obtenidos al someter a una escultura a un TAC. Éste software será utilizado principalmente por restauradores.
+	Este capítulo de especificación de requisitos tiene como objetivo definir las especificaciones funcionales y no funcionales para el desarrollo de un software que permitirá visualizar e interactuar con los datos DICOM obtenidos al someter a una escultura a una TC. Éste software será utilizado principalmente por restauradores.
 	
 	\subsection{Ámbito del sistema}
 	
-	En la actualidad los datos DICOM obtenidos tras un TAC se utilizan, principalmente, en el campo donde surgieron, la medicina. No obstante, esto no significa que solo se pueda aplicar ahí. Con este software, llamado \myTitle, se tratará de trasladar esta técnica al campo de la restauración de bienes culturales y poder visualizar e interactuar con los datos DICOM obtenidos con esculturas.
+	En la actualidad los datos DICOM obtenidos tras una TC se utilizan, principalmente, en el campo donde surgieron, la medicina. No obstante, esto no significa que solo se pueda aplicar ahí. Con este software, llamado \myTitle, se tratará de trasladar esta técnica al campo de la restauración de bienes culturales y poder visualizar e interactuar con los datos DICOM obtenidos con esculturas.
 	
 	\subsection{Definiciones, acrónimos y abreviaturas}
 	
@@ -18,7 +18,7 @@ Este capítulo es una Especificación de Requisitos Software para el software qu
 		\item \textbf{ERS}: Especificación de Requisitos Software.
 		\item \textbf{GUI} (\textit{Graphic User Interface}): Interfaz gráfica de usuario.
 		\item \textbf{DICOM} (\textit{Digital Imaging and Comunication in Medicine}): Datos de donde se obtienen las imágenes.
-		\item \textbf{TAC} (Tomografía Axial Computerizada): Escáner en el que se obtienen los datos DICOM.
+		\item \textbf{TAC o TC} (Tomografía Axial Computerizada): Escáner en el que se obtienen los datos DICOM.
 		\item \textbf{GPU} (\textit{Graphic Precessor Unit}): Tarjeta gráfica.
 		\item \textbf{VTK} (\textit{The Visualization ToolKit}): Librería gráfica que se utilizará.
 		\item \textbf{CMake} (\textit{Cross platform Make}): Herramienta para generar código compilable en distintas plataformas.
@@ -44,7 +44,7 @@ Este capítulo es una Especificación de Requisitos Software para el software qu
 
 \subsection{Perspectiva del producto}
 
-	El software \myTitle tiene como objetivo interactuar con datos DICOM, pero no es el encargado de generarlos. Para generarlos se deberá utilizar algún escáner TAC.
+	El software \myTitle tiene como objetivo interactuar con datos DICOM, pero no es el encargado de generarlos. Para generarlos se deberá utilizar algún escáner de TC.
 	
 	Una vez obtenidos, no se necesitará ningún otro software adicional.
 	

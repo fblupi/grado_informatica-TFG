@@ -12,7 +12,7 @@ A la hora de renderizar un conjunto de datos volumétricos para obtener una imag
 		\label{fig:marching_cubes_head}
 	\end{figure}
 	
-	\item \textbf{Texturas2D}: Se utilizan planos de corte alineados a los ejes de coordenadas. Por lo que se tendría una serie de cortes sobre el plano sagital, otra sobre el coronal y otra sobre el axial. Se realiza una interpolación bilineal para obtener la imagen final (Figura \ref{fig:texturas2d} \cite{intro_medical_vtk_bioimage}). Se puede usar en VTK con \texttt{vtkVolumeTextureMapper}.
+	\item \textbf{Texturas 2D}: Se utilizan planos de corte alineados a los ejes de coordenadas. Por lo que se tendría una serie de cortes sobre el plano sagital, otra sobre el coronal y otra sobre el axial. Se realiza una interpolación bilineal para obtener la imagen final (Figura \ref{fig:texturas2d} \cite{intro_medical_vtk_bioimage}). Se puede usar en VTK con \texttt{vtkVolumeTextureMapper}.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=10cm]{imagenes/texturas2d}
@@ -20,7 +20,7 @@ A la hora de renderizar un conjunto de datos volumétricos para obtener una imag
 		\label{fig:texturas2d}
 	\end{figure}
 	
-	\item \textbf{Texturas3D}: Esta técnica es similar a la anterior, pero ahora los datos se cargan en una textura 3D y los cortes se dibujan paralelos a la dirección de vista. A diferencia de las texturas 2D, usa interpolación trilineal y no es necesario tener almacenado en memoria tres copias de los mismos datos (Figura \ref{fig:texturas3d}) \cite{intro_medical_vtk_bioimage}. Se puede usar en VTK con \texttt{vtkVolumeTextureMapper3D}.
+	\item \textbf{Texturas 3D}: Esta técnica es similar a la anterior, pero ahora los datos se cargan en una textura 3D y los cortes se dibujan paralelos a la dirección de vista. A diferencia de las texturas 2D, usa interpolación trilineal y no es necesario tener almacenado en memoria tres copias de los mismos datos (Figura \ref{fig:texturas3d}) \cite{intro_medical_vtk_bioimage}. Se puede usar en VTK con \texttt{vtkVolumeTextureMapper3D}.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=10cm]{imagenes/texturas3d}
@@ -120,3 +120,37 @@ Para poder definir la función de la opacidad gradiente, al igual que con las de
 	\caption{Parte de opacidad gradiente de la función de transferencia del \textit{preset} \textit{CT-WoodSculpture} creado para visualizar esculturas de madera policromadas. Se obtendría un valor cercano a 1 en la opacidad en aquellas zonas más cercanas a los bordes entre materiales pues se ha establecido que para un gradiente 0 la opacidad sea 0, y para 2000, 1. }
 	\label{fig:gradient_tf}
 \end{figure}
+
+\section{Escala Hounsfield}
+
+Como ya se ha explicado, para desarrollar la función de transferencia con la que se visualiza el volumen, juega un papel muy importante el valor de densidad del material. 
+
+Este valor se encuentra en unas unidades conocidas como Unidades Hounsfield (HU) en honor al ingeniero Godfrey Newbold Hounsfield, inventor del primer escáner TAC con el que ganó el Premio Nobel de Fisiología o Medicina en 1979.
+
+La Escala Hounsfield no es más que la transformación de la escala de coeficientes de atenuación lineal de rayos X a una nueva en relación al valor del agua destilada en condiciones normales de presión y temperatura.
+
+El valor de HU de un material viene dado por la siguiente fórmula:
+
+\[ HU = 1000 \times \frac{\mu_{mat}-\mu_{agua}}{\mu_{agua}} \]
+
+Donde $ \mu_{mat} $ es el coeficiente de atenuación lineal del material y $ \mu_{agua} $ el del agua.
+
+Por tanto, el valor teórico del agua será 0 HU.
+
+El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores representados mediante 12 bits.
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular} {|l|l|}
+			\hline
+			Material & HU \\ \hline
+			\hline
+			Aire & -1000 \\ \hline
+			Madera & -750 a -350 \\ \hline
+			Estuco & 200 a 1000 \\ \hline
+			Metal & 2900 a 3000 \\ \hline
+		\end{tabular}
+		\caption{Valores en HU de distintos materiales presentes en imágenes de esculturas de madera}
+		\label{tab:materials_hu}
+	\end{center}
+\end{table}

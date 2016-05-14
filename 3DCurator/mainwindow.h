@@ -28,8 +28,8 @@
 #include "colorTFChart.h"
 #include "opacityTFChart.h"
 
-#define MIN_INTENSITY -9024.0 /**< Valor mínimo de intensidad que podría tener una imagen DICOM */
-#define MAX_INTENSITY 10976.0 /**< Valor máximo de intensidad que podría tener una imagen DICOM */
+#define MIN_INTENSITY -1024.0 /**< Valor mínimo de intensidad que podría tener una imagen DICOM */
+#define MAX_INTENSITY 3071.0 /**< Valor máximo de intensidad que podría tener una imagen DICOM */
 
 namespace Ui {
     class MainWindow;

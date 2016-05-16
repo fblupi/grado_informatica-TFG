@@ -8,6 +8,54 @@
 #include <vtkVolumeProperty.h>
 #include <vtkDICOMImageReader.h>
 #include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkVolumePicker.h>
+#include <vtkObjectFactory.h>
+
+class MouseIteractorStyle : public vtkInteractorStyleTrackballCamera {
+public:
+	static MouseIteractorStyle* New();
+	vtkTypeMacro(vtkInteractorStyleTrackballCamera, MouseIteractorStyle);
+
+	void SetDefaultRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin) {
+		this->renWin = renWin;
+	}
+
+	virtual void OnLeftButtonDown() {
+		if (removing) {
+			int *pos = this->GetInteractor()->GetEventPosition();
+
+			vtkSmartPointer<vtkVolumePicker> picker = vtkSmartPointer<vtkVolumePicker>::New();
+			picker->SetUseVolumeGradientOpacity(true);
+			picker->SetVolumeOpacityIsovalue(0.2);
+
+			picker->Pick(pos[0], pos[1], pos[2], this->GetDefaultRenderer());
+
+			double *worldPosition = picker->GetPickPosition();
+			std::cout << "Pick position is: " << worldPosition[0] << " " << worldPosition[1] << " " << worldPosition[2] << std::endl;
+		}
+
+		vtkInteractorStyleTrackballCamera::OnLeftButtonDown(); // Forward events
+	}
+
+	virtual void OnKeyPress() {
+		if (this->Interactor->GetKeySym() == std::string("Delete")) {
+			if (removing) {
+				removing = false;
+				this->GetDefaultRenderer()->SetBackground(0.1, 0.2, 0.3);
+				renWin->Render();
+			} else {
+				removing = true;
+				this->GetDefaultRenderer()->SetBackground(0.3, 0.2, 0.1);
+				renWin->Render();
+			}
+		}
+	}
+private:
+	bool removing = false;
+	vtkSmartPointer<vtkRenderWindow> renWin;
+};
+
+vtkStandardNewMacro(MouseIteractorStyle);
 
 int main(int argc, char *argv[]) {
 
@@ -22,7 +70,9 @@ int main(int argc, char *argv[]) {
   renWin->AddRenderer(ren1);
   renWin->SetSize(800, 800);
   
-  vtkSmartPointer<vtkInteractorStyleTrackballCamera> style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+  vtkSmartPointer<MouseIteractorStyle> style = vtkSmartPointer<MouseIteractorStyle>::New();
+  style->SetDefaultRenderer(ren1);
+  style->SetDefaultRenderWindow(renWin);
   vtkSmartPointer<vtkRenderWindowInteractor> iren = vtkSmartPointer<vtkRenderWindowInteractor>::New();
   iren->SetInteractorStyle(style);
   iren->SetRenderWindow(renWin);

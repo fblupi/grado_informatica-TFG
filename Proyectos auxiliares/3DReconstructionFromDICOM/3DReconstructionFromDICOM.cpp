@@ -13,8 +13,11 @@
 #include <vtkImageData.h>
 #include <vtkMath.h>
 
-#define AIR_HU 1000
-#define TOLERANCE 40
+#include <stack>
+#include <vector>
+
+#define AIR_HU -1000
+#define TOLERANCE 50
 #define MIN_X 0
 #define MIN_Y 0
 #define MIN_Z 0
@@ -22,17 +25,154 @@
 #define MAX_Y 512
 #define MAX_Z 460
 
-void deleteVoxels(vtkSmartPointer<vtkImageData> imageData, const int x, const int y, const int z, const double value, const double tolerance) {
+void deleteVoxelsIter(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const double value, const double tolerance) {
+	double v;
+	std::vector<int> xyz(3), xyzNew(3);
+	xyz[0] = ijk[0]; xyz[1] = ijk[1]; xyz[2] = ijk[2];
+	std::stack<std::vector<int> > stack;
+	stack.push(xyz);
+	while (!stack.empty()) {
+		xyz = stack.top();
+		stack.pop();
+		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
+			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
+			//std::cout << "Deleting (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ")" << std::endl;
+			if (v >= value - tolerance && v <= value + tolerance) {
+				imageData->SetScalarComponentFromDouble(xyz[0], xyz[1], xyz[2], 0, AIR_HU);
+
+				xyzNew[0] = xyz[0];
+				xyzNew[1] = xyz[1];
+				xyzNew[2] = xyz[2] - 1;
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0];
+				xyzNew[1] = xyz[1];
+				xyzNew[2] = xyz[2] + 1;
+				stack.push(xyzNew);
+
+				xyzNew[0] = xyz[0];
+				xyzNew[1] = xyz[1] - 1;
+				xyzNew[2] = xyz[2];
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0];
+				xyzNew[1] = xyz[1] - 1;
+				xyzNew[2] = xyz[2] - 1;
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0];
+				xyzNew[1] = xyz[1] - 1;
+				xyzNew[2] = xyz[2] + 1;
+				stack.push(xyzNew);
+
+				xyzNew[0] = xyz[0];
+				xyzNew[1] = xyz[1] + 1;
+				xyzNew[2] = xyz[2];
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0];
+				xyzNew[1] = xyz[1] + 1;
+				xyzNew[2] = xyz[2] - 1;
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0];
+				xyzNew[1] = xyz[1] + 1;
+				xyzNew[2] = xyz[2] + 1;
+				stack.push(xyzNew);
+
+
+				xyzNew[0] = xyz[0] - 1;
+				xyzNew[1] = xyz[1];
+				xyzNew[2] = xyz[2];
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] - 1;
+				xyzNew[1] = xyz[1];
+				xyzNew[2] = xyz[2] - 1;
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] - 1;
+				xyzNew[1] = xyz[1];
+				xyzNew[2] = xyz[2] + 1;
+				stack.push(xyzNew);
+
+				xyzNew[0] = xyz[0] - 1;
+				xyzNew[1] = xyz[1] - 1;
+				xyzNew[2] = xyz[2];
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] - 1;
+				xyzNew[1] = xyz[1] - 1;
+				xyzNew[2] = xyz[2] - 1;
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] - 1;
+				xyzNew[1] = xyz[1] - 1;
+				xyzNew[2] = xyz[2] + 1;
+				stack.push(xyzNew);
+
+				xyzNew[0] = xyz[0] - 1;
+				xyzNew[1] = xyz[1] + 1;
+				xyzNew[2] = xyz[2];
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] - 1;
+				xyzNew[1] = xyz[1] + 1;
+				xyzNew[2] = xyz[2] - 1;
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] - 1;
+				xyzNew[1] = xyz[1] + 1;
+				xyzNew[2] = xyz[2] + 1;
+				stack.push(xyzNew);
+
+
+				xyzNew[0] = xyz[0] + 1;
+				xyzNew[1] = xyz[1];
+				xyzNew[2] = xyz[2];
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] + 1;
+				xyzNew[1] = xyz[1];
+				xyzNew[2] = xyz[2] - 1;
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] + 1;
+				xyzNew[1] = xyz[1];
+				xyzNew[2] = xyz[2] + 1;
+				stack.push(xyzNew);
+
+				xyzNew[0] = xyz[0] + 1;
+				xyzNew[1] = xyz[1] - 1;
+				xyzNew[2] = xyz[2];
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] + 1;
+				xyzNew[1] = xyz[1] - 1;
+				xyzNew[2] = xyz[2] - 1;
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] + 1;
+				xyzNew[1] = xyz[1] - 1;
+				xyzNew[2] = xyz[2] + 1;
+				stack.push(xyzNew);
+
+				xyzNew[0] = xyz[0] + 1;
+				xyzNew[1] = xyz[1] + 1;
+				xyzNew[2] = xyz[2];
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] + 1;
+				xyzNew[1] = xyz[1] + 1;
+				xyzNew[2] = xyz[2] - 1;
+				stack.push(xyzNew);
+				xyzNew[0] = xyz[0] + 1;
+				xyzNew[1] = xyz[1] + 1;
+				xyzNew[2] = xyz[2] + 1;
+				stack.push(xyzNew);
+			}
+		}
+	}
+}
+
+void deleteVoxelsRecur(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const double value, const double tolerance) {
 	//std::cout << value << std::endl << imageData->GetScalarComponentAsDouble(x, y, z, 0) << std::endl << std::endl;
-	for (int i = x - 1; i < x + 2; i++) {
-		for (int j = y - 1; j < y + 2; j++) {
-			for (int k = z - 1; k < z + 2; k++) {
+	int i, j, k, xyz[3];
+	double v;
+	for (i = ijk[0] - 1; i < ijk[0] + 2; i++) {
+		for (j = ijk[1] - 1; j < ijk[1] + 2; j++) {
+			for (k = ijk[2] - 1; k < ijk[2] + 2; k++) {
 				if (i < MAX_X && j < MAX_Y && k < MAX_Z && i >= MIN_X && j >= MIN_Y && k >= MIN_Z) {
-					double v = imageData->GetScalarComponentAsDouble(i, j, k, 0);
+					v = imageData->GetScalarComponentAsDouble(i, j, k, 0);
 					if (v >= value - tolerance && v <= value + tolerance) {
 						//std::cout << "Deleting (" << x << ", " << y << ", " << z << ")" << std::endl;
-						imageData->SetScalarComponentFromDouble(x, y, z, 0, AIR_HU);
-						deleteVoxels(imageData, i, j, k, value, tolerance);
+						imageData->SetScalarComponentFromDouble(ijk[0], ijk[1], ijk[2], 0, AIR_HU);
+						xyz[0] = i; xyz[1] = j; xyz[2] = k;
+						deleteVoxelsRecur(imageData, xyz, value, tolerance);
 					}
 				}
 			}
@@ -72,7 +212,7 @@ public:
 			if (picker->GetPointId() != -1) {
 				double value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
 				std::cout << "Voxel value (before) is: " << value << std::endl;
-				deleteVoxels(imageData, ijk[0], ijk[1], ijk[2], value, TOLERANCE);
+				deleteVoxelsIter(imageData, ijk, value, TOLERANCE);
 				value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
 				std::cout << "Voxel value (after) is: " << value << std::endl;
 

@@ -14,6 +14,60 @@
 #include <vtkMath.h>
 
 #define AIR_HU -1000
+#define TOLERANCE 20
+#define MIN_X 0
+#define MIN_Y 0
+#define MIN_Z 0
+#define MAX_X 512
+#define MAX_Y 512
+#define MAX_Z 460
+
+void deleteVoxels(vtkSmartPointer<vtkImageData> imageData, const int x, const int y, const int z, const double value, const double tolerance) {
+	//std::cout << value << std::endl << imageData->GetScalarComponentAsDouble(x, y, z, 0) << std::endl << std::endl;
+	if (x < MAX_X && y < MAX_Y && z < MAX_Z && x >= MIN_X && y >= MIN_Y && z >= MIN_Z)
+		if (imageData->GetScalarComponentAsDouble(x, y, z, 0) >= value - tolerance && imageData->GetScalarComponentAsDouble(x, y, z, 0) <= value + tolerance) {
+			std::cout << "Deleting (" << x << ", " << y << ", " << z << ")" << std::endl;
+
+			imageData->SetScalarComponentFromDouble(x, y, z, 0, AIR_HU);
+
+			deleteVoxels(imageData, x, y, z - 1, value, tolerance);
+			deleteVoxels(imageData, x, y, z + 1, value, tolerance);
+
+			deleteVoxels(imageData, x, y - 1, z, value, tolerance);
+			deleteVoxels(imageData, x, y - 1, z - 1, value, tolerance);
+			deleteVoxels(imageData, x, y - 1, z + 1, value, tolerance);
+
+			deleteVoxels(imageData, x, y + 1, z, value, tolerance);
+			deleteVoxels(imageData, x, y + 1, z - 1, value, tolerance);
+			deleteVoxels(imageData, x, y + 1, z + 1, value, tolerance);
+
+
+			deleteVoxels(imageData, x - 1, y, z, value, tolerance);
+			deleteVoxels(imageData, x - 1, y, z - 1, value, tolerance);
+			deleteVoxels(imageData, x - 1, y, z + 1, value, tolerance);
+
+			deleteVoxels(imageData, x - 1, y - 1, z, value, tolerance);
+			deleteVoxels(imageData, x - 1, y - 1, z - 1, value, tolerance);
+			deleteVoxels(imageData, x - 1, y - 1, z + 1, value, tolerance);
+
+			deleteVoxels(imageData, x - 1, y + 1, z, value, tolerance);
+			deleteVoxels(imageData, x - 1, y + 1, z - 1, value, tolerance);
+			deleteVoxels(imageData, x - 1, y + 1, z + 1, value, tolerance);
+
+
+			deleteVoxels(imageData, x + 1, y, z, value, tolerance);
+			deleteVoxels(imageData, x + 1, y, z - 1, value, tolerance);
+			deleteVoxels(imageData, x + 1, y, z + 1, value, tolerance);
+
+			deleteVoxels(imageData, x + 1, y - 1, z, value, tolerance);
+			deleteVoxels(imageData, x + 1, y - 1, z - 1, value, tolerance);
+			deleteVoxels(imageData, x + 1, y - 1, z + 1, value, tolerance);
+
+			deleteVoxels(imageData, x + 1, y + 1, z, value, tolerance);
+			deleteVoxels(imageData, x + 1, y + 1, z - 1, value, tolerance);
+			deleteVoxels(imageData, x + 1, y + 1, z + 1, value, tolerance);
+		}
+}
 
 class MouseIteractorStyle : public vtkInteractorStyleTrackballCamera {
 public:
@@ -26,6 +80,10 @@ public:
 
 	void SetImageData(vtkSmartPointer<vtkImageData> imageData) {
 		this->imageData = imageData;
+	}
+
+	void SetVolume(vtkSmartPointer<vtkVolume> volume) {
+		this->volume = volume;
 	}
 
 	virtual void OnLeftButtonDown() {
@@ -43,9 +101,22 @@ public:
 			if (picker->GetPointId() != -1) {
 				double value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
 				std::cout << "Voxel value (before) is: " << value << std::endl;
-				imageData->SetScalarComponentFromDouble(ijk[0], ijk[1], ijk[2], 0, AIR_HU);
+				deleteVoxels(imageData, ijk[0], ijk[1], ijk[2], value, TOLERANCE);
 				value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
 				std::cout << "Voxel value (after) is: " << value << std::endl;
+
+				//for (int i = 0; i < 512; i++)
+				//	for (int j = 0; j < 512; j++)
+				//		for (int k = 0; k < 220; k++)
+				//			imageData->SetScalarComponentFromDouble(i, j, k, 0, AIR_HU);
+
+				std::cout << "finish" << std::endl;
+
+				vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
+				volumeMapper->SetBlendModeToComposite();
+				volumeMapper->SetRequestedRenderModeToGPU();
+				volumeMapper->SetInputData(imageData);
+				volume->SetMapper(volumeMapper);
 			}
 		}
 
@@ -69,6 +140,7 @@ private:
 	bool removing = false;
 	vtkSmartPointer<vtkRenderWindow> renWin;
 	vtkSmartPointer<vtkImageData> imageData;
+	vtkSmartPointer<vtkVolume> volume;
 };
 
 vtkStandardNewMacro(MouseIteractorStyle);
@@ -76,36 +148,39 @@ vtkStandardNewMacro(MouseIteractorStyle);
 int main(int argc, char *argv[]) {
 
 	vtkSmartPointer<vtkImageData> imageData = vtkSmartPointer<vtkImageData>::New();
-
 	vtkSmartPointer<vtkDICOMImageReader> reader = vtkSmartPointer<vtkDICOMImageReader>::New();
+	vtkSmartPointer<vtkRenderWindow> renWin = vtkSmartPointer<vtkRenderWindow>::New();
+	vtkSmartPointer<vtkRenderer> ren1 = vtkSmartPointer<vtkRenderer>::New();
+	vtkSmartPointer<MouseIteractorStyle> style = vtkSmartPointer<MouseIteractorStyle>::New();
+	vtkSmartPointer<vtkRenderWindowInteractor> iren = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
+	vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
+	vtkSmartPointer<vtkPiecewiseFunction> gradientOpacity = vtkSmartPointer<vtkPiecewiseFunction>::New();
+	vtkSmartPointer<vtkPiecewiseFunction> scalarOpacity = vtkSmartPointer<vtkPiecewiseFunction>::New();
+	vtkSmartPointer<vtkColorTransferFunction> color = vtkSmartPointer<vtkColorTransferFunction>::New();
+	vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
+
 	reader->SetDirectoryName("C:\\Users\\FranciscoJavier\\Dropbox\\Facultad\\Grado Informatica\\TFG\\DICOM\\Inmaculada Concepcion\\SE000000");
 	reader->Update();
 	imageData->ShallowCopy(reader->GetOutput());
-
-	//std::cout << "Voxel value is: " << imageData->GetScalarComponentAsDouble(255, 255, 229, 0) << std::endl;
   
-	vtkSmartPointer<vtkRenderWindow> renWin = vtkSmartPointer<vtkRenderWindow>::New();
-	vtkSmartPointer<vtkRenderer> ren1 = vtkSmartPointer<vtkRenderer>::New();
 	ren1->SetBackground(0.1, 0.2, 0.3);
   
 	renWin->AddRenderer(ren1);
 	renWin->SetSize(800, 800);
   
-	vtkSmartPointer<MouseIteractorStyle> style = vtkSmartPointer<MouseIteractorStyle>::New();
 	style->SetDefaultRenderer(ren1);
 	style->SetDefaultRenderWindow(renWin);
 	style->SetImageData(imageData);
-	vtkSmartPointer<vtkRenderWindowInteractor> iren = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+	style->SetVolume(volume);
 	iren->SetInteractorStyle(style);
 	iren->SetRenderWindow(renWin);
   
-	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	volumeMapper->SetBlendModeToComposite();
 	volumeMapper->SetRequestedRenderModeToGPU();
 	//volumeMapper->SetInputConnection(reader->GetOutputPort());
 	volumeMapper->SetInputData(imageData);
 
-	vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	volumeProperty->ShadeOn();
 	volumeProperty->SetInterpolationTypeToLinear();
 	volumeProperty->SetAmbient(0.1);
@@ -113,12 +188,10 @@ int main(int argc, char *argv[]) {
 	volumeProperty->SetSpecular(0.2);
 	volumeProperty->SetSpecularPower(10.0);
 
-	vtkSmartPointer<vtkPiecewiseFunction> gradientOpacity = vtkSmartPointer<vtkPiecewiseFunction>::New();
 	gradientOpacity->AddPoint(0.0, 0.0);
 	gradientOpacity->AddPoint(2000.0, 1.0);
 	volumeProperty->SetGradientOpacity(gradientOpacity);
   
-	vtkSmartPointer<vtkPiecewiseFunction> scalarOpacity = vtkSmartPointer<vtkPiecewiseFunction>::New();
 	scalarOpacity->AddPoint(-800.0, 0.0);
 	scalarOpacity->AddPoint(-750.0, 1.0);
 	scalarOpacity->AddPoint(-350.0, 1.0);
@@ -131,7 +204,6 @@ int main(int argc, char *argv[]) {
 	scalarOpacity->AddPoint(3000.0, 0.0);
 	volumeProperty->SetScalarOpacity(scalarOpacity);
   
-	vtkSmartPointer<vtkColorTransferFunction> color = vtkSmartPointer<vtkColorTransferFunction>::New();
 	color->AddRGBPoint(-750.0, 0.08, 0.05, 0.03);
 	color->AddRGBPoint(-350.0, 0.39, 0.25, 0.16);
 	color->AddRGBPoint(-200.0, 0.80, 0.80, 0.80);
@@ -139,7 +211,6 @@ int main(int argc, char *argv[]) {
 	color->AddRGBPoint(3000.0, 0.35, 0.35, 0.35);
 	volumeProperty->SetColor(color);
     
-	vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
 	volume->SetMapper(volumeMapper);
 	volume->SetProperty(volumeProperty);
 	ren1->AddVolume(volume);

@@ -10,6 +10,8 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkVolumePicker.h>
 #include <vtkObjectFactory.h>
+#include <vtkImageData.h>
+#include <vtkMath.h>
 
 class MouseIteractorStyle : public vtkInteractorStyleTrackballCamera {
 public:
@@ -20,18 +22,26 @@ public:
 		this->renWin = renWin;
 	}
 
+	void SetImageData(vtkSmartPointer<vtkImageData> imageData) {
+		this->imageData = imageData;
+	}
+
 	virtual void OnLeftButtonDown() {
 		if (removing) {
-			int *pos = this->GetInteractor()->GetEventPosition();
-
 			vtkSmartPointer<vtkVolumePicker> picker = vtkSmartPointer<vtkVolumePicker>::New();
 			picker->SetUseVolumeGradientOpacity(true);
-			picker->SetVolumeOpacityIsovalue(0.2);
+			picker->SetVolumeOpacityIsovalue(0.1);
 
+			int *pos = this->GetInteractor()->GetEventPosition();
 			picker->Pick(pos[0], pos[1], pos[2], this->GetDefaultRenderer());
 
-			double *worldPosition = picker->GetPickPosition();
-			std::cout << "Pick position is: " << worldPosition[0] << " " << worldPosition[1] << " " << worldPosition[2] << std::endl;
+			int *ijk = picker->GetPointIJK();
+			std::cout << "Pick position is: " << ijk[0] << " " << ijk[1] << " " << ijk[2] << std::endl;
+
+			if (picker->GetPointId() != -1) {
+				double value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
+				std::cout << "Voxel value is: " << value << std::endl;
+			}
 		}
 
 		vtkInteractorStyleTrackballCamera::OnLeftButtonDown(); // Forward events
@@ -53,78 +63,86 @@ public:
 private:
 	bool removing = false;
 	vtkSmartPointer<vtkRenderWindow> renWin;
+	vtkSmartPointer<vtkImageData> imageData;
 };
 
 vtkStandardNewMacro(MouseIteractorStyle);
 
 int main(int argc, char *argv[]) {
 
-  vtkSmartPointer<vtkDICOMImageReader> reader = vtkSmartPointer<vtkDICOMImageReader>::New();
-  reader->SetDirectoryName("C:\\Users\\FranciscoJavier\\Dropbox\\Facultad\\Grado Informatica\\TFG\\DICOM\\Inmaculada Concepcion\\SE000000");
-  reader->Update();
-  
-  vtkSmartPointer<vtkRenderWindow> renWin = vtkSmartPointer<vtkRenderWindow>::New();
-  vtkSmartPointer<vtkRenderer> ren1 = vtkSmartPointer<vtkRenderer>::New();
-  ren1->SetBackground(0.1, 0.2, 0.3);
-  
-  renWin->AddRenderer(ren1);
-  renWin->SetSize(800, 800);
-  
-  vtkSmartPointer<MouseIteractorStyle> style = vtkSmartPointer<MouseIteractorStyle>::New();
-  style->SetDefaultRenderer(ren1);
-  style->SetDefaultRenderWindow(renWin);
-  vtkSmartPointer<vtkRenderWindowInteractor> iren = vtkSmartPointer<vtkRenderWindowInteractor>::New();
-  iren->SetInteractorStyle(style);
-  iren->SetRenderWindow(renWin);
-  
-  vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
-  volumeMapper->SetBlendModeToComposite();
-  volumeMapper->SetRequestedRenderModeToGPU();
-  volumeMapper->SetInputConnection(reader->GetOutputPort());
+	vtkSmartPointer<vtkImageData> imageData = vtkSmartPointer<vtkImageData>::New();
 
-  vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
-  volumeProperty->ShadeOn();
-  volumeProperty->SetInterpolationTypeToLinear();
-  volumeProperty->SetAmbient(0.1);
-  volumeProperty->SetDiffuse(0.9);
-  volumeProperty->SetSpecular(0.2);
-  volumeProperty->SetSpecularPower(10.0);
+	vtkSmartPointer<vtkDICOMImageReader> reader = vtkSmartPointer<vtkDICOMImageReader>::New();
+	reader->SetDirectoryName("C:\\Users\\FranciscoJavier\\Dropbox\\Facultad\\Grado Informatica\\TFG\\DICOM\\Inmaculada Concepcion\\SE000000");
+	reader->Update();
+	imageData->ShallowCopy(reader->GetOutput());
 
-  vtkSmartPointer<vtkPiecewiseFunction> gradientOpacity = vtkSmartPointer<vtkPiecewiseFunction>::New();
-  gradientOpacity->AddPoint(0.0, 0.0);
-  gradientOpacity->AddPoint(2000.0, 1.0);
-  volumeProperty->SetGradientOpacity(gradientOpacity);
+	//std::cout << "Voxel value is: " << imageData->GetScalarComponentAsDouble(255, 255, 229, 0) << std::endl;
   
-  vtkSmartPointer<vtkPiecewiseFunction> scalarOpacity = vtkSmartPointer<vtkPiecewiseFunction>::New();
-  scalarOpacity->AddPoint(-800.0, 0.0);
-  scalarOpacity->AddPoint(-750.0, 1.0);
-  scalarOpacity->AddPoint(-350.0, 1.0);
-  scalarOpacity->AddPoint(-300.0, 0.0);
-  scalarOpacity->AddPoint(-200.0, 0.0);
-  scalarOpacity->AddPoint(-100.0, 1.0);
-  scalarOpacity->AddPoint(1000.0, 0.0);
-  scalarOpacity->AddPoint(2750.0, 0.0);
-  scalarOpacity->AddPoint(2976.0, 1.0);
-  scalarOpacity->AddPoint(3000.0, 0.0);
-  volumeProperty->SetScalarOpacity(scalarOpacity);
+	vtkSmartPointer<vtkRenderWindow> renWin = vtkSmartPointer<vtkRenderWindow>::New();
+	vtkSmartPointer<vtkRenderer> ren1 = vtkSmartPointer<vtkRenderer>::New();
+	ren1->SetBackground(0.1, 0.2, 0.3);
   
-  vtkSmartPointer<vtkColorTransferFunction> color = vtkSmartPointer<vtkColorTransferFunction>::New();
-  color->AddRGBPoint(-750.0, 0.08, 0.05, 0.03);
-  color->AddRGBPoint(-350.0, 0.39, 0.25, 0.16);
-  color->AddRGBPoint(-200.0, 0.80, 0.80, 0.80);
-  color->AddRGBPoint(2750.0, 0.70, 0.70, 0.70);
-  color->AddRGBPoint(3000.0, 0.35, 0.35, 0.35);
-  volumeProperty->SetColor(color);
+	renWin->AddRenderer(ren1);
+	renWin->SetSize(800, 800);
+  
+	vtkSmartPointer<MouseIteractorStyle> style = vtkSmartPointer<MouseIteractorStyle>::New();
+	style->SetDefaultRenderer(ren1);
+	style->SetDefaultRenderWindow(renWin);
+	style->SetImageData(imageData);
+	vtkSmartPointer<vtkRenderWindowInteractor> iren = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+	iren->SetInteractorStyle(style);
+	iren->SetRenderWindow(renWin);
+  
+	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
+	volumeMapper->SetBlendModeToComposite();
+	volumeMapper->SetRequestedRenderModeToGPU();
+	//volumeMapper->SetInputConnection(reader->GetOutputPort());
+	volumeMapper->SetInputData(imageData);
+
+	vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
+	volumeProperty->ShadeOn();
+	volumeProperty->SetInterpolationTypeToLinear();
+	volumeProperty->SetAmbient(0.1);
+	volumeProperty->SetDiffuse(0.9);
+	volumeProperty->SetSpecular(0.2);
+	volumeProperty->SetSpecularPower(10.0);
+
+	vtkSmartPointer<vtkPiecewiseFunction> gradientOpacity = vtkSmartPointer<vtkPiecewiseFunction>::New();
+	gradientOpacity->AddPoint(0.0, 0.0);
+	gradientOpacity->AddPoint(2000.0, 1.0);
+	volumeProperty->SetGradientOpacity(gradientOpacity);
+  
+	vtkSmartPointer<vtkPiecewiseFunction> scalarOpacity = vtkSmartPointer<vtkPiecewiseFunction>::New();
+	scalarOpacity->AddPoint(-800.0, 0.0);
+	scalarOpacity->AddPoint(-750.0, 1.0);
+	scalarOpacity->AddPoint(-350.0, 1.0);
+	scalarOpacity->AddPoint(-300.0, 0.0);
+	scalarOpacity->AddPoint(-200.0, 0.0);
+	scalarOpacity->AddPoint(-100.0, 1.0);
+	scalarOpacity->AddPoint(1000.0, 0.0);
+	scalarOpacity->AddPoint(2750.0, 0.0);
+	scalarOpacity->AddPoint(2976.0, 1.0);
+	scalarOpacity->AddPoint(3000.0, 0.0);
+	volumeProperty->SetScalarOpacity(scalarOpacity);
+  
+	vtkSmartPointer<vtkColorTransferFunction> color = vtkSmartPointer<vtkColorTransferFunction>::New();
+	color->AddRGBPoint(-750.0, 0.08, 0.05, 0.03);
+	color->AddRGBPoint(-350.0, 0.39, 0.25, 0.16);
+	color->AddRGBPoint(-200.0, 0.80, 0.80, 0.80);
+	color->AddRGBPoint(2750.0, 0.70, 0.70, 0.70);
+	color->AddRGBPoint(3000.0, 0.35, 0.35, 0.35);
+	volumeProperty->SetColor(color);
     
-  vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
-  volume->SetMapper(volumeMapper);
-  volume->SetProperty(volumeProperty);
-  ren1->AddVolume(volume);
-  ren1->ResetCamera();
+	vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
+	volume->SetMapper(volumeMapper);
+	volume->SetProperty(volumeProperty);
+	ren1->AddVolume(volume);
+	ren1->ResetCamera();
   
-  renWin->Render();
-  iren->Start();
+	renWin->Render();
+	iren->Start();
   
-  return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 
 }

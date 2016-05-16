@@ -13,8 +13,8 @@
 #include <vtkImageData.h>
 #include <vtkMath.h>
 
-#define AIR_HU 3000
-#define TOLERANCE 25
+#define AIR_HU 1000
+#define TOLERANCE 40
 #define MIN_X 0
 #define MIN_Y 0
 #define MIN_Z 0
@@ -24,49 +24,20 @@
 
 void deleteVoxels(vtkSmartPointer<vtkImageData> imageData, const int x, const int y, const int z, const double value, const double tolerance) {
 	//std::cout << value << std::endl << imageData->GetScalarComponentAsDouble(x, y, z, 0) << std::endl << std::endl;
-	if (x < MAX_X && y < MAX_Y && z < MAX_Z && x >= MIN_X && y >= MIN_Y && z >= MIN_Z)
-		if (imageData->GetScalarComponentAsDouble(x, y, z, 0) >= value - tolerance && imageData->GetScalarComponentAsDouble(x, y, z, 0) <= value + tolerance) {
-			std::cout << "Deleting (" << x << ", " << y << ", " << z << ")" << std::endl;
-
-			imageData->SetScalarComponentFromDouble(x, y, z, 0, AIR_HU);
-
-			deleteVoxels(imageData, x, y, z - 1, value, tolerance);
-			deleteVoxels(imageData, x, y, z + 1, value, tolerance);
-
-			deleteVoxels(imageData, x, y - 1, z, value, tolerance);
-			deleteVoxels(imageData, x, y - 1, z - 1, value, tolerance);
-			deleteVoxels(imageData, x, y - 1, z + 1, value, tolerance);
-
-			deleteVoxels(imageData, x, y + 1, z, value, tolerance);
-			deleteVoxels(imageData, x, y + 1, z - 1, value, tolerance);
-			deleteVoxels(imageData, x, y + 1, z + 1, value, tolerance);
-
-
-			deleteVoxels(imageData, x - 1, y, z, value, tolerance);
-			deleteVoxels(imageData, x - 1, y, z - 1, value, tolerance);
-			deleteVoxels(imageData, x - 1, y, z + 1, value, tolerance);
-
-			deleteVoxels(imageData, x - 1, y - 1, z, value, tolerance);
-			deleteVoxels(imageData, x - 1, y - 1, z - 1, value, tolerance);
-			deleteVoxels(imageData, x - 1, y - 1, z + 1, value, tolerance);
-
-			deleteVoxels(imageData, x - 1, y + 1, z, value, tolerance);
-			deleteVoxels(imageData, x - 1, y + 1, z - 1, value, tolerance);
-			deleteVoxels(imageData, x - 1, y + 1, z + 1, value, tolerance);
-
-
-			deleteVoxels(imageData, x + 1, y, z, value, tolerance);
-			deleteVoxels(imageData, x + 1, y, z - 1, value, tolerance);
-			deleteVoxels(imageData, x + 1, y, z + 1, value, tolerance);
-
-			deleteVoxels(imageData, x + 1, y - 1, z, value, tolerance);
-			deleteVoxels(imageData, x + 1, y - 1, z - 1, value, tolerance);
-			deleteVoxels(imageData, x + 1, y - 1, z + 1, value, tolerance);
-
-			deleteVoxels(imageData, x + 1, y + 1, z, value, tolerance);
-			deleteVoxels(imageData, x + 1, y + 1, z - 1, value, tolerance);
-			deleteVoxels(imageData, x + 1, y + 1, z + 1, value, tolerance);
+	for (int i = x - 1; i < x + 2; i++) {
+		for (int j = y - 1; j < y + 2; j++) {
+			for (int k = z - 1; k < z + 2; k++) {
+				if (i < MAX_X && j < MAX_Y && k < MAX_Z && i >= MIN_X && j >= MIN_Y && k >= MIN_Z) {
+					double v = imageData->GetScalarComponentAsDouble(i, j, k, 0);
+					if (v >= value - tolerance && v <= value + tolerance) {
+						//std::cout << "Deleting (" << x << ", " << y << ", " << z << ")" << std::endl;
+						imageData->SetScalarComponentFromDouble(x, y, z, 0, AIR_HU);
+						deleteVoxels(imageData, i, j, k, value, tolerance);
+					}
+				}
+			}
 		}
+	}
 }
 
 class MouseIteractorStyle : public vtkInteractorStyleTrackballCamera {
@@ -201,15 +172,14 @@ int main(int argc, char *argv[]) {
 	scalarOpacity->AddPoint(1000.0, 0.0);
 	scalarOpacity->AddPoint(2750.0, 0.0);
 	scalarOpacity->AddPoint(2976.0, 1.0);
-	scalarOpacity->AddPoint(3000.0, 1.0);
-	scalarOpacity->AddPoint(3076.0, 0.0);
+	scalarOpacity->AddPoint(3000.0, 0.0);
 	volumeProperty->SetScalarOpacity(scalarOpacity);
   
 	color->AddRGBPoint(-750.0, 0.08, 0.05, 0.03);
 	color->AddRGBPoint(-350.0, 0.39, 0.25, 0.16);
 	color->AddRGBPoint(-200.0, 0.80, 0.80, 0.80);
 	color->AddRGBPoint(2750.0, 0.70, 0.70, 0.70);
-	color->AddRGBPoint(3000.0, 1, 0.35, 0.35);
+	color->AddRGBPoint(3000.0, 0.35, 0.35, 0.35);
 	volumeProperty->SetColor(color);
     
 	volume->SetMapper(volumeMapper);

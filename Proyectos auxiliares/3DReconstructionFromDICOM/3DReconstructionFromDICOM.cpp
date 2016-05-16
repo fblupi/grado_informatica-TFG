@@ -13,6 +13,8 @@
 #include <vtkImageData.h>
 #include <vtkMath.h>
 
+#define AIR_HU -1000
+
 class MouseIteractorStyle : public vtkInteractorStyleTrackballCamera {
 public:
 	static MouseIteractorStyle* New();
@@ -40,7 +42,10 @@ public:
 
 			if (picker->GetPointId() != -1) {
 				double value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
-				std::cout << "Voxel value is: " << value << std::endl;
+				std::cout << "Voxel value (before) is: " << value << std::endl;
+				imageData->SetScalarComponentFromDouble(ijk[0], ijk[1], ijk[2], 0, AIR_HU);
+				value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
+				std::cout << "Voxel value (after) is: " << value << std::endl;
 			}
 		}
 

@@ -13,8 +13,8 @@
 #include <vtkImageData.h>
 #include <vtkMath.h>
 
-#define AIR_HU -1000
-#define TOLERANCE 20
+#define AIR_HU 3000
+#define TOLERANCE 25
 #define MIN_X 0
 #define MIN_Y 0
 #define MIN_Z 0
@@ -201,14 +201,15 @@ int main(int argc, char *argv[]) {
 	scalarOpacity->AddPoint(1000.0, 0.0);
 	scalarOpacity->AddPoint(2750.0, 0.0);
 	scalarOpacity->AddPoint(2976.0, 1.0);
-	scalarOpacity->AddPoint(3000.0, 0.0);
+	scalarOpacity->AddPoint(3000.0, 1.0);
+	scalarOpacity->AddPoint(3076.0, 0.0);
 	volumeProperty->SetScalarOpacity(scalarOpacity);
   
 	color->AddRGBPoint(-750.0, 0.08, 0.05, 0.03);
 	color->AddRGBPoint(-350.0, 0.39, 0.25, 0.16);
 	color->AddRGBPoint(-200.0, 0.80, 0.80, 0.80);
 	color->AddRGBPoint(2750.0, 0.70, 0.70, 0.70);
-	color->AddRGBPoint(3000.0, 0.35, 0.35, 0.35);
+	color->AddRGBPoint(3000.0, 1, 0.35, 0.35);
 	volumeProperty->SetColor(color);
     
 	volume->SetMapper(volumeMapper);

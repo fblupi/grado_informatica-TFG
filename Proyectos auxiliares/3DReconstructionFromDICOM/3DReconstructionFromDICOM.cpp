@@ -29,16 +29,22 @@ void deleteIslands(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], co
 	xyz[0] = ijk[0];
 	xyz[1] = ijk[1];
 	xyz[2] = ijk[2];
-	std::stack<std::vector<int> > stack;
+	std::vector<std::vector<int> > stack;
+	//std::stack<std::vector<int> > stack;
 	//std::set<std::vector<int> > set;
 	//std::set<std::vector<int> >::iterator it;
-	stack.push(xyz);
+	stack.push_back(xyz);
+	//stack.push(xyz);
 	//set.insert(xyz);
 	while (!stack.empty()) {
 	//while (!set.empty()) {
-		xyz = stack.top();
+		xyz = stack.back();
+		stack.pop_back();
+		//xyz = stack.top();
+		//stack.pop();
 		//it = set.begin();
 		//xyz = *it;
+		//set.erase(it);
 		//std::cout << "Checking (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ")" << std::endl;
 		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
 			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
@@ -48,21 +54,20 @@ void deleteIslands(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], co
 				for (i = -1; i < 2; i++) {
 					for (j = -1; j < 2; j++) {
 						for (k = -1; k < 2; k++) {
-							if (i != 0 && j != 0 && k != 0) {
+							if (!(i != 0 && j != 0 && k != 0)) {
 								xyzNew[0] = xyz[0] + i;
 								xyzNew[1] = xyz[1] + j;
 								xyzNew[2] = xyz[2] + k;
 								//std::cout << "Adding (" << xyzNew[0] << ", " << xyzNew[1] << ", " << xyzNew[2] << ")" << std::endl;
+								stack.push_back(xyzNew);
+								//stack.push(xyzNew);
 								//set.insert(xyzNew);
-								stack.push(xyzNew);
 							}
 						}
 					}
 				}
 			}
 		}
-		stack.pop();
-		//set.erase(it);
 		iters++;
 	}
 	std::cout << "Voxels deleted: " << iters << std::endl;
@@ -230,7 +235,7 @@ int main(int argc, char *argv[]) {
 	vtkSmartPointer<vtkColorTransferFunction> color = vtkSmartPointer<vtkColorTransferFunction>::New();
 	vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
 
-	reader->SetDirectoryName("C:\\Users\\FranciscoJavier\\Dropbox\\Facultad\\Grado Informatica\\TFG\\DICOM\\Inmaculada Concepcion\\SE000005");
+	reader->SetDirectoryName("C:\\Users\\FranciscoJavier\\Dropbox\\Facultad\\Grado Informatica\\TFG\\DICOM\\San Juan Evangelista\\SE000000");
 	reader->Update();
 	imageData->ShallowCopy(reader->GetOutput());
   
@@ -260,7 +265,7 @@ int main(int argc, char *argv[]) {
 
 	gradientOpacity->AddPoint(0.0, 0.0);
 	gradientOpacity->AddPoint(2000.0, 1.0);
-	//volumeProperty->SetGradientOpacity(gradientOpacity);
+	volumeProperty->SetGradientOpacity(gradientOpacity);
   
 	scalarOpacity->AddPoint(-800.0, 0.0);
 	scalarOpacity->AddPoint(-750.0, 1.0);

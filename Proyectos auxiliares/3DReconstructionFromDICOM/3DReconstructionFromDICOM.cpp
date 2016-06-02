@@ -27,16 +27,16 @@
 void deleteIslands(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, const int MIN_Z, const int MAX_Z) {
 	double v;
 	int i, j, k, iters = 0;
+
 	std::vector<int> xyz(3), xyzNew(3);
 	xyz[0] = ijk[0];
 	xyz[1] = ijk[1];
 	xyz[2] = ijk[2];
 	std::stack<std::vector<int> > stack;
 	stack.push(xyz);
-	while (!stack.empty()) {
+	while (!stack.empty() && iters < 3e6) {
 		xyz = stack.top();
 		stack.pop();
-		//std::cout << "Checking (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ")" << std::endl;
 		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
 			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
 			//std::cout << "Deleting (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ") = " << v << std::endl;
@@ -59,6 +59,17 @@ void deleteIslands(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], co
 		}
 		iters++;
 	}
+	while (!stack.empty()) {
+		xyz = stack.top();
+		stack.pop();
+		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
+			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
+			if (v >= MIN_AIR) {
+				imageData->SetScalarComponentFromDouble(xyz[0], xyz[1], xyz[2], 0, AIR_HU);
+			}
+		}
+		iters++;
+	}
 	std::cout << "Voxels deleted: " << iters << std::endl;
 }
 
@@ -71,7 +82,7 @@ void deleteVoxelsIter(vtkSmartPointer<vtkImageData> imageData, const int ijk[3],
 	xyz[2] = ijk[2];
 	std::stack<std::vector<int> > stack;
 	stack.push(xyz);
-	while (!stack.empty()) {
+	while (!stack.empty() && iters < 3e6) {
 		xyz = stack.top();
 		stack.pop();
 		//std::cout << "Checking (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ")" << std::endl;
@@ -93,6 +104,17 @@ void deleteVoxelsIter(vtkSmartPointer<vtkImageData> imageData, const int ijk[3],
 						}
 					}
 				}
+			}
+		}
+		iters++;
+	}
+	while (!stack.empty()) {
+		xyz = stack.top();
+		stack.pop();
+		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
+			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
+			if (v >= value - tolerance && v <= value + tolerance && v > AIR_HU) {
+				imageData->SetScalarComponentFromDouble(xyz[0], xyz[1], xyz[2], 0, AIR_HU);
 			}
 		}
 		iters++;
@@ -155,7 +177,7 @@ public:
 			if (picker->GetPointId() != -1) {
 				double value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
 				int *dimensions = imageData->GetDimensions();
-				if (value > -1000) {
+				if (value > AIR_HU) {
 					std::cout << "Voxel value (before) is: " << value << std::endl;
 					std::cout << "Working..." << std::endl;
 					clock_t t = clock();
@@ -165,13 +187,11 @@ public:
 					deleteVoxelsIter(imageData, ijk, value, TOLERANCE, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2]);
 #endif
 					t = clock() - t;
-					std::cout << "It took " << ((float) t) / CLOCKS_PER_SEC << " secconds" << std::endl;
-					value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
-					std::cout << "Voxel value (after) is: " << value << std::endl;
+					std::cout << "It took " << ((float) t) / CLOCKS_PER_SEC << " seconds" << std::endl;
+					//value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
+					//std::cout << "Voxel value (after) is: " << value << std::endl;
 
 					vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
-					volumeMapper->SetBlendModeToComposite();
-					volumeMapper->SetRequestedRenderModeToGPU();
 					volumeMapper->SetInputData(imageData);
 					volume->SetMapper(volumeMapper);
 				}

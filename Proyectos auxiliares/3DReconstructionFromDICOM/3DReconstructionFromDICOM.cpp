@@ -21,54 +21,43 @@
 #define MIN_AIR -850
 #define AIR_HU -1000
 #define TOLERANCE 50
+#define LIMIT 2e6
 
 #define ISLANDS
 
 void deleteIslands(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, const int MIN_Z, const int MAX_Z) {
 	double v;
 	int i, j, k, iters = 0;
-
 	std::vector<int> xyz(3), xyzNew(3);
 	xyz[0] = ijk[0];
 	xyz[1] = ijk[1];
 	xyz[2] = ijk[2];
 	std::stack<std::vector<int> > stack;
 	stack.push(xyz);
-	while (!stack.empty() && iters < 3e6) {
+	while (!stack.empty()) {
 		xyz = stack.top();
 		stack.pop();
 		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
 			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
-			//std::cout << "Deleting (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ") = " << v << std::endl;
+			iters++;
 			if (v >= MIN_AIR) {
 				imageData->SetScalarComponentFromDouble(xyz[0], xyz[1], xyz[2], 0, AIR_HU);
-				for (i = -1; i < 2; i++) {
-					for (j = -1; j < 2; j++) {
-						for (k = -1; k < 2; k++) {
-							if (!(i == 0 && j == 0 && k == 0)) {
-								xyzNew[0] = xyz[0] + i;
-								xyzNew[1] = xyz[1] + j;
-								xyzNew[2] = xyz[2] + k;
-								//std::cout << "Adding (" << xyzNew[0] << ", " << xyzNew[1] << ", " << xyzNew[2] << ")" << std::endl;
-								stack.push(xyzNew);
+				if (iters < LIMIT) {
+					for (i = -1; i < 2; i++) {
+						for (j = -1; j < 2; j++) {
+							for (k = -1; k < 2; k++) {
+								if (!(i == 0 && j == 0 && k == 0)) {
+									xyzNew[0] = xyz[0] + i;
+									xyzNew[1] = xyz[1] + j;
+									xyzNew[2] = xyz[2] + k;
+									stack.push(xyzNew);
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-		iters++;
-	}
-	while (!stack.empty()) {
-		xyz = stack.top();
-		stack.pop();
-		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
-			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
-			if (v >= MIN_AIR) {
-				imageData->SetScalarComponentFromDouble(xyz[0], xyz[1], xyz[2], 0, AIR_HU);
-			}
-		}
-		iters++;
 	}
 	std::cout << "Voxels deleted: " << iters << std::endl;
 }
@@ -82,42 +71,30 @@ void deleteVoxelsIter(vtkSmartPointer<vtkImageData> imageData, const int ijk[3],
 	xyz[2] = ijk[2];
 	std::stack<std::vector<int> > stack;
 	stack.push(xyz);
-	while (!stack.empty() && iters < 3e6) {
+	while (!stack.empty()) {
 		xyz = stack.top();
 		stack.pop();
-		//std::cout << "Checking (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ")" << std::endl;
 		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
 			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
-			//std::cout << "Deleting (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ") = " << v << std::endl;
+			iters++;
 			if (v >= value - tolerance && v <= value + tolerance && v > AIR_HU) {
 				imageData->SetScalarComponentFromDouble(xyz[0], xyz[1], xyz[2], 0, AIR_HU);
-				for (i = -1; i < 2; i++) {
-					for (j = -1; j < 2; j++) {
-						for (k = -1; k < 2; k++) {
-							if (!(i == 0 && j == 0 && k == 0)) {
-								xyzNew[0] = xyz[0] + i;
-								xyzNew[1] = xyz[1] + j;
-								xyzNew[2] = xyz[2] + k;
-								//std::cout << "Adding (" << xyzNew[0] << ", " << xyzNew[1] << ", " << xyzNew[2] << ")" << std::endl;
-								stack.push(xyzNew);
+				if (iters < LIMIT) {
+					for (i = -1; i < 2; i++) {
+						for (j = -1; j < 2; j++) {
+							for (k = -1; k < 2; k++) {
+								if (!(i == 0 && j == 0 && k == 0)) {
+									xyzNew[0] = xyz[0] + i;
+									xyzNew[1] = xyz[1] + j;
+									xyzNew[2] = xyz[2] + k;
+									stack.push(xyzNew);
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-		iters++;
-	}
-	while (!stack.empty()) {
-		xyz = stack.top();
-		stack.pop();
-		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
-			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
-			if (v >= value - tolerance && v <= value + tolerance && v > AIR_HU) {
-				imageData->SetScalarComponentFromDouble(xyz[0], xyz[1], xyz[2], 0, AIR_HU);
-			}
-		}
-		iters++;
 	}
 	std::cout << "Voxels deleted: " << iters << std::endl;
 }

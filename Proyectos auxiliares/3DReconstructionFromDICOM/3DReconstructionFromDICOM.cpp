@@ -22,6 +22,8 @@
 #define AIR_HU -1000
 #define TOLERANCE 50
 
+#define ISLANDS
+
 void deleteIslands(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, const int MIN_Z, const int MAX_Z) {
 	double v;
 	int i, j, k, iters = 0;
@@ -29,22 +31,11 @@ void deleteIslands(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], co
 	xyz[0] = ijk[0];
 	xyz[1] = ijk[1];
 	xyz[2] = ijk[2];
-	std::vector<std::vector<int> > stack;
-	//std::stack<std::vector<int> > stack;
-	//std::set<std::vector<int> > set;
-	//std::set<std::vector<int> >::iterator it;
-	stack.push_back(xyz);
-	//stack.push(xyz);
-	//set.insert(xyz);
+	std::stack<std::vector<int> > stack;
+	stack.push(xyz);
 	while (!stack.empty()) {
-	//while (!set.empty()) {
-		xyz = stack.back();
-		stack.pop_back();
-		//xyz = stack.top();
-		//stack.pop();
-		//it = set.begin();
-		//xyz = *it;
-		//set.erase(it);
+		xyz = stack.top();
+		stack.pop();
 		//std::cout << "Checking (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ")" << std::endl;
 		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
 			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
@@ -59,9 +50,7 @@ void deleteIslands(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], co
 								xyzNew[1] = xyz[1] + j;
 								xyzNew[2] = xyz[2] + k;
 								//std::cout << "Adding (" << xyzNew[0] << ", " << xyzNew[1] << ", " << xyzNew[2] << ")" << std::endl;
-								stack.push_back(xyzNew);
-								//stack.push(xyzNew);
-								//set.insert(xyzNew);
+								stack.push(xyzNew);
 							}
 						}
 					}
@@ -77,25 +66,19 @@ void deleteVoxelsIter(vtkSmartPointer<vtkImageData> imageData, const int ijk[3],
 	double v;
 	int i, j, k, iters = 0;
 	std::vector<int> xyz(3), xyzNew(3);
-	xyz[0] = ijk[0]; 
-	xyz[1] = ijk[1]; 
+	xyz[0] = ijk[0];
+	xyz[1] = ijk[1];
 	xyz[2] = ijk[2];
-	//std::stack<std::vector<int> > stack;
-	std::set<std::vector<int> > set;
-	std::set<std::vector<int> >::iterator it;
-	//stack.push(xyz);
-	set.insert(xyz);
-	//while (!stack.empty()) {
-	while (!set.empty()) {
-		//xyz = stack.top();
-		it = set.begin();
-		xyz = *it;
+	std::stack<std::vector<int> > stack;
+	stack.push(xyz);
+	while (!stack.empty()) {
+		xyz = stack.top();
+		stack.pop();
 		//std::cout << "Checking (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ")" << std::endl;
 		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
 			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
 			//std::cout << "Deleting (" << xyz[0] << ", " << xyz[1] << ", " << xyz[2] << ") = " << v << std::endl;
-			//if (v >= value - tolerance && v <= value + tolerance && v > AIR_HU) {
-			if (v >= -850) {
+			if (v >= value - tolerance && v <= value + tolerance && v > AIR_HU) {
 				imageData->SetScalarComponentFromDouble(xyz[0], xyz[1], xyz[2], 0, AIR_HU);
 				for (i = -1; i < 2; i++) {
 					for (j = -1; j < 2; j++) {
@@ -105,16 +88,13 @@ void deleteVoxelsIter(vtkSmartPointer<vtkImageData> imageData, const int ijk[3],
 								xyzNew[1] = xyz[1] + j;
 								xyzNew[2] = xyz[2] + k;
 								//std::cout << "Adding (" << xyzNew[0] << ", " << xyzNew[1] << ", " << xyzNew[2] << ")" << std::endl;
-								set.insert(xyzNew);
-								//stack.push(xyzNew);
+								stack.push(xyzNew);
 							}
 						}
 					}
 				}
 			}
 		}
-		//stack.pop();
-		set.erase(it);
 		iters++;
 	}
 	std::cout << "Voxels deleted: " << iters << std::endl;
@@ -178,9 +158,12 @@ public:
 				if (value > -1000) {
 					std::cout << "Voxel value (before) is: " << value << std::endl;
 					std::cout << "Working..." << std::endl;
-					//deleteVoxelsIter(imageData, ijk, value, TOLERANCE, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2]);
 					clock_t t = clock();
+#ifdef ISLANDS
 					deleteIslands(imageData, ijk, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2]);
+#else
+					deleteVoxelsIter(imageData, ijk, value, TOLERANCE, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2]);
+#endif
 					t = clock() - t;
 					std::cout << "It took " << ((float) t) / CLOCKS_PER_SEC << " secconds" << std::endl;
 					value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
@@ -235,7 +218,7 @@ int main(int argc, char *argv[]) {
 	vtkSmartPointer<vtkColorTransferFunction> color = vtkSmartPointer<vtkColorTransferFunction>::New();
 	vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
 
-	reader->SetDirectoryName("C:\\Users\\FranciscoJavier\\Dropbox\\Facultad\\Grado Informatica\\TFG\\DICOM\\San Juan Evangelista\\SE000000");
+	reader->SetDirectoryName("C:\\Users\\FranciscoJavier\\Dropbox\\Facultad\\Grado Informatica\\TFG\\DICOM\\Inmaculada Concepcion\\SE000000");
 	reader->Update();
 	imageData->ShallowCopy(reader->GetOutput());
   

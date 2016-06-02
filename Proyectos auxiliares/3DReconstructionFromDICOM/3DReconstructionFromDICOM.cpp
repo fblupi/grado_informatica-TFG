@@ -54,7 +54,7 @@ void deleteIslands(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], co
 				for (i = -1; i < 2; i++) {
 					for (j = -1; j < 2; j++) {
 						for (k = -1; k < 2; k++) {
-							if (!(i != 0 && j != 0 && k != 0)) {
+							if (!(i == 0 && j == 0 && k == 0)) {
 								xyzNew[0] = xyz[0] + i;
 								xyzNew[1] = xyz[1] + j;
 								xyzNew[2] = xyz[2] + k;
@@ -100,7 +100,7 @@ void deleteVoxelsIter(vtkSmartPointer<vtkImageData> imageData, const int ijk[3],
 				for (i = -1; i < 2; i++) {
 					for (j = -1; j < 2; j++) {
 						for (k = -1; k < 2; k++) {
-							if (i != 0 && j != 0 && k != 0) {
+							if (!(i == 0 && j == 0 && k == 0)) {
 								xyzNew[0] = xyz[0] + i;
 								xyzNew[1] = xyz[1] + j;
 								xyzNew[2] = xyz[2] + k;

@@ -191,7 +191,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>841</width>
+             <width>131</width>
              <height>1000</height>
             </rect>
            </property>
@@ -700,6 +700,8 @@
     </property>
     <addaction name="actionImportPreset"/>
     <addaction name="actionExportPreset"/>
+    <addaction name="separator"/>
+    <addaction name="actionDelete"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuEditar"/>
@@ -770,6 +772,11 @@
   <action name="actionExportPreset">
    <property name="text">
     <string>Exportar Preset...</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>Borrar</string>
    </property>
   </action>
  </widget>

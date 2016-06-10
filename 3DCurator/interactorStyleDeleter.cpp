@@ -2,6 +2,14 @@
 
 vtkStandardNewMacro(InteractorStyleDeleter);
 
+void InteractorStyleDeleter::SetDefaultRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin) {
+	this->renWin = renWin;
+}
+
+void InteractorStyleDeleter::SetFigura(Figura* figura) {
+	this->figura = figura;
+}
+
 void InteractorStyleDeleter::OnLeftButtonDown() {
 	vtkSmartPointer<vtkVolumePicker> picker = vtkSmartPointer<vtkVolumePicker>::New();
 	picker->SetUseVolumeGradientOpacity(true);
@@ -13,6 +21,12 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 	int* ijk = picker->GetPointIJK();
 
 	if (picker->GetPointId() != -1) {
+		QProgressDialog progressDialog(NULL);
+		progressDialog.setWindowTitle(QString("Borrando..."));
+		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
+		progressDialog.setCancelButton(0);
+		progressDialog.show();
+
 		double value = figura->getImageData()->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
 		int * dimensions = figura->getImageData()->GetDimensions();
 		if (value > AIR_HU) {
@@ -22,7 +36,10 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			volumeMapper->SetInputData(figura->getImageData());
 			figura->getVolume()->SetMapper(volumeMapper);
 		}
+
+		progressDialog.close();
 	}
+
 	vtkInteractorStyleTrackballCamera::OnLeftButtonDown(); // Forward events
 }
 

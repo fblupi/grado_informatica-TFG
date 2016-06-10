@@ -1,6 +1,8 @@
 #ifndef INTERACTORSTYLEDELETER_H
 #define INTERACTORSTYLEDELETER_H
 
+#include <QProgressDialog>
+
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>
 #include <vtkInteractorStyleTrackballCamera.h>
@@ -25,7 +27,7 @@ public:
 	vtkTypeMacro(vtkInteractorStyleTrackballCamera, InteractorStyleDeleter);
 
 	void SetDefaultRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
-	void SetFigura(const Figura* figura);
+	void SetFigura(Figura* figura);
 
 	virtual void OnLeftButtonDown();
 

@@ -25,6 +25,7 @@
 #include "figura.h"
 #include "plano.h"
 #include "interactorStyleImage.h"
+#include "interactorStyleDeleter.h"
 #include "colorTFChart.h"
 #include "opacityTFChart.h"
 
@@ -61,6 +62,7 @@ private slots:
 	void on_actionExportPreset_triggered();
 	void on_actionImportPreset_triggered();
 	void on_actionOpenDICOM_triggered();
+	void on_actionDelete_triggered();
 
 	void on_axialPlane_pressed();
 	void on_coronalPlane_pressed();
@@ -195,9 +197,11 @@ private:
 	vtkSmartPointer<vtkImageViewer2> sliceViewer; /**< Puntero al ImageViewer2 donde se verá el corte producido por el plano en el volumen */
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle; /**< Estilo para la ventana donde se visualizará el volumen */
 	vtkSmartPointer<InteractorStyleImage> sliceStyle; /**< Estilo para la ventana donde se visualizarán los cortes de la figura con el plano */
+	vtkSmartPointer<InteractorStyleDeleter> deleterStyle; /**< Estilo para poder borrar en la ventana donde se visualizará el volumen */
 	vtkSmartPointer<vtkWindowToImageFilter> filter;  /**< Filtro para pasar de un RenderWindow a una imagen */
 	vtkSmartPointer<vtkImageWriter> writer; /**< Exportador de imagen */
 	vtkSmartPointer<vtkDistanceWidget> distanceWidget; /**< Widget para realizar medidas */
+	bool deleting; /**< Variable para ver si está en modo borrado o no */
 };
 
 #endif // MAINWINDOW_H

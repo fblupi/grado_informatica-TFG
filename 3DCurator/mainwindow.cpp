@@ -4,10 +4,13 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 
+	deleting = false;
+
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
 	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
 	volumeStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
+	deleterStyle = vtkSmartPointer<InteractorStyleDeleter>::New();
 	distanceWidget = vtkSmartPointer<vtkDistanceWidget>::New();
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
@@ -57,6 +60,10 @@ void MainWindow::connectComponents() {
 	distanceWidget->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
 	distanceWidget->CreateDefaultRepresentation(); // usa la representación por defecto
 	static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
+
+	deleterStyle->SetFigura(figura); // asigna la figura al estilo para borrar partes
+	deleterStyle->SetDefaultRenderer(volumeRen); // asigna el renderer al estilo para borrar partes
+	deleterStyle->SetDefaultRenderWindow(ui->volumeWidget->GetRenderWindow()); // asigna la ventana de renderizado al estilo para borrar partes
 }
 
 void MainWindow::drawVolume() {
@@ -268,6 +275,19 @@ void MainWindow::on_actionImportPreset_triggered() {
 
 void MainWindow::on_actionOpenDICOM_triggered() {
 	importDICOM();
+}
+
+void MainWindow::on_actionDelete_triggered() {
+	if (deleting) {
+		deleting = false;
+		setBackgroundColor(volumeRen, .1, .2, .3);
+		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
+	} else {
+		deleting = true;
+		setBackgroundColor(volumeRen, .2, .3, .1);
+		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
+	}
+	renderVolume();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

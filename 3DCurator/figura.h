@@ -13,6 +13,7 @@
 #include <vtkPointData.h>
 #include <vtkDataArray.h>
 #include <vtkImageAccumulate.h>
+#include <vtkImageData.h>
 
 #include "transferFunction.h"
 
@@ -49,6 +50,12 @@ public:
 	 * @return	Puntero al lector de datos
 	 */
 	vtkSmartPointer<vtkAlgorithm> getReader() const;
+
+	/**
+	* Obtiene la matriz 3D con los datos del volumen
+	* @return	Puntero a los datos del volumen
+	*/
+	vtkSmartPointer<vtkImageData> getImageData() const;
 
 	/** 
 	 * Obtiene el histograma de frecuencias de valores de intensidad
@@ -122,6 +129,7 @@ public:
 private:
 	vtkSmartPointer<vtkDICOMImageReader> imageReader; /**< Lector de datos DICOM */
 	vtkSmartPointer<vtkAlgorithm> reader; /**< Lector necesario para obtener el puerto de salida */
+	vtkSmartPointer<vtkImageData> imageData; /** < Matriz 3D con los valores escalares de la figura */
     vtkSmartPointer<vtkVolume> volume;  /**< Volumen con la figura */
 	vtkSmartPointer<vtkSmartVolumeMapper> mapper;  /**< Mapeador que usa DVR GPU-Raycasting */
     vtkSmartPointer<vtkVolumeProperty> volumeProperty;  /**< Propiedades del volumen */

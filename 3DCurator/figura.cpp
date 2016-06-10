@@ -6,6 +6,7 @@ Figura::Figura() {
     reader = imageReader;
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
+	imageData = vtkSmartPointer<vtkImageData>::New();
 	//histogram = vtkSmartPointer<vtkImageAccumulate>::New();
 	//histogram->SetComponentExtent(-750, 3000, 0, 3000, 0, 0);
     volume = vtkSmartPointer<vtkVolume>::New();
@@ -28,6 +29,10 @@ vtkSmartPointer<vtkVolume> Figura::getVolume() const {
 
 vtkSmartPointer<vtkAlgorithm> Figura::getReader() const {
 	return reader;
+}
+
+vtkSmartPointer<vtkImageData> Figura::getImageData() const {
+	return imageData;
 }
 
 vtkSmartPointer<vtkImageAccumulate> Figura::getHistogram() const {
@@ -61,7 +66,8 @@ double Figura::getMaxZBound() const {
 void Figura::setDICOMFolder(const std::string s) {
     imageReader->SetDirectoryName(s.c_str()); // asigna la carpeta al image reader
     imageReader->Update(); // lee los archivos
-	mapper->SetInputConnection(reader->GetOutputPort()); // conecta el mapper con el reader
+	imageData->ShallowCopy(imageReader->GetOutput());
+	mapper->SetInputData(imageData); // conecta el mapper con el reader
 	//histogram->SetInputConnection(reader->GetOutputPort());
 }
 

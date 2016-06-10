@@ -14,6 +14,10 @@ void InteractorStyleDeleter::SetFigura(Figura* figura) {
 	this->figura = figura;
 }
 
+void InteractorStyleDeleter::SetPlano(Plano* plano) {
+	this->plano = plano;
+}
+
 void InteractorStyleDeleter::OnLeftButtonDown() {
 	vtkSmartPointer<vtkVolumePicker> picker = vtkSmartPointer<vtkVolumePicker>::New();
 	picker->SetUseVolumeGradientOpacity(true);
@@ -41,9 +45,8 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			volumeMapper->SetInputData(figura->getImageData());
 			figura->getVolume()->SetMapper(volumeMapper);
 
-			if (viewer != NULL) {
-				viewer->Render();
-			}
+			plano->getPlane()->UpdatePlacement(); // Actualiza el plano para que se actualicen los cambios en el corte
+			viewer->Render(); // Renderiza el corte
 
 			progressDialog.close();
 		}

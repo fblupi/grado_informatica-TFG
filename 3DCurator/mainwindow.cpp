@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceViewer->SetColorWindow(400);
 
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
+
     connectComponents(); // conecta los renderers con los widgets
 
 	renderVolume();
@@ -62,6 +63,7 @@ void MainWindow::connectComponents() {
 	static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
 
 	deleterStyle->SetFigura(figura); // asigna la figura al estilo para borrar partes
+	deleterStyle->SetPlano(plano); // asigna el plano al estilo para borrar partes
 	deleterStyle->SetDefaultRenderer(volumeRen); // asigna el renderer al estilo para borrar partes
 	deleterStyle->SetViewer(sliceViewer); // asigna la ventana de cortes
 	deleterStyle->SetDefaultRenderWindow(ui->volumeWidget->GetRenderWindow()); // asigna la ventana de renderizado al estilo para borrar partes
@@ -288,7 +290,9 @@ void MainWindow::on_actionDelete_triggered() {
 		setBackgroundColor(volumeRen, .2, .3, .1);
 		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
 	}
+	plano->getPlane()->UpdatePlacement();
 	renderVolume();
+	renderSlice();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

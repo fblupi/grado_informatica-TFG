@@ -3,9 +3,9 @@
 
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>
-#include <vtkAlgorithm.h>
 #include <vtkImagePlaneWidget.h>
 #include <vtkImageViewer2.h>
+#include <vtkImageData.h>
 
 #include "imagePlaneWidget.h"
 
@@ -32,9 +32,9 @@ public:
 
 	/**
 	 * Establece la conexión con el volumen
-	 * @param	reader	Lector de donde se obtienen los datos del volumen
+	 * @param	imageData	Lector de donde se obtienen los datos del volumen
 	 */
-	void setInputConnection(vtkSmartPointer<vtkAlgorithm> reader);
+	void setInputData(vtkSmartPointer<vtkImageData> imageData);
 
 	/** 
 	 * Establece el visor donde se verán los cortes

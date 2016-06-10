@@ -9,8 +9,9 @@ vtkSmartPointer<ImagePlaneWidget> Plano::getPlane() const {
 	return plane;
 }
 
-void Plano::setInputConnection(vtkSmartPointer<vtkAlgorithm> reader) {
-	plane->SetInputConnection(reader->GetOutputPort());
+void Plano::setInputData(vtkSmartPointer<vtkImageData> imageData) {
+	//plane->SetInputConnection(reader->GetOutputPort());
+	plane->SetInputData(imageData);
 }
 
 void Plano::setViewer(vtkSmartPointer<vtkImageViewer2> viewer) {

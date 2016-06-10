@@ -3,7 +3,6 @@
 Figura::Figura() {
 	tf = new TransferFunction();
 	imageReader = vtkSmartPointer<vtkDICOMImageReader>::New();
-    reader = imageReader;
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	imageData = vtkSmartPointer<vtkImageData>::New();
@@ -25,10 +24,6 @@ TransferFunction * Figura::getTransferFunction() const {
 
 vtkSmartPointer<vtkVolume> Figura::getVolume() const {
 	return volume;
-}
-
-vtkSmartPointer<vtkAlgorithm> Figura::getReader() const {
-	return reader;
 }
 
 vtkSmartPointer<vtkImageData> Figura::getImageData() const {

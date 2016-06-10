@@ -63,6 +63,7 @@ void MainWindow::connectComponents() {
 
 	deleterStyle->SetFigura(figura); // asigna la figura al estilo para borrar partes
 	deleterStyle->SetDefaultRenderer(volumeRen); // asigna el renderer al estilo para borrar partes
+	deleterStyle->SetViewer(sliceViewer); // asigna la ventana de cortes
 	deleterStyle->SetDefaultRenderWindow(ui->volumeWidget->GetRenderWindow()); // asigna la ventana de renderizado al estilo para borrar partes
 }
 
@@ -173,7 +174,7 @@ void MainWindow::importDICOM() {
 
 		plano->show(false);
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
-		plano->setInputConnection(figura->getReader()); // conecta el plano con los datos del volumen
+		plano->setInputData(figura->getImageData()); // conecta el plano con los datos del volumen
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		updateShadow(); // actualiza sombreado
 		defaultPlanePosition(); // coloca el plano en una posición inicial

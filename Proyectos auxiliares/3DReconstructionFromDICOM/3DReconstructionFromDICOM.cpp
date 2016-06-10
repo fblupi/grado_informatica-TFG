@@ -14,16 +14,12 @@
 #include <vtkMath.h>
 
 #include <stack>
-#include <set>
-#include <vector>
 #include <time.h>
 
 #define MIN_AIR -850
 #define AIR_HU -1000
 #define TOLERANCE 50
 #define LIMIT 2e6
-
-#define ISLANDS
 
 std::pair<int, int> searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y) {
 	if (ijk[0] - 1 >= MIN_X 
@@ -58,10 +54,12 @@ std::pair<int, int> searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, 
 		&& imageData->GetScalarComponentAsDouble(ijk[0] - 1, ijk[1] - 1, ijk[2], 0) < MIN_AIR) {
 		return std::make_pair(ijk[0] + 1, ijk[1] + 1);
 	}
+	else {
+		return std::make_pair(ijk[0], ijk[1]);
+	}
 }
 
 void deleteImage(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y) {
-	double v;
 	std::pair<int, int> ij;
 	std::stack<std::pair<int, int>> stack;
 
@@ -113,103 +111,6 @@ void deleteByImages(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], c
 	}
 }
 
-void deleteIslands(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, const int MIN_Z, const int MAX_Z) {
-	double v;
-	int i, j, k, iters = 0;
-	std::vector<int> xyz(3), xyzNew(3);
-	xyz[0] = ijk[0];
-	xyz[1] = ijk[1];
-	xyz[2] = ijk[2];
-	std::stack<std::vector<int> > stack;
-	stack.push(xyz);
-	while (!stack.empty()) {
-		xyz = stack.top();
-		stack.pop();
-		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
-			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
-			iters++;
-			if (v >= MIN_AIR) {
-				imageData->SetScalarComponentFromDouble(xyz[0], xyz[1], xyz[2], 0, AIR_HU);
-				if (iters < LIMIT) {
-					for (i = -1; i < 2; i++) {
-						for (j = -1; j < 2; j++) {
-							for (k = -1; k < 2; k++) {
-								if (!(i == 0 && j == 0 && k == 0)) {
-									xyzNew[0] = xyz[0] + i;
-									xyzNew[1] = xyz[1] + j;
-									xyzNew[2] = xyz[2] + k;
-									stack.push(xyzNew);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	std::cout << "Voxels deleted: " << iters << std::endl;
-}
-
-void deleteVoxelsIter(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const double value, const double tolerance, const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, const int MIN_Z, const int MAX_Z) {
-	double v;
-	int i, j, k, iters = 0;
-	std::vector<int> xyz(3), xyzNew(3);
-	xyz[0] = ijk[0];
-	xyz[1] = ijk[1];
-	xyz[2] = ijk[2];
-	std::stack<std::vector<int> > stack;
-	stack.push(xyz);
-	while (!stack.empty()) {
-		xyz = stack.top();
-		stack.pop();
-		if (xyz[0] < MAX_X && xyz[1] < MAX_Y && xyz[2] < MAX_Z && xyz[0] >= MIN_X && xyz[1] >= MIN_Y && xyz[2] >= MIN_Z) {
-			v = imageData->GetScalarComponentAsDouble(xyz[0], xyz[1], xyz[2], 0);
-			iters++;
-			if (v >= value - tolerance && v <= value + tolerance && v > AIR_HU) {
-				imageData->SetScalarComponentFromDouble(xyz[0], xyz[1], xyz[2], 0, AIR_HU);
-				if (iters < LIMIT) {
-					for (i = -1; i < 2; i++) {
-						for (j = -1; j < 2; j++) {
-							for (k = -1; k < 2; k++) {
-								if (!(i == 0 && j == 0 && k == 0)) {
-									xyzNew[0] = xyz[0] + i;
-									xyzNew[1] = xyz[1] + j;
-									xyzNew[2] = xyz[2] + k;
-									stack.push(xyzNew);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	std::cout << "Voxels deleted: " << iters << std::endl;
-}
-
-void deleteVoxelsRecur(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const double value, const double tolerance, const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, const int MIN_Z, const int MAX_Z) {
-	//std::cout << value << std::endl << imageData->GetScalarComponentAsDouble(x, y, z, 0) << std::endl << std::endl;
-	int i, j, k, xyz[3];
-	double v;
-	for (i = ijk[0] - 1; i < ijk[0] + 2; i++) {
-		for (j = ijk[1] - 1; j < ijk[1] + 2; j++) {
-			for (k = ijk[2] - 1; k < ijk[2] + 2; k++) {
-				if (i < MAX_X && j < MAX_Y && k < MAX_Z && i >= MIN_X && j >= MIN_Y && k >= MIN_Z) {
-					v = imageData->GetScalarComponentAsDouble(i, j, k, 0);
-					if (v >= value - tolerance && v <= value + tolerance) {
-						//std::cout << "Deleting (" << x << ", " << y << ", " << z << ")" << std::endl;
-						imageData->SetScalarComponentFromDouble(ijk[0], ijk[1], ijk[2], 0, AIR_HU);
-						xyz[0] = i; 
-						xyz[1] = j; 
-						xyz[2] = k;
-						deleteVoxelsRecur(imageData, xyz, value, tolerance, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_Z, MAX_Z);
-					}
-				}
-			}
-		}
-	}
-}
-
 class MouseIteractorStyle : public vtkInteractorStyleTrackballCamera {
 public:
 	static MouseIteractorStyle* New();
@@ -246,11 +147,7 @@ public:
 					std::cout << "Voxel value (before) is: " << value << std::endl;
 					std::cout << "Working..." << std::endl;
 					clock_t t = clock();
-#ifdef ISLANDS
 					deleteByImages(imageData, ijk, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2]);
-#else
-					deleteVoxelsIter(imageData, ijk, value, TOLERANCE, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2]);
-#endif
 					t = clock() - t;
 					std::cout << "It took " << ((float) t) / CLOCKS_PER_SEC << " seconds" << std::endl;
 					//value = imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);

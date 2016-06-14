@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
+#include <QFile>
 #include <QProgressDialog>
 
 #include <sstream>
@@ -74,6 +75,10 @@ private slots:
 	void on_exportPresetAs_pressed();
 	void on_restoreMaterial_pressed();
 	void on_updateProperties_pressed();
+	void on_completePreset_pressed();
+	void on_woodPreset_pressed();
+	void on_stuccoPreset_pressed();
+	void on_metalPreset_pressed();
 
 	void on_enablePlane_stateChanged();
 	void on_enableRule_stateChanged();
@@ -158,6 +163,12 @@ private slots:
 	 * Importa un preset de una función de transferencia
 	 */
 	void importPreset();
+
+	/**
+	 * Carga un preset de los que por defecto incluye el programa
+	 * @param	file	Archivo con el preset que se va a cargar
+	 */
+	void loadDefaultPreset(QFile *file);
 
 	/**
 	 * Exporta una imagen de un Render Window

@@ -83,19 +83,23 @@ void MainWindow::renderSlice() {
 	sliceViewer->Render(); // renderiza
 }
 
-void MainWindow::defaultTF() {
-	QFile file(":/presets/ct-woodsculpture.xml");
-	if (file.open(QIODevice::ReadOnly | QIODevice::Text)) { // se lee el archivo
+void MainWindow::loadDefaultPreset(QFile *file) {
+	if (file->open(QIODevice::ReadOnly | QIODevice::Text)) { // se lee el archivo
 		std::istringstream ss;
-		ss.str(QString(file.readAll()).toStdString());
+		ss.str(QString(file->readAll()).toStdString());
 		figura->getTransferFunction()->read(ss);
-		file.close(); // se cierra el archivo
+		file->close(); // se cierra el archivo
 		ui->tfName->setText(QString::fromUtf8(figura->getTransferFunction()->getName().c_str()));
 		ui->tfDescription->setText(QString::fromUtf8(figura->getTransferFunction()->getDescription().c_str()));
 	} else {
 		cerr << "Error abriendo archivo por defecto de función de transferencia" << endl;
 		exit(-1); // si no lo puede leer se sale
 	}
+}
+
+void MainWindow::defaultTF() {
+	QFile file(":/presets/ct-woodsculpture.xml");
+	loadDefaultPreset(&file);
 }
 
 void MainWindow::defaultMaterial() {
@@ -347,6 +351,30 @@ void MainWindow::on_updateProperties_pressed() {
 	updateShadow();
 	updateMaterial();
 	updateRenderMode();
+	renderVolume();
+}
+
+void MainWindow::on_completePreset_pressed() {
+	QFile file(":/presets/ct-woodsculpture.xml");
+	loadDefaultPreset(&file);
+	renderVolume();
+}
+
+void MainWindow::on_woodPreset_pressed() {
+	QFile file(":/presets/ct-onlywood.xml");
+	loadDefaultPreset(&file);
+	renderVolume();
+}
+
+void MainWindow::on_stuccoPreset_pressed() {
+	QFile file(":/presets/ct-onlystucco.xml");
+	loadDefaultPreset(&file);
+	renderVolume();
+}
+
+void MainWindow::on_metalPreset_pressed() {
+	QFile file(":/presets/ct-onlymetal.xml");
+	loadDefaultPreset(&file);
 	renderVolume();
 }
 

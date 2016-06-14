@@ -10,7 +10,6 @@ vtkSmartPointer<ImagePlaneWidget> Plano::getPlane() const {
 }
 
 void Plano::setInputData(vtkSmartPointer<vtkImageData> imageData) {
-	//plane->SetInputConnection(reader->GetOutputPort());
 	plane->SetInputData(imageData);
 }
 

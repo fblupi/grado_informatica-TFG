@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tf name="CT-WoodSculpture" description="Escultura de madera con clavos y una capa de estuco y policromado">
+<tf name="CT-OnlyStucco" description="Muestra solo el estuco de la escultura">
 	<color>
 		<point>
 			<x>-750</x>
@@ -34,22 +34,6 @@
 	</color>
 	<scalar>
 		<point>
-			<x>-800</x>
-			<y>0</y>
-		</point>
-		<point>
-			<x>-750</x>
-			<y>1</y>
-		</point>
-		<point>
-			<x>-350</x>
-			<y>1</y>
-		</point>
-		<point>
-			<x>-300</x>
-			<y>0</y>
-		</point>
-		<point>
 			<x>-200</x>
 			<y>0</y>
 		</point>
@@ -59,18 +43,6 @@
 		</point>
 		<point>
 			<x>1000</x>
-			<y>0</y>
-		</point>
-		<point>
-			<x>2950</x>
-			<y>0</y>
-		</point>
-		<point>
-			<x>2976</x>
-			<y>1</y>
-		</point>
-		<point>
-			<x>3000</x>
 			<y>0</y>
 		</point>
 	</scalar>

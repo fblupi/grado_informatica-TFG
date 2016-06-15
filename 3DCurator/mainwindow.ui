@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1708</width>
-    <height>890</height>
+    <width>1000</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,20 +19,20 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_52">
-    <item row="0" column="0">
-     <widget class="QVTKWidget" name="volumeWidget">
-      <property name="minimumSize">
-       <size>
-        <width>800</width>
-        <height>800</height>
-       </size>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="0">
      <widget class="QLabel" name="labelFolder">
       <property name="text">
        <string>Carpeta</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QVTKWidget" name="volumeWidget">
+      <property name="minimumSize">
+       <size>
+        <width>500</width>
+        <height>500</height>
+       </size>
       </property>
      </widget>
     </item>
@@ -175,7 +175,20 @@
         <string>Función de transferencia</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_84">
-        <item row="2" column="1" colspan="11">
+        <item row="1" column="6">
+         <widget class="QLineEdit" name="tfDescription">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" colspan="10">
          <widget class="QScrollArea" name="scrollArea">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -191,8 +204,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>841</width>
-             <height>1000</height>
+             <width>433</width>
+             <height>920</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -236,7 +249,7 @@
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>180</height>
+                   <height>160</height>
                   </size>
                  </property>
                 </widget>
@@ -258,7 +271,7 @@
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>180</height>
+                   <height>160</height>
                   </size>
                  </property>
                 </widget>
@@ -306,7 +319,7 @@
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>180</height>
+                   <height>160</height>
                   </size>
                  </property>
                 </widget>
@@ -383,7 +396,7 @@
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>180</height>
+                   <height>160</height>
                   </size>
                  </property>
                 </widget>
@@ -395,111 +408,20 @@
           </widget>
          </widget>
         </item>
-        <item row="1" column="7">
-         <widget class="QLineEdit" name="tfDescription">
-          <property name="minimumSize">
-           <size>
-            <width>400</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="5">
+        <item row="1" column="4">
          <widget class="QLineEdit" name="tfName">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="text">
-           <string>TF</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="importPreset">
-          <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset resource="assets/resources.qrc">
-            <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
          </widget>
         </item>
-        <item row="1" column="3">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="1" column="9">
-         <widget class="QPushButton" name="exportPresetAs">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="assets/resources.qrc">
-            <normaloff>:/icons/save-as.png</normaloff>:/icons/save-as.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="6">
-         <widget class="QLabel" name="labelTFDescription">
-          <property name="text">
-           <string>Descripción</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
-         <widget class="QLabel" name="labelTFName">
-          <property name="text">
-           <string>Nombre</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="8">
-         <widget class="QPushButton" name="exportPreset">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="assets/resources.qrc">
-            <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2" colspan="8">
+        <item row="0" column="2" colspan="7">
          <widget class="QGroupBox" name="defaultPresetsBox">
           <property name="title">
            <string>Presets</string>
@@ -602,6 +524,71 @@
           </layout>
          </widget>
         </item>
+        <item row="1" column="3">
+         <widget class="QLabel" name="labelTFName">
+          <property name="text">
+           <string>Nombre</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="importPreset">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="assets/resources.qrc">
+            <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QLabel" name="labelTFDescription">
+          <property name="text">
+           <string>Descripción</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="8">
+         <widget class="QPushButton" name="exportPresetAs">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="assets/resources.qrc">
+            <normaloff>:/icons/save-as.png</normaloff>:/icons/save-as.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="7">
+         <widget class="QPushButton" name="exportPreset">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="assets/resources.qrc">
+            <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tabProperties">
@@ -612,32 +599,6 @@
         <string>Propiedades</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_83">
-        <item row="3" column="1">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="4" column="0" colspan="2">
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item row="1" column="1">
          <widget class="QComboBox" name="renderMode">
           <item>
@@ -652,10 +613,23 @@
           </item>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="renderModeLabel">
+        <item row="4" column="0" colspan="2">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="3">
+         <widget class="QPushButton" name="updateProperties">
           <property name="text">
-           <string>Modo de renderizado</string>
+           <string>Actualizar</string>
           </property>
          </widget>
         </item>
@@ -669,10 +643,10 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="3">
-         <widget class="QPushButton" name="updateProperties">
+        <item row="1" column="0">
+         <widget class="QLabel" name="renderModeLabel">
           <property name="text">
-           <string>Actualizar</string>
+           <string>Modo de renderizado</string>
           </property>
          </widget>
         </item>
@@ -785,6 +759,19 @@
           <zorder>restoreMaterial</zorder>
          </widget>
         </item>
+        <item row="3" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -796,7 +783,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1708</width>
+     <width>1000</width>
      <height>21</height>
     </rect>
    </property>

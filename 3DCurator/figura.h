@@ -121,7 +121,6 @@ public:
 	void setRenderMode(const int mode);
 
 private:
-	vtkSmartPointer<vtkDICOMImageReader> imageReader; /**< Lector de datos DICOM */
 	vtkSmartPointer<vtkImageData> imageData; /** < Matriz 3D con los valores escalares de la figura */
     vtkSmartPointer<vtkVolume> volume;  /**< Volumen con la figura */
 	vtkSmartPointer<vtkSmartVolumeMapper> mapper;  /**< Mapeador que usa DVR GPU-Raycasting */

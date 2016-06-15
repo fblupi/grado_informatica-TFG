@@ -27,7 +27,6 @@
         <height>800</height>
        </size>
       </property>
-      <zorder>tabWidget</zorder>
      </widget>
     </item>
     <item row="1" column="0">
@@ -155,6 +154,19 @@
         </item>
         <item>
          <widget class="QVTKWidget" name="slicesWidget"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="coordsAndValueLabel">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>HU: Fuera de rango</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

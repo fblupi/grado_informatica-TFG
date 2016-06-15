@@ -54,6 +54,9 @@ void MainWindow::connectComponents() {
 	plano->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor()); // asigna el interactor al plano para poder verlo y moverlo
 
 	sliceViewer->SetupInteractor(ui->slicesWidget->GetInteractor()); // asigna el interactor al viewer
+	sliceStyle->SetPlano(plano);
+	sliceStyle->SetDefaultRenderer(sliceViewer->GetRenderer());
+	sliceStyle->SetLabel(ui->coordsAndValueLabel);
 	ui->slicesWidget->GetInteractor()->SetInteractorStyle(sliceStyle); // asigna el estilo al interactor del slice widget
 
 	plano->setViewer(sliceViewer); // asigna el slice viewer al plano para que pueda renderizar cuando se de el evento de mover el plano

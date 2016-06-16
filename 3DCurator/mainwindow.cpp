@@ -84,7 +84,7 @@ void MainWindow::drawVolume() {
 }
 
 void MainWindow::drawMesh() {
-	meshRen->AddActor(figura->getMeshActor()); // añade la malla al renderer
+	meshRen->AddActor(figura->getMesh()); // añade la malla al renderer
 	meshRen->ResetCamera(); // resetea la cámara
 	renderMesh();
 }
@@ -276,8 +276,15 @@ void MainWindow::exportMesh(const QString filename) {
 		progressDialog.setCancelButton(0);
 		progressDialog.show();
 
+		vtkSmartPointer<vtkMarchingCubes> surface = vtkSmartPointer<vtkMarchingCubes>::New();
+		surface->SetInputData(figura->getImageData());
+		surface->UpdateInformation();
+		surface->ComputeNormalsOn();
+		surface->ComputeScalarsOn();
+		surface->SetValue(0, figura->getIsoValue());
 		vtkSmartPointer<vtkPolyData> marched = vtkSmartPointer<vtkPolyData>::New();
-		marched->DeepCopy(figura->getMeshData()->GetOutput());
+		surface->Update();
+		marched->DeepCopy(surface->GetOutput());
 		vtkSmartPointer<vtkDecimatePro> decimator = vtkSmartPointer<vtkDecimatePro>::New();
 		decimator->SetInputData(marched);
 		decimator->SetTargetReduction(0.5);
@@ -289,14 +296,9 @@ void MainWindow::exportMesh(const QString filename) {
 		smoother->SetFeatureAngle(60);
 		smoother->SetRelaxationFactor(0.05);
 		smoother->FeatureEdgeSmoothingOff();
-		vtkSmartPointer<vtkPolyDataConnectivityFilter> connectivityFilter = vtkSmartPointer<vtkPolyDataConnectivityFilter>::New();
-		connectivityFilter->SetInputConnection(smoother->GetOutputPort());
-		connectivityFilter->ScalarConnectivityOff();
-		connectivityFilter->SetExtractionModeToLargestRegion();
-		connectivityFilter->Update();
+		smoother->Update();
 		vtkSmartPointer<vtkPolyData> mesh = vtkSmartPointer<vtkPolyData>::New();
-		mesh->ShallowCopy(connectivityFilter->GetOutput());
-
+		mesh->ShallowCopy(smoother->GetOutput());
 		vtkSmartPointer<vtkSTLWriter> stlWriter = vtkSmartPointer<vtkSTLWriter>::New();
 		stlWriter->SetFileName(filename.toUtf8().constData());
 		stlWriter->SetInputData(mesh);
@@ -482,7 +484,7 @@ void MainWindow::on_extractMeshWood_pressed() {
 
 	figura->setIsoValue(WOOD_ISOVALUE);
 	ui->isoValueSlider->setValue(WOOD_ISOVALUE);
-	figura->updateMesh();
+	figura->createMesh();
 	meshRen->Render();
 
 	progressDialog.close();
@@ -497,7 +499,7 @@ void MainWindow::on_extractMeshStucco_pressed() {
 
 	figura->setIsoValue(STUCCO_ISOVALUE);
 	ui->isoValueSlider->setValue(STUCCO_ISOVALUE);
-	figura->updateMesh();
+	figura->createMesh();
 	meshRen->Render();
 
 	progressDialog.close();
@@ -512,7 +514,7 @@ void MainWindow::on_extractMeshMetal_pressed() {
 
 	figura->setIsoValue(METAL_ISOVALUE);
 	ui->isoValueSlider->setValue(METAL_ISOVALUE);
-	figura->updateMesh();
+	figura->createMesh();
 	meshRen->Render();
 
 	progressDialog.close();
@@ -583,7 +585,7 @@ void MainWindow::on_isoValueSlider_valueChanged() {
 	progressDialog.show();
 
 	figura->setIsoValue(ui->isoValueSlider->value());
-	figura->updateMesh();
+	figura->createMesh();
 	meshRen->Render();
 
 	progressDialog.close();

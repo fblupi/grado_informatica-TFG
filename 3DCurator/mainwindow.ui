@@ -39,7 +39,7 @@
     <item row="0" column="1">
      <widget class="QTabWidget" name="mainTab">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabSlices">
        <attribute name="title">
@@ -198,7 +198,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>131</width>
+             <width>433</width>
              <height>920</height>
             </rect>
            </property>
@@ -699,6 +699,9 @@
           </property>
           <property name="maximum">
            <number>3071</number>
+          </property>
+          <property name="value">
+           <number>-750</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>

@@ -19,6 +19,7 @@
 #include <vtkActor.h>
 
 #include "transferFunction.h"
+#include "measures.h"
 
 /**
  * @class Figura
@@ -64,13 +65,13 @@ public:
 	 * Obtiene la malla extraida
 	 * @return	Puntero al actor de la malla
 	 */
-	vtkSmartPointer<vtkActor> getMeshActor() const;
+	vtkSmartPointer<vtkActor> getMesh() const;
 
 	/**
-	 * Obtiene la malla extraida
-	 * @return	Puntero al actor de la malla
+	 * Obtiene el valor de isosuperficie
+	 * @return	Valor de isosuperficie
 	 */
-	vtkSmartPointer<vtkMarchingCubes> getMeshData() const;
+	double getIsoValue() const;
 
 	/**
 	 * Obtiene el límite inferior de la figura en el eje X
@@ -146,19 +147,12 @@ public:
 	 */
 	void createMesh();
 
-	/**
-	 * Actualiza la malla
-	 */
-	void updateMesh();
-
 private:
 	vtkSmartPointer<vtkImageData> imageData; /** < Matriz 3D con los valores escalares de la figura */
     vtkSmartPointer<vtkVolume> volume;  /**< Volumen con la figura */
 	vtkSmartPointer<vtkSmartVolumeMapper> mapper;  /**< Mapeador que usa DVR GPU-Raycasting */
     vtkSmartPointer<vtkVolumeProperty> volumeProperty;  /**< Propiedades del volumen */
 	vtkSmartPointer<vtkImageAccumulate> histogram; /**< Histograma de frecuencias de valores de intensidad */
-	vtkSmartPointer<vtkMarchingCubes> surface; /**< Malla extraida con marching cubes */
-	vtkSmartPointer<vtkPolyDataMapper> meshMapper; /**< Mapper de la malla extraida */
 	vtkSmartPointer<vtkActor> meshActor; /**< Actor de la malla extraida */
 	TransferFunction *tf;  /**< Función de transferencia */
 	double isoValue; /**< Valor de isosuperficia para la malla */

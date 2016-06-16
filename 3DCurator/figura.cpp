@@ -2,12 +2,10 @@
 
 Figura::Figura() {
 	tf = new TransferFunction();
-	isoValue = -750;
+	isoValue = WOOD_ISOVALUE;
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	imageData = vtkSmartPointer<vtkImageData>::New();
-	surface = vtkSmartPointer<vtkMarchingCubes>::New();
-	meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
 	meshActor = vtkSmartPointer<vtkActor>::New();
 	//histogram = vtkSmartPointer<vtkImageAccumulate>::New();
 	//histogram->SetComponentExtent(-750, 3000, 0, 3000, 0, 0);
@@ -37,12 +35,12 @@ vtkSmartPointer<vtkImageAccumulate> Figura::getHistogram() const {
 	return histogram;
 }
 
-vtkSmartPointer<vtkActor> Figura::getMeshActor() const {
+vtkSmartPointer<vtkActor> Figura::getMesh() const {
 	return meshActor;
 }
 
-vtkSmartPointer<vtkMarchingCubes> Figura::getMeshData() const {
-	return surface;
+double Figura::getIsoValue() const {
+	return isoValue;
 }
 
 double Figura::getMinXBound() const {
@@ -76,11 +74,11 @@ void Figura::setDICOMFolder(const std::string s) {
     imageReader->Update(); // lee los archivos
 
 	// Guarda los datos del volumen
-	imageData = vtkSmartPointer<vtkImageData>::New();
+	//imageData = vtkSmartPointer<vtkImageData>::New();
 	imageData->ShallowCopy(imageReader->GetOutput());
 
 	// Crea y asigna el mapper
-	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
+	//mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	mapper->SetInputData(imageData); // conecta el mapper con el reader
 	volume->SetMapper(mapper);
 
@@ -88,20 +86,16 @@ void Figura::setDICOMFolder(const std::string s) {
 }
 
 void Figura::createMesh() {
-	surface = vtkSmartPointer<vtkMarchingCubes>::New();
+	vtkSmartPointer<vtkMarchingCubes> surface = vtkSmartPointer<vtkMarchingCubes>::New();
 	surface->SetInputData(imageData);
+	surface->UpdateInformation();
 	surface->ComputeNormalsOn();
 	surface->ComputeScalarsOn();
 	surface->SetValue(0, isoValue);
-	meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+	vtkSmartPointer<vtkPolyDataMapper> meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
 	meshMapper->SetInputConnection(surface->GetOutputPort());
 	meshMapper->ScalarVisibilityOff();
 	meshActor->SetMapper(meshMapper);
-}
-
-
-void Figura::updateMesh() {
-	surface->SetValue(0, isoValue);
 }
 
 void Figura::setProperties() {

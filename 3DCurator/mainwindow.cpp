@@ -211,12 +211,15 @@ void MainWindow::importDICOM() {
 		removeMesh();
 
 		plano->show(false);
+		plano->enable(false);
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
 		plano->setInputData(figura->getImageData()); // conecta el plano con los datos del volumen
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		updateShadow(); // actualiza sombreado
 		defaultPlanePosition(); // coloca el plano en una posición inicial
 		plano->show(true);
+		plano->enable(true);
+		ui->enablePlane->setChecked(true);
 
 		drawVolume(); // dibuja volumen
 		renderSlice(); // dibuja el corte

@@ -2,9 +2,13 @@
 
 Figura::Figura() {
 	tf = new TransferFunction();
+	isoValue = -750;
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	imageData = vtkSmartPointer<vtkImageData>::New();
+	surface = vtkSmartPointer<vtkMarchingCubes>::New();
+	meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+	meshActor = vtkSmartPointer<vtkActor>::New();
 	//histogram = vtkSmartPointer<vtkImageAccumulate>::New();
 	//histogram->SetComponentExtent(-750, 3000, 0, 3000, 0, 0);
     volume = vtkSmartPointer<vtkVolume>::New();
@@ -31,6 +35,10 @@ vtkSmartPointer<vtkImageData> Figura::getImageData() const {
 
 vtkSmartPointer<vtkImageAccumulate> Figura::getHistogram() const {
 	return histogram;
+}
+
+vtkSmartPointer<vtkActor> Figura::getMesh() const {
+	return meshActor;
 }
 
 double Figura::getMinXBound() const {
@@ -73,6 +81,24 @@ void Figura::setDICOMFolder(const std::string s) {
 	volume->SetMapper(mapper);
 
 	//histogram->SetInputConnection(reader->GetOutputPort());
+}
+
+void Figura::createMesh() {
+	surface = vtkSmartPointer<vtkMarchingCubes>::New();
+	surface->SetInputData(imageData);
+	surface->ComputeNormalsOn();
+	surface->ComputeScalarsOn();
+	surface->SetValue(0, isoValue);
+	meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+	meshMapper->SetInputConnection(surface->GetOutputPort());
+	meshMapper->ScalarVisibilityOff();
+	//meshActor = vtkSmartPointer<vtkActor>::New();
+	meshActor->SetMapper(meshMapper);
+}
+
+
+void Figura::updateMesh() {
+	surface->SetValue(0, isoValue);
 }
 
 void Figura::setProperties() {

@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	deleting = false;
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
+	meshRen = vtkSmartPointer<vtkRenderer>::New();
 	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
 	volumeStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
@@ -27,10 +28,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceViewer->SetColorWindow(400);
 
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
+	setBackgroundColor(meshRen, .3, .2, .1); // fondo marron
 
     connectComponents(); // conecta los renderers con los widgets
 
 	renderVolume();
+	renderMesh();
 
 	plano->show(false); // No muestra el corte del plano
 	plano->enable(true); // Muestra el plano
@@ -46,6 +49,7 @@ void MainWindow::setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, f
 
 void MainWindow::connectComponents() {
 	ui->volumeWidget->GetRenderWindow()->AddRenderer(volumeRen); // conecta el volume widget con el renderer
+	ui->meshWidget->GetRenderWindow()->AddRenderer(meshRen); // conecta el mesh widget con el renderer
 
 	ui->slicesWidget->SetRenderWindow(sliceViewer->GetRenderWindow()); // conecta el slice widget con el viewer
 	sliceViewer->SetInputData(plano->getPlane()->GetResliceOutput()); // asigna el flujo de salida de los cortes del plano al slice viewer
@@ -78,8 +82,29 @@ void MainWindow::drawVolume() {
 	renderVolume();
 }
 
+void MainWindow::drawMesh() {
+	meshRen->AddActor(figura->getMesh()); // añade la malla al renderer
+	meshRen->ResetCamera(); // resetea la cámara
+	renderMesh();
+}
+
+void MainWindow::removeVolume() {
+	volumeRen->RemoveAllViewProps();
+	volumeRen->ResetCamera();
+	renderVolume();
+}
+
+void MainWindow::removeMesh() {
+	meshRen->RemoveAllViewProps();
+	meshRen->ResetCamera();
+	renderMesh();
+}
+
 void MainWindow::renderVolume() {
 	ui->volumeWidget->GetRenderWindow()->Render(); // renderiza
+}
+void MainWindow::renderMesh() {
+	ui->meshWidget->GetRenderWindow()->Render(); // renderiza
 }
 
 void MainWindow::renderSlice() {
@@ -181,6 +206,9 @@ void MainWindow::importDICOM() {
 		progressDialog.setCancelButton(0);
 		progressDialog.show();
 
+		removeVolume();
+		removeMesh();
+
 		plano->show(false);
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
 		plano->setInputData(figura->getImageData()); // conecta el plano con los datos del volumen
@@ -188,6 +216,7 @@ void MainWindow::importDICOM() {
 		updateShadow(); // actualiza sombreado
 		defaultPlanePosition(); // coloca el plano en una posición inicial
 		plano->show(true);
+
 		drawVolume(); // dibuja volumen
 		renderSlice(); // dibuja el corte
 
@@ -379,6 +408,12 @@ void MainWindow::on_metalPreset_pressed() {
 	QFile file(":/presets/ct-onlymetal.xml");
 	loadDefaultPreset(&file);
 	renderVolume();
+}
+
+void MainWindow::on_updateMesh_pressed() {
+	removeMesh();
+	figura->createMesh();
+	drawMesh();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

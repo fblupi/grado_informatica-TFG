@@ -79,6 +79,7 @@ private slots:
 	void on_woodPreset_pressed();
 	void on_stuccoPreset_pressed();
 	void on_metalPreset_pressed();
+	void on_updateMesh_pressed();
 
 	void on_enablePlane_stateChanged();
 	void on_enableRule_stateChanged();
@@ -110,9 +111,29 @@ private slots:
 	void drawVolume();
 
 	/**
+	 * Añade la malla a su respectivo visor
+	 */
+	void drawMesh();
+
+	/**
+	 * Elimina el volumen de su respectivo visor
+	 */
+	void removeVolume();
+
+	/**
+	 * Elimina la malla de su respectivo visor
+	 */
+	void removeMesh();
+
+	/**
 	 * Renderiza la ventana del volumen y el plano
 	 */
 	void renderVolume();
+
+	/**
+	* Renderiza la ventana de la malla
+	*/
+	void renderMesh();
 
 	/**
 	 * Renderiza la ventana del corte producidor por el plano en el volumen
@@ -205,6 +226,7 @@ private:
 	OpacityTFChart *scalarTFChart; /**< Puntero a la gráfica de la parte de opacida escalar de la función de transferencia */
 	OpacityTFChart *gradientTFChart; /**< Puntero a la gráfica de la parte de opacida gradiente de la función de transferencia */
 	vtkSmartPointer<vtkRenderer> volumeRen; /**< Puntero al Renderer donde estará el volumen y el plano de corte */
+	vtkSmartPointer<vtkRenderer> meshRen; /**< Puntero al Renderer donde se visulizará la malla a extraer */
 	vtkSmartPointer<vtkImageViewer2> sliceViewer; /**< Puntero al ImageViewer2 donde se verá el corte producido por el plano en el volumen */
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle; /**< Estilo para la ventana donde se visualizará el volumen */
 	vtkSmartPointer<InteractorStyleImage> sliceStyle; /**< Estilo para la ventana donde se visualizarán los cortes de la figura con el plano */

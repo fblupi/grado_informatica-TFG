@@ -14,6 +14,9 @@
 #include <vtkDataArray.h>
 #include <vtkImageAccumulate.h>
 #include <vtkImageData.h>
+#include <vtkMarchingCubes.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkActor.h>
 
 #include "transferFunction.h"
 
@@ -56,6 +59,12 @@ public:
 	 * @return	Puntero al histograma
 	 */
 	vtkSmartPointer<vtkImageAccumulate> getHistogram() const;
+
+	/**
+	 * Obtiene la malla extraida
+	 * @return	Puntero al actor de la malla
+	 */
+	vtkSmartPointer<vtkActor> getMesh() const;
 
 	/**
 	 * Obtiene el límite inferior de la figura en el eje X
@@ -120,13 +129,27 @@ public:
 	 */
 	void setRenderMode(const int mode);
 
+	/**
+	 * Crea la malla
+	 */
+	void createMesh();
+
+	/**
+	 * Actualiza la malla
+	 */
+	void updateMesh();
+
 private:
 	vtkSmartPointer<vtkImageData> imageData; /** < Matriz 3D con los valores escalares de la figura */
     vtkSmartPointer<vtkVolume> volume;  /**< Volumen con la figura */
 	vtkSmartPointer<vtkSmartVolumeMapper> mapper;  /**< Mapeador que usa DVR GPU-Raycasting */
     vtkSmartPointer<vtkVolumeProperty> volumeProperty;  /**< Propiedades del volumen */
 	vtkSmartPointer<vtkImageAccumulate> histogram; /**< Histograma de frecuencias de valores de intensidad */
+	vtkSmartPointer<vtkMarchingCubes> surface; /**< Malla extraida con marching cubes */
+	vtkSmartPointer<vtkPolyDataMapper> meshMapper; /**< Mapper de la malla extraida */
+	vtkSmartPointer<vtkActor> meshActor; /**< Actor de la malla extraida */
 	TransferFunction *tf;  /**< Función de transferencia */
+	double isoValue; /**< Valor de isosuperficia para la malla */
 
     void setProperties(); // establace las propiedades del volumen
 };

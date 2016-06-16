@@ -27,8 +27,6 @@
         <height>550</height>
        </size>
       </property>
-      <zorder>mainTab</zorder>
-      <zorder>mainTab</zorder>
      </widget>
     </item>
     <item row="1" column="0">
@@ -41,7 +39,7 @@
     <item row="0" column="1">
      <widget class="QTabWidget" name="mainTab">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabSlices">
        <attribute name="title">
@@ -598,27 +596,7 @@
         <string>Extraer malla</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="3" column="0">
-         <spacer name="horizontalSpacer_8">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="3" column="1">
-         <widget class="QPushButton" name="extractMeshButton">
-          <property name="text">
-           <string>Extraer</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="2">
+        <item row="2" column="2" colspan="4">
          <widget class="QVTKWidget" name="meshWidget">
           <property name="minimumSize">
            <size>
@@ -628,14 +606,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0" colspan="2">
-         <widget class="QSlider" name="horizontalSlider">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
+        <item row="0" column="2" colspan="4">
          <widget class="QGroupBox" name="extractMeshPresets">
           <property name="title">
            <string>Presets</string>
@@ -719,6 +690,46 @@
             </spacer>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item row="1" column="2" colspan="4">
+         <widget class="QSlider" name="horizontalSlider">
+          <property name="minimum">
+           <number>-1024</number>
+          </property>
+          <property name="maximum">
+           <number>3071</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="5">
+         <widget class="QPushButton" name="extractMesh">
+          <property name="text">
+           <string>Extraer</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="3">
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="4">
+         <widget class="QPushButton" name="updateMesh">
+          <property name="text">
+           <string>Actualizar</string>
+          </property>
          </widget>
         </item>
        </layout>

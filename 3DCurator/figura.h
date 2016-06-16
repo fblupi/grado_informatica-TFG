@@ -64,7 +64,13 @@ public:
 	 * Obtiene la malla extraida
 	 * @return	Puntero al actor de la malla
 	 */
-	vtkSmartPointer<vtkActor> getMesh() const;
+	vtkSmartPointer<vtkActor> getMeshActor() const;
+
+	/**
+	 * Obtiene la malla extraida
+	 * @return	Puntero al actor de la malla
+	 */
+	vtkSmartPointer<vtkMarchingCubes> getMeshData() const;
 
 	/**
 	 * Obtiene el límite inferior de la figura en el eje X

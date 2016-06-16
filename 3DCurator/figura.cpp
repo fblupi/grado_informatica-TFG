@@ -37,8 +37,12 @@ vtkSmartPointer<vtkImageAccumulate> Figura::getHistogram() const {
 	return histogram;
 }
 
-vtkSmartPointer<vtkActor> Figura::getMesh() const {
+vtkSmartPointer<vtkActor> Figura::getMeshActor() const {
 	return meshActor;
+}
+
+vtkSmartPointer<vtkMarchingCubes> Figura::getMeshData() const {
+	return surface;
 }
 
 double Figura::getMinXBound() const {

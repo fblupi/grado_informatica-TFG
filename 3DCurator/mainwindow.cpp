@@ -84,7 +84,7 @@ void MainWindow::drawVolume() {
 }
 
 void MainWindow::drawMesh() {
-	meshRen->AddActor(figura->getMesh()); // añade la malla al renderer
+	meshRen->AddActor(figura->getMeshActor()); // añade la malla al renderer
 	meshRen->ResetCamera(); // resetea la cámara
 	renderMesh();
 }
@@ -267,6 +267,23 @@ void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> re
 	}
 }
 
+void MainWindow::exportMesh(const QString filename) {
+	if (filename != NULL) { // el archivo se ha leído bien
+		QProgressDialog progressDialog(this);
+		progressDialog.setWindowTitle(QString("Extrayendo..."));
+		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
+		progressDialog.setCancelButton(0);
+		progressDialog.show();
+
+		vtkSmartPointer<vtkSTLWriter> stlWriter = vtkSmartPointer<vtkSTLWriter>::New();
+		stlWriter->SetFileName(filename.toUtf8().constData());
+		stlWriter->SetInputData(figura->getMeshData()->GetOutput());
+		stlWriter->Write();
+
+		progressDialog.close();
+	}
+}
+
 void MainWindow::exportPreset(const QString filename) {
 	if (filename != NULL) { // el nombre del archivo es correcto
 		figura->getTransferFunction()->setName(ui->tfName->text().toUtf8().constData());
@@ -285,6 +302,11 @@ QString MainWindow::getExportPresetFilename(const QString defaultFilename) {
 QString MainWindow::getExportImageFilename(const QString defaultFilename) {
 	return QFileDialog::getSaveFileName(
 		this, tr("Exportar imagen"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)");
+}
+
+QString MainWindow::getExportMeshFilename(const QString defaultFilename) {
+	return QFileDialog::getSaveFileName(
+		this, tr("Exportar malla"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)");
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -423,6 +445,10 @@ void MainWindow::on_updateMesh_pressed() {
 	drawMesh();
 
 	progressDialog.close();
+}
+
+void MainWindow::on_extractMesh_pressed() {
+	exportMesh(getExportMeshFilename("Mesh"));
 }
 
 void MainWindow::on_extractMeshWood_pressed() {

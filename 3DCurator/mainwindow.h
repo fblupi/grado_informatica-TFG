@@ -19,6 +19,7 @@
 #include <vtkImageWriter.h>
 #include <vtkPNGWriter.h>
 #include <vtkJPEGWriter.h>
+#include <vtkSTLWriter.h>
 #include <vtkDistanceWidget.h>
 #include <vtkDistanceRepresentation.h>
 
@@ -83,6 +84,7 @@ private slots:
 	void on_stuccoPreset_pressed();
 	void on_metalPreset_pressed();
 	void on_updateMesh_pressed();
+	void on_extractMesh_pressed();
 	void on_extractMeshWood_pressed();
 	void on_extractMeshStucco_pressed();
 	void on_extractMeshMetal_pressed();
@@ -212,6 +214,12 @@ private slots:
 	void exportPreset(const QString filename);
 
 	/**
+	 * Exporta la malla
+	 * @param	filename	Nombre del archivo de salida
+	 */
+	void exportMesh(const QString filename);
+
+	/**
 	 * Obtiene el nombre del archivo de salida para exportar una imagen
 	 * @param	defaultFilename		Nombre que se dará por defecto (fecha y hora)
 	 * @return	Archivo de salida
@@ -224,6 +232,13 @@ private slots:
 	 * @return	Archivo de salida
 	 */
 	QString getExportPresetFilename(const QString defaultFilename);
+
+	/**
+	 * Obtiene el nombre del archivo de salida para exportar una malla
+	 * @param	defaultFilename		Nombre que se dará por defecto
+	 * @return	Archivo de salida
+	 */
+	QString getExportMeshFilename(const QString defaultFilename);
 
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>590</height>
+    <width>1050</width>
+    <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,18 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_52">
+    <item row="0" column="0">
+     <widget class="QVTKWidget" name="volumeWidget">
+      <property name="minimumSize">
+       <size>
+        <width>550</width>
+        <height>550</height>
+       </size>
+      </property>
+      <zorder>mainTab</zorder>
+      <zorder>mainTab</zorder>
+     </widget>
+    </item>
     <item row="1" column="0">
      <widget class="QLabel" name="labelFolder">
       <property name="text">
@@ -26,18 +38,8 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QVTKWidget" name="volumeWidget">
-      <property name="minimumSize">
-       <size>
-        <width>500</width>
-        <height>500</height>
-       </size>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="mainTab">
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -175,16 +177,10 @@
         <string>Función de transferencia</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_84">
-        <item row="1" column="6">
-         <widget class="QLineEdit" name="tfDescription">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
+        <item row="1" column="3">
+         <widget class="QLabel" name="labelTFName">
           <property name="text">
-           <string/>
+           <string>Nombre</string>
           </property>
          </widget>
         </item>
@@ -421,7 +417,61 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="2" colspan="7">
+        <item row="1" column="6">
+         <widget class="QLineEdit" name="tfDescription">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QLabel" name="labelTFDescription">
+          <property name="text">
+           <string>Descripción</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="7">
+         <widget class="QPushButton" name="exportPreset">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="assets/resources.qrc">
+            <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="8">
+         <widget class="QPushButton" name="exportPresetAs">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="assets/resources.qrc">
+            <normaloff>:/icons/save-as.png</normaloff>:/icons/save-as.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" colspan="10">
          <widget class="QGroupBox" name="defaultPresetsBox">
           <property name="title">
            <string>Presets</string>
@@ -524,13 +574,6 @@
           </layout>
          </widget>
         </item>
-        <item row="1" column="3">
-         <widget class="QLabel" name="labelTFName">
-          <property name="text">
-           <string>Nombre</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="2">
          <widget class="QPushButton" name="importPreset">
           <property name="text">
@@ -548,45 +591,134 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="5">
-         <widget class="QLabel" name="labelTFDescription">
+       </layout>
+      </widget>
+      <widget class="QWidget" name="extractMeshTab">
+       <attribute name="title">
+        <string>Extraer malla</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="3" column="0">
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="1">
+         <widget class="QPushButton" name="extractMeshButton">
           <property name="text">
-           <string>Descripción</string>
+           <string>Extraer</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="8">
-         <widget class="QPushButton" name="exportPresetAs">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="assets/resources.qrc">
-            <normaloff>:/icons/save-as.png</normaloff>:/icons/save-as.png</iconset>
-          </property>
-          <property name="iconSize">
+        <item row="2" column="0" colspan="2">
+         <widget class="QVTKWidget" name="meshWidget">
+          <property name="minimumSize">
            <size>
-            <width>21</width>
-            <height>21</height>
+            <width>350</width>
+            <height>350</height>
            </size>
           </property>
          </widget>
         </item>
-        <item row="1" column="7">
-         <widget class="QPushButton" name="exportPreset">
-          <property name="text">
-           <string/>
+        <item row="1" column="0" colspan="2">
+         <widget class="QSlider" name="horizontalSlider">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
-          <property name="icon">
-           <iconset resource="assets/resources.qrc">
-            <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QGroupBox" name="extractMeshPresets">
+          <property name="title">
+           <string>Presets</string>
           </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="extractMeshWood">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="assets/resources.qrc">
+               <normaloff>:/icons/wood.png</normaloff>:/icons/wood.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>50</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="extractMeshStucco">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="assets/resources.qrc">
+               <normaloff>:/icons/stucco.png</normaloff>:/icons/stucco.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>50</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="extractMeshMetal">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="assets/resources.qrc">
+               <normaloff>:/icons/metal.png</normaloff>:/icons/metal.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>50</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -783,7 +915,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1000</width>
+     <width>1050</width>
      <height>21</height>
     </rect>
    </property>

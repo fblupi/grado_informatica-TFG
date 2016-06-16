@@ -253,9 +253,10 @@ void MainWindow::importPreset() {
 
 void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename) {
 	if (filename != NULL) { // el archivo se ha leído bien
-		filter = vtkSmartPointer<vtkWindowToImageFilter>::New(); // crea el filter
+		vtkSmartPointer<vtkWindowToImageFilter> filter = vtkSmartPointer<vtkWindowToImageFilter>::New(); // crea el filter
 		filter->SetInput(renWin); // conecta el filter al widget
 		filter->Update(); // actualiza el filter
+		vtkSmartPointer<vtkImageWriter> writer;
 		if (toUpper(getFileExtension(filename.toUtf8().constData())) == "PNG") { // comprueba si es PNG
 			writer = vtkSmartPointer<vtkPNGWriter>::New(); // crea el writer de PNG
 		} else { // si no, es JPG
@@ -275,9 +276,30 @@ void MainWindow::exportMesh(const QString filename) {
 		progressDialog.setCancelButton(0);
 		progressDialog.show();
 
+		vtkSmartPointer<vtkPolyData> marched = vtkSmartPointer<vtkPolyData>::New();
+		marched->DeepCopy(figura->getMeshData()->GetOutput());
+		vtkSmartPointer<vtkDecimatePro> decimator = vtkSmartPointer<vtkDecimatePro>::New();
+		decimator->SetInputData(marched);
+		decimator->SetTargetReduction(0.5);
+		decimator->SetPreserveTopology(true);
+		decimator->Update();
+		vtkSmartPointer<vtkSmoothPolyDataFilter> smoother = vtkSmartPointer<vtkSmoothPolyDataFilter>::New();
+		smoother->SetInputData(decimator->GetOutput());
+		smoother->SetNumberOfIterations(5);
+		smoother->SetFeatureAngle(60);
+		smoother->SetRelaxationFactor(0.05);
+		smoother->FeatureEdgeSmoothingOff();
+		vtkSmartPointer<vtkPolyDataConnectivityFilter> connectivityFilter = vtkSmartPointer<vtkPolyDataConnectivityFilter>::New();
+		connectivityFilter->SetInputConnection(smoother->GetOutputPort());
+		connectivityFilter->ScalarConnectivityOff();
+		connectivityFilter->SetExtractionModeToLargestRegion();
+		connectivityFilter->Update();
+		vtkSmartPointer<vtkPolyData> mesh = vtkSmartPointer<vtkPolyData>::New();
+		mesh->ShallowCopy(connectivityFilter->GetOutput());
+
 		vtkSmartPointer<vtkSTLWriter> stlWriter = vtkSmartPointer<vtkSTLWriter>::New();
 		stlWriter->SetFileName(filename.toUtf8().constData());
-		stlWriter->SetInputData(figura->getMeshData()->GetOutput());
+		stlWriter->SetInputData(mesh);
 		stlWriter->Write();
 
 		progressDialog.close();

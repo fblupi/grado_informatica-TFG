@@ -22,6 +22,9 @@
 #include <vtkSTLWriter.h>
 #include <vtkDistanceWidget.h>
 #include <vtkDistanceRepresentation.h>
+#include <vtkDecimatePro.h>
+#include <vtkSmoothPolyDataFilter.h>
+#include <vtkPolyDataConnectivityFilter.h>
 
 #include "utils.h"
 #include "figura.h"
@@ -242,20 +245,24 @@ private slots:
 
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */
+
 	Figura *figura; /**< Puntero a la figura */
 	Plano *plano; /**< Puntero al plano */
+
 	ColorTFChart *colorTFChart; /**< Puntero a la gráfica de la parte de color de la función de transferencia */
 	OpacityTFChart *scalarTFChart; /**< Puntero a la gráfica de la parte de opacida escalar de la función de transferencia */
 	OpacityTFChart *gradientTFChart; /**< Puntero a la gráfica de la parte de opacida gradiente de la función de transferencia */
+
 	vtkSmartPointer<vtkRenderer> volumeRen; /**< Puntero al Renderer donde estará el volumen y el plano de corte */
 	vtkSmartPointer<vtkRenderer> meshRen; /**< Puntero al Renderer donde se visulizará la malla a extraer */
 	vtkSmartPointer<vtkImageViewer2> sliceViewer; /**< Puntero al ImageViewer2 donde se verá el corte producido por el plano en el volumen */
+
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle; /**< Estilo para la ventana donde se visualizará el volumen */
 	vtkSmartPointer<InteractorStyleImage> sliceStyle; /**< Estilo para la ventana donde se visualizarán los cortes de la figura con el plano */
 	vtkSmartPointer<InteractorStyleDeleter> deleterStyle; /**< Estilo para poder borrar en la ventana donde se visualizará el volumen */
-	vtkSmartPointer<vtkWindowToImageFilter> filter;  /**< Filtro para pasar de un RenderWindow a una imagen */
-	vtkSmartPointer<vtkImageWriter> writer; /**< Exportador de imagen */
+
 	vtkSmartPointer<vtkDistanceWidget> distanceWidget; /**< Widget para realizar medidas */
+
 	bool deleting; /**< Variable para ver si está en modo borrado o no */
 };
 

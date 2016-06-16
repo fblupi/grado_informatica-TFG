@@ -32,6 +32,9 @@
 
 #define MIN_INTENSITY -1024.0 /**< Valor mínimo de intensidad que podría tener una imagen DICOM */
 #define MAX_INTENSITY 3071.0 /**< Valor máximo de intensidad que podría tener una imagen DICOM */
+#define WOOD_ISOVALUE -750 /**< Valor de isosuperficie de la madera */
+#define STUCCO_ISOVALUE -100 /**< Valor de isosuperficie del estuco */
+#define METAL_ISOVALUE 2976 /**< Valor de isosuperficie del metal */
 
 namespace Ui {
     class MainWindow;
@@ -80,6 +83,9 @@ private slots:
 	void on_stuccoPreset_pressed();
 	void on_metalPreset_pressed();
 	void on_updateMesh_pressed();
+	void on_extractMeshWood_pressed();
+	void on_extractMeshStucco_pressed();
+	void on_extractMeshMetal_pressed();
 
 	void on_enablePlane_stateChanged();
 	void on_enableRule_stateChanged();
@@ -90,6 +96,7 @@ private slots:
 	void on_gradientTFMinSlider_valueChanged();
 	void on_scalarTFMaxSlider_valueChanged();
 	void on_scalarTFMinSlider_valueChanged();
+	void on_isoValueSlider_valueChanged();
 
 	/**
 	 * Establece un color a un Renderer

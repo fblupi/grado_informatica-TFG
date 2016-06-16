@@ -130,6 +130,12 @@ public:
 	void setRenderMode(const int mode);
 
 	/**
+	 * Establece el valor de isosuperficie para generar la malla
+	 * @param	isoValue	isoValue
+	 */
+	void setIsoValue(const double isoValue);
+
+	/**
 	 * Crea la malla
 	 */
 	void createMesh();

@@ -92,7 +92,6 @@ void Figura::createMesh() {
 	meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
 	meshMapper->SetInputConnection(surface->GetOutputPort());
 	meshMapper->ScalarVisibilityOff();
-	//meshActor = vtkSmartPointer<vtkActor>::New();
 	meshActor->SetMapper(meshMapper);
 }
 
@@ -134,4 +133,8 @@ void Figura::setRenderMode(const int mode) {
 	default:
 		mapper->SetRequestedRenderModeToDefault();
 	}
+}
+
+void Figura::setIsoValue(const double isoValue) {
+	this->isoValue = isoValue;
 }

@@ -3,6 +3,7 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
+	ui->isoValueSlider->setTracking(false);
 
 	deleting = false;
 
@@ -28,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceViewer->SetColorWindow(400);
 
 	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
-	setBackgroundColor(meshRen, .3, .2, .1); // fondo marron
+	setBackgroundColor(meshRen, .1, .2, .3); // fondo azul oscuro
 
     connectComponents(); // conecta los renderers con los widgets
 
@@ -411,9 +412,63 @@ void MainWindow::on_metalPreset_pressed() {
 }
 
 void MainWindow::on_updateMesh_pressed() {
+	QProgressDialog progressDialog(this);
+	progressDialog.setWindowTitle(QString("Generando..."));
+	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
+	progressDialog.setCancelButton(0);
+	progressDialog.show();
+
 	removeMesh();
 	figura->createMesh();
 	drawMesh();
+
+	progressDialog.close();
+}
+
+void MainWindow::on_extractMeshWood_pressed() {
+	QProgressDialog progressDialog(this);
+	progressDialog.setWindowTitle(QString("Actualizando..."));
+	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
+	progressDialog.setCancelButton(0);
+	progressDialog.show();
+
+	figura->setIsoValue(WOOD_ISOVALUE);
+	ui->isoValueSlider->setValue(WOOD_ISOVALUE);
+	figura->updateMesh();
+	meshRen->Render();
+
+	progressDialog.close();
+}
+
+void MainWindow::on_extractMeshStucco_pressed() {
+	QProgressDialog progressDialog(this);
+	progressDialog.setWindowTitle(QString("Actualizando..."));
+	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
+	progressDialog.setCancelButton(0);
+	progressDialog.show();
+
+	figura->setIsoValue(STUCCO_ISOVALUE);
+	ui->isoValueSlider->setValue(STUCCO_ISOVALUE);
+	figura->updateMesh();
+	meshRen->Render();
+
+	progressDialog.close();
+}
+
+void MainWindow::on_extractMeshMetal_pressed() {
+	QProgressDialog progressDialog(this);
+	progressDialog.setWindowTitle(QString("Actualizando..."));
+	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
+	progressDialog.setCancelButton(0);
+	progressDialog.show();
+
+	figura->setIsoValue(METAL_ISOVALUE);
+	ui->isoValueSlider->setValue(METAL_ISOVALUE);
+	figura->updateMesh();
+	meshRen->Render();
+
+	progressDialog.close();
+
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -470,4 +525,18 @@ void MainWindow::on_scalarTFMaxSlider_valueChanged() {
 void MainWindow::on_scalarTFMinSlider_valueChanged() {
 	scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
 	ui->scalarTFMaxSlider->setMinimum(ui->scalarTFMinSlider->value());
+}
+
+void MainWindow::on_isoValueSlider_valueChanged() {
+	QProgressDialog progressDialog(this);
+	progressDialog.setWindowTitle(QString("Actualizando..."));
+	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
+	progressDialog.setCancelButton(0);
+	progressDialog.show();
+
+	figura->setIsoValue(ui->isoValueSlider->value());
+	figura->updateMesh();
+	meshRen->Render();
+
+	progressDialog.close();
 }

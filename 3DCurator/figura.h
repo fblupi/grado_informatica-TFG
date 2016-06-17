@@ -55,11 +55,11 @@ public:
 	*/
 	vtkSmartPointer<vtkImageData> getImageData() const;
 
-	/** 
-	 * Obtiene el histograma de frecuencias de valores de intensidad
-	 * @return	Puntero al histograma
+	/**
+	 * Obtiene el mapper del volumen
+	 * @return	Puntero al mapper del volumen
 	 */
-	vtkSmartPointer<vtkImageAccumulate> getHistogram() const;
+	vtkSmartPointer<vtkSmartVolumeMapper> getMapper() const;
 
 	/**
 	 * Obtiene la malla extraida
@@ -152,7 +152,6 @@ private:
     vtkSmartPointer<vtkVolume> volume;  /**< Volumen con la figura */
 	vtkSmartPointer<vtkSmartVolumeMapper> mapper;  /**< Mapeador que usa DVR GPU-Raycasting */
     vtkSmartPointer<vtkVolumeProperty> volumeProperty;  /**< Propiedades del volumen */
-	vtkSmartPointer<vtkImageAccumulate> histogram; /**< Histograma de frecuencias de valores de intensidad */
 	vtkSmartPointer<vtkActor> meshActor; /**< Actor de la malla extraida */
 	TransferFunction *tf;  /**< Función de transferencia */
 	double isoValue; /**< Valor de isosuperficia para la malla */

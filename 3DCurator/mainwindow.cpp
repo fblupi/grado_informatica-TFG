@@ -224,15 +224,6 @@ void MainWindow::importDICOM() {
 		drawVolume(); // dibuja volumen
 		renderSlice(); // dibuja el corte
 
-		/* Dibuja el histograma con valores */
-		//vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
-		//vtkSmartPointer<vtkXYPlotActor> plot = vtkSmartPointer<vtkXYPlotActor>::New();
-		//plot->AddDataSetInputConnection(figura->getHistogram()->GetOutputPort());
-		//plot->SetXRange(-750, 3000);
-		//renderer->AddActor(plot);
-		//ui->histogramWidget->GetRenderWindow()->AddRenderer(renderer);
-		/* ------------------------------- */
-
 		progressDialog.close();
 	}
 }
@@ -552,32 +543,32 @@ void MainWindow::on_enableRule_stateChanged() {
 
 void MainWindow::on_colorTFMaxSlider_valueChanged() {
 	colorTFChart->setRange((double)ui->colorTFMinSlider->value(), (double)ui->colorTFMaxSlider->value());
-	ui->colorTFMinSlider->setMaximum(ui->colorTFMaxSlider->value());
+	ui->colorTFMinSlider->setMaximum(ui->colorTFMaxSlider->value() - 1);
 }
 
 void MainWindow::on_colorTFMinSlider_valueChanged() {
 	colorTFChart->setRange((double)ui->colorTFMinSlider->value(), (double)ui->colorTFMaxSlider->value());
-	ui->colorTFMaxSlider->setMinimum(ui->colorTFMinSlider->value());
+	ui->colorTFMaxSlider->setMinimum(ui->colorTFMinSlider->value() + 1);
 }
 
 void MainWindow::on_gradientTFMaxSlider_valueChanged() {
 	gradientTFChart->setRange((double)ui->gradientTFMinSlider->value(), (double)ui->gradientTFMaxSlider->value());
-	ui->gradientTFMinSlider->setMaximum(ui->gradientTFMaxSlider->value());
+	ui->gradientTFMinSlider->setMaximum(ui->gradientTFMaxSlider->value() - 1);
 }
 
 void MainWindow::on_gradientTFMinSlider_valueChanged() {
 	gradientTFChart->setRange((double)ui->gradientTFMinSlider->value(), (double)ui->gradientTFMaxSlider->value());
-	ui->gradientTFMaxSlider->setMinimum(ui->gradientTFMinSlider->value());
+	ui->gradientTFMaxSlider->setMinimum(ui->gradientTFMinSlider->value() + 1);
 }
 
 void MainWindow::on_scalarTFMaxSlider_valueChanged() {
 	scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
-	ui->scalarTFMinSlider->setMaximum(ui->scalarTFMaxSlider->value());
+	ui->scalarTFMinSlider->setMaximum(ui->scalarTFMaxSlider->value() - 1);
 }
 
 void MainWindow::on_scalarTFMinSlider_valueChanged() {
 	scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
-	ui->scalarTFMaxSlider->setMinimum(ui->scalarTFMinSlider->value());
+	ui->scalarTFMaxSlider->setMinimum(ui->scalarTFMinSlider->value() + 1);
 }
 
 void MainWindow::on_isoValueSlider_valueChanged() {

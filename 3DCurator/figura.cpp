@@ -7,8 +7,6 @@ Figura::Figura() {
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	imageData = vtkSmartPointer<vtkImageData>::New();
 	meshActor = vtkSmartPointer<vtkActor>::New();
-	//histogram = vtkSmartPointer<vtkImageAccumulate>::New();
-	//histogram->SetComponentExtent(-750, 3000, 0, 3000, 0, 0);
     volume = vtkSmartPointer<vtkVolume>::New();
 	setProperties(); // asigna propiedades del volumen (material, función de transferencia...)
 	volume->SetMapper(mapper);
@@ -31,8 +29,8 @@ vtkSmartPointer<vtkImageData> Figura::getImageData() const {
 	return imageData;
 }
 
-vtkSmartPointer<vtkImageAccumulate> Figura::getHistogram() const {
-	return histogram;
+vtkSmartPointer<vtkSmartVolumeMapper> Figura::getMapper() const {
+	return mapper;
 }
 
 vtkSmartPointer<vtkActor> Figura::getMesh() const {
@@ -80,9 +78,6 @@ void Figura::setDICOMFolder(const std::string s) {
 	// Crea y asigna el mapper
 	//mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	mapper->SetInputData(imageData); // conecta el mapper con el reader
-	volume->SetMapper(mapper);
-
-	//histogram->SetInputConnection(reader->GetOutputPort());
 }
 
 void Figura::createMesh() {

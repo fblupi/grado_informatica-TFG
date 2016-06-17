@@ -249,7 +249,7 @@
              <x>0</x>
              <y>0</y>
              <width>399</width>
-             <height>920</height>
+             <height>693</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -394,54 +394,6 @@
                  </property>
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="histogramBox">
-              <property name="title">
-               <string>Histograma</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout">
-               <item row="1" column="0">
-                <widget class="QSlider" name="histogramMinSlider">
-                 <property name="minimum">
-                  <number>-9024</number>
-                 </property>
-                 <property name="maximum">
-                  <number>0</number>
-                 </property>
-                 <property name="value">
-                  <number>-9024</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QSlider" name="histogramMaxSlider">
-                 <property name="maximum">
-                  <number>10976</number>
-                 </property>
-                 <property name="value">
-                  <number>10976</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0" colspan="2">
-                <widget class="QVTKWidget" name="histogramWidget">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>160</height>
-                  </size>
                  </property>
                 </widget>
                </item>

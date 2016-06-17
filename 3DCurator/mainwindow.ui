@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1050</width>
+    <width>1016</width>
     <height>640</height>
    </rect>
   </property>
@@ -82,23 +82,66 @@
             </widget>
            </item>
            <item>
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QPushButton" name="sagitalPlane">
              <property name="text">
-              <string>Sagital</string>
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="assets/resources.qrc">
+               <normaloff>:/icons/sagital.png</normaloff>:/icons/sagital.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="axialPlane">
              <property name="text">
-              <string>Axial</string>
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="assets/resources.qrc">
+               <normaloff>:/icons/axial.png</normaloff>:/icons/axial.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="coronalPlane">
              <property name="text">
-              <string>Coronal</string>
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="assets/resources.qrc">
+               <normaloff>:/icons/coronal.png</normaloff>:/icons/coronal.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -153,7 +196,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QVTKWidget" name="slicesWidget"/>
+         <widget class="QVTKWidget" name="slicesWidget">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QLabel" name="coordsAndValueLabel">
@@ -198,7 +248,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>433</width>
+             <width>399</width>
              <height>920</height>
             </rect>
            </property>
@@ -409,6 +459,12 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
           </property>
           <property name="text">
            <string/>
@@ -731,7 +787,7 @@
         <item row="3" column="4">
          <widget class="QPushButton" name="updateMesh">
           <property name="text">
-           <string>Actualizar</string>
+           <string>Generar</string>
           </property>
          </widget>
         </item>
@@ -929,7 +985,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1050</width>
+     <width>1016</width>
      <height>21</height>
     </rect>
    </property>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1016</width>
-    <height>640</height>
+    <height>645</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,6 @@
         <height>550</height>
        </size>
       </property>
-      <zorder>mainTab</zorder>
      </widget>
     </item>
     <item row="1" column="0">
@@ -228,9 +227,6 @@
             <height>0</height>
            </size>
           </property>
-          <zorder>enableRule</zorder>
-          <zorder>coordsAndValueLabel</zorder>
-          <zorder>planeOptions</zorder>
          </widget>
         </item>
         <item>
@@ -754,7 +750,17 @@
         <item row="3" column="5">
          <widget class="QPushButton" name="extractMesh">
           <property name="text">
-           <string>Extraer</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="assets/resources.qrc">
+            <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -774,7 +780,17 @@
         <item row="3" column="4">
          <widget class="QPushButton" name="updateMesh">
           <property name="text">
-           <string>Generar</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="assets/resources.qrc">
+            <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
           </property>
          </widget>
         </item>

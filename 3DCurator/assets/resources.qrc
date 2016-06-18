@@ -3,6 +3,7 @@
 <qresource>
 	<file>icons/3DCurator.ico</file>
 	<file>icons/folder.png</file>
+	<file>icons/refresh.png</file>
 	<file>icons/power.png</file>
 	<file>icons/save.png</file>
 	<file>icons/save-as.png</file>

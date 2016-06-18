@@ -39,12 +39,9 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			progressDialog.setCancelButton(0);
 			progressDialog.show();
 
-			deleteByImages(figura->getImageData(), ijk, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2]);
+			deleteByImages(figura->getImageData(), ijk, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2]); // Borra
 
-			vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
-			volumeMapper->SetInputData(figura->getImageData());
-			figura->getVolume()->SetMapper(volumeMapper);
-			//figura->getMapper()->Update();
+			figura->getImageData()->Modified(); // Actualiza tiempo de modificación para que el mapper recalcule los datos del volumen
 
 			plano->getPlane()->UpdatePlacement(); // Actualiza el plano para que se actualicen los cambios en el corte
 			viewer->Render(); // Renderiza el corte

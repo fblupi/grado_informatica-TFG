@@ -71,10 +71,8 @@ private slots:
 	void on_coronalPlane_pressed();
 	void on_sagitalPlane_pressed();
 	void on_exportSliceImage_pressed();
-	void on_exportSliceImageAs_pressed();
 	void on_importPreset_pressed();
 	void on_exportPreset_pressed();
-	void on_exportPresetAs_pressed();
 	void on_restoreMaterial_pressed();
 	void on_updateProperties_pressed();
 	void on_completePreset_pressed();

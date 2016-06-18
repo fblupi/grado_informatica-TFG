@@ -410,11 +410,6 @@ void MainWindow::on_sagitalPlane_pressed() {
 
 void MainWindow::on_exportSliceImage_pressed() {
 	exportImageFromRenderWindow(
-		ui->slicesWidget->GetRenderWindow(), QDir(QDir::homePath()).filePath(QString::fromStdString(getCurrentDate() + ".png")));
-}
-
-void MainWindow::on_exportSliceImageAs_pressed() {
-	exportImageFromRenderWindow(
 		ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
@@ -423,10 +418,6 @@ void MainWindow::on_importPreset_pressed() {
 }
 
 void MainWindow::on_exportPreset_pressed() {
-	exportPreset(QDir(QDir::homePath()).filePath(ui->tfName->text() + ".xml"));
-}
-
-void MainWindow::on_exportPresetAs_pressed() {
 	exportPreset(getExportPresetFilename(ui->tfName->text()));
 }
 

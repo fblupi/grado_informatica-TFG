@@ -39,18 +39,28 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			progressDialog.setCancelButton(0);
 			progressDialog.show();
 
-			deleteByImages(figura->getImageData(), ijk, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2]); // Borra
+			vtkSmartPointer<vtkImageData> oldData = vtkSmartPointer<vtkImageData>::New();
+			oldData->DeepCopy(figura->getImageData()); // Guarda los datos por si luego hay que volver al estado original
 
+			deleteByImages(figura->getImageData(), ijk, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2]); // Borra
 			figura->getImageData()->Modified(); // Actualiza tiempo de modificación para que el mapper recalcule los datos del volumen
 
 			plano->getPlane()->UpdatePlacement(); // Actualiza el plano para que se actualicen los cambios en el corte
 			viewer->Render(); // Renderiza el corte
 
+			if (QMessageBox::question(NULL, "Confirmar", "¿Actualizar cambios?", QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
+				figura->getImageData()->DeepCopy(oldData); // Vuelve a los datos antes del borrado
+				figura->getImageData()->Modified(); // Actualiza tiempo de modificación para que el mapper recalcule los datos del volumen
+
+				plano->getPlane()->UpdatePlacement(); // Actualiza el plano para que se actualicen los cambios en el corte
+				viewer->Render(); // Renderiza el corte
+			}
+
 			progressDialog.close();
 		}
 	}
 
-	vtkInteractorStyleTrackballCamera::OnLeftButtonDown(); // Forward events
+	//vtkInteractorStyleTrackballCamera::OnLeftButtonDown(); // Forward events
 }
 
 std::pair<int, int> InteractorStyleDeleter::searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y) {

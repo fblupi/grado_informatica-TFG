@@ -2,6 +2,7 @@
 #define INTERACTORSTYLEDELETER_H
 
 #include <QProgressDialog>
+#include <QMessageBox>
 
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>

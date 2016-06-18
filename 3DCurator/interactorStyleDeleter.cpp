@@ -34,7 +34,8 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 
 		if (value > AIR_HU) {
 			QProgressDialog progressDialog(NULL);
-			progressDialog.setWindowTitle(QString("Borrando..."));
+			progressDialog.setWindowTitle(QString::fromLatin1("Borrando..."));
+			progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 			progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
 			progressDialog.setCancelButton(0);
 			progressDialog.show();
@@ -48,7 +49,16 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			plano->getPlane()->UpdatePlacement(); // Actualiza el plano para que se actualicen los cambios en el corte
 			viewer->Render(); // Renderiza el corte
 
-			if (QMessageBox::question(NULL, "Confirmar", "¿Actualizar cambios?", QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
+			QMessageBox confirmBox(NULL);
+			confirmBox.setWindowTitle(QString::fromLatin1("Confirmar"));
+			confirmBox.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+			confirmBox.setIcon(QMessageBox::Question);
+			confirmBox.setText(QString::fromLatin1("¿Actualizar cambios?"));
+			confirmBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+			confirmBox.button(QMessageBox::Yes)->setText(QString::fromLatin1("Sí"));
+			confirmBox.button(QMessageBox::No)->setText(QString::fromLatin1("No"));
+
+			if (confirmBox.exec() == QMessageBox::No) {
 				figura->getImageData()->DeepCopy(oldData); // Vuelve a los datos antes del borrado
 				figura->getImageData()->Modified(); // Actualiza tiempo de modificación para que el mapper recalcule los datos del volumen
 

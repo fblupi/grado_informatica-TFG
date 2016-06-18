@@ -204,6 +204,7 @@ void MainWindow::importDICOM() {
 	if (dicomFolder != NULL) { // la carpeta se ha leído bien
 		QProgressDialog progressDialog(this);
 		progressDialog.setWindowTitle(QString("Cargando..."));
+		progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog.setCancelButton(0);
 		progressDialog.show();
@@ -266,6 +267,7 @@ void MainWindow::exportMesh(const QString filename) {
 	if (filename != NULL) { // el archivo se ha leído bien
 		QProgressDialog progressDialog(this);
 		progressDialog.setWindowTitle(QString("Extrayendo..."));
+		progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog.setCancelButton(0);
 		progressDialog.show();
@@ -459,6 +461,7 @@ void MainWindow::on_metalPreset_pressed() {
 void MainWindow::on_updateMesh_pressed() {
 	QProgressDialog progressDialog(this);
 	progressDialog.setWindowTitle(QString("Generando..."));
+	progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
 	progressDialog.setCancelButton(0);
 	progressDialog.show();
@@ -477,6 +480,7 @@ void MainWindow::on_extractMesh_pressed() {
 void MainWindow::on_extractMeshWood_pressed() {
 	QProgressDialog progressDialog(this);
 	progressDialog.setWindowTitle(QString("Actualizando..."));
+	progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
 	progressDialog.setCancelButton(0);
 	progressDialog.show();
@@ -492,6 +496,7 @@ void MainWindow::on_extractMeshWood_pressed() {
 void MainWindow::on_extractMeshStucco_pressed() {
 	QProgressDialog progressDialog(this);
 	progressDialog.setWindowTitle(QString("Actualizando..."));
+	progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
 	progressDialog.setCancelButton(0);
 	progressDialog.show();
@@ -507,6 +512,7 @@ void MainWindow::on_extractMeshStucco_pressed() {
 void MainWindow::on_extractMeshMetal_pressed() {
 	QProgressDialog progressDialog(this);
 	progressDialog.setWindowTitle(QString("Actualizando..."));
+	progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
 	progressDialog.setCancelButton(0);
 	progressDialog.show();
@@ -579,6 +585,7 @@ void MainWindow::on_scalarTFMinSlider_valueChanged() {
 void MainWindow::on_isoValueSlider_valueChanged() {
 	QProgressDialog progressDialog(this);
 	progressDialog.setWindowTitle(QString("Actualizando..."));
+	progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
 	progressDialog.setCancelButton(0);
 	progressDialog.show();

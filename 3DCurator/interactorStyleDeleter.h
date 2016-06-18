@@ -5,6 +5,9 @@
 #include <QIcon>
 #include <QMessageBox>
 #include <QAbstractButton>
+#include <QPointer>
+#include <QProgressBar>
+#include <QApplication>
 
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>

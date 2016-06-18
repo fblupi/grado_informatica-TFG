@@ -202,12 +202,17 @@ void MainWindow::importDICOM() {
 		this, tr("Abrir carpeta DICOM"), QDir::homePath(), QFileDialog::ShowDirsOnly);
 
 	if (dicomFolder != NULL) { // la carpeta se ha leído bien
-		QProgressDialog progressDialog(this);
-		progressDialog.setWindowTitle(QString("Cargando..."));
-		progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
-		progressDialog.setCancelButton(0);
-		progressDialog.show();
+		QPointer<QProgressBar> bar = new QProgressBar(0);
+		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+		progressDialog->setWindowTitle(QString("Cargando..."));
+		progressDialog->setLabelText(QString::fromLatin1("Cargando los datos del volumen, por favor espere"));
+		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+		progressDialog->setCancelButton(0);
+		progressDialog->setBar(bar);
+		progressDialog->show();
+		bar->close();
+		QApplication::processEvents();
 
 		removeVolume();
 		removeMesh();
@@ -225,7 +230,7 @@ void MainWindow::importDICOM() {
 		drawVolume(); // dibuja volumen
 		renderSlice(); // dibuja el corte
 
-		progressDialog.close();
+		progressDialog->close();
 	}
 }
 
@@ -265,12 +270,17 @@ void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> re
 
 void MainWindow::exportMesh(const QString filename) {
 	if (filename != NULL) { // el archivo se ha leído bien
-		QProgressDialog progressDialog(this);
-		progressDialog.setWindowTitle(QString("Extrayendo..."));
-		progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-		progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
-		progressDialog.setCancelButton(0);
-		progressDialog.show();
+		QPointer<QProgressBar> bar = new QProgressBar(0);
+		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+		progressDialog->setWindowTitle(QString("Extrayendo..."));
+		progressDialog->setLabelText(QString::fromLatin1("Extrayendo la malla del modelo"));
+		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+		progressDialog->setCancelButton(0);
+		progressDialog->setBar(bar);
+		progressDialog->show();
+		bar->close();
+		QApplication::processEvents();
 
 		vtkSmartPointer<vtkMarchingCubes> surface = vtkSmartPointer<vtkMarchingCubes>::New();
 		surface->SetInputData(figura->getImageData());
@@ -300,7 +310,7 @@ void MainWindow::exportMesh(const QString filename) {
 		stlWriter->SetInputData(mesh);
 		stlWriter->Write();
 
-		progressDialog.close();
+		progressDialog->close();
 	}
 }
 
@@ -459,18 +469,23 @@ void MainWindow::on_metalPreset_pressed() {
 }
 
 void MainWindow::on_updateMesh_pressed() {
-	QProgressDialog progressDialog(this);
-	progressDialog.setWindowTitle(QString("Generando..."));
-	progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
-	progressDialog.setCancelButton(0);
-	progressDialog.show();
+	QPointer<QProgressBar> bar = new QProgressBar(0);
+	QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+	progressDialog->setWindowTitle(QString("Generando..."));
+	progressDialog->setLabelText(QString::fromLatin1("Generando la malla del modelo"));
+	progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+	progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+	progressDialog->setCancelButton(0);
+	progressDialog->setBar(bar);
+	progressDialog->show();
+	bar->close();
+	QApplication::processEvents();
 
 	removeMesh();
 	figura->createMesh();
 	drawMesh();
 
-	progressDialog.close();
+	progressDialog->close();
 }
 
 void MainWindow::on_extractMesh_pressed() {
@@ -478,51 +493,15 @@ void MainWindow::on_extractMesh_pressed() {
 }
 
 void MainWindow::on_extractMeshWood_pressed() {
-	QProgressDialog progressDialog(this);
-	progressDialog.setWindowTitle(QString("Actualizando..."));
-	progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
-	progressDialog.setCancelButton(0);
-	progressDialog.show();
-
-	figura->setIsoValue(WOOD_ISOVALUE);
 	ui->isoValueSlider->setValue(WOOD_ISOVALUE);
-	figura->createMesh();
-	meshRen->Render();
-
-	progressDialog.close();
 }
 
 void MainWindow::on_extractMeshStucco_pressed() {
-	QProgressDialog progressDialog(this);
-	progressDialog.setWindowTitle(QString("Actualizando..."));
-	progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
-	progressDialog.setCancelButton(0);
-	progressDialog.show();
-
-	figura->setIsoValue(STUCCO_ISOVALUE);
 	ui->isoValueSlider->setValue(STUCCO_ISOVALUE);
-	figura->createMesh();
-	meshRen->Render();
-
-	progressDialog.close();
 }
 
 void MainWindow::on_extractMeshMetal_pressed() {
-	QProgressDialog progressDialog(this);
-	progressDialog.setWindowTitle(QString("Actualizando..."));
-	progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
-	progressDialog.setCancelButton(0);
-	progressDialog.show();
-
-	figura->setIsoValue(METAL_ISOVALUE);
 	ui->isoValueSlider->setValue(METAL_ISOVALUE);
-	figura->createMesh();
-	meshRen->Render();
-
-	progressDialog.close();
 
 }
 
@@ -583,16 +562,21 @@ void MainWindow::on_scalarTFMinSlider_valueChanged() {
 }
 
 void MainWindow::on_isoValueSlider_valueChanged() {
-	QProgressDialog progressDialog(this);
-	progressDialog.setWindowTitle(QString("Actualizando..."));
-	progressDialog.setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	progressDialog.setWindowFlags(progressDialog.windowFlags() & ~Qt::WindowCloseButtonHint);
-	progressDialog.setCancelButton(0);
-	progressDialog.show();
+	QPointer<QProgressBar> bar = new QProgressBar(0);
+	QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+	progressDialog->setWindowTitle(QString("Actualizando..."));
+	progressDialog->setLabelText(QString::fromLatin1("Generando el modelo con la isosuperficie especificada"));
+	progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+	progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+	progressDialog->setCancelButton(0);
+	progressDialog->setBar(bar);
+	progressDialog->show();
+	bar->close();
+	QApplication::processEvents();
 
 	figura->setIsoValue(ui->isoValueSlider->value());
 	figura->createMesh();
 	meshRen->Render();
 
-	progressDialog.close();
+	progressDialog->close();
 }

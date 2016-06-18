@@ -33,7 +33,8 @@ bool ColorTransferControlPointsItem::MouseDoubleClickEvent(const vtkContextMouse
 			values[2],	// verde
 			values[3]	// y azul
 			);
-		color = QColorDialog::getColor(color); // obtiene el color elegido por el usuario, dando por defecto el que tiene en ese momento
+		QPointer<QColorDialog> colorDialog = new QColorDialog(0);
+		color = colorDialog->getColor(color); // obtiene el color elegido por el usuario, dando por defecto el que tiene en ese momento
 		if (color.isValid()) { // se ha seleccionado un color
 			values[1] = color.redF();	// cambia el valor de la componente roja del color
 			values[2] = color.greenF();	// el de la componente verde

@@ -11,6 +11,7 @@
 #include <vtkRenderWindowInteractor.h>
 
 #include <QColorDialog>
+#include <QPointer>
 
 /**
  * @class ColorTransferControlPointsItem

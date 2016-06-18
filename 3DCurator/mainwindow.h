@@ -5,6 +5,8 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QProgressDialog>
+#include <QProgressBar>
+#include <QPointer>
 
 #include <sstream>
 

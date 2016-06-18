@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	ui->isoValueSlider->setTracking(false);
 
 	deleting = false;
+	showPlane = true;
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
 	meshRen = vtkSmartPointer<vtkRenderer>::New();
@@ -37,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	renderMesh();
 
 	plano->show(false); // No muestra el corte del plano
-	plano->enable(true); // Muestra el plano
+	enablePlane(); // Muestra el plano
 }
 
 MainWindow::~MainWindow() {
@@ -211,15 +212,14 @@ void MainWindow::importDICOM() {
 		removeMesh();
 
 		plano->show(false);
-		plano->enable(false);
+		disablePlane();
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
 		plano->setInputData(figura->getImageData()); // conecta el plano con los datos del volumen
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		updateShadow(); // actualiza sombreado
 		defaultPlanePosition(); // coloca el plano en una posición inicial
 		plano->show(true);
-		plano->enable(true);
-		ui->enablePlane->setChecked(true);
+		enablePlane();
 
 		drawVolume(); // dibuja volumen
 		renderSlice(); // dibuja el corte
@@ -325,6 +325,20 @@ QString MainWindow::getExportImageFilename(const QString defaultFilename) {
 QString MainWindow::getExportMeshFilename(const QString defaultFilename) {
 	return QFileDialog::getSaveFileName(
 		this, tr("Exportar malla"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)");
+}
+
+void MainWindow::enablePlane() {
+	plano->enable(true);
+	QIcon icon(":/icons/eye-slash.png");
+	ui->enablePlane->setIcon(icon);
+	showPlane = true;
+}
+
+void MainWindow::disablePlane() {
+	plano->enable(false);
+	QIcon icon(":/icons/eye.png");
+	ui->enablePlane->setIcon(icon);
+	showPlane = false;
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -515,18 +529,18 @@ void MainWindow::on_extractMeshMetal_pressed() {
 
 }
 
-//---------------------------------------------------------------------------------------------------------------------------------
-// Eventos GUI - CHECKBOX
-//---------------------------------------------------------------------------------------------------------------------------------
-
-void MainWindow::on_enablePlane_stateChanged() {
-	if (ui->enablePlane->isChecked()) {
-		plano->enable(true);
+void MainWindow::on_enablePlane_pressed() {
+	if (showPlane) {
+		disablePlane();
 	} else {
-		plano->enable(false);
+		enablePlane();
 	}
 	renderVolume();
 }
+
+//---------------------------------------------------------------------------------------------------------------------------------
+// Eventos GUI - CHECKBOX
+//---------------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_enableRule_stateChanged() {
 	if (ui->enableRule->isChecked()) {

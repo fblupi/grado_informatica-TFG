@@ -27,6 +27,7 @@
         <height>550</height>
        </size>
       </property>
+      <zorder>mainTab</zorder>
      </widget>
     </item>
     <item row="1" column="0">
@@ -48,14 +49,20 @@
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <widget class="QGroupBox" name="planeOptions">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>60</height>
+            <height>72</height>
            </size>
           </property>
           <property name="title">
-           <string notr="true"/>
+           <string notr="true">Plano</string>
           </property>
           <property name="flat">
            <bool>false</bool>
@@ -65,19 +72,19 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QCheckBox" name="enableRule">
+            <widget class="QPushButton" name="enablePlane">
              <property name="text">
-              <string>Regla</string>
+              <string/>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="enablePlane">
-             <property name="text">
-              <string>Plano</string>
+             <property name="icon">
+              <iconset resource="assets/resources.qrc">
+               <normaloff>:/icons/eye-slash.png</normaloff>:/icons/eye-slash.png</iconset>
              </property>
-             <property name="checked">
-              <bool>true</bool>
+             <property name="iconSize">
+              <size>
+               <width>21</width>
+               <height>21</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -96,6 +103,12 @@
            </item>
            <item>
             <widget class="QPushButton" name="sagitalPlane">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -113,6 +126,12 @@
            </item>
            <item>
             <widget class="QPushButton" name="axialPlane">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -130,6 +149,12 @@
            </item>
            <item>
             <widget class="QPushButton" name="coronalPlane">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -202,6 +227,16 @@
             <width>0</width>
             <height>0</height>
            </size>
+          </property>
+          <zorder>enableRule</zorder>
+          <zorder>coordsAndValueLabel</zorder>
+          <zorder>planeOptions</zorder>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="enableRule">
+          <property name="text">
+           <string>Regla</string>
           </property>
          </widget>
         </item>

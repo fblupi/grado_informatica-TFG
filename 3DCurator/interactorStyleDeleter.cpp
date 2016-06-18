@@ -44,6 +44,7 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 			volumeMapper->SetInputData(figura->getImageData());
 			figura->getVolume()->SetMapper(volumeMapper);
+			//figura->getMapper()->Update();
 
 			plano->getPlane()->UpdatePlacement(); // Actualiza el plano para que se actualicen los cambios en el corte
 			viewer->Render(); // Renderiza el corte

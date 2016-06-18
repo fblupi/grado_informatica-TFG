@@ -86,8 +86,8 @@ private slots:
 	void on_extractMeshWood_pressed();
 	void on_extractMeshStucco_pressed();
 	void on_extractMeshMetal_pressed();
+	void on_enablePlane_pressed();
 
-	void on_enablePlane_stateChanged();
 	void on_enableRule_stateChanged();
 
 	void on_colorTFMaxSlider_valueChanged();
@@ -138,8 +138,8 @@ private slots:
 	void renderVolume();
 
 	/**
-	* Renderiza la ventana de la malla
-	*/
+	 * Renderiza la ventana de la malla
+	 */
 	void renderMesh();
 
 	/**
@@ -238,6 +238,16 @@ private slots:
 	 */
 	QString getExportMeshFilename(const QString defaultFilename);
 
+	/**
+	 * Habilita el plano
+	 */
+	void enablePlane();
+
+	/**
+	 * Deshabilita el plano
+	 */
+	void disablePlane();
+
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */
 
@@ -259,6 +269,7 @@ private:
 	vtkSmartPointer<vtkDistanceWidget> distanceWidget; /**< Widget para realizar medidas */
 
 	bool deleting; /**< Variable para ver si está en modo borrado o no */
+	bool showPlane; /**< Mostrar el plano */
 };
 
 #endif // MAINWINDOW_H

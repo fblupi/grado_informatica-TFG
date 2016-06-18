@@ -14,14 +14,13 @@
 #include <stack>
 #include "figura.h"
 #include "plano.h"
-
-#define MIN_AIR -850
-#define AIR_HU -1000
+#include "measures.h"
 
 /**
  * @class InteractorStyleDeleter
  * Clase que hereda de la clase vtkInteractorStyleTrackballCamera y que al pulsar sobre un voxel borra todos los que forman
- * parte de esa parte de la figura rodeada de aire
+ * parte de esa parte de la figura rodeada de aire. En ocasiones, dependiendo del voxel en el que se pulse, borra la totalidad
+ * de la parte que se desea borrar o no y habría que hacer varios clicks
  */
 class InteractorStyleDeleter : public vtkInteractorStyleTrackballCamera {
 public:

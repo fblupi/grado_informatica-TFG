@@ -56,12 +56,6 @@ public:
 	vtkSmartPointer<vtkImageData> getImageData() const;
 
 	/**
-	 * Obtiene el mapper del volumen
-	 * @return	Puntero al mapper del volumen
-	 */
-	vtkSmartPointer<vtkSmartVolumeMapper> getMapper() const;
-
-	/**
 	 * Obtiene la malla extraida
 	 * @return	Puntero al actor de la malla
 	 */
@@ -154,12 +148,13 @@ public:
 	void createMesh();
 
 private:
-	vtkSmartPointer<vtkImageData> imageData; /** < Matriz 3D con los valores escalares de la figura */
-    vtkSmartPointer<vtkVolume> volume;  /**< Volumen con la figura */
-	vtkSmartPointer<vtkSmartVolumeMapper> mapper;  /**< Mapeador que usa DVR GPU-Raycasting */
-    vtkSmartPointer<vtkVolumeProperty> volumeProperty;  /**< Propiedades del volumen */
+	vtkSmartPointer<vtkDICOMImageReader> imageReader; /**< Lector de datos del volumen */
+	vtkSmartPointer<vtkImageData> imageData; /**< Matriz 3D con los valores escalares de la figura */
+    vtkSmartPointer<vtkVolume> volume; /**< Volumen con la figura */
+	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper; /**< Mapeador que usa DVR GPU-Raycasting */
+	vtkSmartPointer<vtkVolumeProperty> volumeProperty; /**< Propiedades del volumen */
 	vtkSmartPointer<vtkActor> meshActor; /**< Actor de la malla extraida */
-	TransferFunction *tf;  /**< Función de transferencia */
+	TransferFunction *tf; /**< Función de transferencia */
 	double isoValue; /**< Valor de isosuperficia para la malla */
 	bool loaded; /**< Flag que determina si hay un volumen cargado */
 

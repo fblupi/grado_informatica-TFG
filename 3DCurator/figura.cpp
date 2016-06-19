@@ -4,13 +4,14 @@ Figura::Figura() {
 	tf = new TransferFunction();
 	isoValue = WOOD_ISOVALUE;
 	loaded = false;
+	imageReader = vtkSmartPointer<vtkDICOMImageReader>::New();
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
-	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
+	volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	imageData = vtkSmartPointer<vtkImageData>::New();
 	meshActor = vtkSmartPointer<vtkActor>::New();
     volume = vtkSmartPointer<vtkVolume>::New();
 	setProperties(); // asigna propiedades del volumen (material, función de transferencia...)
-	volume->SetMapper(mapper);
+	volume->SetMapper(volumeMapper);
     volume->SetProperty(volumeProperty);
 }
 
@@ -28,10 +29,6 @@ vtkSmartPointer<vtkVolume> Figura::getVolume() const {
 
 vtkSmartPointer<vtkImageData> Figura::getImageData() const {
 	return imageData;
-}
-
-vtkSmartPointer<vtkSmartVolumeMapper> Figura::getMapper() const {
-	return mapper;
 }
 
 vtkSmartPointer<vtkActor> Figura::getMesh() const {
@@ -74,7 +71,6 @@ void Figura::setDICOMFolder(const std::string s) {
 	loaded = false;
 
 	// Lee los datos
-	vtkSmartPointer<vtkDICOMImageReader> imageReader = vtkSmartPointer<vtkDICOMImageReader>::New();
     imageReader->SetDirectoryName(s.c_str()); // asigna la carpeta al image reader
     imageReader->Update(); // lee los archivos
 
@@ -82,7 +78,7 @@ void Figura::setDICOMFolder(const std::string s) {
 	imageData->ShallowCopy(imageReader->GetOutput());
 
 	// Crea y asigna el mapper
-	mapper->SetInputData(imageData); // conecta el mapper con el reader
+	volumeMapper->SetInputData(imageData); // conecta el mapper con el reader
 
 	loaded = true;
 }
@@ -125,13 +121,13 @@ void Figura::setMaterial(const double ambient, const double diffuse, const doubl
 void Figura::setRenderMode(const int mode) {
 	switch (mode) {
 	case 0:
-		mapper->SetRequestedRenderModeToGPU();
+		volumeMapper->SetRequestedRenderModeToGPU();
 		break;
 	case 1:
-		mapper->SetRequestedRenderModeToRayCast();
+		volumeMapper->SetRequestedRenderModeToRayCast();
 		break;
 	default:
-		mapper->SetRequestedRenderModeToDefault();
+		volumeMapper->SetRequestedRenderModeToDefault();
 	}
 }
 

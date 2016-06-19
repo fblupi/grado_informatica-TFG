@@ -342,15 +342,77 @@ QString MainWindow::getExportMeshFilename(const QString defaultFilename) {
 void MainWindow::enablePlane() {
 	plano->enable(true);
 	QIcon icon(":/icons/eye-slash.png");
-	ui->enablePlane->setIcon(icon);
+	ui->enableDisablePlane->setIcon(icon);
 	showPlane = true;
 }
 
 void MainWindow::disablePlane() {
 	plano->enable(false);
 	QIcon icon(":/icons/eye.png");
-	ui->enablePlane->setIcon(icon);
+	ui->enableDisablePlane->setIcon(icon);
 	showPlane = false;
+}
+
+void MainWindow::updateMesh() {
+	QPointer<QProgressBar> bar = new QProgressBar(0);
+	QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+	progressDialog->setWindowTitle(QString("Generando..."));
+	progressDialog->setLabelText(QString::fromLatin1("Generando la malla del modelo"));
+	progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+	progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+	progressDialog->setCancelButton(0);
+	progressDialog->setBar(bar);
+	progressDialog->show();
+	bar->close();
+	QApplication::processEvents();
+
+	removeMesh();
+	figura->createMesh();
+	drawMesh();
+
+	progressDialog->close();
+}
+
+void MainWindow::enableDisablePlane() {
+	if (showPlane) {
+		disablePlane();
+	} else {
+		enablePlane();
+	}
+	renderVolume();
+}
+
+void MainWindow::axialPlane() {
+	plano->setAxial();
+	renderVolume();
+	renderSlice();
+}
+
+void MainWindow::coronalPlane() {
+	plano->setCoronal();
+	renderVolume();
+	renderSlice();
+}
+
+void MainWindow::sagitalPlane() {
+	plano->setSagital();
+	renderVolume();
+	renderSlice();
+}
+
+void MainWindow::deleteVolumeParts() {
+	if (deleting) {
+		deleting = false;
+		setBackgroundColor(volumeRen, .1, .2, .3);
+		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
+	} else {
+		deleting = true;
+		setBackgroundColor(volumeRen, .2, .3, .1);
+		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
+	}
+	plano->getPlane()->UpdatePlacement();
+	renderVolume();
+	renderSlice();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -383,46 +445,58 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 	importDICOM();
 }
 
-void MainWindow::on_actionDelete_triggered() {
-	if (deleting) {
-		deleting = false;
-		setBackgroundColor(volumeRen, .1, .2, .3);
-		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
-	} else {
-		deleting = true;
-		setBackgroundColor(volumeRen, .2, .3, .1);
-		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
-	}
-	plano->getPlane()->UpdatePlacement();
-	renderVolume();
-	renderSlice();
+void MainWindow::on_actionDeleteVolumeParts_triggered() {
+	deleteVolumeParts();
+}
+
+void MainWindow::on_actionUpdateMesh_triggered() {
+	updateMesh();
+}
+
+void MainWindow::on_actionEnableDisablePlane_triggered() {
+	enableDisablePlane();
+}
+
+void MainWindow::on_actionAxialPlane_triggered() {
+	axialPlane();
+}
+
+void MainWindow::on_actionCoronalPlane_triggered() {
+	coronalPlane();
+}
+
+void MainWindow::on_actionSagitalPlane_triggered() {
+	sagitalPlane();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
 // Eventos GUI - BOTONES
 //---------------------------------------------------------------------------------------------------------------------------------
 
+void MainWindow::on_openDICOM_pressed() {
+	importDICOM();
+}
+
 void MainWindow::on_axialPlane_pressed() {
-	plano->setAxial();
-	renderVolume();
-	renderSlice();
+	axialPlane();
 }
 
 void MainWindow::on_coronalPlane_pressed() {
-	plano->setCoronal();
-	renderVolume();
-	renderSlice();
+	coronalPlane();
 }
 
 void MainWindow::on_sagitalPlane_pressed() {
-	plano->setSagital();
-	renderVolume();
-	renderSlice();
+	sagitalPlane();
 }
 
 void MainWindow::on_exportSliceImage_pressed() {
 	exportImageFromRenderWindow(
 		ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+}
+
+void MainWindow::on_exportVolumeImage_pressed() {
+	exportImageFromRenderWindow(
+		ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_importPreset_pressed() {
@@ -469,23 +543,7 @@ void MainWindow::on_metalPreset_pressed() {
 }
 
 void MainWindow::on_updateMesh_pressed() {
-	QPointer<QProgressBar> bar = new QProgressBar(0);
-	QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-	progressDialog->setWindowTitle(QString("Generando..."));
-	progressDialog->setLabelText(QString::fromLatin1("Generando la malla del modelo"));
-	progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-	progressDialog->setCancelButton(0);
-	progressDialog->setBar(bar);
-	progressDialog->show();
-	bar->close();
-	QApplication::processEvents();
-
-	removeMesh();
-	figura->createMesh();
-	drawMesh();
-
-	progressDialog->close();
+	updateMesh();
 }
 
 void MainWindow::on_extractMesh_pressed() {
@@ -505,13 +563,12 @@ void MainWindow::on_extractMeshMetal_pressed() {
 
 }
 
-void MainWindow::on_enablePlane_pressed() {
-	if (showPlane) {
-		disablePlane();
-	} else {
-		enablePlane();
-	}
-	renderVolume();
+void MainWindow::on_enableDisablePlane_pressed() {
+	enableDisablePlane();
+}
+
+void MainWindow::on_deleteVolumeParts_pressed() {
+	deleteVolumeParts();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

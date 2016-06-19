@@ -67,12 +67,19 @@ private slots:
 	void on_actionExportPreset_triggered();
 	void on_actionImportPreset_triggered();
 	void on_actionOpenDICOM_triggered();
-	void on_actionDelete_triggered();
+	void on_actionDeleteVolumeParts_triggered();
+	void on_actionUpdateMesh_triggered();
+	void on_actionEnableDisablePlane_triggered();
+	void on_actionAxialPlane_triggered();
+	void on_actionCoronalPlane_triggered();
+	void on_actionSagitalPlane_triggered();
 
+	void on_openDICOM_pressed();
 	void on_axialPlane_pressed();
 	void on_coronalPlane_pressed();
 	void on_sagitalPlane_pressed();
 	void on_exportSliceImage_pressed();
+	void on_exportVolumeImage_pressed();
 	void on_importPreset_pressed();
 	void on_exportPreset_pressed();
 	void on_restoreMaterial_pressed();
@@ -86,7 +93,8 @@ private slots:
 	void on_extractMeshWood_pressed();
 	void on_extractMeshStucco_pressed();
 	void on_extractMeshMetal_pressed();
-	void on_enablePlane_pressed();
+	void on_enableDisablePlane_pressed();
+	void on_deleteVolumeParts_pressed();
 
 	void on_enableRule_stateChanged();
 
@@ -218,6 +226,11 @@ private slots:
 	void exportMesh(const QString filename);
 
 	/**
+	 * Actualiza la malla
+	 */
+	void updateMesh();
+
+	/**
 	 * Obtiene el nombre del archivo de salida para exportar una imagen
 	 * @param	defaultFilename		Nombre que se dará por defecto (fecha y hora)
 	 * @return	Archivo de salida
@@ -247,6 +260,31 @@ private slots:
 	 * Deshabilita el plano
 	 */
 	void disablePlane();
+
+	/**
+	 * Habilita o deshabilita el plano
+	 */
+	void enableDisablePlane();
+
+	/**
+	 * Coloca el plano en posición axial
+	 */
+	void axialPlane();
+
+	/**
+	 * Coloca el plano en posición axial
+	 */
+	void coronalPlane();
+
+	/**
+	 * Coloca el plano en posición axial
+	 */
+	void sagitalPlane();
+
+	/**
+	 * Entra o sale del modo de borrado donde borra partes del volumen
+	 */
+	void deleteVolumeParts();
 
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */

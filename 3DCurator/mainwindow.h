@@ -220,10 +220,15 @@ private slots:
 	void exportPreset(const QString filename);
 
 	/**
-	 * Exporta la malla
+	 * Exporta la malla a un archivo
 	 * @param	filename	Nombre del archivo de salida
 	 */
-	void exportMesh(const QString filename);
+	void exportMeshToFile(const QString filename);
+
+	/**
+	 * Exporta la malla
+	 */
+	void exportMesh();
 
 	/**
 	 * Actualiza la malla
@@ -285,6 +290,11 @@ private slots:
 	 * Entra o sale del modo de borrado donde borra partes del volumen
 	 */
 	void deleteVolumeParts();
+
+	/**
+	 * Lanza un mensaje informando que antes se necesita importar un volumen
+	 */
+	void launchWarningNoVolume();
 
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */

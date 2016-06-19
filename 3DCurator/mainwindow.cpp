@@ -268,7 +268,7 @@ void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> re
 	}
 }
 
-void MainWindow::exportMesh(const QString filename) {
+void MainWindow::exportMeshToFile(const QString filename) {
 	if (filename != NULL) { // el archivo se ha leído bien
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
@@ -353,24 +353,36 @@ void MainWindow::disablePlane() {
 	showPlane = false;
 }
 
+void MainWindow::exportMesh() {
+	if (figura->getLoaded()) {
+		exportMeshToFile(getExportMeshFilename("Mesh"));
+	} else {
+		launchWarningNoVolume();
+	}
+}
+
 void MainWindow::updateMesh() {
-	QPointer<QProgressBar> bar = new QProgressBar(0);
-	QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-	progressDialog->setWindowTitle(QString("Generando..."));
-	progressDialog->setLabelText(QString::fromLatin1("Generando la malla del modelo"));
-	progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-	progressDialog->setCancelButton(0);
-	progressDialog->setBar(bar);
-	progressDialog->show();
-	bar->close();
-	QApplication::processEvents();
+	if (figura->getLoaded()) {
+		QPointer<QProgressBar> bar = new QProgressBar(0);
+		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+		progressDialog->setWindowTitle(QString("Generando..."));
+		progressDialog->setLabelText(QString::fromLatin1("Generando la malla del modelo"));
+		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+		progressDialog->setCancelButton(0);
+		progressDialog->setBar(bar);
+		progressDialog->show();
+		bar->close();
+		QApplication::processEvents();
 
-	removeMesh();
-	figura->createMesh();
-	drawMesh();
+		removeMesh();
+		figura->createMesh();
+		drawMesh();
 
-	progressDialog->close();
+		progressDialog->close();
+	} else {
+		launchWarningNoVolume();
+	}
 }
 
 void MainWindow::enableDisablePlane() {
@@ -383,21 +395,33 @@ void MainWindow::enableDisablePlane() {
 }
 
 void MainWindow::axialPlane() {
-	plano->setAxial();
-	renderVolume();
-	renderSlice();
+	if (figura->getLoaded()) {
+		plano->setAxial();
+		renderVolume();
+		renderSlice();
+	} else {
+		launchWarningNoVolume();
+	}
 }
 
 void MainWindow::coronalPlane() {
-	plano->setCoronal();
-	renderVolume();
-	renderSlice();
+	if (figura->getLoaded()) {
+		plano->setCoronal();
+		renderVolume();
+		renderSlice();
+	} else {
+		launchWarningNoVolume();
+	}
 }
 
 void MainWindow::sagitalPlane() {
-	plano->setSagital();
-	renderVolume();
-	renderSlice();
+	if (figura->getLoaded()) {
+		plano->setSagital();
+		renderVolume();
+		renderSlice();
+	} else {
+		launchWarningNoVolume();
+	}
 }
 
 void MainWindow::deleteVolumeParts() {
@@ -413,6 +437,16 @@ void MainWindow::deleteVolumeParts() {
 	plano->getPlane()->UpdatePlacement();
 	renderVolume();
 	renderSlice();
+}
+
+void MainWindow::launchWarningNoVolume() {
+	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
+	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
+	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+	confirmBox->setIcon(QMessageBox::Information);
+	confirmBox->setText(QString::fromLatin1("Hace falta cargar un modelo antes"));
+	confirmBox->setStandardButtons(QMessageBox::Ok);
+	confirmBox->exec();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -547,7 +581,7 @@ void MainWindow::on_updateMesh_pressed() {
 }
 
 void MainWindow::on_extractMesh_pressed() {
-	exportMesh(getExportMeshFilename("Mesh"));
+	exportMesh();
 }
 
 void MainWindow::on_extractMeshWood_pressed() {

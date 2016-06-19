@@ -3,6 +3,7 @@
 Figura::Figura() {
 	tf = new TransferFunction();
 	isoValue = WOOD_ISOVALUE;
+	loaded = false;
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	imageData = vtkSmartPointer<vtkImageData>::New();
@@ -41,6 +42,10 @@ double Figura::getIsoValue() const {
 	return isoValue;
 }
 
+bool Figura::getLoaded() const {
+	return loaded;
+}
+
 double Figura::getMinXBound() const {
 	return volume->GetMinXBound();
 }
@@ -66,18 +71,20 @@ double Figura::getMaxZBound() const {
 }
 
 void Figura::setDICOMFolder(const std::string s) {
+	loaded = false;
+
 	// Lee los datos
 	vtkSmartPointer<vtkDICOMImageReader> imageReader = vtkSmartPointer<vtkDICOMImageReader>::New();
     imageReader->SetDirectoryName(s.c_str()); // asigna la carpeta al image reader
     imageReader->Update(); // lee los archivos
 
 	// Guarda los datos del volumen
-	//imageData = vtkSmartPointer<vtkImageData>::New();
 	imageData->ShallowCopy(imageReader->GetOutput());
 
 	// Crea y asigna el mapper
-	//mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	mapper->SetInputData(imageData); // conecta el mapper con el reader
+
+	loaded = true;
 }
 
 void Figura::createMesh() {

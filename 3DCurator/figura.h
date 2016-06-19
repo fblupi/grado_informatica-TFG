@@ -74,6 +74,12 @@ public:
 	double getIsoValue() const;
 
 	/**
+	 * Obtiene el flag para comprobar si está o no cargado el volumen
+	 * @return	Flag de cargado o no cargado
+	 */
+	bool getLoaded() const;
+
+	/**
 	 * Obtiene el límite inferior de la figura en el eje X
 	 * @return	Límite
 	 */
@@ -155,6 +161,7 @@ private:
 	vtkSmartPointer<vtkActor> meshActor; /**< Actor de la malla extraida */
 	TransferFunction *tf;  /**< Función de transferencia */
 	double isoValue; /**< Valor de isosuperficia para la malla */
+	bool loaded; /**< Flag que determina si hay un volumen cargado */
 
     void setProperties(); // establace las propiedades del volumen
 };

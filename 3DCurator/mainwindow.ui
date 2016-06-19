@@ -323,6 +323,12 @@
         </item>
         <item row="0" column="1" colspan="9">
          <widget class="QGroupBox" name="defaultPresetsBox">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>96</height>
+           </size>
+          </property>
           <property name="title">
            <string>Presets</string>
           </property>
@@ -681,7 +687,7 @@
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>91</height>
+            <height>96</height>
            </size>
           </property>
           <property name="title">

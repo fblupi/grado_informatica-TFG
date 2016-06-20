@@ -205,7 +205,7 @@ void MainWindow::importDICOM() {
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
 		progressDialog->setWindowTitle(QString("Cargando..."));
-		progressDialog->setLabelText(QString::fromLatin1("Cargando los datos del volumen, por favor espere"));
+		progressDialog->setLabelText(QString::fromLatin1("Cargando los datos DICOM especificados"));
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
@@ -228,6 +228,7 @@ void MainWindow::importDICOM() {
 		enablePlane();
 
 		drawVolume(); // dibuja volumen
+		drawMesh(); // dibuja la malla
 		renderSlice(); // dibuja el corte
 
 		progressDialog->close();
@@ -365,8 +366,8 @@ void MainWindow::updateMesh() {
 	if (figura->getLoaded()) {
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(QString("Generando..."));
-		progressDialog->setLabelText(QString::fromLatin1("Generando la malla del modelo"));
+		progressDialog->setWindowTitle(QString("Actualizando..."));
+		progressDialog->setLabelText(QString::fromLatin1("Generando el modelo con la isosuperficie especificada"));
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
@@ -375,11 +376,11 @@ void MainWindow::updateMesh() {
 		bar->close();
 		QApplication::processEvents();
 
-		removeMesh();
 		figura->createMesh();
-		drawMesh();
+		meshRen->Render();
 
 		progressDialog->close();
+
 	} else {
 		launchWarningNoVolume();
 	}
@@ -653,21 +654,6 @@ void MainWindow::on_scalarTFMinSlider_valueChanged() {
 }
 
 void MainWindow::on_isoValueSlider_valueChanged() {
-	QPointer<QProgressBar> bar = new QProgressBar(0);
-	QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-	progressDialog->setWindowTitle(QString("Actualizando..."));
-	progressDialog->setLabelText(QString::fromLatin1("Generando el modelo con la isosuperficie especificada"));
-	progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-	progressDialog->setCancelButton(0);
-	progressDialog->setBar(bar);
-	progressDialog->show();
-	bar->close();
-	QApplication::processEvents();
-
 	figura->setIsoValue(ui->isoValueSlider->value());
-	figura->createMesh();
-	meshRen->Render();
-
-	progressDialog->close();
+	updateMesh();
 }

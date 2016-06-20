@@ -152,12 +152,15 @@ private:
     vtkSmartPointer<vtkVolume> volume; /**< Volumen con la figura */
 	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper; /**< Mapeador que usa DVR GPU-Raycasting */
 	vtkSmartPointer<vtkVolumeProperty> volumeProperty; /**< Propiedades del volumen */
+	vtkSmartPointer<vtkMarchingCubes> surface; /**< Malla extraida del volumen mediante marching cubes */
+	vtkSmartPointer<vtkPolyDataMapper> meshMapper; /**< Mapeador de la malla */
 	vtkSmartPointer<vtkActor> meshActor; /**< Actor de la malla extraida */
 	TransferFunction *tf; /**< Función de transferencia */
 	double isoValue; /**< Valor de isosuperficia para la malla */
 	bool loaded; /**< Flag que determina si hay un volumen cargado */
 
     void setProperties(); // establace las propiedades del volumen
+	void connectComponents(); // conecta los distintos componentes
 };
 
 #endif // FIGURA_H

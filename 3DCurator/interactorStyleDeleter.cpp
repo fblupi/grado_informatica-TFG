@@ -72,11 +72,8 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 				plano->getPlane()->UpdatePlacement(); // Actualiza el plano para que se actualicen los cambios en el corte
 				viewer->Render(); // Renderiza el corte
 			}
-
 		}
 	}
-
-	//vtkInteractorStyleTrackballCamera::OnLeftButtonDown(); // Forward events
 }
 
 std::pair<int, int> InteractorStyleDeleter::searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y) {

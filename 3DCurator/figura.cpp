@@ -9,13 +9,37 @@ Figura::Figura() {
 	imageData = vtkSmartPointer<vtkImageData>::New();
 	meshActor = vtkSmartPointer<vtkActor>::New();
     volume = vtkSmartPointer<vtkVolume>::New();
-	setProperties(); // asigna propiedades del volumen (material, función de transferencia...)
-	volume->SetMapper(volumeMapper);
-    volume->SetProperty(volumeProperty);
+	meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+	surface = vtkSmartPointer<vtkMarchingCubes>::New();
+	setProperties(); // asigna propiedades del volumen (material, función de transferencia...) y la malla
+	connectComponents(); // conecta los components del volumen y la malla
 }
 
 Figura::~Figura() {
 
+}
+
+void Figura::connectComponents() {
+	// Volumen
+	volume->SetMapper(volumeMapper);
+	volume->SetProperty(volumeProperty);
+
+	// Malla
+	meshMapper->SetInputConnection(surface->GetOutputPort());
+	meshActor->SetMapper(meshMapper);
+}
+
+void Figura::setProperties() {
+	// Volumen
+	volumeProperty->SetInterpolationTypeToLinear(); // interpolación linear
+	volumeProperty->SetGradientOpacity(tf->getGradientFun()); // función de opacidad gradiente
+	volumeProperty->SetScalarOpacity(tf->getScalarFun()); // función de opacidad escalar
+	volumeProperty->SetColor(tf->getColorFun()); // función de color
+
+	// Malla
+	surface->ComputeNormalsOn();
+	surface->ComputeScalarsOn();
+	meshMapper->ScalarVisibilityOff();
 }
 
 TransferFunction * Figura::getTransferFunction() const {
@@ -77,30 +101,18 @@ void Figura::setDICOMFolder(const std::string s) {
 	// Guarda los datos del volumen
 	imageData->DeepCopy(imageReader->GetOutput());
 
-	// Crea y asigna el mapper
-	volumeMapper->SetInputData(imageData); // conecta el mapper con el reader
+	// Actualiza los input data
+	volumeMapper->SetInputData(imageData); // conecta el mapper con los datos
+
+	surface->SetInputData(imageData); // conecta la malla con los datos
+	meshMapper->Update(); // actualiza el mapper de la malla
+	surface->SetValue(0, isoValue); // asigna el valor de isosuperficie
 
 	loaded = true;
 }
 
 void Figura::createMesh() {
-	vtkSmartPointer<vtkMarchingCubes> surface = vtkSmartPointer<vtkMarchingCubes>::New();
-	surface->SetInputData(imageData);
-	surface->UpdateInformation();
-	surface->ComputeNormalsOn();
-	surface->ComputeScalarsOn();
 	surface->SetValue(0, isoValue);
-	vtkSmartPointer<vtkPolyDataMapper> meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-	meshMapper->SetInputConnection(surface->GetOutputPort());
-	meshMapper->ScalarVisibilityOff();
-	meshActor->SetMapper(meshMapper);
-}
-
-void Figura::setProperties() {
-	volumeProperty->SetInterpolationTypeToLinear(); // interpolación linear
-	volumeProperty->SetGradientOpacity(tf->getGradientFun()); // función de opacidad gradiente
-	volumeProperty->SetScalarOpacity(tf->getScalarFun()); // función de opacidad escalar
-	volumeProperty->SetColor(tf->getColorFun()); // función de color
 }
 
 void Figura::enableShadow(const bool onOff) {

@@ -148,7 +148,6 @@ public:
 	void createMesh();
 
 private:
-	vtkSmartPointer<vtkDICOMImageReader> imageReader; /**< Lector de datos del volumen */
 	vtkSmartPointer<vtkImageData> imageData; /**< Matriz 3D con los valores escalares de la figura */
     vtkSmartPointer<vtkVolume> volume; /**< Volumen con la figura */
 	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper; /**< Mapeador que usa DVR GPU-Raycasting */

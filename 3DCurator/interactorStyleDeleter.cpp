@@ -66,11 +66,18 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			confirmBox->button(QMessageBox::No)->setText(QString::fromLatin1("No"));
 
 			if (confirmBox->exec() == QMessageBox::No) {
+				progressDialog->setWindowTitle(QString("Restaurando..."));
+				progressDialog->setLabelText(QString::fromLatin1("Deshaciendo borrado"));
+				progressDialog->show();
+				QApplication::processEvents();
+
 				figura->getImageData()->DeepCopy(oldData); // Vuelve a los datos antes del borrado
 				figura->getImageData()->Modified(); // Actualiza tiempo de modificación para que el mapper recalcule los datos del volumen
 
 				plano->getPlane()->UpdatePlacement(); // Actualiza el plano para que se actualicen los cambios en el corte
 				viewer->Render(); // Renderiza el corte
+
+				progressDialog->close();
 			}
 		}
 	}

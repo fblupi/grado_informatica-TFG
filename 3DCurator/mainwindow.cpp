@@ -440,6 +440,30 @@ void MainWindow::deleteVolumeParts() {
 	renderSlice();
 }
 
+void MainWindow::importCompletePreset() {
+	QFile file(":/presets/ct-woodsculpture.xml");
+	loadDefaultPreset(&file);
+	renderVolume();
+}
+
+void MainWindow::importWoodPreset() {
+	QFile file(":/presets/ct-onlywood.xml");
+	loadDefaultPreset(&file);
+	renderVolume();
+}
+
+void MainWindow::importStuccoPreset() {
+	QFile file(":/presets/ct-onlystucco.xml");
+	loadDefaultPreset(&file);
+	renderVolume();
+}
+
+void MainWindow::importMetalPreset() {
+	QFile file(":/presets/ct-onlymetal.xml");
+	loadDefaultPreset(&file);
+	renderVolume();
+}
+
 void MainWindow::launchWarningNoVolume() {
 	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
 	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
@@ -454,13 +478,8 @@ void MainWindow::launchWarningNoVolume() {
 // Eventos GUI - MENÚ
 //---------------------------------------------------------------------------------------------------------------------------------
 
-void MainWindow::on_actionExit_triggered() {
-	exit(0);
-}
-
-void MainWindow::on_actionExportSliceImage_triggered() {
-	exportImageFromRenderWindow(
-		ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+void MainWindow::on_actionOpenDICOM_triggered() {
+	importDICOM();
 }
 
 void MainWindow::on_actionExportVolumeImage_triggered() {
@@ -468,28 +487,21 @@ void MainWindow::on_actionExportVolumeImage_triggered() {
 		ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
-void MainWindow::on_actionExportPreset_triggered() {
-	exportPreset(getExportPresetFilename(ui->tfName->text()));
+void MainWindow::on_actionExportSliceImage_triggered() {
+	exportImageFromRenderWindow(
+		ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
-void MainWindow::on_actionImportPreset_triggered() {
-	importPreset();
-}
-
-void MainWindow::on_actionOpenDICOM_triggered() {
-	importDICOM();
-}
-
-void MainWindow::on_actionDeleteVolumeParts_triggered() {
-	deleteVolumeParts();
-}
-
-void MainWindow::on_actionUpdateMesh_triggered() {
-	updateMesh();
+void MainWindow::on_actionExit_triggered() {
+	exit(0);
 }
 
 void MainWindow::on_actionEnableDisablePlane_triggered() {
 	enableDisablePlane();
+}
+
+void MainWindow::on_actionSagitalPlane_triggered() {
+	sagitalPlane();
 }
 
 void MainWindow::on_actionAxialPlane_triggered() {
@@ -500,8 +512,44 @@ void MainWindow::on_actionCoronalPlane_triggered() {
 	coronalPlane();
 }
 
-void MainWindow::on_actionSagitalPlane_triggered() {
-	sagitalPlane();
+void MainWindow::on_actionImportPreset_triggered() {
+	importPreset();
+}
+
+void MainWindow::on_actionCompletePreset_triggered() {
+	importCompletePreset();
+}
+
+void MainWindow::on_actionWoodPreset_triggered() {
+	importWoodPreset();
+}
+
+void MainWindow::on_actionStuccoPreset_triggered() {
+	importStuccoPreset();
+}
+
+void MainWindow::on_actionMetalPreset_triggered() {
+	importMetalPreset();
+}
+
+void MainWindow::on_actionExportPreset_triggered() {
+	exportPreset(getExportPresetFilename(ui->tfName->text()));
+}
+
+void MainWindow::on_actionDeleteVolumeParts_triggered() {
+	deleteVolumeParts();
+}
+
+void MainWindow::on_actionWoodMesh_triggered() {
+	ui->isoValueSlider->setValue(WOOD_ISOVALUE);
+}
+
+void MainWindow::on_actionStuccoMesh_triggered() {
+	ui->isoValueSlider->setValue(STUCCO_ISOVALUE);
+}
+
+void MainWindow::on_actionMetalMesh_triggered() {
+	ui->isoValueSlider->setValue(METAL_ISOVALUE);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -554,31 +602,19 @@ void MainWindow::on_updateProperties_pressed() {
 }
 
 void MainWindow::on_completePreset_pressed() {
-	QFile file(":/presets/ct-woodsculpture.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+	importCompletePreset();
 }
 
 void MainWindow::on_woodPreset_pressed() {
-	QFile file(":/presets/ct-onlywood.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+	importWoodPreset();
 }
 
 void MainWindow::on_stuccoPreset_pressed() {
-	QFile file(":/presets/ct-onlystucco.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+	importStuccoPreset();
 }
 
 void MainWindow::on_metalPreset_pressed() {
-	QFile file(":/presets/ct-onlymetal.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
-}
-
-void MainWindow::on_updateMesh_pressed() {
-	updateMesh();
+	importMetalPreset();
 }
 
 void MainWindow::on_extractMesh_pressed() {
@@ -595,7 +631,6 @@ void MainWindow::on_extractMeshStucco_pressed() {
 
 void MainWindow::on_extractMeshMetal_pressed() {
 	ui->isoValueSlider->setValue(METAL_ISOVALUE);
-
 }
 
 void MainWindow::on_enableDisablePlane_pressed() {

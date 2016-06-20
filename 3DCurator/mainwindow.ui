@@ -672,17 +672,53 @@
         <string>Extraer malla</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="2" column="2" colspan="4">
-         <widget class="QVTKWidget" name="meshWidget">
-          <property name="minimumSize">
+        <item row="3" column="4">
+         <widget class="QPushButton" name="extractMesh">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="assets/resources.qrc">
+            <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+          </property>
+          <property name="iconSize">
            <size>
-            <width>350</width>
-            <height>350</height>
+            <width>21</width>
+            <height>21</height>
            </size>
           </property>
          </widget>
         </item>
-        <item row="0" column="2" colspan="4">
+        <item row="3" column="3">
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2" colspan="3">
+         <widget class="QSlider" name="isoValueSlider">
+          <property name="minimum">
+           <number>-1024</number>
+          </property>
+          <property name="maximum">
+           <number>3071</number>
+          </property>
+          <property name="value">
+           <number>-750</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2" colspan="3">
          <widget class="QGroupBox" name="extractMeshPresets">
           <property name="maximumSize">
            <size>
@@ -774,65 +810,12 @@
           </layout>
          </widget>
         </item>
-        <item row="1" column="2" colspan="4">
-         <widget class="QSlider" name="isoValueSlider">
-          <property name="minimum">
-           <number>-1024</number>
-          </property>
-          <property name="maximum">
-           <number>3071</number>
-          </property>
-          <property name="value">
-           <number>-750</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="5">
-         <widget class="QPushButton" name="extractMesh">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="assets/resources.qrc">
-            <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
-          </property>
-          <property name="iconSize">
+        <item row="2" column="2" colspan="3">
+         <widget class="QVTKWidget" name="meshWidget">
+          <property name="minimumSize">
            <size>
-            <width>21</width>
-            <height>21</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="3">
-         <spacer name="horizontalSpacer_8">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="3" column="4">
-         <widget class="QPushButton" name="updateMesh">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="assets/resources.qrc">
-            <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>21</width>
-            <height>21</height>
+            <width>350</width>
+            <height>350</height>
            </size>
           </property>
          </widget>
@@ -1063,6 +1046,7 @@
      <string>Archivo</string>
     </property>
     <addaction name="actionOpenDICOM"/>
+    <addaction name="separator"/>
     <addaction name="actionExportVolumeImage"/>
     <addaction name="actionExportSliceImage"/>
     <addaction name="separator"/>
@@ -1079,10 +1063,16 @@
     <addaction name="separator"/>
     <addaction name="actionImportPreset"/>
     <addaction name="actionExportPreset"/>
+    <addaction name="actionCompletePreset"/>
+    <addaction name="actionWoodPreset"/>
+    <addaction name="actionStuccoPreset"/>
+    <addaction name="actionMetalPreset"/>
     <addaction name="separator"/>
     <addaction name="actionDeleteVolumeParts"/>
     <addaction name="separator"/>
-    <addaction name="actionUpdateMesh"/>
+    <addaction name="actionWoodMesh"/>
+    <addaction name="actionStuccoMesh"/>
+    <addaction name="actionMetalMesh"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuEditar"/>
@@ -1158,7 +1148,7 @@
   </action>
   <action name="actionDeleteVolumeParts">
    <property name="text">
-    <string>Borrar</string>
+    <string>Borrar partes</string>
    </property>
   </action>
   <action name="actionOpenDICOM_2">
@@ -1193,6 +1183,41 @@
   <action name="actionCoronalPlane">
    <property name="text">
     <string>Plano coronal</string>
+   </property>
+  </action>
+  <action name="actionWoodPreset">
+   <property name="text">
+    <string>Preset madera</string>
+   </property>
+  </action>
+  <action name="actionStuccoPreset">
+   <property name="text">
+    <string>Preset estuco</string>
+   </property>
+  </action>
+  <action name="actionMetalPreset">
+   <property name="text">
+    <string>Preset metal</string>
+   </property>
+  </action>
+  <action name="actionCompletePreset">
+   <property name="text">
+    <string>Preset completo</string>
+   </property>
+  </action>
+  <action name="actionWoodMesh">
+   <property name="text">
+    <string>Malla madera</string>
+   </property>
+  </action>
+  <action name="actionStuccoMesh">
+   <property name="text">
+    <string>Malla estuco</string>
+   </property>
+  </action>
+  <action name="actionMetalMesh">
+   <property name="text">
+    <string>Malla metal</string>
    </property>
   </action>
  </widget>

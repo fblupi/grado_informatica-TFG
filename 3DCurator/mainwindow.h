@@ -61,18 +61,24 @@ public:
 
 private slots:
 	// eventos GUI
-	void on_actionExit_triggered();
-	void on_actionExportSliceImage_triggered();
-	void on_actionExportVolumeImage_triggered();
-	void on_actionExportPreset_triggered();
-	void on_actionImportPreset_triggered();
 	void on_actionOpenDICOM_triggered();
-	void on_actionDeleteVolumeParts_triggered();
-	void on_actionUpdateMesh_triggered();
+	void on_actionExportVolumeImage_triggered();
+	void on_actionExportSliceImage_triggered();
+	void on_actionExit_triggered();
 	void on_actionEnableDisablePlane_triggered();
+	void on_actionSagitalPlane_triggered();
 	void on_actionAxialPlane_triggered();
 	void on_actionCoronalPlane_triggered();
-	void on_actionSagitalPlane_triggered();
+	void on_actionImportPreset_triggered();
+	void on_actionExportPreset_triggered();
+	void on_actionCompletePreset_triggered();
+	void on_actionWoodPreset_triggered();
+	void on_actionStuccoPreset_triggered();
+	void on_actionMetalPreset_triggered();
+	void on_actionDeleteVolumeParts_triggered();
+	void on_actionWoodMesh_triggered();
+	void on_actionStuccoMesh_triggered();
+	void on_actionMetalMesh_triggered();
 
 	void on_openDICOM_pressed();
 	void on_axialPlane_pressed();
@@ -88,7 +94,6 @@ private slots:
 	void on_woodPreset_pressed();
 	void on_stuccoPreset_pressed();
 	void on_metalPreset_pressed();
-	void on_updateMesh_pressed();
 	void on_extractMesh_pressed();
 	void on_extractMeshWood_pressed();
 	void on_extractMeshStucco_pressed();
@@ -290,6 +295,26 @@ private slots:
 	 * Entra o sale del modo de borrado donde borra partes del volumen
 	 */
 	void deleteVolumeParts();
+
+	/**
+	 * Importa el preset para mostrar la figura completa
+	 */
+	void importCompletePreset();
+
+	/**
+	 * Importa el preset para mostrar la madera
+	 */
+	void importWoodPreset();
+
+	/**
+	 * Importa el preset para mostrar el estuco
+	 */
+	void importStuccoPreset();
+
+	/**
+	 * Importa el preset para mostrar el metal
+	 */
+	void importMetalPreset();
 
 	/**
 	 * Lanza un mensaje informando que antes se necesita importar un volumen

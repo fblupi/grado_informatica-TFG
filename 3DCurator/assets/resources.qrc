@@ -10,6 +10,8 @@
 	<file>icons/eye.png</file>
 	<file>icons/eye-slash.png</file>
 	<file>icons/eraser.png</file>
+	<file>icons/minus.png</file>
+	<file>icons/plus.png</file>
 	<file>icons/axial.png</file>
 	<file>icons/sagital.png</file>
 	<file>icons/coronal.png</file>

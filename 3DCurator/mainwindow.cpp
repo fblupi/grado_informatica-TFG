@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	showPlane = true;
 	ruleCounter = 0;
 
+	itemListEnabled = QFont();
+	itemListDisabled = QFont();
+	itemListDisabled.setItalic(true);
+
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
 	meshRen = vtkSmartPointer<vtkRenderer>::New();
 	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
@@ -479,15 +483,54 @@ void MainWindow::addRule() {
 	ruleCounter++;
 	QListWidgetItem *item = new QListWidgetItem(0);
 	item->setText(("Regla " + std::to_string(ruleCounter)).c_str());
+	item->setFont(itemListEnabled);
 	ui->rulesList->addItem(item);
 	ui->rulesList->setCurrentItem(item);
 }
 
 void MainWindow::deleteRule() {
-	 delete ui->rulesList->currentItem();
-	 if (ui->rulesList->count() == 0) {
-		 ruleCounter = 0;
-	 }
+	if (ui->rulesList->currentItem() != NULL) {
+		delete ui->rulesList->currentItem();
+		if (ui->rulesList->count() == 0) {
+			ruleCounter = 0;
+		}
+	} else {
+		QPointer<QMessageBox> confirmBox = new QMessageBox(0);
+		confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
+		confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+		confirmBox->setIcon(QMessageBox::Information);
+		confirmBox->setText(QString::fromLatin1("Seleccione una regla antes"));
+		confirmBox->setStandardButtons(QMessageBox::Ok);
+		confirmBox->exec();
+	}
+}
+
+void MainWindow::enableDisableRule() {
+	if (ui->rulesList->currentItem() != NULL) {
+		if (ui->rulesList->currentItem()->font() == itemListDisabled) {
+			enableRule();
+			ui->rulesList->currentItem()->setFont(itemListEnabled);
+		} else {
+			disableRule();
+			ui->rulesList->currentItem()->setFont(itemListDisabled);
+		}
+	} else {
+		QPointer<QMessageBox> confirmBox = new QMessageBox(0);
+		confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
+		confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+		confirmBox->setIcon(QMessageBox::Information);
+		confirmBox->setText(QString::fromLatin1("Seleccione una regla antes"));
+		confirmBox->setStandardButtons(QMessageBox::Ok);
+		confirmBox->exec();
+	}
+}
+
+void MainWindow::enableRule() {
+
+}
+
+void MainWindow::disableRule() {
+
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -663,6 +706,10 @@ void MainWindow::on_addRule_pressed() {
 
 void MainWindow::on_deleteRule_pressed() {
 	deleteRule();
+}
+
+void MainWindow::on_enableDisableRule_pressed() {
+	enableDisableRule();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

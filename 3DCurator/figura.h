@@ -50,9 +50,9 @@ public:
 	vtkSmartPointer<vtkVolume> getVolume() const;
 
 	/**
-	* Obtiene la matriz 3D con los datos del volumen
-	* @return	Puntero a los datos del volumen
-	*/
+	 * Obtiene la matriz 3D con los datos del volumen
+	 * @return	Puntero a los datos del volumen
+	 */
 	vtkSmartPointer<vtkImageData> getImageData() const;
 
 	/**

@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	deleting = false;
 	showPlane = true;
+	ruleCounter = 0;
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
 	meshRen = vtkSmartPointer<vtkRenderer>::New();
@@ -474,6 +475,21 @@ void MainWindow::launchWarningNoVolume() {
 	confirmBox->exec();
 }
 
+void MainWindow::addRule() {
+	ruleCounter++;
+	QListWidgetItem *item = new QListWidgetItem(0);
+	item->setText(("Regla " + std::to_string(ruleCounter)).c_str());
+	ui->rulesList->addItem(item);
+	ui->rulesList->setCurrentItem(item);
+}
+
+void MainWindow::deleteRule() {
+	 delete ui->rulesList->currentItem();
+	 if (ui->rulesList->count() == 0) {
+		 ruleCounter = 0;
+	 }
+}
+
 //---------------------------------------------------------------------------------------------------------------------------------
 // Eventos GUI - MENÚ
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -639,6 +655,14 @@ void MainWindow::on_enableDisablePlane_pressed() {
 
 void MainWindow::on_deleteVolumeParts_pressed() {
 	deleteVolumeParts();
+}
+
+void MainWindow::on_addRule_pressed() {
+	addRule();
+}
+
+void MainWindow::on_deleteRule_pressed() {
+	deleteRule();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

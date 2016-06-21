@@ -100,6 +100,8 @@ private slots:
 	void on_extractMeshMetal_pressed();
 	void on_enableDisablePlane_pressed();
 	void on_deleteVolumeParts_pressed();
+	void on_addRule_pressed();
+	void on_deleteRule_pressed();
 
 	void on_enableRule_stateChanged();
 
@@ -321,6 +323,16 @@ private slots:
 	 */
 	void launchWarningNoVolume();
 
+	/**
+	 * Añade una nueva regla para medir
+	 */
+	void addRule();
+
+	/**
+	 * Elimina la regla seleccionada
+	 */
+	void deleteRule();
+
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */
 
@@ -343,6 +355,7 @@ private:
 
 	bool deleting; /**< Variable para ver si está en modo borrado o no */
 	bool showPlane; /**< Mostrar el plano */
+	int ruleCounter; /**< Contador de índice de regla */
 };
 
 #endif // MAINWINDOW_H

@@ -7,7 +7,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	deleting = false;
 	showPlane = true;
-	ruleCounter = 0;
+	volumeRuleCounter = 0;
+	sliceRuleCounter = 0;
 
 	itemListEnabled = QFont();
 	itemListDisabled = QFont();
@@ -110,6 +111,7 @@ void MainWindow::removeMesh() {
 void MainWindow::renderVolume() {
 	ui->volumeWidget->GetRenderWindow()->Render(); // renderiza
 }
+
 void MainWindow::renderMesh() {
 	ui->meshWidget->GetRenderWindow()->Render(); // renderiza
 }
@@ -221,6 +223,7 @@ void MainWindow::importDICOM() {
 
 		removeVolume();
 		removeMesh();
+		clearAllRules();
 
 		plano->show(false);
 		disablePlane();
@@ -469,64 +472,146 @@ void MainWindow::importMetalPreset() {
 	renderVolume();
 }
 
-void MainWindow::addRule() {
-	ruleCounter++;
+void MainWindow::addRule(const int type) {
+	std::string id;
 	QListWidgetItem *item = new QListWidgetItem(0);
-	std::string id = "Regla " + std::to_string(ruleCounter);
-	item->setText(id.c_str());
-	item->setFont(itemListEnabled);
-	ui->rulesList->addItem(item);
-	ui->rulesList->setCurrentItem(item);
-	rules[id] = vtkSmartPointer<vtkDistanceWidget>::New();
-	rules[id]->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
-	rules[id]->CreateDefaultRepresentation(); // usa la representación por defecto
-	static_cast<vtkDistanceRepresentation *>(rules[id]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
-	rules[id]->On();
+	switch (type) {
+		case 0:
+			volumeRuleCounter++;
+			id = "Regla " + std::to_string(volumeRuleCounter);
+			item->setText(id.c_str());
+			item->setFont(itemListEnabled);
+			ui->volumeRulesList->addItem(item);
+			ui->volumeRulesList->setCurrentItem(item);
+			volumeRules[id] = vtkSmartPointer<vtkDistanceWidget>::New();
+			volumeRules[id]->SetInteractor(ui->volumeWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
+			volumeRules[id]->CreateDefaultRepresentation(); // usa la representación por defecto
+			static_cast<vtkDistanceRepresentation *>(volumeRules[id]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
+			volumeRules[id]->On();
+			break;
+		default:
+			sliceRuleCounter++;
+			id = "Regla " + std::to_string(sliceRuleCounter);
+			item->setText(id.c_str());
+			item->setFont(itemListEnabled);
+			ui->sliceRulesList->addItem(item);
+			ui->sliceRulesList->setCurrentItem(item);
+			sliceRules[id] = vtkSmartPointer<vtkDistanceWidget>::New();
+			sliceRules[id]->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
+			sliceRules[id]->CreateDefaultRepresentation(); // usa la representación por defecto
+			static_cast<vtkDistanceRepresentation *>(sliceRules[id]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
+			sliceRules[id]->On();
+	}
+	
 }
 
-void MainWindow::deleteRule() {
-	if (ui->rulesList->currentItem() != NULL) {
-		std::string id = ui->rulesList->currentItem()->text().toUtf8().constData();
-		rules.erase(id);
-		delete ui->rulesList->currentItem();
-		if (ui->rulesList->count() == 0) {
-			ruleCounter = 0;
-		}
-	} else {
-		launchWarningNoRule();
+void MainWindow::deleteRule(const int type) {
+	switch (type) {
+		case 0:
+			if (ui->volumeRulesList->currentItem() != NULL) {
+				std::string id = ui->volumeRulesList->currentItem()->text().toUtf8().constData();
+				volumeRules.erase(id);
+				delete ui->volumeRulesList->currentItem();
+				renderVolume();
+				if (ui->volumeRulesList->count() == 0) {
+					volumeRuleCounter = 0;
+				}
+			} else {
+				launchWarningNoRule();
+			}
+			break;
+		default:
+			if (ui->sliceRulesList->currentItem() != NULL) {
+				std::string id = ui->sliceRulesList->currentItem()->text().toUtf8().constData();
+				sliceRules.erase(id);
+				delete ui->sliceRulesList->currentItem();
+				renderSlice();
+				if (ui->sliceRulesList->count() == 0) {
+					sliceRuleCounter = 0;
+				}
+			} else {
+				launchWarningNoRule();
+			}
 	}
 }
 
-void MainWindow::enableDisableRule() {
-	if (ui->rulesList->currentItem() != NULL) {
-		if (ui->rulesList->currentItem()->font() == itemListDisabled) {
-			enableRule();
-			ui->rulesList->currentItem()->setFont(itemListEnabled);
+void MainWindow::enableDisableRule(const int type) {
+	switch (type) {
+		case 0:
+			if (ui->volumeRulesList->currentItem() != NULL) {
+				if (ui->volumeRulesList->currentItem()->font() == itemListDisabled) {
+					enableRule(type);
+					ui->volumeRulesList->currentItem()->setFont(itemListEnabled);
+				} else {
+					disableRule(type);
+					ui->volumeRulesList->currentItem()->setFont(itemListDisabled);
+				}
+			} else {
+				launchWarningNoRule();
+			}
+			break;
+		default:
+			if (ui->sliceRulesList->currentItem() != NULL) {
+				if (ui->sliceRulesList->currentItem()->font() == itemListDisabled) {
+					enableRule(type);
+					ui->sliceRulesList->currentItem()->setFont(itemListEnabled);
+				} else {
+					disableRule(type);
+					ui->sliceRulesList->currentItem()->setFont(itemListDisabled);
+				}
+			} else {
+				launchWarningNoRule();
+			}
+	}
+}
+
+void MainWindow::enableRule(const int type) {
+	switch (type) {
+		case 0:
+			if (ui->volumeRulesList->currentItem() != NULL) {
+				std::string id = ui->volumeRulesList->currentItem()->text().toUtf8().constData();
+				volumeRules[id]->On();
+			} else {
+				launchWarningNoRule();
+			}
+			break;
+		default:
+			if (ui->sliceRulesList->currentItem() != NULL) {
+				std::string id = ui->sliceRulesList->currentItem()->text().toUtf8().constData();
+				sliceRules[id]->On();
+			} else {
+				launchWarningNoRule();
+			}
+	}
+}
+
+void MainWindow::disableRule(const int type) {
+	switch (type) {
+	case 0:
+		if (ui->volumeRulesList->currentItem() != NULL) {
+			std::string id = ui->volumeRulesList->currentItem()->text().toUtf8().constData();
+			volumeRules[id]->Off();
 		} else {
-			disableRule();
-			ui->rulesList->currentItem()->setFont(itemListDisabled);
+			launchWarningNoRule();
 		}
-	} else {
-		launchWarningNoRule();
+		break;
+	default:
+		if (ui->sliceRulesList->currentItem() != NULL) {
+			std::string id = ui->sliceRulesList->currentItem()->text().toUtf8().constData();
+			sliceRules[id]->Off();
+		} else {
+			launchWarningNoRule();
+		}
 	}
 }
 
-void MainWindow::enableRule() {
-	if (ui->rulesList->currentItem() != NULL) {
-		std::string id = ui->rulesList->currentItem()->text().toUtf8().constData();
-		rules[id]->On();
-	} else {
-		launchWarningNoRule();
-	}
-}
-
-void MainWindow::disableRule() {
-	if (ui->rulesList->currentItem() != NULL) {
-		std::string id = ui->rulesList->currentItem()->text().toUtf8().constData();
-		rules[id]->Off();
-	} else {
-		launchWarningNoRule();
-	}
+void MainWindow::clearAllRules() {
+	sliceRules.clear();
+	volumeRules.clear();
+	ui->sliceRulesList->clear();
+	ui->volumeRulesList->clear();
+	sliceRuleCounter = 0;
+	volumeRuleCounter = 0;
 }
 
 void MainWindow::launchWarningNoVolume() {
@@ -716,16 +801,28 @@ void MainWindow::on_deleteVolumeParts_pressed() {
 	deleteVolumeParts();
 }
 
-void MainWindow::on_addRule_pressed() {
-	addRule();
+void MainWindow::on_addSliceRule_pressed() {
+	addRule(1);
 }
 
-void MainWindow::on_deleteRule_pressed() {
-	deleteRule();
+void MainWindow::on_addVolumeRule_pressed() {
+	addRule(0);
 }
 
-void MainWindow::on_enableDisableRule_pressed() {
-	enableDisableRule();
+void MainWindow::on_deleteSliceRule_pressed() {
+	deleteRule(1);
+}
+
+void MainWindow::on_deleteVolumeRule_pressed() {
+	deleteRule(0);
+}
+
+void MainWindow::on_enableDisableSliceRule_pressed() {
+	enableDisableRule(1);
+}
+
+void MainWindow::on_enableDisableVolumeRule_pressed() {
+	enableDisableRule(0);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

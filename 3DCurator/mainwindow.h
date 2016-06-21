@@ -101,9 +101,12 @@ private slots:
 	void on_extractMeshMetal_pressed();
 	void on_enableDisablePlane_pressed();
 	void on_deleteVolumeParts_pressed();
-	void on_addRule_pressed();
-	void on_deleteRule_pressed();
-	void on_enableDisableRule_pressed();
+	void on_addSliceRule_pressed();
+	void on_addVolumeRule_pressed();
+	void on_deleteSliceRule_pressed();
+	void on_deleteVolumeRule_pressed();
+	void on_enableDisableSliceRule_pressed();
+	void on_enableDisableVolumeRule_pressed();
 
 	void on_enableRule_stateChanged();
 
@@ -322,28 +325,38 @@ private slots:
 
 	/**
 	 * Añade una nueva regla para medir
+	 * @param	type	0: Figura 3D y 1: Cortes
 	 */
-	void addRule();
+	void addRule(const int type);
 
 	/**
 	 * Elimina la regla seleccionada
+	 * @param	type	0: Figura 3D y 1: Cortes
 	 */
-	void deleteRule();
+	void deleteRule(const int type);
 
 	/**
 	 * Habilita o deshabilita la regla seleccionada
+	 * @param	type	0: Figura 3D y 1: Cortes
 	 */
-	void enableDisableRule();
+	void enableDisableRule(const int type);
 
 	/**
 	 * Habilita la regla
+	 * @param	type	0: Figura 3D y 1: Cortes
 	 */
-	void enableRule();
+	void enableRule(const int type);
 
 	/**
 	 * Deshabilita la regla
+	 * @param	type	0: Figura 3D y 1: Cortes
 	 */
-	void disableRule();
+	void disableRule(const int type);
+
+	/**
+	 * Borra todas las reglas
+	 */
+	void clearAllRules();
 
 	/**
 	 * Lanza un mensaje informando que antes se necesita importar un volumen
@@ -365,7 +378,8 @@ private:
 	OpacityTFChart *scalarTFChart; /**< Puntero a la gráfica de la parte de opacida escalar de la función de transferencia */
 	OpacityTFChart *gradientTFChart; /**< Puntero a la gráfica de la parte de opacida gradiente de la función de transferencia */
 
-	std::map<std::string, vtkSmartPointer<vtkDistanceWidget>> rules; /**< Almacén de reglas */
+	std::map<std::string, vtkSmartPointer<vtkDistanceWidget>> volumeRules; /**< Almacén de reglas */
+	std::map<std::string, vtkSmartPointer<vtkDistanceWidget>> sliceRules; /**< Almacén de reglas */
 
 	vtkSmartPointer<vtkRenderer> volumeRen; /**< Puntero al Renderer donde estará el volumen y el plano de corte */
 	vtkSmartPointer<vtkRenderer> meshRen; /**< Puntero al Renderer donde se visulizará la malla a extraer */
@@ -379,7 +393,8 @@ private:
 
 	bool deleting; /**< Variable para ver si está en modo borrado o no */
 	bool showPlane; /**< Mostrar el plano */
-	int ruleCounter; /**< Contador de índice de regla */
+	int volumeRuleCounter; /**< Contador de índice de regla */
+	int sliceRuleCounter; /**< Contador de índice de regla */
 
 	QFont itemListEnabled;
 	QFont itemListDisabled;

@@ -469,39 +469,31 @@ void MainWindow::importMetalPreset() {
 	renderVolume();
 }
 
-void MainWindow::launchWarningNoVolume() {
-	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
-	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
-	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	confirmBox->setIcon(QMessageBox::Information);
-	confirmBox->setText(QString::fromLatin1("Hace falta cargar un modelo antes"));
-	confirmBox->setStandardButtons(QMessageBox::Ok);
-	confirmBox->exec();
-}
-
 void MainWindow::addRule() {
 	ruleCounter++;
 	QListWidgetItem *item = new QListWidgetItem(0);
-	item->setText(("Regla " + std::to_string(ruleCounter)).c_str());
+	std::string id = "Regla " + std::to_string(ruleCounter);
+	item->setText(id.c_str());
 	item->setFont(itemListEnabled);
 	ui->rulesList->addItem(item);
 	ui->rulesList->setCurrentItem(item);
+	rules[id] = vtkSmartPointer<vtkDistanceWidget>::New();
+	rules[id]->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
+	rules[id]->CreateDefaultRepresentation(); // usa la representación por defecto
+	static_cast<vtkDistanceRepresentation *>(rules[id]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
+	rules[id]->On();
 }
 
 void MainWindow::deleteRule() {
 	if (ui->rulesList->currentItem() != NULL) {
+		std::string id = ui->rulesList->currentItem()->text().toUtf8().constData();
+		rules.erase(id);
 		delete ui->rulesList->currentItem();
 		if (ui->rulesList->count() == 0) {
 			ruleCounter = 0;
 		}
 	} else {
-		QPointer<QMessageBox> confirmBox = new QMessageBox(0);
-		confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
-		confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-		confirmBox->setIcon(QMessageBox::Information);
-		confirmBox->setText(QString::fromLatin1("Seleccione una regla antes"));
-		confirmBox->setStandardButtons(QMessageBox::Ok);
-		confirmBox->exec();
+		launchWarningNoRule();
 	}
 }
 
@@ -515,22 +507,46 @@ void MainWindow::enableDisableRule() {
 			ui->rulesList->currentItem()->setFont(itemListDisabled);
 		}
 	} else {
-		QPointer<QMessageBox> confirmBox = new QMessageBox(0);
-		confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
-		confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-		confirmBox->setIcon(QMessageBox::Information);
-		confirmBox->setText(QString::fromLatin1("Seleccione una regla antes"));
-		confirmBox->setStandardButtons(QMessageBox::Ok);
-		confirmBox->exec();
+		launchWarningNoRule();
 	}
 }
 
 void MainWindow::enableRule() {
-
+	if (ui->rulesList->currentItem() != NULL) {
+		std::string id = ui->rulesList->currentItem()->text().toUtf8().constData();
+		rules[id]->On();
+	} else {
+		launchWarningNoRule();
+	}
 }
 
 void MainWindow::disableRule() {
+	if (ui->rulesList->currentItem() != NULL) {
+		std::string id = ui->rulesList->currentItem()->text().toUtf8().constData();
+		rules[id]->Off();
+	} else {
+		launchWarningNoRule();
+	}
+}
 
+void MainWindow::launchWarningNoVolume() {
+	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
+	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
+	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+	confirmBox->setIcon(QMessageBox::Information);
+	confirmBox->setText(QString::fromLatin1("Hace falta cargar un modelo antes"));
+	confirmBox->setStandardButtons(QMessageBox::Ok);
+	confirmBox->exec();
+}
+
+void MainWindow::launchWarningNoRule() {
+	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
+	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
+	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+	confirmBox->setIcon(QMessageBox::Information);
+	confirmBox->setText(QString::fromLatin1("Seleccione una regla antes"));
+	confirmBox->setStandardButtons(QMessageBox::Ok);
+	confirmBox->exec();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

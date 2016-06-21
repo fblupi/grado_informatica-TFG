@@ -9,6 +9,7 @@
 #include <QPointer>
 
 #include <sstream>
+#include <map>
 
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
@@ -320,11 +321,6 @@ private slots:
 	void importMetalPreset();
 
 	/**
-	 * Lanza un mensaje informando que antes se necesita importar un volumen
-	 */
-	void launchWarningNoVolume();
-
-	/**
 	 * Añade una nueva regla para medir
 	 */
 	void addRule();
@@ -349,6 +345,16 @@ private slots:
 	 */
 	void disableRule();
 
+	/**
+	 * Lanza un mensaje informando que antes se necesita importar un volumen
+	 */
+	void launchWarningNoVolume();
+
+	/**
+	 * Lanza un mensaje informando que antes se necesita seleccionar una regla
+	 */
+	void launchWarningNoRule();
+
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */
 
@@ -358,6 +364,8 @@ private:
 	ColorTFChart *colorTFChart; /**< Puntero a la gráfica de la parte de color de la función de transferencia */
 	OpacityTFChart *scalarTFChart; /**< Puntero a la gráfica de la parte de opacida escalar de la función de transferencia */
 	OpacityTFChart *gradientTFChart; /**< Puntero a la gráfica de la parte de opacida gradiente de la función de transferencia */
+
+	std::map<std::string, vtkSmartPointer<vtkDistanceWidget>> rules; /**< Almacén de reglas */
 
 	vtkSmartPointer<vtkRenderer> volumeRen; /**< Puntero al Renderer donde estará el volumen y el plano de corte */
 	vtkSmartPointer<vtkRenderer> meshRen; /**< Puntero al Renderer donde se visulizará la malla a extraer */

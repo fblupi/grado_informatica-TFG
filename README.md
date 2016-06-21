@@ -108,6 +108,14 @@ De esta forma es más fácil organizar versiones para una u otra plataforma de d
 * Agregar al proyecto de Visual Studio:
   + En *Project Properties* ir a *Configuration Properties > C/C++ > General > Additional Include Directories* y añadir el directorio `C:\Boost\include\boost-1_60`.
   + En *Project Properties* ir a *Configuration Properties > Linker > Additional Library Directories* y añadir el directorio `C:\Boost\lib`.
+  
+##### Configurar proyecto
+
+Una vez generado el proyecto con CMake realizar los siguientes cambios en la configuración:
+
+* En *Project Properties* ir a *Configuration Properties > Linker > System* y:
+  + En *SubSystem* seleccionar la opción *Windows (/SUBSYSTEM:WINDOWS)*.
+  + En *Enable Large Adresses* seleccionar la opción *Yes (/LARGEADRESSAWARE)*.
 
 #### Linux
 

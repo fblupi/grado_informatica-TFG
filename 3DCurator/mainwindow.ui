@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1143</width>
-    <height>708</height>
+    <height>696</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -278,13 +278,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="enableRule">
-          <property name="text">
-           <string>Regla</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QLabel" name="coordsAndValueLabel">
           <property name="maximumSize">
            <size>
@@ -492,7 +485,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>131</width>
+             <width>360</width>
              <height>693</height>
             </rect>
            </property>
@@ -1261,21 +1254,6 @@
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuEditar"/>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="movable">
-    <bool>true</bool>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenDICOM">

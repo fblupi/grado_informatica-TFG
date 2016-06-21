@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	volumeStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
 	deleterStyle = vtkSmartPointer<InteractorStyleDeleter>::New();
-	distanceWidget = vtkSmartPointer<vtkDistanceWidget>::New();
 	plano = new Plano(); // crea una instancia de Plano
 	figura = new Figura(); // crea una instancia de Figura
 	defaultTF(); // define la función de transferencia, necesaria para definir las gráficas y el visor de cortes
@@ -72,10 +71,6 @@ void MainWindow::connectComponents() {
 	ui->slicesWidget->GetInteractor()->SetInteractorStyle(sliceStyle); // asigna el estilo al interactor del slice widget
 
 	plano->setViewer(sliceViewer); // asigna el slice viewer al plano para que pueda renderizar cuando se de el evento de mover el plano
-
-	distanceWidget->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
-	distanceWidget->CreateDefaultRepresentation(); // usa la representación por defecto
-	static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
 
 	deleterStyle->SetFigura(figura); // asigna la figura al estilo para borrar partes
 	deleterStyle->SetPlano(plano); // asigna el plano al estilo para borrar partes
@@ -823,19 +818,6 @@ void MainWindow::on_enableDisableSliceRule_pressed() {
 
 void MainWindow::on_enableDisableVolumeRule_pressed() {
 	enableDisableRule(0);
-}
-
-//---------------------------------------------------------------------------------------------------------------------------------
-// Eventos GUI - CHECKBOX
-//---------------------------------------------------------------------------------------------------------------------------------
-
-void MainWindow::on_enableRule_stateChanged() {
-	if (ui->enableRule->isChecked()) {
-		distanceWidget->On();
-	} else {
-		distanceWidget->Off();
-		//distanceWidget->SetWidgetStateToStart(); // Borra los puntos actuales
-	}
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

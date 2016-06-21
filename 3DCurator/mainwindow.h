@@ -108,8 +108,6 @@ private slots:
 	void on_enableDisableSliceRule_pressed();
 	void on_enableDisableVolumeRule_pressed();
 
-	void on_enableRule_stateChanged();
-
 	void on_colorTFMaxSlider_valueChanged();
 	void on_colorTFMinSlider_valueChanged();
 	void on_gradientTFMaxSlider_valueChanged();
@@ -388,8 +386,6 @@ private:
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle; /**< Estilo para la ventana donde se visualizará el volumen */
 	vtkSmartPointer<InteractorStyleImage> sliceStyle; /**< Estilo para la ventana donde se visualizarán los cortes de la figura con el plano */
 	vtkSmartPointer<InteractorStyleDeleter> deleterStyle; /**< Estilo para poder borrar en la ventana donde se visualizará el volumen */
-
-	vtkSmartPointer<vtkDistanceWidget> distanceWidget; /**< Widget para realizar medidas */
 
 	bool deleting; /**< Variable para ver si está en modo borrado o no */
 	bool showPlane; /**< Mostrar el plano */

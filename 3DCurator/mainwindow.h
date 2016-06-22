@@ -7,6 +7,7 @@
 #include <QProgressDialog>
 #include <QProgressBar>
 #include <QPointer>
+#include <QListWidgetItem>
 
 #include <sstream>
 #include <map>
@@ -376,8 +377,7 @@ private:
 	OpacityTFChart *scalarTFChart; /**< Puntero a la gráfica de la parte de opacida escalar de la función de transferencia */
 	OpacityTFChart *gradientTFChart; /**< Puntero a la gráfica de la parte de opacida gradiente de la función de transferencia */
 
-	std::map<std::string, vtkSmartPointer<vtkDistanceWidget>> volumeRules; /**< Almacén de reglas */
-	std::map<std::string, vtkSmartPointer<vtkDistanceWidget>> sliceRules; /**< Almacén de reglas */
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget>> rules; /**< Almacén de reglas */
 
 	vtkSmartPointer<vtkRenderer> volumeRen; /**< Puntero al Renderer donde estará el volumen y el plano de corte */
 	vtkSmartPointer<vtkRenderer> meshRen; /**< Puntero al Renderer donde se visulizará la malla a extraer */

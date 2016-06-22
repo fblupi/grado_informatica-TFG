@@ -478,11 +478,8 @@ void MainWindow::addRule(const int type) {
 			item->setFont(itemListEnabled);
 			ui->volumeRulesList->addItem(item);
 			ui->volumeRulesList->setCurrentItem(item);
-			volumeRules[id] = vtkSmartPointer<vtkDistanceWidget>::New();
-			volumeRules[id]->SetInteractor(ui->volumeWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
-			volumeRules[id]->CreateDefaultRepresentation(); // usa la representación por defecto
-			static_cast<vtkDistanceRepresentation *>(volumeRules[id]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
-			volumeRules[id]->On();
+			rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); // crea la regla
+			rules[item]->SetInteractor(ui->volumeWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
 			break;
 		default:
 			sliceRuleCounter++;
@@ -491,21 +488,19 @@ void MainWindow::addRule(const int type) {
 			item->setFont(itemListEnabled);
 			ui->sliceRulesList->addItem(item);
 			ui->sliceRulesList->setCurrentItem(item);
-			sliceRules[id] = vtkSmartPointer<vtkDistanceWidget>::New();
-			sliceRules[id]->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
-			sliceRules[id]->CreateDefaultRepresentation(); // usa la representación por defecto
-			static_cast<vtkDistanceRepresentation *>(sliceRules[id]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
-			sliceRules[id]->On();
+			rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); // crea la regla
+			rules[item]->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
 	}
-	
+	rules[item]->CreateDefaultRepresentation(); // usa la representación por defecto
+	static_cast<vtkDistanceRepresentation *>(rules[item]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
+	rules[item]->On();
 }
 
 void MainWindow::deleteRule(const int type) {
 	switch (type) {
 		case 0:
 			if (ui->volumeRulesList->currentItem() != NULL) {
-				std::string id = ui->volumeRulesList->currentItem()->text().toUtf8().constData();
-				volumeRules.erase(id);
+				rules.erase(ui->volumeRulesList->currentItem());
 				delete ui->volumeRulesList->currentItem();
 				renderVolume();
 				if (ui->volumeRulesList->count() == 0) {
@@ -517,8 +512,7 @@ void MainWindow::deleteRule(const int type) {
 			break;
 		default:
 			if (ui->sliceRulesList->currentItem() != NULL) {
-				std::string id = ui->sliceRulesList->currentItem()->text().toUtf8().constData();
-				sliceRules.erase(id);
+				rules.erase(ui->sliceRulesList->currentItem());
 				delete ui->sliceRulesList->currentItem();
 				renderSlice();
 				if (ui->sliceRulesList->count() == 0) {
@@ -564,16 +558,14 @@ void MainWindow::enableRule(const int type) {
 	switch (type) {
 		case 0:
 			if (ui->volumeRulesList->currentItem() != NULL) {
-				std::string id = ui->volumeRulesList->currentItem()->text().toUtf8().constData();
-				volumeRules[id]->On();
+				rules[ui->volumeRulesList->currentItem()]->On();
 			} else {
 				launchWarningNoRule();
 			}
 			break;
 		default:
 			if (ui->sliceRulesList->currentItem() != NULL) {
-				std::string id = ui->sliceRulesList->currentItem()->text().toUtf8().constData();
-				sliceRules[id]->On();
+				rules[ui->sliceRulesList->currentItem()]->On();
 			} else {
 				launchWarningNoRule();
 			}
@@ -584,16 +576,14 @@ void MainWindow::disableRule(const int type) {
 	switch (type) {
 	case 0:
 		if (ui->volumeRulesList->currentItem() != NULL) {
-			std::string id = ui->volumeRulesList->currentItem()->text().toUtf8().constData();
-			volumeRules[id]->Off();
+			rules[ui->volumeRulesList->currentItem()]->Off();
 		} else {
 			launchWarningNoRule();
 		}
 		break;
 	default:
 		if (ui->sliceRulesList->currentItem() != NULL) {
-			std::string id = ui->sliceRulesList->currentItem()->text().toUtf8().constData();
-			sliceRules[id]->Off();
+			rules[ui->sliceRulesList->currentItem()]->Off();
 		} else {
 			launchWarningNoRule();
 		}
@@ -601,8 +591,7 @@ void MainWindow::disableRule(const int type) {
 }
 
 void MainWindow::clearAllRules() {
-	sliceRules.clear();
-	volumeRules.clear();
+	rules.clear();
 	ui->sliceRulesList->clear();
 	ui->volumeRulesList->clear();
 	sliceRuleCounter = 0;

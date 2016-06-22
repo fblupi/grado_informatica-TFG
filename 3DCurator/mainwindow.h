@@ -39,6 +39,12 @@
 #include "colorTFChart.h"
 #include "opacityTFChart.h"
 
+#define VOLUME_RULE 0
+#define SLICE_RULE 1
+#define VOLUME_BACKGROUND 0
+#define VOLUME_DELETING_BACKGROUND 1
+#define MESH_BACKGROUND 2
+
 namespace Ui {
     class MainWindow;
 }
@@ -108,6 +114,10 @@ private slots:
 	void on_deleteVolumeRule_pressed();
 	void on_enableDisableSliceRule_pressed();
 	void on_enableDisableVolumeRule_pressed();
+	void on_volumeBackground_pressed();
+	void on_volumeDeletingBackground_pressed();
+	void on_meshBackground_pressed();
+	void on_restoreBackgrounds_pressed();
 
 	void on_colorTFMaxSlider_valueChanged();
 	void on_colorTFMinSlider_valueChanged();
@@ -175,6 +185,11 @@ private slots:
 	 * Asigna un material por defecto
 	 */
 	void defaultMaterial();
+
+	/**
+	 * Asigna colores de fondo por defecto
+	 */
+	void defaultBackgroundColors();
 
 	/**
 	 * Coloca el plano en una posición por defecto
@@ -348,6 +363,11 @@ private slots:
 	void clearAllRules();
 
 	/**
+	 * Restaura los colores por defecto
+	 */
+	void restoreBackgroundColors();
+
+	/**
 	 * Lanza un mensaje informando que antes se necesita importar un volumen
 	 */
 	void launchWarningNoVolume();
@@ -361,6 +381,12 @@ private slots:
 	 * Lanza un mensaje informando que antes se necesita seleccionar una regla
 	 */
 	void launchWarningTooManyRules();
+
+	/**
+	 * Cambia el color de una ventana
+	 * @param	widget	0: Figura 3D, 1: Figura 3D (borrado), 2: Malla
+	 */
+	void changeBackgroundColor(const int widget);
 
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */
@@ -389,6 +415,10 @@ private:
 
 	QFont itemListEnabled;
 	QFont itemListDisabled;
+
+	QColor volumeBackground;
+	QColor volumeDeletingBackground;
+	QColor meshBackground;
 };
 
 #endif // MAINWINDOW_H

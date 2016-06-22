@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	figura = new Figura(); // crea una instancia de Figura
 	defaultTF(); // define la función de transferencia, necesaria para definir las gráficas y el visor de cortes
 	defaultMaterial(); // asigna un material por defecto a la figura
+	defaultBackgroundColors(); // asigna los colores de fondo por defecto
 
 	colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), figura->getTransferFunction()->getColorFun(), "Densidad", "", MIN_INTENSITY, MAX_INTENSITY);
 	scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), figura->getTransferFunction()->getScalarFun(), "Densidad", "Opacidad", MIN_INTENSITY, MAX_INTENSITY);
@@ -34,8 +35,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	sliceViewer->SetColorLevel(-600); 
 	sliceViewer->SetColorWindow(400);
 
-	setBackgroundColor(volumeRen, .1, .2, .3); // fondo azul oscuro
-	setBackgroundColor(meshRen, .1, .2, .3); // fondo azul oscuro
+	setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF()); // fondo azul oscuro
+	setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF()); // fondo azul oscuro
 
     connectComponents(); // conecta los renderers con los widgets
 
@@ -139,6 +140,12 @@ void MainWindow::defaultMaterial() {
 	ui->diffuseValue->setValue(0.9);
 	ui->specularValue->setValue(0.2);
 	ui->powerValue->setValue(10.0);
+}
+
+void MainWindow::defaultBackgroundColors() {
+	volumeBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
+	volumeDeletingBackground = QColor::fromRgbF(0.2, 0.3, 0.1);
+	meshBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
 }
 
 void MainWindow::defaultPlanePosition() {
@@ -418,11 +425,11 @@ void MainWindow::sagitalPlane() {
 void MainWindow::deleteVolumeParts() {
 	if (deleting) {
 		deleting = false;
-		setBackgroundColor(volumeRen, .1, .2, .3);
+		setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
 		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
 	} else {
 		deleting = true;
-		setBackgroundColor(volumeRen, .2, .3, .1);
+		setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
 		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
 	}
 	plano->getPlane()->UpdatePlacement();
@@ -459,7 +466,7 @@ void MainWindow::addRule(const int type) {
 		std::string id;
 		QListWidgetItem *item = new QListWidgetItem(0);
 		switch (type) {
-		case 0:
+		case VOLUME_RULE:
 			volumeRuleCounter++;
 			id = "Regla " + std::to_string(volumeRuleCounter);
 			item->setText(id.c_str());
@@ -469,7 +476,7 @@ void MainWindow::addRule(const int type) {
 			rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); // crea la regla
 			rules[item]->SetInteractor(ui->volumeWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
 			break;
-		default:
+		case SLICE_RULE:
 			sliceRuleCounter++;
 			id = "Regla " + std::to_string(sliceRuleCounter);
 			item->setText(id.c_str());
@@ -478,6 +485,7 @@ void MainWindow::addRule(const int type) {
 			ui->sliceRulesList->setCurrentItem(item);
 			rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); // crea la regla
 			rules[item]->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
+			break;
 		}
 		rules[item]->CreateDefaultRepresentation(); // usa la representación por defecto
 		static_cast<vtkDistanceRepresentation *>(rules[item]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
@@ -489,7 +497,7 @@ void MainWindow::addRule(const int type) {
 
 void MainWindow::deleteRule(const int type) {
 	switch (type) {
-		case 0:
+		case VOLUME_RULE:
 			if (ui->volumeRulesList->currentItem() != NULL) {
 				rules.erase(ui->volumeRulesList->currentItem());
 				delete ui->volumeRulesList->currentItem();
@@ -501,7 +509,7 @@ void MainWindow::deleteRule(const int type) {
 				launchWarningNoRule();
 			}
 			break;
-		default:
+		case SLICE_RULE:
 			if (ui->sliceRulesList->currentItem() != NULL) {
 				rules.erase(ui->sliceRulesList->currentItem());
 				delete ui->sliceRulesList->currentItem();
@@ -512,12 +520,13 @@ void MainWindow::deleteRule(const int type) {
 			} else {
 				launchWarningNoRule();
 			}
+			break;
 	}
 }
 
 void MainWindow::enableDisableRule(const int type) {
 	switch (type) {
-		case 0:
+		case VOLUME_RULE:
 			if (ui->volumeRulesList->currentItem() != NULL) {
 				if (ui->volumeRulesList->currentItem()->font() == itemListDisabled) {
 					enableRule(type);
@@ -530,7 +539,7 @@ void MainWindow::enableDisableRule(const int type) {
 				launchWarningNoRule();
 			}
 			break;
-		default:
+		case SLICE_RULE:
 			if (ui->sliceRulesList->currentItem() != NULL) {
 				if (ui->sliceRulesList->currentItem()->font() == itemListDisabled) {
 					enableRule(type);
@@ -542,42 +551,45 @@ void MainWindow::enableDisableRule(const int type) {
 			} else {
 				launchWarningNoRule();
 			}
+			break;
 	}
 }
 
 void MainWindow::enableRule(const int type) {
 	switch (type) {
-		case 0:
+		case VOLUME_RULE:
 			if (ui->volumeRulesList->currentItem() != NULL) {
 				rules[ui->volumeRulesList->currentItem()]->On();
 			} else {
 				launchWarningNoRule();
 			}
 			break;
-		default:
+		case SLICE_RULE:
 			if (ui->sliceRulesList->currentItem() != NULL) {
 				rules[ui->sliceRulesList->currentItem()]->On();
 			} else {
 				launchWarningNoRule();
 			}
+			break;
 	}
 }
 
 void MainWindow::disableRule(const int type) {
 	switch (type) {
-	case 0:
-		if (ui->volumeRulesList->currentItem() != NULL) {
-			rules[ui->volumeRulesList->currentItem()]->Off();
-		} else {
-			launchWarningNoRule();
-		}
-		break;
-	default:
-		if (ui->sliceRulesList->currentItem() != NULL) {
-			rules[ui->sliceRulesList->currentItem()]->Off();
-		} else {
-			launchWarningNoRule();
-		}
+		case VOLUME_RULE:
+			if (ui->volumeRulesList->currentItem() != NULL) {
+				rules[ui->volumeRulesList->currentItem()]->Off();
+			} else {
+				launchWarningNoRule();
+			}
+			break;
+		case SLICE_RULE:
+			if (ui->sliceRulesList->currentItem() != NULL) {
+				rules[ui->sliceRulesList->currentItem()]->Off();
+			} else {
+				launchWarningNoRule();
+			}
+			break;
 	}
 }
 
@@ -587,6 +599,42 @@ void MainWindow::clearAllRules() {
 	ui->volumeRulesList->clear();
 	sliceRuleCounter = 0;
 	volumeRuleCounter = 0;
+}
+
+void MainWindow::changeBackgroundColor(const int widget) {
+	switch (widget) {
+		case VOLUME_BACKGROUND:
+			volumeBackground = QColorDialog::getColor(volumeBackground);
+			if (!deleting) {
+				setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
+				renderVolume();
+			}
+			break;
+		case VOLUME_DELETING_BACKGROUND:
+			volumeDeletingBackground = QColorDialog::getColor(volumeDeletingBackground);
+			if (deleting) {
+				setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
+				renderVolume();
+			}
+			break;
+		case MESH_BACKGROUND:
+			meshBackground = QColorDialog::getColor(meshBackground);
+			setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
+			renderMesh();
+			break;
+	}
+}
+
+void MainWindow::restoreBackgroundColors() {
+	defaultBackgroundColors();
+	if (deleting) {
+		setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
+	} else {
+		setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
+	}
+	setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
+	renderVolume();
+	renderMesh();
 }
 
 void MainWindow::launchWarningNoVolume() {
@@ -806,6 +854,22 @@ void MainWindow::on_enableDisableSliceRule_pressed() {
 
 void MainWindow::on_enableDisableVolumeRule_pressed() {
 	enableDisableRule(0);
+}
+
+void MainWindow::on_volumeBackground_pressed() {
+	changeBackgroundColor(0);
+}
+
+void MainWindow::on_volumeDeletingBackground_pressed() {
+	changeBackgroundColor(1);
+}
+
+void MainWindow::on_meshBackground_pressed() {
+	changeBackgroundColor(2);
+}
+
+void MainWindow::on_restoreBackgrounds_pressed() {
+	restoreBackgroundColors();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

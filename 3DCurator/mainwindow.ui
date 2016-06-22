@@ -101,10 +101,218 @@
       </layout>
      </widget>
     </item>
+    <item row="0" column="2" rowspan="3">
+     <widget class="QGroupBox" name="rulesBox">
+      <property name="minimumSize">
+       <size>
+        <width>160</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>160</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Reglas</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="6" column="0">
+        <widget class="QPushButton" name="enableDisableSliceRule">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="assets/resources.qrc">
+           <normaloff>:/icons/eye.png</normaloff>:/icons/eye.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QPushButton" name="addSliceRule">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="assets/resources.qrc">
+           <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <spacer name="horizontalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="6" column="2">
+        <widget class="QPushButton" name="deleteSliceRule">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="assets/resources.qrc">
+           <normaloff>:/icons/minus.png</normaloff>:/icons/minus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="4">
+        <widget class="QListWidget" name="sliceRulesList"/>
+       </item>
+       <item row="2" column="3">
+        <widget class="QPushButton" name="addVolumeRule">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="assets/resources.qrc">
+           <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="4">
+        <widget class="QListWidget" name="volumeRulesList"/>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="deleteVolumeRule">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="assets/resources.qrc">
+           <normaloff>:/icons/minus.png</normaloff>:/icons/minus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="enableDisableVolumeRule">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="assets/resources.qrc">
+           <normaloff>:/icons/eye.png</normaloff>:/icons/eye.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>10</width>
+           <height>10</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="1">
+        <spacer name="horizontalSpacer_12">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="volumeRuleLabel">
+         <property name="text">
+          <string>Volumen</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QLabel" name="sliceRuleLabel">
+         <property name="text">
+          <string>Cortes</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QVTKWidget" name="volumeWidget">
+      <property name="minimumSize">
+       <size>
+        <width>550</width>
+        <height>550</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="labelFolder">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>13</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Carpeta</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="1" rowspan="3">
      <widget class="QTabWidget" name="mainTab">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabSlices">
        <attribute name="title">
@@ -829,22 +1037,8 @@
            <string>Material</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_86">
-           <item row="1" column="1">
-            <widget class="QLabel" name="diffuseLabel">
-             <property name="text">
-              <string>Difusa</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="ambientLabel">
-             <property name="text">
-              <string>Ambiente</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QDoubleSpinBox" name="ambientValue">
+           <item row="1" column="3">
+            <widget class="QDoubleSpinBox" name="diffuseValue">
              <property name="maximum">
               <double>1.000000000000000</double>
              </property>
@@ -863,8 +1057,22 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
-            <widget class="QDoubleSpinBox" name="diffuseValue">
+           <item row="0" column="1">
+            <widget class="QLabel" name="ambientLabel">
+             <property name="text">
+              <string>Ambiente</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="diffuseLabel">
+             <property name="text">
+              <string>Difusa</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QDoubleSpinBox" name="ambientValue">
              <property name="maximum">
               <double>1.000000000000000</double>
              </property>
@@ -876,7 +1084,7 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="2">
+           <item row="2" column="3">
             <widget class="QDoubleSpinBox" name="specularValue">
              <property name="maximum">
               <double>1.000000000000000</double>
@@ -889,7 +1097,7 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="2">
+           <item row="3" column="3">
             <widget class="QDoubleSpinBox" name="powerValue">
              <property name="minimum">
               <double>1.000000000000000</double>
@@ -909,10 +1117,69 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
+           <item row="0" column="2">
+            <spacer name="horizontalSpacer_13">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="3" column="2">
+            <spacer name="horizontalSpacer_16">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="2">
+            <spacer name="horizontalSpacer_14">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="2" column="2">
+            <spacer name="horizontalSpacer_15">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="5" column="1">
             <widget class="QPushButton" name="restoreMaterial">
              <property name="text">
               <string>Restaurar</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2" colspan="2">
+            <widget class="QPushButton" name="updateProperties">
+             <property name="text">
+              <string>Actualizar</string>
              </property>
             </widget>
            </item>
@@ -925,43 +1192,15 @@
           <zorder>specularValue</zorder>
           <zorder>powerLabel</zorder>
           <zorder>powerValue</zorder>
+          <zorder>horizontalSpacer_13</zorder>
+          <zorder>horizontalSpacer_14</zorder>
+          <zorder>horizontalSpacer_15</zorder>
+          <zorder>horizontalSpacer_16</zorder>
+          <zorder>updateProperties</zorder>
           <zorder>restoreMaterial</zorder>
          </widget>
         </item>
-        <item row="2" column="3">
-         <widget class="QPushButton" name="updateProperties">
-          <property name="text">
-           <string>Actualizar</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="2">
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="2" column="2">
-         <spacer name="horizontalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="1" column="1">
+        <item row="4" column="0">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -974,216 +1213,140 @@
           </property>
          </spacer>
         </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Fondos</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="3" column="0">
+            <widget class="QLabel" name="meshBackgroundLabel">
+             <property name="text">
+              <string>Malla</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QPushButton" name="meshBackground">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QPushButton" name="volumeDeletingBackground">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="volumeBackgroundLabel">
+             <property name="text">
+              <string>Volumen</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QPushButton" name="restoreBackgrounds">
+             <property name="text">
+              <string>Restaurar</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="volumeBackground">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="volumeDeletingBackgroundLabel">
+             <property name="text">
+              <string>Volumen (borrado)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <spacer name="horizontalSpacer_17">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="2" column="1">
+            <spacer name="horizontalSpacer_18">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="3" column="1">
+            <spacer name="horizontalSpacer_19">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item row="0" column="2" rowspan="3">
-     <widget class="QGroupBox" name="rulesBox">
-      <property name="minimumSize">
-       <size>
-        <width>160</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>160</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>Reglas</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="6" column="0">
-        <widget class="QPushButton" name="enableDisableSliceRule">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="assets/resources.qrc">
-           <normaloff>:/icons/eye.png</normaloff>:/icons/eye.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="3">
-        <widget class="QPushButton" name="addSliceRule">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="assets/resources.qrc">
-           <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <spacer name="horizontalSpacer_11">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="6" column="2">
-        <widget class="QPushButton" name="deleteSliceRule">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="assets/resources.qrc">
-           <normaloff>:/icons/minus.png</normaloff>:/icons/minus.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="4">
-        <widget class="QListWidget" name="sliceRulesList"/>
-       </item>
-       <item row="2" column="3">
-        <widget class="QPushButton" name="addVolumeRule">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="assets/resources.qrc">
-           <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="4">
-        <widget class="QListWidget" name="volumeRulesList"/>
-       </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="deleteVolumeRule">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="assets/resources.qrc">
-           <normaloff>:/icons/minus.png</normaloff>:/icons/minus.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="enableDisableVolumeRule">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="assets/resources.qrc">
-           <normaloff>:/icons/eye.png</normaloff>:/icons/eye.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>10</width>
-           <height>10</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="1">
-        <spacer name="horizontalSpacer_12">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="volumeRuleLabel">
-         <property name="text">
-          <string>Figura 3D</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QLabel" name="sliceRuleLabel">
-         <property name="text">
-          <string>Cortes</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QVTKWidget" name="volumeWidget">
-      <property name="minimumSize">
-       <size>
-        <width>550</width>
-        <height>550</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="labelFolder">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>13</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Carpeta</string>
-      </property>
      </widget>
     </item>
    </layout>

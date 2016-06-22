@@ -602,25 +602,35 @@ void MainWindow::clearAllRules() {
 }
 
 void MainWindow::changeBackgroundColor(const int widget) {
+	QColor color;
 	switch (widget) {
 		case VOLUME_BACKGROUND:
-			volumeBackground = QColorDialog::getColor(volumeBackground);
-			if (!deleting) {
-				setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
-				renderVolume();
+			color = QColorDialog::getColor(volumeBackground);
+			if (color != QColor()) { // No se ha cancelado el dialogo
+				volumeBackground = color;
+				if (!deleting) {
+					setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
+					renderVolume();
+				}
 			}
 			break;
 		case VOLUME_DELETING_BACKGROUND:
-			volumeDeletingBackground = QColorDialog::getColor(volumeDeletingBackground);
-			if (deleting) {
-				setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
-				renderVolume();
+			color = QColorDialog::getColor(volumeDeletingBackground);
+			if (color != QColor()) { // No se ha cancelado el dialogo
+				volumeDeletingBackground = color;
+				if (deleting) {
+					setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
+					renderVolume();
+				}
 			}
 			break;
 		case MESH_BACKGROUND:
-			meshBackground = QColorDialog::getColor(meshBackground);
-			setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
-			renderMesh();
+			color = QColorDialog::getColor(meshBackground);
+			if (color != QColor()) { // No se ha cancelado el dialogo 
+				meshBackground = color;
+				setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
+				renderMesh();
+			}
 			break;
 	}
 }

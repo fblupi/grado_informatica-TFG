@@ -200,7 +200,45 @@ El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores r
 	\begin{center}
 		\begin{tabular} {|l|c|l|}
 			\hline
-			3 & \multicolumn{2}{c|}{Generar y visualizar cortes} \\ \hline \hline
+			3 & \multicolumn{2}{c|}{Cambiar material de la figura} \\ \hline \hline
+			\multicolumn{3}{|l|}{Descripción} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{El usuario podrá cambiar el material con el que se visualiza la figura cambiando sus componentes ambiental, difuso, especular y potencia especular introduciendo un valor entre 0 a 1 en los tres primeros y uno entre 1 y 50 en el último.} \\ \hline
+			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
+			\multicolumn{2}{|l|}{Prioridad} & 4 \\ \hline
+			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
+			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{ - El usuario no puede introducir un valor en ninguna de las componentes fuera del rango de valores.} \\
+			\multicolumn{3}{|p{12cm}|}{ - Cuando se cambia el material la figura pasa a visualizarse con este.} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Historia de usuario - Cambiar material de la figura}
+	\label{tab:hu_cambiar_material_de_la_figura}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular} {|l|c|l|}
+			\hline
+			4 & \multicolumn{2}{c|}{Cambiar color de fondo} \\ \hline \hline
+			\multicolumn{3}{|l|}{Descripción} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{El usuario podrá cambiar el color de fondo de cada uno de las ventanas en cualquiera de sus modos.} \\ \hline
+			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
+			\multicolumn{2}{|l|}{Prioridad} & 4 \\ \hline
+			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
+			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{ - El usuario no puede introducir un color incorrecto.} \\
+			\multicolumn{3}{|p{12cm}|}{ - Cuando el usuario cambia los colores de las ventanas, estas se actualizan con su nuevo color de fondo.} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Historia de usuario - Cambiar color de fondo}
+	\label{tab:hu_cambiar_color_de_fondo}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular} {|l|c|l|}
+			\hline
+			5 & \multicolumn{2}{c|}{Generar y visualizar cortes} \\ \hline \hline
 			\multicolumn{3}{|l|}{Descripción} \\ \hline
 			\multicolumn{3}{|p{12cm}|}{A partir de la reconstrucción 3D del volumen y un plano que se podrá mover y girar arbitrariamente, se visualizará el corte que produce este plano con el volumen en una ventana distinta a la utilizada para visualizarlo en 3D.} \\ \hline
 			\multicolumn{2}{|l|}{Estimación} & 6 \\ \hline
@@ -220,12 +258,49 @@ El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores r
 	\begin{center}
 		\begin{tabular} {|l|c|l|}
 			\hline
-			4 & \multicolumn{2}{c|}{Posiciones por defecto del plano} \\ \hline \hline
+			6 & \multicolumn{2}{c|}{Cambiar plano de corte} \\ \hline \hline
+			\multicolumn{3}{|l|}{Descripción} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{A partir del plano de corte en cualquier posición, se podrá girar en cualquiera de los ejes y mover a través de la dirección de su normal.} \\ \hline
+			\multicolumn{2}{|l|}{Estimación} & 3 \\ \hline
+			\multicolumn{2}{|l|}{Prioridad} & 1 \\ \hline
+			\multicolumn{2}{|l|}{Dependencias} & 5 \\ \hline
+			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{ - Cuando se realiza la transformación en el plano, se actualiza la imagen del corte que produce en la figura.} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Historia de usuario - Cambiar plano de corte}
+	\label{tab:hu_cambiar_plano_de_corte}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular} {|l|c|l|}
+			\hline
+			7 & \multicolumn{2}{c|}{Habilitar y deshabilitar el plano de corte} \\ \hline \hline
+			\multicolumn{3}{|l|}{Descripción} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{El usuario podrá habilitar y deshabilitar el plano de corte para visualizarlo o no en el visor 3D.} \\ \hline
+			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
+			\multicolumn{2}{|l|}{Prioridad} & 1 \\ \hline
+			\multicolumn{2}{|l|}{Dependencias} & 5 \\ \hline
+			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{ - Cuando el plano está habilitado y se ejecuta la acción, este se deshabilita.} \\
+			\multicolumn{3}{|p{12cm}|}{ - Cuando el plano está deshabilitado y se ejecuta la acción, este se habilita.} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Historia de usuario - Habilitar y deshabilitar el plano de corte}
+	\label{tab:hu_habilitar_y_deshabilitar_el_plano_de_corte}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular} {|l|c|l|}
+			\hline
+			8 & \multicolumn{2}{c|}{Posiciones por defecto del plano} \\ \hline \hline
 			\multicolumn{3}{|l|}{Descripción} \\ \hline
 			\multicolumn{3}{|p{12cm}|}{Se puede colocar el plano directamente en el centro del volumen en posiciones axial, sagital y coronal.} \\ \hline
 			\multicolumn{2}{|l|}{Estimación} & 3 \\ \hline
 			\multicolumn{2}{|l|}{Prioridad} & 3 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & 3 \\ \hline
+			\multicolumn{2}{|l|}{Dependencias} & 5 \\ \hline
 			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
 			\multicolumn{3}{|p{12cm}|}{ - El plano se coloca en la posición deseada cuando se realiza la acción.} \\ \hline
 		\end{tabular}
@@ -238,7 +313,7 @@ El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores r
 	\begin{center}
 		\begin{tabular} {|l|c|l|}
 			\hline
-			5 & \multicolumn{2}{c|}{Guardar imágenes de las ventanas} \\ \hline \hline
+			9 & \multicolumn{2}{c|}{Guardar imágenes de las ventanas} \\ \hline \hline
 			\multicolumn{3}{|l|}{Descripción} \\ \hline
 			\multicolumn{3}{|p{12cm}|}{Se podrán guardar imágenes de lo que se visualiza en las ventanas tanto en formato JPG como PNG. Para ello el usuario eligirá dónde almacenar la imagen generada. Por defecto el nombre para la imagen corresponderá con la fecha como cadena de números en formato "AAAAMMDDHHMMSS".} \\ \hline
 			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
@@ -257,7 +332,7 @@ El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores r
 	\begin{center}
 		\begin{tabular} {|l|c|l|}
 			\hline
-			6 & \multicolumn{2}{c|}{Cambiar función de transferencia} \\ \hline \hline
+			10 & \multicolumn{2}{c|}{Cambiar función de transferencia} \\ \hline \hline
 			\multicolumn{3}{|l|}{Descripción} \\ \hline
 			\multicolumn{3}{|p{12cm}|}{Se podrá cambiar la función de transferencia con la que visualizar el volumen eligiendo entre varios presets que se presentan.} \\ \hline
 			\multicolumn{2}{|l|}{Estimación} & 3 \\ \hline
@@ -275,7 +350,7 @@ El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores r
 	\begin{center}
 		\begin{tabular} {|l|c|l|}
 			\hline
-			7 & \multicolumn{2}{c|}{Editar función de transferencia} \\ \hline \hline
+			11 & \multicolumn{2}{c|}{Editar función de transferencia} \\ \hline \hline
 			\multicolumn{3}{|l|}{Descripción} \\ \hline
 			\multicolumn{3}{|p{12cm}|}{El usuario podrá editar la función de transferencia, para ello se le proporcionará un gráfico con cada una de las partes (color, opacidad escalar y gradiente) que podrá modificar añadiendo, quitando y moviendo puntos.} \\ \hline
 			\multicolumn{2}{|l|}{Estimación} & 8 \\ \hline
@@ -294,7 +369,7 @@ El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores r
 	\begin{center}
 		\begin{tabular} {|l|c|l|}
 			\hline
-			8 & \multicolumn{2}{c|}{Exportar función de transferencia} \\ \hline \hline
+			12 & \multicolumn{2}{c|}{Exportar función de transferencia} \\ \hline \hline
 			\multicolumn{3}{|l|}{Descripción} \\ \hline
 			\multicolumn{3}{|p{12cm}|}{Se podrá exportar la función de transferencia actual a un archivo XML.} \\ \hline
 			\multicolumn{2}{|l|}{Estimación} & 5 \\ \hline
@@ -313,7 +388,7 @@ El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores r
 	\begin{center}
 		\begin{tabular} {|l|c|l|}
 			\hline
-			9 & \multicolumn{2}{c|}{Importar función de transferencia} \\ \hline \hline
+			13 & \multicolumn{2}{c|}{Importar función de transferencia} \\ \hline \hline
 			\multicolumn{3}{|l|}{Descripción} \\ \hline
 			\multicolumn{3}{|p{12cm}|}{El usuario podrá importar una función de transferencia almacenada en un archivo XML con un formato determinado.} \\ \hline
 			\multicolumn{2}{|l|}{Estimación} & 6 \\ \hline
@@ -332,10 +407,10 @@ El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores r
 	\begin{center}
 		\begin{tabular} {|l|c|l|}
 			\hline
-			10 & \multicolumn{2}{c|}{Realizar medida} \\ \hline \hline
+			14 & \multicolumn{2}{c|}{Realizar medidas} \\ \hline \hline
 			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá realizar una medida de un punto a otro en cualquiera de las dos ventanas.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 4 \\ \hline
+			\multicolumn{3}{|p{12cm}|}{El usuario podrá realizar varias medidas de un punto a otro en cualquiera de las dos ventanas.} \\ \hline
+			\multicolumn{2}{|l|}{Estimación} & 6 \\ \hline
 			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
 			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
 			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
@@ -350,14 +425,72 @@ El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores r
 	\begin{center}
 		\begin{tabular} {|l|c|l|}
 			\hline
-			11 & \multicolumn{2}{c|}{Eliminar partes} \\ \hline \hline
+			15 & \multicolumn{2}{c|}{Añadir regla} \\ \hline \hline
 			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá eliminar una parte del volumen seleccionando un punto de esta. Para ello se definirá un valor de tolerancia con el que se determinará si un voxel forma parte de esa parte o no.} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{El usuario podrá añadir reglas para realizar medidas en cualquiera de las dos ventanas.} \\ \hline
+			\multicolumn{2}{|l|}{Estimación} & 3 \\ \hline
+			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
+			\multicolumn{2}{|l|}{Dependencias} & 14 \\ \hline
+			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{ - Si el usuario añade una regla en una ventana, se puede realizar la medida en esta.} \\
+			\multicolumn{3}{|p{12cm}|}{ - Si el usuario intenta añadir más reglas que las establecidas por un límite, se le informa y no se añade.} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Historia de usuario - Añadir regla}
+	\label{tab:hu_anadir_regla}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular} {|l|c|l|}
+			\hline
+			16 & \multicolumn{2}{c|}{Eliminar regla} \\ \hline \hline
+			\multicolumn{3}{|l|}{Descripción} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{El usuario podrá eliminar cualquier regla creada con anterioridad.} \\ \hline
+			\multicolumn{2}{|l|}{Estimación} & 3 \\ \hline
+			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
+			\multicolumn{2}{|l|}{Dependencias} & 14 \\ \hline
+			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{ - Si el usuario elimina una regla, se elimina correctamente y deja de visualizarse.} \\
+			\multicolumn{3}{|p{12cm}|}{ - Si el usuario intenta eliminar cuando no hay ninguna regla, se le informa de esto.} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Historia de usuario - Eliminar regla}
+	\label{tab:hu_eliminar_regla}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular} {|l|c|l|}
+			\hline
+			17 & \multicolumn{2}{c|}{Habilitar y deshabilitar regla} \\ \hline \hline
+			\multicolumn{3}{|l|}{Descripción} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{El usuario podrá habilitar o deshabilitar una regla para mostrarla o no sin llegar a borrarla.} \\ \hline
+			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
+			\multicolumn{2}{|l|}{Prioridad} & 3 \\ \hline
+			\multicolumn{2}{|l|}{Dependencias} & 14 \\ \hline
+			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{ - Si el usuario deshabilita una regla habilitada, deja de mostrarse.} \\
+			\multicolumn{3}{|p{12cm}|}{ - Si el usuario habilita una regla deshabilitada, se vuelve a mostrar.} \\
+			\multicolumn{3}{|p{12cm}|}{ - Si el usuario intenta eliminar cuando no hay ninguna regla, se le informa de esto.} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Historia de usuario - Habilitar y deshabilitar regla}
+	\label{tab:hu_habilitar_y_deshabilitar_regla}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular} {|l|c|l|}
+			\hline
+			18 & \multicolumn{2}{c|}{Eliminar partes} \\ \hline \hline
+			\multicolumn{3}{|l|}{Descripción} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{El usuario podrá eliminar una parte del volumen separada de las demás seleccionando un punto de esta.} \\ \hline
 			\multicolumn{2}{|l|}{Estimación} & 10 \\ \hline
 			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
 			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
 			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario selecciona un punto con una tolerancia adecuada, se elimina la parte seleccionada.} \\ \hline
+			\multicolumn{3}{|p{12cm}|}{ - Si el usuario selecciona un punto se elimina la parte seleccionada.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Eliminar partes}

@@ -2,6 +2,8 @@
 
 Este capítulo es una Especificación de Requisitos Software para el software que se va a realizar siguiendo las directrices dadas por el estándar IEEE830 \cite{iee830}.
 
+Esta especificación de requisitos contiene aquellos requisitos iniciales. No obstante se han añadido posteriormente más conforme ha ido avanzando el producto.
+
 \section{Introducción}
 
 	\subsection{Propósito}
@@ -23,12 +25,16 @@ Este capítulo es una Especificación de Requisitos Software para el software qu
 		\item \textbf{VTK} (\textit{The Visualization ToolKit}): Librería gráfica que se utilizará.
 		\item \textbf{CMake} (\textit{Cross platform Make}): Herramienta para generar código compilable en distintas plataformas.
 		\item \textbf{Qt}: Librería que se utilizará para realizar la GUI.
+		\item \textbf{\textit{Widget}}: Elemento de la GUI.
 		\item \textbf{Volumen}: Conjunto de datos en los que para cada posición XYZ se tiene un valor determinado.
+		\item \textbf{\textit{Voxel}} \textit{VOlumentric piXEL}: celda en la matriz 3D del conjunto de datos del volumen.
 		\item \textbf{Corte}: Vista de la figura a través de un plano. Por ejemplo, al cortar con una sierra un tronco por la mitad, se puede ver cómo es por dentro en esa posición por donde se ha cortado.
-		\item \textbf{Función de transferencia}: Función utilizada para visualizar los datos deseados de un volumen.
+		\item \textbf{TF} (Función de transferencia): Función utilizada para visualizar los datos deseados de un volumen.
+		\item \textbf{Preset}: Función de transferencia previamente configurada.
 		\item \textbf{\textit{Direct Volume Rendering}}: Visualización directa de volúmenes en la que cada valor del volumen se mapea con un determinado color y opacidad dado por una función de transferencia.
 		\item \textbf{\textit{Ray-Casting}}: Técnica de \textit{Direct Volume Rendering} utilizada para la visualización de volúmenes.
-		\item \textbf{\textit{Widget}}: Elemento de la GUI.
+		\item \textbf{\textit{Marching-Cubes}}: Técnica para generar malla de polígonos a partir de un volumen y un valor de isosuperficie.
+		\item \textbf{HU \textit{(Hounsfield Units)}}: Unidad de medida escalar del valor de densidad en un \textit{voxel} del voluen
 	\end{itemize}
 	
 	\subsection{Visión general del documento}

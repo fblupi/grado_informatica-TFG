@@ -367,6 +367,11 @@ private slots:
 	 */
 	void launchWarningNoRule();
 
+	/**
+	 * Lanza un mensaje informando que antes se necesita seleccionar una regla
+	 */
+	void launchWarningTooManyRules();
+
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */
 

@@ -468,9 +468,10 @@ void MainWindow::importMetalPreset() {
 }
 
 void MainWindow::addRule(const int type) {
-	std::string id;
-	QListWidgetItem *item = new QListWidgetItem(0);
-	switch (type) {
+	if (rules.size() < RULES_LIMIT) {
+		std::string id;
+		QListWidgetItem *item = new QListWidgetItem(0);
+		switch (type) {
 		case 0:
 			volumeRuleCounter++;
 			id = "Regla " + std::to_string(volumeRuleCounter);
@@ -490,10 +491,13 @@ void MainWindow::addRule(const int type) {
 			ui->sliceRulesList->setCurrentItem(item);
 			rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); // crea la regla
 			rules[item]->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
+		}
+		rules[item]->CreateDefaultRepresentation(); // usa la representación por defecto
+		static_cast<vtkDistanceRepresentation *>(rules[item]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
+		rules[item]->On();
+	} else {
+		launchWarningTooManyRules();
 	}
-	rules[item]->CreateDefaultRepresentation(); // usa la representación por defecto
-	static_cast<vtkDistanceRepresentation *>(rules[item]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
-	rules[item]->On();
 }
 
 void MainWindow::deleteRule(const int type) {
@@ -614,6 +618,16 @@ void MainWindow::launchWarningNoRule() {
 	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 	confirmBox->setIcon(QMessageBox::Information);
 	confirmBox->setText(QString::fromLatin1("Seleccione una regla antes"));
+	confirmBox->setStandardButtons(QMessageBox::Ok);
+	confirmBox->exec();
+}
+
+void MainWindow::launchWarningTooManyRules() {
+	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
+	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
+	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+	confirmBox->setIcon(QMessageBox::Information);
+	confirmBox->setText(QString::fromLatin1("Se ha alcanzado el máximo número de reglas permitidas"));
 	confirmBox->setStandardButtons(QMessageBox::Ok);
 	confirmBox->exec();
 }

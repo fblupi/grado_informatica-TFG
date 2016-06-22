@@ -146,6 +146,9 @@ void MainWindow::defaultBackgroundColors() {
 	volumeBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
 	volumeDeletingBackground = QColor::fromRgbF(0.2, 0.3, 0.1);
 	meshBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
+	ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name());
+	ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name());
+	ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name());
 }
 
 void MainWindow::defaultPlanePosition() {
@@ -612,6 +615,7 @@ void MainWindow::changeBackgroundColor(const int widget) {
 					setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
 					renderVolume();
 				}
+				ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name());
 			}
 			break;
 		case VOLUME_DELETING_BACKGROUND:
@@ -622,6 +626,7 @@ void MainWindow::changeBackgroundColor(const int widget) {
 					setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
 					renderVolume();
 				}
+				ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name());
 			}
 			break;
 		case MESH_BACKGROUND:
@@ -630,6 +635,7 @@ void MainWindow::changeBackgroundColor(const int widget) {
 				meshBackground = color;
 				setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
 				renderMesh();
+				ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name());
 			}
 			break;
 	}

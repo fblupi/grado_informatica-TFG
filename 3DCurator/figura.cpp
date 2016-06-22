@@ -35,6 +35,7 @@ void Figura::setProperties() {
 	volumeProperty->SetGradientOpacity(tf->getGradientFun()); // función de opacidad gradiente
 	volumeProperty->SetScalarOpacity(tf->getScalarFun()); // función de opacidad escalar
 	volumeProperty->SetColor(tf->getColorFun()); // función de color
+	volumeProperty->ShadeOn(); // habilita el sombreado
 
 	// Malla
 	surface->ComputeNormalsOn();
@@ -115,32 +116,11 @@ void Figura::createMesh() {
 	surface->SetValue(0, isoValue);
 }
 
-void Figura::enableShadow(const bool onOff) {
-	if (onOff) {
-		volumeProperty->ShadeOn();
-	} else {
-		volumeProperty->ShadeOff();
-	}
-}
-
 void Figura::setMaterial(const double ambient, const double diffuse, const double specular, const double power) {
 	volumeProperty->SetAmbient(ambient); // componente ambiental del material
 	volumeProperty->SetDiffuse(diffuse); // componente difusa del material
 	volumeProperty->SetSpecular(specular); // componente especular del material
 	volumeProperty->SetSpecularPower(power); // componente de potencia especular del material
-}
-
-void Figura::setRenderMode(const int mode) {
-	switch (mode) {
-	case 0:
-		volumeMapper->SetRequestedRenderModeToGPU();
-		break;
-	case 1:
-		volumeMapper->SetRequestedRenderModeToRayCast();
-		break;
-	default:
-		volumeMapper->SetRequestedRenderModeToDefault();
-	}
 }
 
 void Figura::setIsoValue(const double isoValue) {

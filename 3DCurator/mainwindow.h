@@ -182,19 +182,9 @@ private slots:
 	void defaultPlanePosition();
 
 	/**
-	 * Actualiza si el volumen aparece o no sombreado
-	 */
-	void updateShadow();
-
-	/**
 	 * Actualiza el material
 	 */
 	void updateMaterial();
-
-	/**
-	 * Actualiza el modo de renderizado
-	 */
-	void updateRenderMode();
 
 	/**
 	 * Actualiza los sliders dándole los valores según la función de transferencia

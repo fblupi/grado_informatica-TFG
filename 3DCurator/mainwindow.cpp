@@ -149,14 +149,6 @@ void MainWindow::defaultPlanePosition() {
 	}
 }
 
-void MainWindow::updateShadow() {
-	if (ui->enableShadow->isChecked()) {
-		figura->enableShadow(true);
-	} else {
-		figura->enableShadow(false);
-	}
-}
-
 void MainWindow::updateMaterial() {
 	figura->setMaterial(
 		ui->ambientValue->value(),
@@ -164,10 +156,6 @@ void MainWindow::updateMaterial() {
 		ui->specularValue->value(),
 		ui->powerValue->value()
 		);
-}
-
-void MainWindow::updateRenderMode() {
-	figura->setRenderMode(ui->renderMode->currentIndex());
 }
 
 void MainWindow::updateSliders() {
@@ -225,7 +213,6 @@ void MainWindow::importDICOM() {
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
 		plano->setInputData(figura->getImageData()); // conecta el plano con los datos del volumen
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
-		updateShadow(); // actualiza sombreado
 		defaultPlanePosition(); // coloca el plano en una posición inicial
 		plano->show(true);
 		enablePlane();
@@ -753,9 +740,7 @@ void MainWindow::on_restoreMaterial_pressed() {
 }
 
 void MainWindow::on_updateProperties_pressed() {
-	updateShadow();
 	updateMaterial();
-	updateRenderMode();
 	renderVolume();
 }
 

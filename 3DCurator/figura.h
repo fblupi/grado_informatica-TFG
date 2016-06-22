@@ -116,12 +116,6 @@ public:
 	void setDICOMFolder(const std::string s);
 
 	/**
-	 * Habilita o deshabilita la sombra en el volumen
-	 * @param	onOff	Sombra activada si true o desactivada si false
-	 */
-	void enableShadow(const bool onOff);
-
-	/**
 	 * Asigna el material al volumen
 	 * @param	ambient		Componente ambiental
 	 * @param	diffuse		Componente difusa
@@ -129,12 +123,6 @@ public:
 	 * @param	power		Potencia especular
 	 */
 	void setMaterial(const double ambient, const double diffuse, const double specular, const double power);
-
-	/**
-	 * Establece el modo de renderizado
-	 * @param	mode	Si es 0 usa GPU, si es 1 usa CPU
-	 */
-	void setRenderMode(const int mode);
 
 	/**
 	 * Establece el valor de isosuperficie para generar la malla

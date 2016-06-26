@@ -68,18 +68,18 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			1 & \multicolumn{2}{c|}{Cargar datos DICOM} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{Se debe dotar al software de funcionalidad para cargar datos DICOM de un directorio. Para ello el usuario explorará entre los directorios del sistema hasta encontrar aquel con los datos que se desea visualizar.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 1 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - No se selecciona ningún directorio y no importa los datos.} \\ 
-			\multicolumn{3}{|p{12cm}|}{ - Se selecciona un directorio sin datos DICOM o mal formateados y se informa del fallo y no importa los datos.} \\ 
-			\multicolumn{3}{|p{12cm}|}{ - Se selecciona un directorio con datos DICOM y se cargan correctamente.} \\ \hline
+			1 & \multicolumn{2}{c}{Cargar datos DICOM} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{Se debe dotar al software de funcionalidad para cargar datos DICOM de un directorio. Para ello el usuario explorará entre los directorios del sistema hasta encontrar aquel con los datos que se desea visualizar.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 2 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 1 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - No se selecciona ningún directorio y no importa los datos.} \\ 
+			\multicolumn{3}{p{12cm}}{ - Se selecciona un directorio sin datos DICOM o mal formateados y se informa del fallo y no importa los datos.} \\ 
+			\multicolumn{3}{p{12cm}}{ - Se selecciona un directorio con datos DICOM y se cargan correctamente.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Cargar datos DICOM}
@@ -88,16 +88,16 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			2 & \multicolumn{2}{c|}{Generar reconstrucción 3D} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{A partir de un directorio con datos DICOM se almacenan en un volumen que se renderiza en 3D  según una función de transferencia usando \textit{ray casting} en una ventana.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 6 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 1 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - A partir de unos datos DICOM y una función de transferencia se genera y se visualiza correctamente el volumen.} \\ \hline
+			2 & \multicolumn{2}{c}{Generar reconstrucción 3D} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{A partir de un directorio con datos DICOM se almacenan en un volumen que se renderiza en 3D  según una función de transferencia usando \textit{ray casting} en una ventana.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 6 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 1 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - A partir de unos datos DICOM y una función de transferencia se genera y se visualiza correctamente el volumen.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Generar reconstrucción 3D}
@@ -106,18 +106,18 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			3 & \multicolumn{2}{c|}{Cambiar color de fondo} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá cambiar el color de fondo de cada uno de las ventanas en cualquiera de sus modos. Para ello elegirá un color a partir de un selector con colores predeterminados y funciones para crear el color o mediante RGB o mediante HSV.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 5 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - El usuario no puede introducir un color incorrecto.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario no selecciona ningún color no se realiza ninguna acción.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Cuando el usuario cambia los colores de las ventanas, estas se actualizan con su nuevo color de fondo.} \\ \hline
+			3 & \multicolumn{2}{c}{Cambiar color de fondo} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá cambiar el color de fondo de cada uno de las ventanas en cualquiera de sus modos. Para ello elegirá un color a partir de un selector con colores predeterminados y funciones para crear el color o mediante RGB o mediante HSV.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 2 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 5 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - El usuario no puede introducir un color incorrecto.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario no selecciona ningún color no se realiza ninguna acción.} \\
+			\multicolumn{3}{p{12cm}}{ - Cuando el usuario cambia los colores de las ventanas, estas se actualizan con su nuevo color de fondo.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Cambiar color de fondo}
@@ -126,17 +126,17 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			4 & \multicolumn{2}{c|}{Cambiar material de la figura} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá cambiar el material con el que se visualiza la figura cambiando sus componentes ambiental, difuso, especular y potencia especular introduciendo un valor entre 0 a 1 en los tres primeros y uno entre 1 y 50 en el último.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 1 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 5 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - El usuario no puede introducir un valor en ninguna de las componentes fuera del rango de valores.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Cuando se cambia el material la figura pasa a visualizarse con este.} \\ \hline
+			4 & \multicolumn{2}{c}{Cambiar material de la figura} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá cambiar el material con el que se visualiza la figura cambiando sus componentes ambiental, difuso, especular y potencia especular introduciendo un valor entre 0 a 1 en los tres primeros y uno entre 1 y 50 en el último.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 1 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 5 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - El usuario no puede introducir un valor en ninguna de las componentes fuera del rango de valores.} \\
+			\multicolumn{3}{p{12cm}}{ - Cuando se cambia el material la figura pasa a visualizarse con este.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Cambiar material de la figura}
@@ -146,16 +146,16 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			5 & \multicolumn{2}{c|}{Funciones de transferencia por defecto} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{Se podrá cambiar la función de transferencia con la que visualizar el volumen eligiendo entre varios presets: uno para tener una vista completa con todos los materiales de la figura, otro en el que solo se muestre la madera, otro en el que solo se muestre el estuco y otro en el que se muestren los clavos y una capa casi transparente de madera para tener una referencia de la figura.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 5 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario cambia la función de transferencia, se actualiza la visualización del volumen usando esta.} \\ \hline
+			5 & \multicolumn{2}{c}{Funciones de transferencia por defecto} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{Se podrá cambiar la función de transferencia con la que visualizar el volumen eligiendo entre varios presets: uno para tener una vista completa con todos los materiales de la figura, otro en el que solo se muestre la madera, otro en el que solo se muestre el estuco y otro en el que se muestren los clavos y una capa casi transparente de madera para tener una referencia de la figura.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 5 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 2 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si el usuario cambia la función de transferencia, se actualiza la visualización del volumen usando esta.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Funciones de transferencia por defecto}
@@ -164,18 +164,18 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			6 & \multicolumn{2}{c|}{Editar función de transferencia} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá editar la función de transferencia, para ello se le proporcionará un gráfico con cada una de las partes (color, opacidad escalar y gradiente) que podrá modificar añadiendo, quitando y moviendo puntos. Para agregar o cambiar un punto de color se facilitará un selector con colores predeterminados y funciones para crear nuevos mediante RGB o HSV.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 7 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 3 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario intenta borrar un punto cuando solo quedan dos, no se le dejará.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario crea un punto en la función de color y no selecciona ningún color se le asigna el color que por interpolación le correspondía antes de que hubiese un punto en esa posición.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si se edita cualquiera de las partes de la función de transferencia se cambia esta y, por tanto, la visualización del volumen.} \\ \hline
+			6 & \multicolumn{2}{c}{Editar función de transferencia} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá editar la función de transferencia, para ello se le proporcionará un gráfico con cada una de las partes (color, opacidad escalar y gradiente) que podrá modificar añadiendo, quitando y moviendo puntos. Para agregar o cambiar un punto de color se facilitará un selector con colores predeterminados y funciones para crear nuevos mediante RGB o HSV.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 7 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 3 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si el usuario intenta borrar un punto cuando solo quedan dos, no se le dejará.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario crea un punto en la función de color y no selecciona ningún color se le asigna el color que por interpolación le correspondía antes de que hubiese un punto en esa posición.} \\
+			\multicolumn{3}{p{12cm}}{ - Si se edita cualquiera de las partes de la función de transferencia se cambia esta y, por tanto, la visualización del volumen.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Editar función de transferencia}
@@ -184,17 +184,17 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			7 & \multicolumn{2}{c|}{Exportar función de transferencia} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{Se podrá exportar la función de transferencia actual a un archivo XML con un formato específico en el que luego se pueda importar.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 4 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 4 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario guarda sin escribir la extensión, comprobar que se añade automáticamente.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario guarda con un nombre, comprobar que efectivamente ocurre así.} \\ \hline
+			7 & \multicolumn{2}{c}{Exportar función de transferencia} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}|}{Se podrá exportar la función de transferencia actual a un archivo XML con un formato específico en el que luego se pueda importar.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 4 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 4 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si el usuario guarda sin escribir la extensión, comprobar que se añade automáticamente.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario guarda con un nombre, comprobar que efectivamente ocurre así.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Exportar función de transferencia}
@@ -203,17 +203,17 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			8 & \multicolumn{2}{c|}{Importar función de transferencia} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá importar una función de transferencia almacenada en un archivo XML con un formato específico.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 6 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 4 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario carga un archivo XML con un formato distinto al usado para exportar funciones de transferencia, se informará del error.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario introduce un archivo correcto, se carga la función de transferencia.} \\ \hline
+			8 & \multicolumn{2}{c}{Importar función de transferencia} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá importar una función de transferencia almacenada en un archivo XML con un formato específico.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 6 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 4 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si el usuario carga un archivo XML con un formato distinto al usado para exportar funciones de transferencia, se informará del error.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario introduce un archivo correcto, se carga la función de transferencia.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Importar función de transferencia}
@@ -222,17 +222,17 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			9 & \multicolumn{2}{c|}{Generar y visualizar cortes} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{A partir de la reconstrucción 3D del volumen y un plano que se podrá mover y girar arbitrariamente, se visualizará el corte que produce este plano con el volumen en una ventana distinta a la utilizada para visualizarlo en 3D.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 6 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 1 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & 2 \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Cuando no hay ningún volumen cargado no se visualiza nada en la ventana de cortes.} \\ 
-			\multicolumn{3}{|p{12cm}|}{ - Cuando el plano interseca con el volumen se visualiza correctamente el corte.} \\ \hline
+			9 & \multicolumn{2}{c}{Generar y visualizar cortes} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{A partir de la reconstrucción 3D del volumen y un plano que se podrá mover y girar arbitrariamente, se visualizará el corte que produce este plano con el volumen en una ventana distinta a la utilizada para visualizarlo en 3D.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 6 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 1 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & 2 \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Cuando no hay ningún volumen cargado no se visualiza nada en la ventana de cortes.} \\ 
+			\multicolumn{3}{p{12cm}}{ - Cuando el plano interseca con el volumen se visualiza correctamente el corte.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Generar y visualizar cortes}
@@ -241,19 +241,19 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			10 & \multicolumn{2}{c|}{Editar plano de corte} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{A partir del plano de corte en cualquier posición, se podrá girar en cualquiera de los ejes y mover a través de la dirección de su normal.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 3 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & 9 \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Comprobar que se puede girar el plano sobre cualquiera de sus ejes con el centro de éste como punto pivote.} \\ 
-			\multicolumn{3}{|p{12cm}|}{ - Comprobar que solo se puede mover el plano a través de la dirección de su normal.} \\ 
-			\multicolumn{3}{|p{12cm}|}{ - Comprobar que no se puede mover el plano más allá de la figura.} \\ 
-			\multicolumn{3}{|p{12cm}|}{ - Cuando se realiza la transformación en el plano, se actualiza la imagen del corte que produce en la figura.} \\ \hline
+			10 & \multicolumn{2}{c}{Editar plano de corte} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{A partir del plano de corte en cualquier posición, se podrá girar en cualquiera de los ejes y mover a través de la dirección de su normal.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 3 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 2 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & 9 \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Comprobar que se puede girar el plano sobre cualquiera de sus ejes con el centro de éste como punto pivote.} \\ 
+			\multicolumn{3}{p{12cm}}{ - Comprobar que solo se puede mover el plano a través de la dirección de su normal.} \\ 
+			\multicolumn{3}{p{12cm}}{ - Comprobar que no se puede mover el plano más allá de la figura.} \\ 
+			\multicolumn{3}{p{12cm}}{ - Cuando se realiza la transformación en el plano, se actualiza la imagen del corte que produce en la figura.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Editar plano de corte}
@@ -262,18 +262,18 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			11 & \multicolumn{2}{c|}{Habilitar y deshabilitar el plano de corte} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá habilitar y deshabilitar el plano de corte para visualizarlo o no en el visor 3D.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 4 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & 9 \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Cuando el plano está habilitado y se ejecuta la acción, este se deshabilita.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Cuando el plano está deshabilitado y se ejecuta la acción, este se habilita.} \\ 
-			\multicolumn{3}{|p{12cm}|}{ - Cuando el plano está deshabilitado no se puede transformar y si se cambia la posición por defecto, no se actualiza el corte hasta que se vuelve a habilitar.} \\ \hline
+			11 & \multicolumn{2}{c}{Habilitar y deshabilitar el plano de corte} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá habilitar y deshabilitar el plano de corte para visualizarlo o no en el visor 3D.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 2 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 4 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & 9 \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Cuando el plano está habilitado y se ejecuta la acción, este se deshabilita.} \\
+			\multicolumn{3}{p{12cm}}{ - Cuando el plano está deshabilitado y se ejecuta la acción, este se habilita.} \\ 
+			\multicolumn{3}{p{12cm}}{ - Cuando el plano está deshabilitado no se puede transformar y si se cambia la posición por defecto, no se actualiza el corte hasta que se vuelve a habilitar.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Habilitar y deshabilitar el plano de corte}
@@ -282,17 +282,17 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			12 & \multicolumn{2}{c|}{Posiciones del plano de corte por defecto} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{Se puede colocar el plano directamente en el centro del volumen en posiciones axial, sagital y coronal.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 3 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & 5 \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Comprobar que cuando no hay ningún volumen no se puede cambiar la posición del plano e informar al usuario de ello.} \\
-			\multicolumn{3}{|p{12cm}|}{ - El plano se coloca en la posición deseada cuando se realiza la acción.} \\ \hline
+			12 & \multicolumn{2}{c}{Posiciones del plano de corte por defecto} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{Se puede colocar el plano directamente en el centro del volumen en posiciones axial, sagital y coronal.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 2 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 3 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & 5 \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Comprobar que cuando no hay ningún volumen no se puede cambiar la posición del plano e informar al usuario de ello.} \\
+			\multicolumn{3}{p{12cm}}{ - El plano se coloca en la posición deseada cuando se realiza la acción.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Posiciones del plano de corte por defecto}
@@ -301,17 +301,17 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			13 & \multicolumn{2}{c|}{Guardar imágenes de las ventanas} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{Se podrán guardar imágenes de lo que se visualiza en las ventanas tanto en formato JPG como PNG. Para ello el usuario eligirá dónde almacenar la imagen generada. Por defecto el nombre para la imagen corresponderá con la fecha como cadena de números en formato ``AAAAMMDDHHMMSS".} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario guarda sin escribir la extensión, comprobar que se añade automáticamente.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario guarda con un nombre y una extensión, comprobar que efectivamente ocurre así.} \\ \hline
+			13 & \multicolumn{2}{c}{Guardar imágenes de las ventanas} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{Se podrán guardar imágenes de lo que se visualiza en las ventanas tanto en formato JPG como PNG. Para ello el usuario eligirá dónde almacenar la imagen generada. Por defecto el nombre para la imagen corresponderá con la fecha como cadena de números en formato ``AAAAMMDDHHMMSS".} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 2 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 2 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si el usuario guarda sin escribir la extensión, comprobar que se añade automáticamente.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario guarda con un nombre y una extensión, comprobar que efectivamente ocurre así.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Guardar imágenes de las ventanas}
@@ -320,17 +320,17 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			14 & \multicolumn{2}{c|}{Realizar medida} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá realizar una medida de un punto a otro en cualquiera de las dos ventanas con una regla, para ello tendrá que pinchar en el punto inicial y el final. Una vez realizada puede cambiarla seleccionando el punto inicial o final y arrastrándolo a la nueva posición.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 5 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario introduce dos puntos se visualiza una línea de uno a otro con la medida correspondiente.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario cambia de posición la regla, se actualiza el valor de cuánto mide ésta.} \\ \hline
+			14 & \multicolumn{2}{c}{Realizar medida} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá realizar una medida de un punto a otro en cualquiera de las dos ventanas con una regla, para ello tendrá que pinchar en el punto inicial y el final. Una vez realizada puede cambiarla seleccionando el punto inicial o final y arrastrándolo a la nueva posición.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 5 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 2 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si el usuario introduce dos puntos se visualiza una línea de uno a otro con la medida correspondiente.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario cambia de posición la regla, se actualiza el valor de cuánto mide ésta.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Realizar medida}
@@ -339,17 +339,17 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			15 & \multicolumn{2}{c|}{Añadir regla} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá añadir reglas para realizar medidas en cualquiera de las dos ventanas.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 3 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & 14 \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario añade una regla en una ventana, se puede realizar la medida en esta.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario intenta añadir más reglas que las establecidas por un límite, se le informa y no se añade.} \\ \hline
+			15 & \multicolumn{2}{c}{Añadir regla} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá añadir reglas para realizar medidas en cualquiera de las dos ventanas.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 3 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 2 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & 14 \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si el usuario añade una regla en una ventana, se puede realizar la medida en esta.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario intenta añadir más reglas que las establecidas por un límite, se le informa y no se añade.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Añadir regla}
@@ -358,17 +358,17 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			16 & \multicolumn{2}{c|}{Eliminar regla} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá eliminar cualquier regla creada con anterioridad.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 3 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & 14 \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario elimina una regla, se elimina correctamente y deja de visualizarse.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario intenta eliminar cuando no hay ninguna regla, se le informa de esto.} \\ \hline
+			16 & \multicolumn{2}{c}{Eliminar regla} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá eliminar cualquier regla creada con anterioridad.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 3 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 2 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & 14 \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si el usuario elimina una regla, se elimina correctamente y deja de visualizarse.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario intenta eliminar cuando no hay ninguna regla, se le informa de esto.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Eliminar regla}
@@ -377,18 +377,18 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			17 & \multicolumn{2}{c|}{Habilitar y deshabilitar regla} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá habilitar o deshabilitar cualquier regla creada con anterioridad para mostrarla o no sin llegar a borrarla.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 4 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & 14 \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario deshabilita una regla habilitada, deja de mostrarse.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario habilita una regla deshabilitada, se vuelve a mostrar.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario intenta eliminar cuando no hay ninguna regla, se le informa de esto.} \\ \hline
+			17 & \multicolumn{2}{c}{Habilitar y deshabilitar regla} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá habilitar o deshabilitar cualquier regla creada con anterioridad para mostrarla o no sin llegar a borrarla.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 2 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 4 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & 14 \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si el usuario deshabilita una regla habilitada, deja de mostrarse.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario habilita una regla deshabilitada, se vuelve a mostrar.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario intenta eliminar cuando no hay ninguna regla, se le informa de esto.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Habilitar y deshabilitar regla}
@@ -397,18 +397,18 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			18 & \multicolumn{2}{c|}{Eliminar partes} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá eliminar una parte del volumen separada de las demás seleccionando un punto de esta. Antes de confirmar el borrado se le pregunta al usuario por si ha borrado una parte que no deseaba borrar y poder volver al estado anterior.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 8 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 2 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si no se selecciona ningún punto no se realiza ninguna acción.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si se cancela el borrado se vuelve al estado original.} \\
-			\multicolumn{3}{|p{12cm}|}{ - Si el usuario selecciona un punto y confirma se elimina la parte seleccionada.} \\ \hline
+			18 & \multicolumn{2}{c}{Eliminar partes} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá eliminar una parte del volumen separada de las demás seleccionando un punto de esta. Antes de confirmar el borrado se le pregunta al usuario por si ha borrado una parte que no deseaba borrar y poder volver al estado anterior.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 8 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 2 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si no se selecciona ningún punto no se realiza ninguna acción.} \\
+			\multicolumn{3}{p{12cm}}{ - Si se cancela el borrado se vuelve al estado original.} \\
+			\multicolumn{3}{p{12cm}}{ - Si el usuario selecciona un punto y confirma se elimina la parte seleccionada.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Eliminar partes}
@@ -417,17 +417,17 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			19 & \multicolumn{2}{c|}{Generar malla} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{El usuario podrá generar una malla de triángulos a partir del volumen dado un valor de isosuperficie mediante el uso de \textit{marching cubes}.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 6 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 3 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & - \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - El usuario solo puede dar un valor de isosuperficie que se encuentre entre los rangos de valores de una imagen DICOM.} \\ 
-			\multicolumn{3}{|p{12cm}|}{ - Dado un valor de isosuperficie se genera la malla de triángulos del volumen correctamente.} \\ \hline
+			19 & \multicolumn{2}{c}{Generar malla} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{El usuario podrá generar una malla de triángulos a partir del volumen dado un valor de isosuperficie mediante el uso de \textit{marching cubes}.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 6 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 3 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & - \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - El usuario solo puede dar un valor de isosuperficie que se encuentre entre los rangos de valores de una imagen DICOM.} \\ 
+			\multicolumn{3}{p{12cm}}{ - Dado un valor de isosuperficie se genera la malla de triángulos del volumen correctamente.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Generar malla}
@@ -436,16 +436,16 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			19 & \multicolumn{2}{c|}{Mallas de materiales por defecto} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{Se facilitarán al usuario los valores de isosuperficie para extraer la madera (que incluye el estuco y los clavos), el estuco (que incluye los clavos) y los clavos.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 1 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 4 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & 19 \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Si es usuario cambia el material, se actualiza la malla.} \\ \hline
+			20 & \multicolumn{2}{c}{Mallas de materiales por defecto} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{Se facilitarán al usuario los valores de isosuperficie para extraer la madera (que incluye el estuco y los clavos), el estuco (que incluye los clavos) y los clavos.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 1 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 4 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & 19 \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Si es usuario cambia el material, se actualiza la malla.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Mallas de materiales por defecto}
@@ -454,16 +454,16 @@ A continuación se incluye una descripción completa de las historias de usuario
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular} {|l|c|l|}
+		\begin{tabular} {l|c|l}
 			\hline
-			19 & \multicolumn{2}{c|}{Exportar malla} \\ \hline \hline
-			\multicolumn{3}{|l|}{Descripción} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{A partir de una malla de triángulos generada, se puede exportar a un formato STL.} \\ \hline
-			\multicolumn{2}{|l|}{Estimación} & 3 \\ \hline
-			\multicolumn{2}{|l|}{Prioridad} & 3 \\ \hline
-			\multicolumn{2}{|l|}{Dependencias} & 19 \\ \hline
-			\multicolumn{3}{|l|}{Pruebas de aceptación} \\ \hline
-			\multicolumn{3}{|p{12cm}|}{ - Comprobar que se exporta correctamente la malla de triángulos generada.} \\ \hline
+			21 & \multicolumn{2}{c}{Exportar malla} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{A partir de una malla de triángulos generada, se puede exportar a un formato STL.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 3 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 3 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & 19 \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Comprobar que se exporta correctamente la malla de triángulos generada.} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{Historia de usuario - Exportar malla}

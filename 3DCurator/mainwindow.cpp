@@ -654,35 +654,26 @@ void MainWindow::restoreBackgroundColors() {
 	renderVolume();
 	renderMesh();
 }
-
-void MainWindow::launchWarningNoVolume() {
+void MainWindow::launchWarning(const std::string message) {
 	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
 	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
 	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 	confirmBox->setIcon(QMessageBox::Information);
-	confirmBox->setText(QString::fromLatin1("Hace falta cargar un modelo antes"));
+	confirmBox->setText(QString::fromLatin1(message.c_str()));
 	confirmBox->setStandardButtons(QMessageBox::Ok);
 	confirmBox->exec();
+}
+
+void MainWindow::launchWarningNoVolume() {
+	launchWarning("Hace falta cargar un modelo antes");
 }
 
 void MainWindow::launchWarningNoRule() {
-	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
-	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
-	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	confirmBox->setIcon(QMessageBox::Information);
-	confirmBox->setText(QString::fromLatin1("Seleccione una regla antes"));
-	confirmBox->setStandardButtons(QMessageBox::Ok);
-	confirmBox->exec();
+	launchWarning("Seleccione una regla antes");
 }
 
 void MainWindow::launchWarningTooManyRules() {
-	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
-	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
-	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
-	confirmBox->setIcon(QMessageBox::Information);
-	confirmBox->setText(QString::fromLatin1("Se ha alcanzado el máximo número de reglas permitidas"));
-	confirmBox->setStandardButtons(QMessageBox::Ok);
-	confirmBox->exec();
+	launchWarning("Se ha alcanzado el máximo número de reglas permitidas");
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

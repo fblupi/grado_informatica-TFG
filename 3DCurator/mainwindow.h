@@ -368,6 +368,12 @@ private slots:
 	void restoreBackgroundColors();
 
 	/**
+	 * Lanza un mensaje informando
+	 * @param	message	Mensaje que se mostrará
+	 */
+	void launchWarning(const std::string message);
+
+	/**
 	 * Lanza un mensaje informando que antes se necesita importar un volumen
 	 */
 	void launchWarningNoVolume();

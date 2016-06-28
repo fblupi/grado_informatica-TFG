@@ -81,6 +81,13 @@ pdfproducer = {pdflatex}
 
 \setlength{\headheight}{1.5\headheight}
 
+\newcommand*\justify{
+	\fontdimen2\font=0.4em
+	\fontdimen3\font=0.2em
+	\fontdimen4\font=0.1em
+	\fontdimen7\font=0.1em
+	\hyphenchar\font=`\-
+}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 %Definimos los tipos teorema, ejemplo y definición podremos usar estos tipos
 %simplemente poniendo \begin{teorema} \end{teorema} ...

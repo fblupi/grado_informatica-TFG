@@ -1,6 +1,23 @@
 \chapter{Diseño}
 
+En este capítulo se mostrarán los diagramas UML \textbf{arquitectónico}, de \textbf{clases} y algunos de \textbf{secuencia} de la aplicación. Todos han sido generados con la aplicación \textit{Visual Paradigm for UML 13.1 Community Edition} \cite{vpp}.
+
+\section{Diagrama arquitectónico}
+
+Aquí el diagrama arquitectónico
+
 \section{Diagramas de clases}
+
+Se presentan las distintas clases en tres diagramas distintos para ser mostrados con más claridad aunque no estén separados en paquetes como tales.
+
+\subsection{Application}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10.5cm]{imagenes/diagramas/clases/Application}
+	\caption{Diagrama de clases del paquete \textit{Application}}
+	\label{fig:diagrama_clases_application}
+\end{figure}
 
 \subsection{Charts}
 
@@ -20,365 +37,190 @@
 	\label{fig:diagrama_clases_volume}
 \end{figure}
 
-\subsection{Application}
+\section{Diagramas de secuencia}
+
+A continuación se muestran algunos de los diagramas de secuencia de la aplicación: Aquellos que se han considerado más importantes.
+
+\subsection{OpacityTFChart}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10.5cm]{imagenes/diagramas/clases/Application}
-	\caption{Diagrama de clases del paquete \textit{Application}}
-	\label{fig:diagrama_clases_application}
+	\includegraphics[angle=90,width=12cm]{imagenes/diagramas/secuencia/OpacityTFChart_New}
+	\caption{Diagrama de secuencia del constructor de \textit{OpacityTFChart}}
+	\label{fig:diagrama_secuencia_opacitytfchart_new}
 \end{figure}
 
-\section{Diagramas de secuencia}
+\subsection{ColorTFChart}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[angle=90,height=18cm]{imagenes/diagramas/secuencia/ColorTFChart_New}
+	\caption{Diagrama de secuencia del constructor de \textit{ColorTFChart}}
+	\label{fig:diagrama_secuencia_colortfchart_new}
+\end{figure}
+
+\subsection{ColorTransferControlPointsItem}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[angle=90,width=12cm]{imagenes/diagramas/secuencia/ColorTransferControlPointsItem_MouseDoubleClickEvent}
+	\caption{Diagrama de secuencia del evento de doble click de \textit{ColorTransferControlPointsItem}}
+	\label{fig:diagrama_secuencia_colortransfercontrolpointsitem_mousedoubleclickevent}
+\end{figure}
+
+\subsection{Figura}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[angle=90,height=18cm]{imagenes/diagramas/secuencia/Figura_New}
+	\caption{Diagrama de secuencia del constructor de \textit{Figura}}
+	\label{fig:diagrama_secuencia_figura_new}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/Figura_SetProperties}
+	\caption{Diagrama de secuencia del método \textit{setProperties} de \textit{Figura}}
+	\label{fig:diagrama_secuencia_figura_setproperties}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/Figura_ConnectComponents}
+	\caption{Diagrama de secuencia del método \textit{connectComponents} de \textit{Figura}}
+	\label{fig:diagrama_secuencia_figura_connectcomponents}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[angle=90,height=18cm]{imagenes/diagramas/secuencia/Figura_SetDicomFolder}
+	\caption{Diagrama de secuencia del método \textit{setDICOMFolder} de \textit{Figura}}
+	\label{fig:diagrama_secuencia_figura_setdicomfolder}
+\end{figure}
+
+\subsection{TransferFunction}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{imagenes/diagramas/secuencia/TransferFunction_ReadFromString}
+	\caption{Diagrama de secuencia del método \textit{read} de \textit{TransferFunction}}
+	\label{fig:diagrama_secuencia_transferfunction_read}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/TransferFunction_ReadData}
+	\caption{Diagrama de secuencia del método \textit{readData} de \textit{TransferFunction}}
+	\label{fig:diagrama_secuencia_transferfunction_readdata}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/TransferFunction_Write}
+	\caption{Diagrama de secuencia del método \textit{write} de \textit{TransferFunction}}
+	\label{fig:diagrama_secuencia_transferfunction_write}
+\end{figure}
 
 \subsection{MainWindow}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=17cm]{imagenes/diagramas/secuencia/MainWindow_New}
-	\caption{Diagrama de secuencia del constructor de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_new}
+	\includegraphics[angle=90,height=18cm]{imagenes/diagramas/secuencia/MainWindow_New}
+	\caption{Diagrama de secuencia del constructor de \textit{MainWindow}}
+	\label{fig:diagrama_secuencia_mainwindow_new}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=20cm]{imagenes/diagramas/secuencia/MainWindow_ConnectComponents}
-	\caption{Diagrama de secuencia de connectComponents de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_connectComponents}
+	\includegraphics[angle=90,height=18cm]{imagenes/diagramas/secuencia/MainWindow_ConnectComponents}
+	\caption{Diagrama de secuencia del método \textit{connectComponents} de \textit{MainWindow}}
+	\label{fig:diagrama_secuencia_mainwindow_connectcomponents}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_SetBackgroundColor}
-	\caption{Diagrama de secuencia de setBackgroundColor de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_setBackgroundColor}
+	\includegraphics[angle=90,height=18cm]{imagenes/diagramas/secuencia/MainWindow_ImportDICOM}
+	\caption{Diagrama de secuencia del método \textit{importDICOM} de \textit{MainWindow}}
+	\label{fig:diagrama_secuencia_mainwindow_importdicom}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_DrawVolume}
-	\caption{Diagrama de secuencia de drawVolume de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_drawVolume}
+	\includegraphics[angle=90,height=18cm]{imagenes/diagramas/secuencia/MainWindow_ExportImageFromRenderWindow}
+	\caption{Diagrama de secuencia del método \textit{exportImageFromRenderWindow} de \textit{MainWindow}}
+	\label{fig:diagrama_secuencia_mainwindow_exportimagefromrenderwindow}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_DrawMesh}
-	\caption{Diagrama de secuencia de drawMesh de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_drawMesh}
+	\includegraphics[angle=90,width=12cm]{imagenes/diagramas/secuencia/MainWindow_ExportMeshToFile}
+	\caption{Diagrama de secuencia del método \textit{exportMeshToFile} de \textit{MainWindow}}
+	\label{fig:diagrama_secuencia_mainwindow_exportmeshtofile}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_RemoveVolume}
-	\caption{Diagrama de secuencia de removeVolume de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_removeVolume}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_RemoveMesh}
-	\caption{Diagrama de secuencia de removeMesh de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_removeMesh}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_RenderVolume}
-	\caption{Diagrama de secuencia de renderVolume de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_renderVolume}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_RenderMesh}
-	\caption{Diagrama de secuencia de renderMesh de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_renderMesh}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_RenderSlice}
-	\caption{Diagrama de secuencia de renderSlice de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_renderSlice}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_LoadDefaultPreset}
-	\caption{Diagrama de secuencia de loadDefaultPreset de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_loadDefaultPreset}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_DefaultTF}
-	\caption{Diagrama de secuencia de defaultTF de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_defaultTF}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_DefaultMaterial}
-	\caption{Diagrama de secuencia de defaultMaterial de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_defaultMaterial}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_DefaultBackgroundColors}
-	\caption{Diagrama de secuencia de defaultBackgroundColors de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_defaultBackgroundColors}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_DefaultPlanePosition}
-	\caption{Diagrama de secuencia de defaultPlanePosition de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_defaultPlanePosition}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_UpdateMaterial}
-	\caption{Diagrama de secuencia de updateMaterial de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_updateMaterial}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_UpdateSliders}
-	\caption{Diagrama de secuencia de updateSliders de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_updateSliders}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ImportDICOM}
-	\caption{Diagrama de secuencia de importDICOM de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_importDICOM}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ImportPreset}
-	\caption{Diagrama de secuencia de importPreset de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_importPreset}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=20cm]{imagenes/diagramas/secuencia/MainWindow_ExportImageFromRenderWindow}
-	\caption{Diagrama de secuencia de exportImageFromRenderWindow de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_exportImageFromRenderWindow}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ExportMeshToFile}
-	\caption{Diagrama de secuencia de exportMeshToFile de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_exportMeshToFile}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ExportPreset}
-	\caption{Diagrama de secuencia de exportPreset de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_exportPreset}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_GetExportPresetFilename}
-	\caption{Diagrama de secuencia de getExportPresetFilename de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_getExportPresetFilename}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_GetExportImageFilename}
-	\caption{Diagrama de secuencia de getExportImageFilename de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_getExportImageFilename}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_GetExportMeshFilename}
-	\caption{Diagrama de secuencia de getExportMeshFilename de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_getExportMeshFilename}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_EnableDisablePlane}
-	\caption{Diagrama de secuencia de enableDisablePlane de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_enableDisablePlane}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_EnablePlane}
-	\caption{Diagrama de secuencia de enablePlane de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_enablePlane}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_DisablePlane}
-	\caption{Diagrama de secuencia de disablePlane de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_disablePlane}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ExportMesh}
-	\caption{Diagrama de secuencia de exportMesh de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_exportMesh}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=10cm]{imagenes/diagramas/secuencia/MainWindow_UpdateMesh}
-	\caption{Diagrama de secuencia de updateMesh de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_updateMesh}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=10cm]{imagenes/diagramas/secuencia/MainWindow_AxialPlane}
-	\caption{Diagrama de secuencia de axialPlane de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_axialPlane}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=10cm]{imagenes/diagramas/secuencia/MainWindow_CoronalPlane}
-	\caption{Diagrama de secuencia de coronalPlane de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_coronalPlane}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=10cm]{imagenes/diagramas/secuencia/MainWindow_SagitalPlane}
-	\caption{Diagrama de secuencia de sagitalPlane de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_sagitalPlane}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ImportCompletePreset}
-	\caption{Diagrama de secuencia de importCompletePreset de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_importCompletePreset}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ImportWoodPreset}
-	\caption{Diagrama de secuencia de importWoodPreset de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_importWoodPreset}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ImportStuccoPreset}
-	\caption{Diagrama de secuencia de importStuccoPreset de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_importStuccoPreset}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ImportMetalPreset}
-	\caption{Diagrama de secuencia de importMetalPreset de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_importMetalPreset}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ClearAllRules}
-	\caption{Diagrama de secuencia de clearAllRules de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_clearAllRules}
+	\includegraphics[angle=90,width=12cm]{imagenes/diagramas/secuencia/MainWindow_ChangeBackgroundColor}
+	\caption{Diagrama de secuencia del método \textit{changeBackgroundColor} de \textit{MainWindow}}
+	\label{fig:diagrama_secuencia_mainwindow_changeBackgroundColor}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_AddRule}
-	\caption{Diagrama de secuencia de addRule de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_addRule}
+	\caption{Diagrama de secuencia del método \textit{addRule} de \textit{MainWindow}}
+	\label{fig:diagrama_secuencia_mainwindow_addrule}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_DeleteRule}
-	\caption{Diagrama de secuencia de deleteRule de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_deleteRule}
+	\caption{Diagrama de secuencia del método \textit{deleteRule} de \textit{MainWindow}}
+	\label{fig:diagrama_secuencia_mainwindow_deleterule}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_EnableDisableRule}
-	\caption{Diagrama de secuencia de enableDisableRule de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_enableDisableRule}
+	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ClearAllRules}
+	\caption{Diagrama de secuencia del método \textit{clearAllRules} de \textit{MainWindow}}
+	\label{fig:diagrama_secuencia_mainwindow_clearallrules}
+\end{figure}
+
+\subsection{InteractorStyleDeleter}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[angle=90,width=12cm]{imagenes/diagramas/secuencia/InteractorStyleDeleter_OnLeftButtonDown}
+	\caption{Diagrama de secuencia del método \textit{OnLeftButtonDown} de \textit{InteractorStyleDeleter}}
+	\label{fig:diagrama_secuencia_interactorstyledeleter_onfeftbuttondown}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_EnableRule}
-	\caption{Diagrama de secuencia de enableRule de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_enableRule}
+	\includegraphics[angle=90,height=18cm]{imagenes/diagramas/secuencia/InteractorStyleDeleter_DeleteByImages}
+	\caption{Diagrama de secuencia del método \textit{deleteByImages} de \textit{InteractorStyleDeleter}}
+	\label{fig:diagrama_secuencia_interactorstyledeleter_deletebyimages}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_DisableRule}
-	\caption{Diagrama de secuencia de disableRule de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_disableRule}
+	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/InteractorStyleDeleter_DeleteImage}
+	\caption{Diagrama de secuencia del método \textit{deleteImage} de \textit{InteractorStyleDeleter}}
+	\label{fig:diagrama_secuencia_interactorstyledeleter_deleteimage}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=20cm]{imagenes/diagramas/secuencia/MainWindow_DeleteVolumeParts}
-	\caption{Diagrama de secuencia de deleteVolumeParts de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_deleteVolumeParts}
+	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/InteractorStyleDeleter_SearchInitialVoxel}
+	\caption{Diagrama de secuencia del método \textit{searchInitialVoxel} de \textit{InteractorStyleDeleter}}
+	\label{fig:diagrama_secuencia_interactorstyledeleter_searchinitialvoxel}
 \end{figure}
+
+\subsection{InteractorStyleImage}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_ChangeBackgroundColor}
-	\caption{Diagrama de secuencia de changeBackgroundColor de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_changeBackgroundColor}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=20cm]{imagenes/diagramas/secuencia/MainWindow_RestoreBackgroundColors}
-	\caption{Diagrama de secuencia de restoreBackgroundColors de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_restoreBackgroundColors}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_LaunchWarning}
-	\caption{Diagrama de secuencia de launchWarning de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_launchWarning}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_LaunchWarningNoVolume}
-	\caption{Diagrama de secuencia de launchWarningNoVolume de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_launchWarningNoVolume}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_LaunchWarningNoRule}
-	\caption{Diagrama de secuencia de launchWarningNoRule de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_launchWarningNoRule}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=12cm]{imagenes/diagramas/secuencia/MainWindow_LaunchWarningTooManyRules}
-	\caption{Diagrama de secuencia de launchWarningTooManyRules de MainWindow}
-	\label{fig:diagrama_secuencia_mainWindow_launchWarningTooManyRules}
+	\includegraphics[angle=90,height=18cm]{imagenes/diagramas/secuencia/InteractorStyleImage_OnMouseMove}
+	\caption{Diagrama de secuencia del método \textit{OnMouseMove} de \textit{InteractorStyleImage}}
+	\label{fig:diagrama_secuencia_interactorstyleimage_onmousemove}
 \end{figure}

@@ -113,7 +113,7 @@ std::pair<int, int> InteractorStyleDeleter::searchInitialVoxel(vtkSmartPointer<v
 		return std::make_pair(ijk[0] + 1, ijk[1] - 1);
 	}
 	else if (ijk[0] + 1 < MAX_X && ijk[1] + 1 < MAX_Y
-		&& imageData->GetScalarComponentAsDouble(ijk[0] - 1, ijk[1] - 1, ijk[2], 0) < MIN_AIR) {
+		&& imageData->GetScalarComponentAsDouble(ijk[0] + 1, ijk[1] + 1, ijk[2], 0) < MIN_AIR) {
 		return std::make_pair(ijk[0] + 1, ijk[1] + 1);
 	}
 	else {

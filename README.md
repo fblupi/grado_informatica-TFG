@@ -71,10 +71,10 @@ De esta forma es más fácil organizar versiones para una u otra plataforma de d
 
 ###### VTK 7.0.0
 
-* Descargar VTK 7.7.0 desde [este enlace](http://www.vtk.org/files/release/7.0/VTK-7.0.0.zip) de su web oficial.
+* Descargar VTK 7.0.0 desde [este enlace](http://www.vtk.org/files/release/7.0/VTK-7.0.0.zip) de su web oficial.
 * Abrir CMake y completar:
   + src: `C:\VTK\7.0.0\src`
-  + build: `C:\VTK\7.0.0\src\build\vs12`
+  + build: `C:\VTK\7.0.0\build\vs12`
 * Elegir como generador `Visual Studio 12 2013`.
 * Presionar en configurar.
 * Una vez haya generado seleccionar los siguientes campos:

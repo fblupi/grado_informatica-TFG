@@ -1,9 +1,6 @@
 #ifndef ReadDICOMSeriesQt_H
 #define ReadDICOMSeriesQt_H
 
-#include <vtkAutoInit.h>
-VTK_MODULE_INIT(vtkRenderingOpenGL)
-
 #include <QMainWindow>
 #include <vtkSmartPointer.h>
 #include <vtkImageViewer2.h>

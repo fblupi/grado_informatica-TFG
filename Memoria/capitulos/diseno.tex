@@ -1,10 +1,26 @@
 \chapter{Diseño}
 
-En este capítulo se mostrarán los diagramas UML \textbf{arquitectónico}, de \textbf{clases} y algunos de \textbf{secuencia} de la aplicación. Todos han sido generados con la aplicación \textit{Visual Paradigm for UML 13.1 Community Edition} \cite{vpp}.
+En este capítulo se mostrarán los diagramas UML \textbf{arquitectónico}, de \textbf{clases} y algunos de \textbf{secuencia} de la aplicación. Siendo los dos último generados con la aplicación \textit{Visual Paradigm for UML 13.1 Community Edition} \cite{vpp}.
 
-\section{Diagrama arquitectónico}
+\section{Arquitectura del software}
 
-Aquí el diagrama arquitectónico
+El software, escrito en C++, hace uso tanto de la CPU como de la GPU a nivel hardware y usa OpenGL como librería gráfica de bajo nivel.
+
+Se hace uso de la librería gráfica de alto nivel VTK, de Qt como librería para crear la GUI y de Boost para usar sus algoritmos en la gestión de ficheros XML.
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|l|c|c|c|c|}
+			\hline
+			Librerías de alto nivel  & \multicolumn{2}{l|}{VTK} & Boost        & Qt        \\ \hline
+			Librerías de bajo nivel  & \multicolumn{4}{l|}{OpenGL}                         \\ \hline
+			Lenguaje de programación & \multicolumn{4}{l|}{C++}                            \\ \hline
+			Nivel Hardware           & \multicolumn{2}{l|}{CPU} & \multicolumn{2}{l|}{GPU} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Arquitectura del software}
+	\label{tab:diagrama_arquitectonico}
+\end{table}
 
 \section{Diagramas de clases}
 

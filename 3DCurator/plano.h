@@ -10,6 +10,7 @@
 #include "imagePlaneWidget.h"
 
 /** 
+ * @class Plano
  * Clase con el plano de corte con la figura
  */
 class Plano {

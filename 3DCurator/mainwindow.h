@@ -397,6 +397,13 @@ private slots:
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */
 
+	QFont itemListEnabled; /**< Fuente de los elementos de la lista de reglas habilitados */
+	QFont itemListDisabled; /**< Fuente de los elementos de la lista de reglas deshabilitados */
+
+	QColor volumeBackground; /**< Color de fondo del widget del volumen */
+	QColor volumeDeletingBackground; /**< Color de fondo del widget del volumen al borrar */
+	QColor meshBackground; /**< Color de fondo del widget de la malla */
+
 	Figura *figura; /**< Puntero a la figura */
 	Plano *plano; /**< Puntero al plano */
 
@@ -418,13 +425,6 @@ private:
 	bool showPlane; /**< Mostrar el plano */
 	int volumeRuleCounter; /**< Contador de índice de regla */
 	int sliceRuleCounter; /**< Contador de índice de regla */
-
-	QFont itemListEnabled;
-	QFont itemListDisabled;
-
-	QColor volumeBackground;
-	QColor volumeDeletingBackground;
-	QColor meshBackground;
 };
 
 #endif // MAINWINDOW_H

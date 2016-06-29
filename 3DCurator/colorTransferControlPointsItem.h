@@ -21,13 +21,35 @@
  */
 class ColorTransferControlPointsItem : public vtkColorTransferControlPointsItem {
 public:
+	/**
+	 * Constructor
+	 */
 	static ColorTransferControlPointsItem* New();
+
 	vtkTypeMacro(vtkColorTransferControlPointsItem, ColorTransferControlPointsItem);
 
-	void SetRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin); /**< Establece el RenderWindow */
+	/**
+	 * Establece el RenderWindow que actualizará
+	 * @param	renWin	RenderWindow que actualizará
+	 */
+	void SetRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
 
+	/**
+	 * Evento al soltar el ratón
+	 * @param	mouse	Contexto del ratón
+	 */
 	virtual bool MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse);
+
+	/**
+	 * Evento al hacer doble click con el ratón
+	 * @param	mouse	Contexto del ratón
+	 */
 	virtual bool MouseDoubleClickEvent(const vtkContextMouseEvent &mouse);
+
+	/**
+	 * Evento al soltar una tecla
+	 * @param	key		Contexto de la tecla
+	 */
 	virtual bool KeyReleaseEvent(const vtkContextKeyEvent &key);
 
 private:

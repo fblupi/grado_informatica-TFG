@@ -2,15 +2,21 @@
 
 vtkStandardNewMacro(ImagePlaneWidget);
 
-void ImagePlaneWidget::SetViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
-	this->viewer = viewer;
-}
-
 void ImagePlaneWidget::OnMouseMove() {
 	if (moving && viewer != NULL) { // si se está moviendo --> renderiza
-		viewer->Render();
+		viewer->Render(); // renderiza
 	}
 	vtkImagePlaneWidget::OnMouseMove(); // forward events
+}
+
+void ImagePlaneWidget::OnRightButtonDown() {
+	moving = true; // cuando pulsa el botón derecho del ratón --> empieza a mover
+	vtkImagePlaneWidget::OnMiddleButtonDown(); // forward events
+}
+
+void ImagePlaneWidget::OnRightButtonUp() {
+	moving = false; // cuando suelta el botón derecho del ratón --> deja de mover
+	vtkImagePlaneWidget::OnMiddleButtonUp(); // forward events
 }
 
 void ImagePlaneWidget::OnMiddleButtonDown() {
@@ -29,12 +35,6 @@ void ImagePlaneWidget::OnLeftButtonUp() {
 	// idle
 }
 
-void ImagePlaneWidget::OnRightButtonDown() {
-	moving = true; // cuando pulsa el botón derecho del ratón --> empieza a mover
-	vtkImagePlaneWidget::OnMiddleButtonDown(); // forward events
-}
-
-void ImagePlaneWidget::OnRightButtonUp() {
-	moving = false; // cuando suelta el botón derecho del ratón --> deja de mover
-	vtkImagePlaneWidget::OnMiddleButtonUp(); // forward events
+void ImagePlaneWidget::SetViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
+	this->viewer = viewer;
 }

@@ -1,9 +1,10 @@
 #include "figura.h"
 
 Figura::Figura() {
+	isoValue = WOOD_ISOVALUE; // comienza con el valor de isosuperficie de la madera
+	loaded = false; // no hay ningún volumen cargado
+
 	tf = new TransferFunction();
-	isoValue = WOOD_ISOVALUE;
-	loaded = false;
     volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	imageData = vtkSmartPointer<vtkImageData>::New();
@@ -11,6 +12,7 @@ Figura::Figura() {
     volume = vtkSmartPointer<vtkVolume>::New();
 	meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
 	surface = vtkSmartPointer<vtkMarchingCubes>::New();
+
 	setProperties(); // asigna propiedades del volumen (material, función de transferencia...) y la malla
 	connectComponents(); // conecta los components del volumen y la malla
 }
@@ -21,12 +23,12 @@ Figura::~Figura() {
 
 void Figura::connectComponents() {
 	// Volumen
-	volume->SetMapper(volumeMapper);
-	volume->SetProperty(volumeProperty);
+	volume->SetMapper(volumeMapper); // asigna el mapper al volumen
+	volume->SetProperty(volumeProperty); // asigna las propiedades del volumen (material y TF)
 
 	// Malla
-	meshMapper->SetInputConnection(surface->GetOutputPort());
-	meshActor->SetMapper(meshMapper);
+	meshMapper->SetInputConnection(surface->GetOutputPort()); // conecta el mapper a la salida del marching cubes
+	meshActor->SetMapper(meshMapper); // asigna el mapper al actor de la malla
 }
 
 void Figura::setProperties() {
@@ -38,10 +40,44 @@ void Figura::setProperties() {
 	volumeProperty->ShadeOn(); // habilita el sombreado
 
 	// Malla
-	surface->ComputeNormalsOn();
-	surface->ComputeScalarsOn();
-	meshMapper->ScalarVisibilityOff();
+	surface->ComputeScalarsOn(); // computa escalares
+	surface->ComputeGradientsOn(); // computa gradientes
+	surface->ComputeNormalsOn(); // computa normales
+	meshMapper->ScalarVisibilityOff(); // no colorea la malla 
 }
+
+void Figura::setDICOMFolder(const std::string s) {
+	loaded = false; // no hay ningún volumen cargado
+
+	vtkSmartPointer<vtkDICOMImageReader> imageReader = vtkSmartPointer<vtkDICOMImageReader>::New();
+    imageReader->SetDirectoryName(s.c_str()); // asigna la carpeta al image reader
+    imageReader->Update(); // lee los archivos
+
+	imageData->DeepCopy(imageReader->GetOutput()); // guarda los datos del volumen
+	volumeMapper->SetInputData(imageData); // conecta el mapper con los datos
+
+	surface->SetInputData(imageData); // conecta la malla con los datos
+	meshMapper->Update(); // actualiza el mapper de la malla
+	surface->SetValue(0, isoValue); // asigna el valor de isosuperficie
+
+	loaded = true; // volumen cargado
+}
+
+void Figura::createMesh() {
+	surface->SetValue(0, isoValue); // asigna el valor de isosuperficie
+}
+
+void Figura::setMaterial(const double ambient, const double diffuse, const double specular, const double power) {
+	volumeProperty->SetAmbient(ambient); // componente ambiental del material
+	volumeProperty->SetDiffuse(diffuse); // componente difusa del material
+	volumeProperty->SetSpecular(specular); // componente especular del material
+	volumeProperty->SetSpecularPower(power); // componente de potencia especular del material
+}
+
+void Figura::setIsoValue(const double isoValue) {
+	this->isoValue = isoValue;
+}
+
 
 TransferFunction * Figura::getTransferFunction() const {
 	return tf;
@@ -89,40 +125,4 @@ double Figura::getMaxYBound() const {
 
 double Figura::getMaxZBound() const {
 	return volume->GetMaxZBound();
-}
-
-void Figura::setDICOMFolder(const std::string s) {
-	loaded = false;
-	vtkSmartPointer<vtkDICOMImageReader> imageReader = vtkSmartPointer<vtkDICOMImageReader>::New();
-
-	// Lee los datos
-    imageReader->SetDirectoryName(s.c_str()); // asigna la carpeta al image reader
-    imageReader->Update(); // lee los archivos
-
-	// Guarda los datos del volumen
-	imageData->DeepCopy(imageReader->GetOutput());
-
-	// Actualiza los input data
-	volumeMapper->SetInputData(imageData); // conecta el mapper con los datos
-
-	surface->SetInputData(imageData); // conecta la malla con los datos
-	meshMapper->Update(); // actualiza el mapper de la malla
-	surface->SetValue(0, isoValue); // asigna el valor de isosuperficie
-
-	loaded = true;
-}
-
-void Figura::createMesh() {
-	surface->SetValue(0, isoValue);
-}
-
-void Figura::setMaterial(const double ambient, const double diffuse, const double specular, const double power) {
-	volumeProperty->SetAmbient(ambient); // componente ambiental del material
-	volumeProperty->SetDiffuse(diffuse); // componente difusa del material
-	volumeProperty->SetSpecular(specular); // componente especular del material
-	volumeProperty->SetSpecularPower(power); // componente de potencia especular del material
-}
-
-void Figura::setIsoValue(const double isoValue) {
-	this->isoValue = isoValue;
 }

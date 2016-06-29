@@ -23,7 +23,7 @@
 
 /**
  * @class Figura
- * Clase que tiene el volumen que se visualizará
+ * Clase que encapsula el los datos del volumen, el volumen y la malla y permite gestionarlos
  */
 class Figura {
 public:
@@ -146,9 +146,16 @@ private:
 	TransferFunction *tf; /**< Función de transferencia */
 	double isoValue; /**< Valor de isosuperficia para la malla */
 	bool loaded; /**< Flag que determina si hay un volumen cargado */
+	
+	/**
+	 * Establece las propiedades del volumen y la malla (llamado desde el constructor)
+	 */
+    void setProperties();
 
-    void setProperties(); // establace las propiedades del volumen
-	void connectComponents(); // conecta los distintos componentes
+	/**
+	 * Conecta los componentes del volumen y la malla (llamado desde el constructor)
+	 */
+	void connectComponents();
 };
 
 #endif // FIGURA_H

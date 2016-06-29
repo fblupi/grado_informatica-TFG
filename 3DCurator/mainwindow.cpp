@@ -2,17 +2,19 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
-	ui->setupUi(this);
-	ui->isoValueSlider->setTracking(false);
+	ui->setupUi(this); // crea la GUI
+	ui->isoValueSlider->setTracking(false); // el evento de cambio de slider cambiado no se lanza hasta que se suelta
 
-	deleting = false;
-	showPlane = true;
+	deleting = false; // no está en modo borrado
+	showPlane = true; // se muestra el plano
+
+	// se inicializan los contadores de reglas
 	volumeRuleCounter = 0;
 	sliceRuleCounter = 0;
 
 	itemListEnabled = QFont();
 	itemListDisabled = QFont();
-	itemListDisabled.setItalic(true);
+	itemListDisabled.setItalic(true); // la fuenta de deshabilitado es en cursiva
 
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
 	meshRen = vtkSmartPointer<vtkRenderer>::New();
@@ -20,8 +22,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	volumeStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
 	deleterStyle = vtkSmartPointer<InteractorStyleDeleter>::New();
-	plano = new Plano(); // crea una instancia de Plano
-	figura = new Figura(); // crea una instancia de Figura
+	plano = new Plano();
+	figura = new Figura();
 	defaultTF(); // define la función de transferencia, necesaria para definir las gráficas y el visor de cortes
 	defaultMaterial(); // asigna un material por defecto a la figura
 	defaultBackgroundColors(); // asigna los colores de fondo por defecto
@@ -32,19 +34,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	updateSliders(); // actualiza valores de los sliders
 
 	sliceViewer->GetWindowLevel()->SetLookupTable(figura->getTransferFunction()->getColorFun()); // usa los mismo colores en el slice viewer que los usados en la TF
-	sliceViewer->SetColorLevel(-600); 
-	sliceViewer->SetColorWindow(400);
+	sliceViewer->SetColorLevel(-600); // nivel de color del viewer
+	sliceViewer->SetColorWindow(400); // color de ventana del viewer
 
 	setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF()); // fondo azul oscuro
 	setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF()); // fondo azul oscuro
 
     connectComponents(); // conecta los renderers con los widgets
 
-	renderVolume();
-	renderMesh();
+	renderVolume(); // renderiza el volumen
+	renderMesh(); // renderiza la malla
 
-	plano->show(false); // No muestra el corte del plano
-	enablePlane(); // Muestra el plano
+	plano->show(false); // no muestra el corte del plano
+	enablePlane(); // muestra el plano
 }
 
 MainWindow::~MainWindow() {
@@ -52,7 +54,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b) {
-	ren->SetBackground(r, g, b);
+	ren->SetBackground(r, g, b); // cambia el color del renderer
 }
 
 void MainWindow::connectComponents() {
@@ -66,9 +68,9 @@ void MainWindow::connectComponents() {
 	plano->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor()); // asigna el interactor al plano para poder verlo y moverlo
 
 	sliceViewer->SetupInteractor(ui->slicesWidget->GetInteractor()); // asigna el interactor al viewer
-	sliceStyle->SetPlano(plano);
-	sliceStyle->SetDefaultRenderer(sliceViewer->GetRenderer());
-	sliceStyle->SetLabel(ui->coordsAndValueLabel);
+	sliceStyle->SetPlano(plano); // asigna el plano
+	sliceStyle->SetDefaultRenderer(sliceViewer->GetRenderer()); // asigna el renderer de los cortes
+	sliceStyle->SetLabel(ui->coordsAndValueLabel); // asigna la etiqueta
 	ui->slicesWidget->GetInteractor()->SetInteractorStyle(sliceStyle); // asigna el estilo al interactor del slice widget
 
 	plano->setViewer(sliceViewer); // asigna el slice viewer al plano para que pueda renderizar cuando se de el evento de mover el plano
@@ -83,25 +85,25 @@ void MainWindow::connectComponents() {
 void MainWindow::drawVolume() {
 	volumeRen->AddViewProp(figura->getVolume()); // añade el volumen al renderer
 	volumeRen->ResetCamera(); // resetea la cámera
-	renderVolume();
+	renderVolume(); // renderiza el volumen
 }
 
 void MainWindow::drawMesh() {
 	meshRen->AddActor(figura->getMesh()); // añade la malla al renderer
 	meshRen->ResetCamera(); // resetea la cámara
-	renderMesh();
+	renderMesh(); // renderiza la malla
 }
 
 void MainWindow::removeVolume() {
-	volumeRen->RemoveAllViewProps();
-	volumeRen->ResetCamera();
-	renderVolume();
+	volumeRen->RemoveAllViewProps(); // borra todos los elementos
+	volumeRen->ResetCamera(); // resetea la cámara
+	renderVolume(); // renderiza el volumen
 }
 
 void MainWindow::removeMesh() {
-	meshRen->RemoveAllViewProps();
-	meshRen->ResetCamera();
-	renderMesh();
+	meshRen->RemoveAllViewProps(); // borra todos los elementos
+	meshRen->ResetCamera(); // resetea la cámara
+	renderMesh(); // renderiza la malla
 }
 
 void MainWindow::renderVolume() {
@@ -119,9 +121,12 @@ void MainWindow::renderSlice() {
 void MainWindow::loadDefaultPreset(QFile *file) {
 	if (file->open(QIODevice::ReadOnly | QIODevice::Text)) { // se lee el archivo
 		std::istringstream ss;
-		ss.str(QString(file->readAll()).toStdString());
-		figura->getTransferFunction()->read(ss);
+		ss.str(QString(file->readAll()).toStdString()); // obtiene istringstream a parteir del QFile
+
+		figura->getTransferFunction()->read(ss); // lee la función de transferencia
 		file->close(); // se cierra el archivo
+
+		// actualiza etiquetas
 		ui->tfName->setText(QString::fromUtf8(figura->getTransferFunction()->getName().c_str()));
 		ui->tfDescription->setText(QString::fromUtf8(figura->getTransferFunction()->getDescription().c_str()));
 	} else {
@@ -131,37 +136,44 @@ void MainWindow::loadDefaultPreset(QFile *file) {
 }
 
 void MainWindow::defaultTF() {
-	QFile file(":/presets/ct-woodsculpture.xml");
-	loadDefaultPreset(&file);
+	QFile file(":/presets/ct-woodsculpture.xml"); // fichero con el preset
+	loadDefaultPreset(&file); // carga el preset a partir dle fichero
 }
 
 void MainWindow::defaultMaterial() {
-	ui->ambientValue->setValue(0.1);
-	ui->diffuseValue->setValue(0.9);
-	ui->specularValue->setValue(0.2);
-	ui->powerValue->setValue(10.0);
+	ui->ambientValue->setValue(0.1); // componente ambiental
+	ui->diffuseValue->setValue(0.9); // componente difusa
+	ui->specularValue->setValue(0.2); // componente escalar
+	ui->powerValue->setValue(10.0); // componente de potencia especular
 }
 
 void MainWindow::defaultBackgroundColors() {
+	// crea los colores por defecto
 	volumeBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
 	volumeDeletingBackground = QColor::fromRgbF(0.2, 0.3, 0.1);
 	meshBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
+
+	// cambia el color de los botones con los colores de los fondos
 	ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name());
 	ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name());
 	ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name());
 }
 
 void MainWindow::defaultPlanePosition() {
-	if (figura->getVolume() != NULL) {
-		double xSize = figura->getMaxXBound() - figura->getMinXBound(), ySize = figura->getMaxYBound() - figura->getMinYBound(), zSize = figura->getMaxZBound() - figura->getMinZBound();
-		plano->setOrigin(xSize / 2, ySize / 2, zSize / 2); // Coloca el centro del plano en el centro de la figura
-		plano->setAxial();
+	if (figura->getVolume() != NULL) { // hay un volumen
+		// dimensión del volumen
+		double xSize = figura->getMaxXBound() - figura->getMinXBound(), 
+			   ySize = figura->getMaxYBound() - figura->getMinYBound(), 
+			   zSize = figura->getMaxZBound() - figura->getMinZBound();
+		plano->setOrigin(xSize / 2, ySize / 2, zSize / 2); // coloca el centro del plano en el centro de la figura
+		plano->setAxial(); // coloca el plano en posición axial
 	} else {
-		launchWarningNoVolume();
+		launchWarningNoVolume(); // lanza mensaje informando que no hay volumen
 	}
 }
 
 void MainWindow::updateMaterial() {
+	// actualiza el material con los valores de la GUI
 	figura->setMaterial(
 		ui->ambientValue->value(),
 		ui->diffuseValue->value(),
@@ -201,9 +213,10 @@ void MainWindow::updateSliders() {
 
 void MainWindow::importDICOM() {
 	QString dicomFolder = QFileDialog::getExistingDirectory(
-		this, tr("Abrir carpeta DICOM"), QDir::homePath(), QFileDialog::ShowDirsOnly);
+		this, tr("Abrir carpeta DICOM"), QDir::homePath(), QFileDialog::ShowDirsOnly); // obtiene directorio
 
 	if (dicomFolder != NULL) { // la carpeta se ha leído bien
+		// lanza barra de progreso
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
 		progressDialog->setWindowTitle(QString("Cargando..."));
@@ -216,41 +229,44 @@ void MainWindow::importDICOM() {
 		bar->close();
 		QApplication::processEvents();
 
-		removeVolume();
-		removeMesh();
-		clearAllRules();
+		removeVolume(); // borra volumen
+		removeMesh(); // borra malla
+		clearAllRules(); // elimina reglas
 
-		plano->show(false);
-		disablePlane();
+		plano->show(false); // esconde el plano
+		disablePlane(); // deshabilita el plano
 		figura->setDICOMFolder(dicomFolder.toUtf8().constData()); // carga los archivos DICOM de la carpeta a la figura
 		plano->setInputData(figura->getImageData()); // conecta el plano con los datos del volumen
 		ui->labelFolder->setText(dicomFolder); // actualiza el label con el path de la carpeta con los archivos DICOM
 		defaultPlanePosition(); // coloca el plano en una posición inicial
-		plano->show(true);
-		enablePlane();
+		plano->show(true); // muestra el plano
+		enablePlane(); // habilita el plano
 
 		drawVolume(); // dibuja volumen
 		drawMesh(); // dibuja la malla
 		renderSlice(); // dibuja el corte
 
-		progressDialog->close();
+		progressDialog->close(); // cierra barra de progreso
 	}
 }
 
 void MainWindow::importPreset() {
-	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath());
+	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath()); // obtiene fichero
 
-	if (presetFile != NULL) {
+	if (presetFile != NULL) { // no se ha cancelado la operación
 		std::string s = presetFile.toUtf8().constData();
-		figura->getTransferFunction()->read(s);
+		figura->getTransferFunction()->read(s); // lee función de transferencia
 
+		// actualiza etiquetas
 		ui->tfName->setText(QString::fromUtf8(figura->getTransferFunction()->getName().c_str()));
 		ui->tfDescription->setText(QString::fromUtf8(figura->getTransferFunction()->getDescription().c_str()));
 
-		colorTFChart->defaultRange();
+		// rangos por defecto
+		colorTFChart->defaultRange(); 
 		scalarTFChart->defaultRange();
 		gradientTFChart->defaultRange();
-		updateSliders();
+
+		updateSliders(); // actualiza sliders
 	}
 }
 
@@ -273,6 +289,7 @@ void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> re
 
 void MainWindow::exportMeshToFile(const QString filename) {
 	if (filename != NULL) { // el archivo se ha leído bien
+		// lanza barra de progreso
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
 		progressDialog->setWindowTitle(QString("Extrayendo..."));
@@ -286,86 +303,94 @@ void MainWindow::exportMeshToFile(const QString filename) {
 		QApplication::processEvents();
 
 		vtkSmartPointer<vtkMarchingCubes> surface = vtkSmartPointer<vtkMarchingCubes>::New();
-		surface->SetInputData(figura->getImageData());
-		surface->UpdateInformation();
-		surface->ComputeNormalsOn();
-		surface->ComputeScalarsOn();
-		surface->SetValue(0, figura->getIsoValue());
-		vtkSmartPointer<vtkPolyData> marched = vtkSmartPointer<vtkPolyData>::New();
-		surface->Update();
-		marched->DeepCopy(surface->GetOutput());
-		vtkSmartPointer<vtkDecimatePro> decimator = vtkSmartPointer<vtkDecimatePro>::New();
-		decimator->SetInputData(marched);
-		decimator->SetTargetReduction(0.5);
-		decimator->SetPreserveTopology(true);
-		decimator->Update();
-		vtkSmartPointer<vtkSmoothPolyDataFilter> smoother = vtkSmartPointer<vtkSmoothPolyDataFilter>::New();
-		smoother->SetInputData(decimator->GetOutput());
-		smoother->SetNumberOfIterations(5);
-		smoother->SetFeatureAngle(60);
-		smoother->SetRelaxationFactor(0.05);
-		smoother->FeatureEdgeSmoothingOff();
-		smoother->Update();
-		vtkSmartPointer<vtkPolyData> mesh = vtkSmartPointer<vtkPolyData>::New();
-		mesh->ShallowCopy(smoother->GetOutput());
-		vtkSmartPointer<vtkSTLWriter> stlWriter = vtkSmartPointer<vtkSTLWriter>::New();
-		stlWriter->SetFileName(filename.toUtf8().constData());
-		stlWriter->SetInputData(mesh);
-		stlWriter->Write();
+		surface->SetInputData(figura->getImageData()); // usa los datos del volumen para hacer marching cubes
+		surface->UpdateInformation(); // actualiza datos
+		surface->ComputeScalarsOn(); // computa escalares
+		surface->ComputeGradientsOn(); // computa gradientes
+		surface->ComputeNormalsOn(); // computa normales
+		surface->SetValue(0, figura->getIsoValue()); // establece valor de isosuperfice
 
-		progressDialog->close();
+		vtkSmartPointer<vtkPolyData> marched = vtkSmartPointer<vtkPolyData>::New();
+		surface->Update(); // actualiza marching cubes
+		marched->DeepCopy(surface->GetOutput()); // copia el resultado en un PolyData
+
+		vtkSmartPointer<vtkDecimatePro> decimator = vtkSmartPointer<vtkDecimatePro>::New();
+		decimator->SetInputData(marched); // la salida del polyData es la entrada para el reductor
+		decimator->SetTargetReduction(0.5); // factor de reducción
+		decimator->SetPreserveTopology(true); // preserva topología
+		decimator->Update(); // actualiza reductor
+
+		vtkSmartPointer<vtkSmoothPolyDataFilter> smoother = vtkSmartPointer<vtkSmoothPolyDataFilter>::New();
+		smoother->SetInputData(decimator->GetOutput()); // la salida del reductor es la entrada del smoother
+		smoother->SetNumberOfIterations(5); // número de iteraciones
+		smoother->SetFeatureAngle(60); // ángulo para detectar sharp edge
+		smoother->SetRelaxationFactor(0.05); // factor de relajación para el laplacian smoothing
+		smoother->FeatureEdgeSmoothingOff(); // no suaviza aristas
+		smoother->Update(); // actualiza smoother
+
+		vtkSmartPointer<vtkPolyData> mesh = vtkSmartPointer<vtkPolyData>::New();
+		mesh->ShallowCopy(smoother->GetOutput()); // la salida del smoother es la entrada de la malla final
+
+		vtkSmartPointer<vtkSTLWriter> stlWriter = vtkSmartPointer<vtkSTLWriter>::New();
+		stlWriter->SetFileName(filename.toUtf8().constData()); // nombre donde se guardará la malla
+		stlWriter->SetInputData(mesh); // malla
+		stlWriter->Write(); // guarda
+
+		progressDialog->close(); // cierra barra de progreso
 	}
 }
 
 void MainWindow::exportPreset(const QString filename) {
 	if (filename != NULL) { // el nombre del archivo es correcto
+		// establece nombre y descripción de la GUI a la TF
 		figura->getTransferFunction()->setName(ui->tfName->text().toUtf8().constData());
 		figura->getTransferFunction()->setDescription(ui->tfDescription->text().toUtf8().constData());
 
 		std::string s = filename.toUtf8().constData();
-		figura->getTransferFunction()->write(s);
+		figura->getTransferFunction()->write(s); // guarda el archivo
 	}
 }
 
 QString MainWindow::getExportPresetFilename(const QString defaultFilename) {
 	return QFileDialog::getSaveFileName(
-		this, tr("Exportar preset"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
+		this, tr("Exportar preset"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)"); // obtiene fichero para guardar archivo XML
 }
 
 QString MainWindow::getExportImageFilename(const QString defaultFilename) {
 	return QFileDialog::getSaveFileName(
-		this, tr("Exportar imagen"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)");
+		this, tr("Exportar imagen"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)"); // obtiene fichero para guardar archivo PNG o JPG
 }
 
 QString MainWindow::getExportMeshFilename(const QString defaultFilename) {
 	return QFileDialog::getSaveFileName(
-		this, tr("Exportar malla"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)");
+		this, tr("Exportar malla"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)"); // obtiene fichero para guardar archivo STL
 }
 
 void MainWindow::enablePlane() {
-	plano->enable(true);
+	plano->enable(true); // habilita el plano
 	QIcon icon(":/icons/eye-slash.png");
-	ui->enableDisablePlane->setIcon(icon);
-	showPlane = true;
+	ui->enableDisablePlane->setIcon(icon); // cambia el icono
+	showPlane = true; // flag del plano true
 }
 
 void MainWindow::disablePlane() {
-	plano->enable(false);
+	plano->enable(false); // deshabilita el plano
 	QIcon icon(":/icons/eye.png");
-	ui->enableDisablePlane->setIcon(icon);
-	showPlane = false;
+	ui->enableDisablePlane->setIcon(icon); // cambia el icono
+	showPlane = false; // flag del plano false
 }
 
 void MainWindow::exportMesh() {
-	if (figura->getLoaded()) {
-		exportMeshToFile(getExportMeshFilename("Mesh"));
+	if (figura->getLoaded()) { // hay un volumen
+		exportMeshToFile(getExportMeshFilename("Mesh")); // exporta malla
 	} else {
-		launchWarningNoVolume();
+		launchWarningNoVolume(); // lanza mensaje informando que no hay volumen
 	}
 }
 
 void MainWindow::updateMesh() {
-	if (figura->getLoaded()) {
+	if (figura->getLoaded()) { // hay un volumen
+		// lanza barra de progreso
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
 		progressDialog->setWindowTitle(QString("Actualizando..."));
@@ -378,152 +403,152 @@ void MainWindow::updateMesh() {
 		bar->close();
 		QApplication::processEvents();
 
-		figura->createMesh();
-		meshRen->Render();
+		figura->createMesh(); // actualiza la malla
+		meshRen->Render(); // renderiza
 
-		progressDialog->close();
+		progressDialog->close(); // cierra barra de progreso
 
 	} else {
-		launchWarningNoVolume();
+		launchWarningNoVolume(); // lanza mensaje informando que no hay volumen
 	}
 }
 
 void MainWindow::enableDisablePlane() {
 	if (showPlane) {
-		disablePlane();
+		disablePlane(); // plano activo --> deshabilita
 	} else {
-		enablePlane();
+		enablePlane(); // si no --> habilita
 	}
-	renderVolume();
+	renderVolume(); // renderiza volumen
 }
 
 void MainWindow::axialPlane() {
-	if (figura->getLoaded()) {
-		plano->setAxial();
-		renderVolume();
-		renderSlice();
+	if (figura->getLoaded()) { // hay un volumen
+		plano->setAxial(); // cambia posición del plano
+		renderVolume(); // renderiza volumen
+		renderSlice(); // renderiza corte
 	} else {
-		launchWarningNoVolume();
+		launchWarningNoVolume(); // lanza mensaje informando que no hay volumen
 	}
 }
 
 void MainWindow::coronalPlane() {
-	if (figura->getLoaded()) {
-		plano->setCoronal();
-		renderVolume();
-		renderSlice();
+	if (figura->getLoaded()) { // hay un volumen
+		plano->setCoronal(); // cambia posición del plano
+		renderVolume(); // renderiza volumen
+		renderSlice(); // renderiza corte
 	} else {
-		launchWarningNoVolume();
+		launchWarningNoVolume(); // lanza mensaje informando que no hay volumen
 	}
 }
 
 void MainWindow::sagitalPlane() {
-	if (figura->getLoaded()) {
-		plano->setSagital();
-		renderVolume();
-		renderSlice();
+	if (figura->getLoaded()) { // hay un volumen
+		plano->setSagital(); // cambia posición del plano
+		renderVolume(); // renderiza volumen
+		renderSlice(); // renderiza corte
 	} else {
-		launchWarningNoVolume();
+		launchWarningNoVolume(); // lanza mensaje informando que no hay volumen
 	}
 }
 
 void MainWindow::deleteVolumeParts() {
-	if (deleting) {
-		deleting = false;
-		setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
-		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
-	} else {
-		deleting = true;
-		setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
-		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
+	if (deleting) { // está borrando
+		deleting = false; // cambia flag de borrado
+		setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF()); // cambia el color de fondo del widget
+		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle); // cambia el interactor
+	} else { // no está borrando
+		deleting = true; // cambia flag de borrado
+		setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF()); // cambia el color de fondo del widget
+		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle); // cambia el interactor
 	}
-	plano->getPlane()->UpdatePlacement();
-	renderVolume();
-	renderSlice();
+	plano->getPlane()->UpdatePlacement(); // actualiza el plano
+	renderVolume(); // renderiza volumen
+	renderSlice(); // renderiza corte
 }
 
 void MainWindow::importCompletePreset() {
 	QFile file(":/presets/ct-woodsculpture.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+	loadDefaultPreset(&file); // carga preset
+	renderVolume(); // renderiza volumen 
 }
 
 void MainWindow::importWoodPreset() {
 	QFile file(":/presets/ct-onlywood.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+	loadDefaultPreset(&file); // carga preset
+	renderVolume(); // renderiza volumen
 }
 
 void MainWindow::importStuccoPreset() {
 	QFile file(":/presets/ct-onlystucco.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+	loadDefaultPreset(&file); // carga preset
+	renderVolume(); // renderiza volumen
 }
 
 void MainWindow::importMetalPreset() {
 	QFile file(":/presets/ct-onlymetal.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+	loadDefaultPreset(&file); // carga preset
+	renderVolume(); // renderiza volumen
 }
 
 void MainWindow::addRule(const int type) {
-	if (rules.size() < RULES_LIMIT) {
+	if (rules.size() < RULES_LIMIT) { // no se ha alcanzado el límite de reglas
 		std::string id;
-		QListWidgetItem *item = new QListWidgetItem(0);
+		QListWidgetItem *item = new QListWidgetItem(0); // crea item
 		switch (type) {
-		case VOLUME_RULE:
-			volumeRuleCounter++;
-			id = "Regla " + std::to_string(volumeRuleCounter);
-			item->setText(id.c_str());
-			item->setFont(itemListEnabled);
-			ui->volumeRulesList->addItem(item);
-			ui->volumeRulesList->setCurrentItem(item);
-			rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); // crea la regla
-			rules[item]->SetInteractor(ui->volumeWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
-			break;
-		case SLICE_RULE:
-			sliceRuleCounter++;
-			id = "Regla " + std::to_string(sliceRuleCounter);
-			item->setText(id.c_str());
-			item->setFont(itemListEnabled);
-			ui->sliceRulesList->addItem(item);
-			ui->sliceRulesList->setCurrentItem(item);
-			rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); // crea la regla
-			rules[item]->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
-			break;
+			case VOLUME_RULE: // regla de volumen
+				volumeRuleCounter++; // aumenta contador
+				id = "Regla " + std::to_string(volumeRuleCounter); // nombre de la regla
+				item->setText(id.c_str()); // actualiza el texto del item
+				item->setFont(itemListEnabled); // actualiza la fuente del item
+				ui->volumeRulesList->addItem(item); // añade item
+				ui->volumeRulesList->setCurrentItem(item); // pasa a ser el item activo
+				rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); // crea la regla
+				rules[item]->SetInteractor(ui->volumeWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
+				break;
+			case SLICE_RULE: // regla de corte
+				sliceRuleCounter++; // aumenta contador
+				id = "Regla " + std::to_string(sliceRuleCounter); // nombre de la regla
+				item->setText(id.c_str()); // actualiza el texto del item
+				item->setFont(itemListEnabled); // actualiza la fuente del item
+				ui->sliceRulesList->addItem(item); // añade item
+				ui->sliceRulesList->setCurrentItem(item); // pasa a ser el item activo
+				rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); // crea la regla
+				rules[item]->SetInteractor(ui->slicesWidget->GetInteractor()); // conecta la regla para medir con el interactor de los cortes
+				break;
 		}
 		rules[item]->CreateDefaultRepresentation(); // usa la representación por defecto
 		static_cast<vtkDistanceRepresentation *>(rules[item]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); // cambia el formato de la etiqueta
-		rules[item]->On();
+		rules[item]->On(); // habilita regla
 	} else {
-		launchWarningTooManyRules();
+		launchWarningTooManyRules(); // lanza mensaje informando que se ha alcanzado el máximo número de reglas
 	}
 }
 
 void MainWindow::deleteRule(const int type) {
 	switch (type) {
-		case VOLUME_RULE:
-			if (ui->volumeRulesList->currentItem() != NULL) {
-				rules.erase(ui->volumeRulesList->currentItem());
-				delete ui->volumeRulesList->currentItem();
-				renderVolume();
-				if (ui->volumeRulesList->count() == 0) {
-					volumeRuleCounter = 0;
+		case VOLUME_RULE: // regla de volumen
+			if (ui->volumeRulesList->currentItem() != NULL) { // hay una regla seleccionada
+				rules.erase(ui->volumeRulesList->currentItem()); // borra regla del map
+				delete ui->volumeRulesList->currentItem(); // borra item
+				renderVolume(); // renderiza volumen
+				if (ui->volumeRulesList->count() == 0) { // no ha más reglas
+					volumeRuleCounter = 0; // resetea contador
 				}
 			} else {
-				launchWarningNoRule();
+				launchWarningNoRule(); // lanza mensaje informando que no hay regla seleccionada
 			}
 			break;
-		case SLICE_RULE:
-			if (ui->sliceRulesList->currentItem() != NULL) {
-				rules.erase(ui->sliceRulesList->currentItem());
-				delete ui->sliceRulesList->currentItem();
-				renderSlice();
-				if (ui->sliceRulesList->count() == 0) {
-					sliceRuleCounter = 0;
+		case SLICE_RULE: // regla de corte
+			if (ui->sliceRulesList->currentItem() != NULL) { // hay una regla seleccionada
+				rules.erase(ui->sliceRulesList->currentItem()); // borra regla del map
+				delete ui->sliceRulesList->currentItem(); // borra item
+				renderSlice(); // renderiza corte
+				if (ui->sliceRulesList->count() == 0) { // no ha más reglas
+					sliceRuleCounter = 0; // resetea contador
 				}
 			} else {
-				launchWarningNoRule();
+				launchWarningNoRule(); // lanza mensaje informando que no hay regla seleccionada
 			}
 			break;
 	}
@@ -531,30 +556,30 @@ void MainWindow::deleteRule(const int type) {
 
 void MainWindow::enableDisableRule(const int type) {
 	switch (type) {
-		case VOLUME_RULE:
-			if (ui->volumeRulesList->currentItem() != NULL) {
+		case VOLUME_RULE: // regla de volumen
+			if (ui->volumeRulesList->currentItem() != NULL) { // hay una regla seleccionada
 				if (ui->volumeRulesList->currentItem()->font() == itemListDisabled) {
-					enableRule(type);
-					ui->volumeRulesList->currentItem()->setFont(itemListEnabled);
+					enableRule(type); // habilita regla
+					ui->volumeRulesList->currentItem()->setFont(itemListEnabled); // fuente de regla habilitada
 				} else {
-					disableRule(type);
-					ui->volumeRulesList->currentItem()->setFont(itemListDisabled);
+					disableRule(type); // deshabilita regla
+					ui->volumeRulesList->currentItem()->setFont(itemListDisabled); // fuente de regla deshabilitada
 				}
 			} else {
-				launchWarningNoRule();
+				launchWarningNoRule(); // lanza mensaje informando que no hay regla seleccionada
 			}
 			break;
-		case SLICE_RULE:
-			if (ui->sliceRulesList->currentItem() != NULL) {
+		case SLICE_RULE: // regla de corte
+			if (ui->sliceRulesList->currentItem() != NULL) { // hay una regla seleccionada
 				if (ui->sliceRulesList->currentItem()->font() == itemListDisabled) {
-					enableRule(type);
-					ui->sliceRulesList->currentItem()->setFont(itemListEnabled);
+					enableRule(type); // habilita regla
+					ui->sliceRulesList->currentItem()->setFont(itemListEnabled); // fuente de regla habilitada
 				} else {
-					disableRule(type);
-					ui->sliceRulesList->currentItem()->setFont(itemListDisabled);
+					disableRule(type); // deshabilita regla
+					ui->sliceRulesList->currentItem()->setFont(itemListDisabled); // fuente de regla deshabilitada
 				}
 			} else {
-				launchWarningNoRule();
+				launchWarningNoRule(); // lanza mensaje informando que no hay regla seleccionada
 			}
 			break;
 	}
@@ -562,18 +587,18 @@ void MainWindow::enableDisableRule(const int type) {
 
 void MainWindow::enableRule(const int type) {
 	switch (type) {
-		case VOLUME_RULE:
-			if (ui->volumeRulesList->currentItem() != NULL) {
-				rules[ui->volumeRulesList->currentItem()]->On();
+		case VOLUME_RULE: // regla de volumen
+			if (ui->volumeRulesList->currentItem() != NULL) { // hay una regla seleccionada
+				rules[ui->volumeRulesList->currentItem()]->On(); // habilita
 			} else {
-				launchWarningNoRule();
+				launchWarningNoRule(); // lanza mensaje informando que no hay regla seleccionada
 			}
 			break;
-		case SLICE_RULE:
-			if (ui->sliceRulesList->currentItem() != NULL) {
-				rules[ui->sliceRulesList->currentItem()]->On();
+		case SLICE_RULE: // regla de corte
+			if (ui->sliceRulesList->currentItem() != NULL) { // hay una regla seleccionada
+				rules[ui->sliceRulesList->currentItem()]->On(); // habilita
 			} else {
-				launchWarningNoRule();
+				launchWarningNoRule(); // lanza mensaje informando que no hay regla seleccionada
 			}
 			break;
 	}
@@ -581,27 +606,31 @@ void MainWindow::enableRule(const int type) {
 
 void MainWindow::disableRule(const int type) {
 	switch (type) {
-		case VOLUME_RULE:
-			if (ui->volumeRulesList->currentItem() != NULL) {
-				rules[ui->volumeRulesList->currentItem()]->Off();
+		case VOLUME_RULE: // regla de volumen
+			if (ui->volumeRulesList->currentItem() != NULL) { // hay una regla seleccionada
+				rules[ui->volumeRulesList->currentItem()]->Off(); // deshabilita
 			} else {
-				launchWarningNoRule();
+				launchWarningNoRule(); // lanza mensaje informando que no hay regla seleccionada
 			}
 			break;
-		case SLICE_RULE:
-			if (ui->sliceRulesList->currentItem() != NULL) {
-				rules[ui->sliceRulesList->currentItem()]->Off();
+		case SLICE_RULE: // regla de corte
+			if (ui->sliceRulesList->currentItem() != NULL) { // hay una regla seleccionada
+				rules[ui->sliceRulesList->currentItem()]->Off(); // deshabilita
 			} else {
-				launchWarningNoRule();
+				launchWarningNoRule(); // lanza mensaje informando que no hay regla seleccionada
 			}
 			break;
 	}
 }
 
 void MainWindow::clearAllRules() {
-	rules.clear();
+	rules.clear(); // limpia el map
+
+	// limpia las listas de la GUI
 	ui->sliceRulesList->clear();
 	ui->volumeRulesList->clear();
+
+	// resetea contadores
 	sliceRuleCounter = 0;
 	volumeRuleCounter = 0;
 }
@@ -609,59 +638,60 @@ void MainWindow::clearAllRules() {
 void MainWindow::changeBackgroundColor(const int widget) {
 	QColor color;
 	switch (widget) {
-		case VOLUME_BACKGROUND:
+		case VOLUME_BACKGROUND: // color del widget del volumen
 			color = QColorDialog::getColor(volumeBackground);
-			if (color.isValid()) { // No se ha cancelado el dialogo
-				volumeBackground = color;
-				if (!deleting) {
-					setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
-					renderVolume();
+			if (color.isValid()) { // no se ha cancelado el dialogo
+				volumeBackground = color; // actualiza color
+				if (!deleting) { // si no está borrando
+					setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF()); // cambia color de fondo
+					renderVolume(); // renderiza el volumen
 				}
-				ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name());
+				ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name()); // cambia color del botón
 			}
 			break;
-		case VOLUME_DELETING_BACKGROUND:
+		case VOLUME_DELETING_BACKGROUND: // color del widget del volumen al borrar
 			color = QColorDialog::getColor(volumeDeletingBackground);
-			if (color.isValid()) { // No se ha cancelado el dialogo
-				volumeDeletingBackground = color;
-				if (deleting) {
-					setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
-					renderVolume();
+			if (color.isValid()) { // no se ha cancelado el dialogo
+				volumeDeletingBackground = color; // actualiza el color
+				if (deleting) { // si está borrando
+					setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF()); // cambia color de fondo
+					renderVolume(); // renderiza el volumen
 				}
-				ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name());
+				ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name()); // cambia color del botón
 			}
 			break;
-		case MESH_BACKGROUND:
+		case MESH_BACKGROUND: // color del widget de la malla
 			color = QColorDialog::getColor(meshBackground);
-			if (color.isValid()) { // No se ha cancelado el dialogo 
-				meshBackground = color;
-				setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
-				renderMesh();
-				ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name());
+			if (color.isValid()) { // no se ha cancelado el dialogo 
+				meshBackground = color; // actualiza color
+				setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF()); // cambia color de fondo
+				renderMesh(); // renderiza malla
+				ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name()); // cambia color del botón
 			}
 			break;
 	}
 }
 
 void MainWindow::restoreBackgroundColors() {
-	defaultBackgroundColors();
-	if (deleting) {
-		setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
-	} else {
-		setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
+	defaultBackgroundColors(); // colores por defecto
+	if (deleting) { // si se está borrando
+		setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF()); // color de widget de volumen es el de borrado
+	} else { // si no
+		setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF()); // color de widget de volumen es el normal
 	}
-	setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
-	renderVolume();
-	renderMesh();
+	setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF()); // color de widget de malla
+	renderVolume(); // renderiza volumen
+	renderMesh(); // renderiza malla
 }
 void MainWindow::launchWarning(const std::string message) {
+	// crea mensaje de advertencia
 	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
 	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
 	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
 	confirmBox->setIcon(QMessageBox::Information);
 	confirmBox->setText(QString::fromLatin1(message.c_str()));
 	confirmBox->setStandardButtons(QMessageBox::Ok);
-	confirmBox->exec();
+	confirmBox->exec(); // y lo ejecuta
 }
 
 void MainWindow::launchWarningNoVolume() {

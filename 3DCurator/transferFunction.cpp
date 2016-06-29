@@ -96,23 +96,10 @@ void TransferFunction::write(std::string &filename) {
 
 	write_xml(filename, pt);  // escribe en el archivo leyendo del árbol que se ha creado
 }
-
-vtkSmartPointer<vtkColorTransferFunction> TransferFunction::getColorFun() const {
-	return colorFun;
-}
-
-vtkSmartPointer<vtkPiecewiseFunction> TransferFunction::getScalarFun() const {
-	return scalarFun;
-}
-
-vtkSmartPointer<vtkPiecewiseFunction> TransferFunction::getGradientFun() const {
-	return gradientFun;
-}
-
 void TransferFunction::clear() {
-	colorFun->RemoveAllPoints();
-	scalarFun->RemoveAllPoints();
-	gradientFun->RemoveAllPoints();
+	colorFun->RemoveAllPoints(); // borra todos los puntos de la función de color
+	scalarFun->RemoveAllPoints(); // borra todos los puntos de la función de opacidad escalar
+	gradientFun->RemoveAllPoints(); // borra todos los puntos de la función de opacidad gradiente
 }
 
 void TransferFunction::addColorPoint(const double x, const double r, const double g, const double b) {
@@ -141,4 +128,16 @@ std::string TransferFunction::getName() const {
 
 std::string TransferFunction::getDescription() const {
 	return description;
+}
+
+vtkSmartPointer<vtkColorTransferFunction> TransferFunction::getColorFun() const {
+	return colorFun;
+}
+
+vtkSmartPointer<vtkPiecewiseFunction> TransferFunction::getScalarFun() const {
+	return scalarFun;
+}
+
+vtkSmartPointer<vtkPiecewiseFunction> TransferFunction::getGradientFun() const {
+	return gradientFun;
 }

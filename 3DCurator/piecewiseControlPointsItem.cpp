@@ -2,10 +2,6 @@
 
 vtkStandardNewMacro(PiecewiseControlPointsItem);
 
-void PiecewiseControlPointsItem::SetRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin) {
-	this->renWin = renWin;
-}
-
 bool PiecewiseControlPointsItem::MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse) {
 	bool result = vtkPiecewiseControlPointsItem::MouseButtonReleaseEvent(mouse); // forward events
 	if (mouse.GetButton() == vtkContextMouseEvent::LEFT_BUTTON			// si se ha soltado el botón izquierdo (añade punto)
@@ -22,4 +18,8 @@ bool PiecewiseControlPointsItem::KeyReleaseEvent(const vtkContextKeyEvent &key) 
 		renWin->Render();
 	}
 	return result;
+}
+
+void PiecewiseControlPointsItem::SetRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin) {
+	this->renWin = renWin;
 }

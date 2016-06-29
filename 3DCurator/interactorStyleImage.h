@@ -18,14 +18,35 @@
  */
 class InteractorStyleImage : public vtkInteractorStyleImage {
 public:
+	/**
+	 * Constructor
+	 */
 	static InteractorStyleImage* New();
-	vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleImage);
 
-	void SetPlano(Plano* plano); /**< Establece la figura */
+	vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleImage);
+	
+	/**
+	 * Establece el plano en el que buscará el valor del voxel seleccionado
+	 * @param	plano	Plano en el que buscará el valor del voxel seleccionado
+	 */
+	void SetPlano(Plano* plano);
+
+	/**
+	 * Establece la etiqueta donde se escribirá el valor escalar del voxel seleccionado
+	 * @param	label	QLabel donde se escribirá el valor escalar del voxel seleccionado
+	 */
 	void SetLabel(QLabel* label); /**< Establece la etiqueta */
 
+	/**
+	 * Evento al pulsar el botón izquierdo del ratón
+	 */
 	virtual void OnLeftButtonDown();
+	
+	/**
+	 * Evento al mover el ratón
+	 */
 	virtual void OnMouseMove();
+
 private:
 	Plano* plano; /**< Figura a la que se le borran partes */
 	QLabel* label; /**< Etiqueta donde se actualizan los valores */

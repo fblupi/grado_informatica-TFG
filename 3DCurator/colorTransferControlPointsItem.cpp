@@ -2,10 +2,6 @@
 
 vtkStandardNewMacro(ColorTransferControlPointsItem);
 
-void ColorTransferControlPointsItem::SetRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin) {
-	this->renWin = renWin;
-}
-
 bool ColorTransferControlPointsItem::MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse) {
 	bool result = vtkColorTransferControlPointsItem::MouseButtonReleaseEvent(mouse); // forward events
 	if (mouse.GetButton() == vtkContextMouseEvent::LEFT_BUTTON			// si se ha soltado el botón izquierdo (añade punto)
@@ -42,4 +38,8 @@ bool ColorTransferControlPointsItem::MouseDoubleClickEvent(const vtkContextMouse
 		}
 	}
 	return vtkColorTransferControlPointsItem::MouseDoubleClickEvent(mouse); // forward events
+}
+
+void ColorTransferControlPointsItem::SetRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin) {
+	this->renWin = renWin;
 }

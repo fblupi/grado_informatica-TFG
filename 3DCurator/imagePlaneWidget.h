@@ -13,17 +13,52 @@
  */
 class ImagePlaneWidget : public vtkImagePlaneWidget {
 public:
+	/**
+	 * Constructor
+	 */
 	static ImagePlaneWidget* New();
+
 	vtkTypeMacro(vtkImagePlaneWidget, ImagePlaneWidget);
 
+	/**
+	 * Establece el ImageViewer2 que actualizará
+	 * @param	viewer	ImageViewer2 que se actualizará
+	 */
 	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer); /**< Establece el ImageViewer2 */
 
+	/**
+	 * Evento al mover el ratón
+	 */
 	virtual void OnMouseMove();
+
+	/**
+	 * Evento al pulsar el botón central del ratón
+	 */
 	virtual void OnMiddleButtonDown();
+
+	/**
+	 * Evento al levantar el botón central del ratón
+	 */
 	virtual void OnMiddleButtonUp();
+
+	/**
+	 * Evento al pulsar el botón izquierdo del ratón
+	 */
 	virtual void OnLeftButtonDown();
+
+	/**
+	 * Evento al levantar el botón izquierdo del ratón
+	 */
 	virtual void OnLeftButtonUp();
+
+	/**
+	 * Evento al pulsar el botón derecho del ratón
+	 */
 	virtual void OnRightButtonDown();
+
+	/**
+	 * Evento al levantar el botón izquierdo del ratón
+	 */
 	virtual void OnRightButtonUp();
 
 private:

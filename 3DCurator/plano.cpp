@@ -2,34 +2,7 @@
 
 Plano::Plano() {
 	plane = vtkSmartPointer<ImagePlaneWidget>::New();
-	centers[0] = centers[1] = centers[2] = 0.0;
-}
-
-vtkSmartPointer<ImagePlaneWidget> Plano::getPlane() const {
-	return plane;
-}
-
-void Plano::setInputData(vtkSmartPointer<vtkImageData> imageData) {
-	plane->SetInputData(imageData);
-}
-
-void Plano::setViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
-	plane->SetViewer(viewer);
-}
-
-void Plano::enable(const bool onOff) {
-	plane->SetEnabled(onOff);
-}
-
-void Plano::show(const bool onOff) {
-	plane->SetTextureVisibility(onOff); // muestra la imagen del corte
-}
-
-void Plano::setOrigin(const double x, const double y, const double z) {
-	plane->SetOrigin(x, y, z);
-	centers[0] = x;
-	centers[1] = y;
-	centers[2] = z;
+	centers[0] = centers[1] = centers[2] = 0.0; // el centro inicial es el 0
 }
 
 void Plano::setSagital() {
@@ -54,7 +27,7 @@ void Plano::setSagital() {
 	plane->SetPoint2(p1[0], p1[1], p1[2]);
 	plane->SetOrigin(p1[0], p1[1], p2[2]);
 
-	plane->UpdatePlacement();
+	plane->UpdatePlacement(); // actualiza el plano con los nuevos puntos y origen
 }
 
 void Plano::setCoronal() {
@@ -79,11 +52,39 @@ void Plano::setCoronal() {
 	plane->SetPoint2(p1[1], p1[0], p1[2]);
 	plane->SetOrigin(p1[1], p1[0], p2[2]);
 
-	plane->UpdatePlacement();
+	plane->UpdatePlacement(); // actualiza el plano con los nuevos puntos y origen
 }
 
 void Plano::setAxial() {
 	// coloca el plano sobre los ejes XY
 	plane->SetPlaneOrientationToZAxes();
 	plane->SetSlicePosition(centers[2]);
+}
+
+void Plano::setOrigin(const double x, const double y, const double z) {
+	plane->SetOrigin(x, y, z);
+	// actualiza el centro
+	centers[0] = x;
+	centers[1] = y;
+	centers[2] = z;
+}
+
+void Plano::show(const bool onOff) {
+	plane->SetTextureVisibility(onOff); // muestra la imagen del corte
+}
+
+void Plano::enable(const bool onOff) {
+	plane->SetEnabled(onOff);
+}
+
+void Plano::setInputData(vtkSmartPointer<vtkImageData> imageData) {
+	plane->SetInputData(imageData);
+}
+
+void Plano::setViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
+	plane->SetViewer(viewer);
+}
+
+vtkSmartPointer<ImagePlaneWidget> Plano::getPlane() const {
+	return plane;
 }

@@ -30,14 +30,40 @@
  */
 class InteractorStyleDeleter : public vtkInteractorStyleTrackballCamera {
 public:
+	/**
+	 * Constructor
+	 */
 	static InteractorStyleDeleter* New();
+
 	vtkTypeMacro(vtkInteractorStyleTrackballCamera, InteractorStyleDeleter);
 
-	void SetDefaultRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin); /**< Establece el RenderWindow */
-	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer); /**< Establece el ImageViewer2 */
-	void SetFigura(Figura* figura); /**< Establece la figura */
-	void SetPlano(Plano* plano); /**< Establece la figura */
+	/**
+	 * Establece el RenderWindow donde se hará pick
+	 * @param	renWin		RenderWindow donde se hará pick
+	 */
+	void SetDefaultRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
 
+	/**
+	 * Establece el ImageViewer2 que actualizará al borrar
+	 * @param	viewer		ImageViewer2 que se actualizará al borrar
+	 */
+	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
+
+	/**
+	 * Establece la figura sobre la que se hará pick para borrar
+	 * @param	figura		Figura a la que borrará partes
+	 */
+	void SetFigura(Figura* figura);
+
+	/**
+	 * Establece el plano al que actualizará el corte al borrar
+	 * @param	plano		Plano al que actualizará la imagen de corte
+	 */
+	void SetPlano(Plano* plano);
+
+	/**
+	 * Evento al pulsar el botón izquierdo del ratón
+	 */
 	virtual void OnLeftButtonDown();
 
 private:
@@ -46,8 +72,40 @@ private:
 	Figura* figura; /**< Figura a la que se le borran partes */
 	Plano* plano; /**< Plano con el que se obtienen los cortes */
 
+	/**
+	 * Busca un voxel inicial donde empezar a expandirse al borrar una imagen
+	 * @param	imageData	Datos del volumen
+	 * @param	ijk			Punto inicial
+	 * @param	MIN_X		Límite mínimo en la coordenada x
+	 * @param	MAX_X		Límite máximo en la coordenada x
+	 * @param	MIN_Y		Límite mínimo en la coordenada y
+	 * @param	MAX_Y		Límite máximo en la coordenada y
+	 * @return	coordenada x,y donde empezar a borrar la imagen
+	 */
 	std::pair<int, int> searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y);
+	
+	/**
+	 * Borra la isla donde se encuentra un punto de una imagen
+	 * @param	imageData	Datos del volumen
+	 * @param	ijk			Punto inicial
+	 * @param	MIN_X		Límite mínimo en la coordenada x
+	 * @param	MAX_X		Límite máximo en la coordenada x
+	 * @param	MIN_Y		Límite mínimo en la coordenada y
+	 * @param	MAX_Y		Límite máximo en la coordenada y
+	 */
 	void deleteImage(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y);
+
+	/**
+	 * Borra la isla donde se encuentra un punto
+	 * @param	imageData	Datos del volumen
+	 * @param	ijk			Punto inicial
+	 * @param	MIN_X		Límite mínimo en la coordenada x
+	 * @param	MAX_X		Límite máximo en la coordenada x
+	 * @param	MIN_Y		Límite mínimo en la coordenada y
+	 * @param	MAX_Y		Límite máximo en la coordenada y
+	 * @param	MIN_Z		Límite mínimo en la coordenada z
+	 * @param	MAX_Z		Límite máximo en la coordenada z
+	 */
 	void deleteByImages(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, const int MIN_Z, const int MAX_Z);
 };
 

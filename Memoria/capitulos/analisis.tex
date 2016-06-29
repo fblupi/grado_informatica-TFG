@@ -57,6 +57,8 @@ A continuación se muestran el listado de historias de usuario (Product Backlog)
 	\hline
 	21	&	Exportar malla								&	19		&	3		&	3	\\
 	\hline
+	22	&	Mostrar valor escalar de un pixel en HU		&	9		&	4		&	4	\\
+	\hline
 	\\
 	\caption{Historias de usuario}
 	\label{tab:hus}
@@ -468,5 +470,24 @@ A continuación se incluye una descripción completa de las historias de usuario
 	\end{center}
 	\caption{Historia de usuario - Exportar malla}
 	\label{tab:hu_exportar_malla}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular} {l|c|l}
+			\hline
+			22 & \multicolumn{2}{c}{Mostrar valor escalar de un pixel en HU} \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Descripción} \\ \hline
+			\multicolumn{3}{p{12cm}}{A partir de un corte generado, mostrar el valor escalar en HU del pixel seleccionado.} \\ \noalign{\hrule height 1pt}
+			\multicolumn{2}{l|}{Estimación} & 4 \\ \hline
+			\multicolumn{2}{l|}{Prioridad} & 4 \\ \hline
+			\multicolumn{2}{l|}{Dependencias} & 9 \\ \noalign{\hrule height 1pt}
+			\multicolumn{3}{l}{Pruebas de aceptación} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Comprobar que cuando se selecciona fuera de la imagen informa al usuario de ello.} \\ \hline
+			\multicolumn{3}{p{12cm}}{ - Comprobar que al colocar el ratón sobre un pixel de la imagen aparece el valor escalar de éste en HU.} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Historia de usuario - Mostrar valor escalar de un pixel en HU}
+	\label{tab:hu_mostrar_valor_hu}
 \end{table}
 

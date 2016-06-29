@@ -85,35 +85,35 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 
 std::pair<int, int> InteractorStyleDeleter::searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y) {
 	if (ijk[0] - 1 >= MIN_X 
-		&& imageData->GetScalarComponentAsDouble(ijk[0] - 1, ijk[1], ijk[2], 0) < MIN_AIR) {
+		&& imageData->GetScalarComponentAsDouble(ijk[0] - 1, ijk[1], ijk[2], 0) >= MIN_AIR) {
 		return std::make_pair(ijk[0] - 1, ijk[1]);
 	}
 	else if (ijk[0] + 1 < MAX_X 
-		&& imageData->GetScalarComponentAsDouble(ijk[0] + 1, ijk[1], ijk[2], 0) < MIN_AIR) {
+		&& imageData->GetScalarComponentAsDouble(ijk[0] + 1, ijk[1], ijk[2], 0) >= MIN_AIR) {
 		return std::make_pair(ijk[0] + 1, ijk[1]);
 	}
 	else if (ijk[1] - 1 >= MIN_Y 
-		&& imageData->GetScalarComponentAsDouble(ijk[0], ijk[1] - 1, ijk[2], 0) < MIN_AIR) {
+		&& imageData->GetScalarComponentAsDouble(ijk[0], ijk[1] - 1, ijk[2], 0) >= MIN_AIR) {
 		return std::make_pair(ijk[0], ijk[1] - 1);
 	}
 	else if (ijk[1] + 1 < MAX_Y 
-		&& imageData->GetScalarComponentAsDouble(ijk[0], ijk[1] + 1, ijk[2], 0) < MIN_AIR) {
+		&& imageData->GetScalarComponentAsDouble(ijk[0], ijk[1] + 1, ijk[2], 0) >= MIN_AIR) {
 		return std::make_pair(ijk[0], ijk[1] + 1);
 	}
 	else if (ijk[0] - 1 >= MIN_X && ijk[1] - 1 >= MIN_Y
-		&& imageData->GetScalarComponentAsDouble(ijk[0] - 1, ijk[1] - 1, ijk[2], 0) < MIN_AIR) {
+		&& imageData->GetScalarComponentAsDouble(ijk[0] - 1, ijk[1] - 1, ijk[2], 0) >= MIN_AIR) {
 		return std::make_pair(ijk[0] - 1, ijk[1] - 1);
 	}
 	else if (ijk[0] - 1 >= MIN_X && ijk[1] + 1 < MAX_Y
-		&& imageData->GetScalarComponentAsDouble(ijk[0] - 1, ijk[1] + 1, ijk[2], 0) < MIN_AIR) {
+		&& imageData->GetScalarComponentAsDouble(ijk[0] - 1, ijk[1] + 1, ijk[2], 0) >= MIN_AIR) {
 		return std::make_pair(ijk[0] - 1, ijk[1] + 1);
 	}
 	else if (ijk[0] + 1 < MAX_X && ijk[1] - 1 >= MIN_Y
-		&& imageData->GetScalarComponentAsDouble(ijk[0] + 1, ijk[1] - 1, ijk[2], 0) < MIN_AIR) {
+		&& imageData->GetScalarComponentAsDouble(ijk[0] + 1, ijk[1] - 1, ijk[2], 0) >= MIN_AIR) {
 		return std::make_pair(ijk[0] + 1, ijk[1] - 1);
 	}
 	else if (ijk[0] + 1 < MAX_X && ijk[1] + 1 < MAX_Y
-		&& imageData->GetScalarComponentAsDouble(ijk[0] + 1, ijk[1] + 1, ijk[2], 0) < MIN_AIR) {
+		&& imageData->GetScalarComponentAsDouble(ijk[0] + 1, ijk[1] + 1, ijk[2], 0) >= MIN_AIR) {
 		return std::make_pair(ijk[0] + 1, ijk[1] + 1);
 	}
 	else {
@@ -128,7 +128,7 @@ void InteractorStyleDeleter::deleteImage(vtkSmartPointer<vtkImageData> imageData
 	ij.first = ijk[0];
 	ij.second = ijk[1];
 
-	if (imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0) < AIR_HU) {
+	if (imageData->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0) < MIN_AIR) {
 		ij = searchInitialVoxel(imageData, ijk, MIN_X, MAX_X, MIN_Y, MAX_Y);
 	}
 

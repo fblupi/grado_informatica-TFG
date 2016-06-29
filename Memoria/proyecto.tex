@@ -128,30 +128,35 @@ pdfproducer = {pdflatex}
 \lstnewenvironment{listing}[1][]
    {\lstset{#1}\pagebreak[0]}{\pagebreak[0]}
 
-\lstdefinestyle{CodigoC}
-   {
+\lstdefinestyle{C} {
 	basicstyle=\scriptsize,
 	frame=single,
 	language=C,
 	numbers=left
-   }
-\lstdefinestyle{CodigoC++}
-   {
+}
+
+\lstdefinestyle{C++} {
 	basicstyle=\small,
 	frame=single,
 	backgroundcolor=\color{gray30},
 	language=C++,
 	numbers=left
-   }
-\lstdefinestyle{Consola}
-   {
+}
+
+\lstdefinestyle{Consola} {
    	basicstyle=\scriptsize\bf\ttfamily,
     backgroundcolor=\color{gray30},
     frame=single,
     language=shell,
     numbers=none
-   }
+}
 
+\lstdefinestyle{XML} {
+	basicstyle=\scriptsize,
+	frame=single,
+	language=XML,
+	numbers=left
+}
 
 \newcommand{\bigrule}{\titlerule[0.5mm]}
 

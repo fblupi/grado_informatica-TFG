@@ -105,7 +105,7 @@ Pero los problemas no acababan aquí, y es que, con la nueva versión, el progra
 
 Una vez generado el proyecto realizar los siguientes cambios en la configuración: 
 \begin{itemize}
-	\item En \textit{Project Properties} ir a \textit{Configuration Properties $ \rangle $ C/C++ $ \rangle $ General $ \rangle $ Additional Include Directories} y añadir el directorio \texttt{C:\textbackslash Boost\textbackslash include \\ \textbackslash boost-1\_60}.
+	\item En \textit{Project Properties} ir a \textit{Configuration Properties $ \rangle $ C/C++ $ \rangle $ General $ \rangle $ Additional Include Directories} y añadir el directorio \texttt{C:\textbackslash Boost\textbackslash \\  include\textbackslash boost-1\_60}.
 	\item En \textit{Project Properties} ir a \textit{Configuration Properties $ \rangle $ Linker $ \rangle $ Additional Library Directories} y añadir el directorio \texttt{C:\textbackslash Boost\textbackslash lib}.
 	\item En \textit{Project Properties} ir a \textit{Configuration Properties $ \rangle $ Linker $ \rangle $ System} y:
 	\begin{itemize}
@@ -114,7 +114,7 @@ Una vez generado el proyecto realizar los siguientes cambios en la configuració
 	\end{itemize}
 \end{itemize}
 
-\section{Decisiones de implementación: Volume Rendering}
+\section{Conceptos clave en Volume Rendering}
 
 \subsection{Técnicas de renderizado}
 
@@ -314,12 +314,12 @@ Una vez comprobado que se estaba realizando bien el renderizado, se debía mejor
 
 Antes de mejorar la forma en la que se edita la función de transferencia se pasó a realizar una de las partes más importantes. La de la poder ver cortes de la figura. Para empezar se creó un nuevo \textit{widget} con el que se combinó lo implementado anteriormente para visualizar cortes (Figura \ref{fig:read_dicom_series_qt}). 
 
-Pero de esta forma no se estaban generando cortes sino visualizando las propias imágenes con las que se reconstruía el volumen. La idea era poder \textbf{crear un corte en la figura dado por un plano arbitrario}. Para ello se hizo uso de \texttt{vtkImagePlaneWidget} modificando esta clase para que se renderizase el corte al mismo tiempo que se movía el plano. Este plano se conectaba con los datos del volumen (\texttt{vtkImageData}) para mostrar la salida en un \texttt{vtkImageViewer2} (Figuraw \ref{fig:primer_plano_de_corte}).
+Pero de esta forma no se estaban generando cortes sino visualizando las propias imágenes con las que se reconstruía el volumen. La idea era poder \textbf{crear un corte en la figura dado por un plano arbitrario}. Para ello se hizo uso de \texttt{vtkImagePlaneWidget} modificando esta clase para que se renderizase el corte al mismo tiempo que se movía el plano. Este plano se conectaba con los datos del volumen (\texttt{vtkImageData}) para mostrar la salida en un \texttt{vtkImageViewer2} (Figura \ref{fig:primer_plano_de_corte}).
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm]{imagenes/primer_plano_de_corte}
-	\caption{Plano que corta la figura y renderiza el corte en otro \textit{widget}}
+	\caption{Primera implmentación del pano que corta la figura y renderiza el corte en otro \textit{widget}}
 	\label{fig:primer_plano_de_corte}
 \end{figure}
 
@@ -329,32 +329,184 @@ Además se reescribieron métodos de eventos de ratón para eliminar los inneces
 
 \subsection{Guardar imágenes}
 
-Lalala
+Otra funcionalidad básica era la de poder \textbf{guardar imágenes de ambos visores}. VTK ofrece con las distintas subclases de \texttt{vtkImageWriter} una serie de clases con las que exportar imágenes en distintos formatos. Se han utilizado tanto \texttt{vtkJPEGWriter} como \texttt{vtkPNGWriter} para darle al usuario la posibilidad de guardar la imagen tanto en JPEG como en PNG. 
 
 \subsection{Editar función de transferencia}
 
-Lalala
+Con el software cada vez más completo, era el momento de mejorar la \textbf{edición de función de transferencia}. La implementación anterior (Figura \ref{fig:gui_inicial_tf}) no ofrecía retroalimentación visual al usuario de cómo era la curva de la función o la paleta de colores. Además, añadir y editar puntos era un trabajo tedioso.
+
+Resultaba imprescindible cambiarlo y la forma más cómoda de editar la función era trabajar sobre la misma. Es decir, \textbf{mostrar la función en una gráfica} con cada uno de sus puntos y poder mover, añadir o borrarlos interactuando directamente con la gráfica.
+
+Explorando entre las clases que proporcionaba VTK se encontraron:
+
+\begin{itemize}
+	\item \texttt{vtkColorTransferFunctionItem}: Muestra la función de transferencia de color como un \texttt{vtkPlot} que se puede añadir a una \texttt{vtkChartXY}.
+	\item \texttt{vtkPiecewiseFunctionItem}: Muestra la función de transferencia de opacidad como un \texttt{vtkPlot} que se puede añadir a una \texttt{vtkChartXY}.
+	\item \texttt{vtkColorTransferControlPointsItem}: Muestra y permite modificar los puntos de la función de transferencia de color como un \texttt{vtkPlot} que se puede añadir a una \texttt{vtkChartXY}.
+	\item \texttt{vtkPiecewiseControlPointsItem}: Muestra y permite modificar los puntos de la función de transferencia de opacidad como un \texttt{vtkPlot} que se puede añadir a una \texttt{vtkChartXY}.
+\end{itemize}
+
+No obstante, había que reescribir algunos métodos de estas clases para poder adaptarlas al software. Había que eliminar algunos eventos innecesarios y agregar nuevos acciones a otros como volver a renderizar el volumen cada vez que se cambie algún punto.
+
+Llevar a cabo este trabajo fue bastante costoso pero finalmente se logró proporcionar al usuario una interfaz gráfica para editar la función de transferencia intuitiva y fácil de utilizar (Figura \ref{fig:gui_final_tf}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{imagenes/gui_final_tf}
+	\caption{Interfaz para editar la función de transferencia}
+	\label{fig:gui_final_tf}
+\end{figure}
 
 \subsection{Importar y exportar función de transferencia}
 
-Lalala
+Con la nueva interfaz iba a resultar sencillo crear una batería de funciones de transferencia, por tanto, llegó el momento de almacenarlas de alguna forma para luego poder usarlas.
+
+Para esto se decidió utilizar XML almacenándolas con un formato en el que el software pudiese exportar e importarlas (Código \ref{code:xmlschema}).
+
+\lstinputlisting[caption={Descripción de formato XML utilizado usando XML Schema}, label=code:xmlschema, style=XML]{misc/tf-xmlschema.xml}
+
+Por ejemplo, la función de transferencia principal utilizada en este formato XML sería la siguiente (Código \ref{code:xmltf})
+
+\lstinputlisting[caption={Ejemplo de función de transferencia en el formato XML descrito}, label=code:xmltf, style=XML]{misc/ct-woodsculpture.xml}
+
+Para poder\textbf{ gestionar estos ficheros}, se decidió utilizar una librería. Había muchas opciones, pero lo que se quería gestionar era bastante básico por lo que utilizar una demasiado compleja podría resultar contraproducente ya que se tardaría bastante tiempo en aprender a utilizarla.
+
+Finalmente se optó por \textbf{Boost}, una librería muy extensa que cuenta con un pequeño gestor de ficheros XML. 
+
+A partir de un fichero XML, Boost transforma la información a un \texttt{struct} en forma de árbol de forma que luego se puede recorrer fácilmente obteniendo la información deseada.
 
 \subsection{Realizar medida}
 
-Lalala
+Una de las primeras ideas que surgieron para añadir al software era la de poder realizar medidas. Pues esto podría resultar de mucha utilidad para los restauradores.
+
+En poco tiempo se consiguió, gracias a la clase \texttt{vtkDistanceWidget} añadir una regla con la que \textbf{realizar medidas} (Figura \ref{fig:primera_regla}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8cm]{imagenes/primera_regla}
+	\caption{Primera implementación de regla para medir. Solo se podía utilizar una en el visor de cortes}
+	\label{fig:primera_regla}
+\end{figure}
+
+Lo ideal sería poder añadir más de una regla, pero antes de llevar esta mejora a cabo, se decidió pasar a otra quizás más importante.
 
 \subsection{Borrar partes innecesarias}
 
-Lalala
+Al hacer \textit{ray-casting} se mapean los datos de la imagen en valores de color y opacidad gracias a la función de transferencia. Esto hace que se puedan diferenciar distintos materiales. Pero hay materiales con compuestos similares que pueden aparecer pues se encontraban en el escáner a la hora de realizarse la tomografía.
+
+Hablo de \textbf{la camilla donde está apoyada la figura} que tiene zonas en las que hay un material con una densidad similar al estuco y otra con uno similar a la madera. Por lo que, al visualizarse, aparecen. Aunque no tienen nada que ver con la figura. Y no solo sobran, también molestan pues en el caso de una capa de la camilla, impide ver la figura a las espaldas (Figura \ref{fig:necesario_borrar}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8cm]{imagenes/necesario_borrar}
+	\caption{La camilla tapa la espalda de la figura e impide verla}
+	\label{fig:necesario_borrar}
+\end{figure}
+
+Es por tanto necesario proveer al software de una herramienta para poder \textbf{borrar estas partes}.
+
+En un principio se pensó hacer un borrado en el que a partir de un punto seleccionado por el usuario, se \textbf{extendiese en 3D} comprobando si alguno de los puntos de alrededor tiene un valor similar para seguir extendiéndose recursivamente. Pero la camilla pegada a la figura tiene zonas donde las zonas de la camilla y la figura tienen un valor muy similar y esto provocaría que borrase en el interior de la figura.
+
+La segunda capa de camilla, la más gruesa con valores de estuco (puede verse más blanca en las imágenes), está separada de la figura por un material con valores cercanos a los del aire y que, por tanto, no se muestran.
+
+Esta situación hizo que se cambiase un poco el planteamiento y se borrase no por zonas con valor parecido sino por \textit{islas}. Entendiendo isla como una zona separada de las demás.
+
+Se empezó a implementar el \textbf{algoritmo recursivo} descrito anteriormente, pero usando una pila de puntos a analizar en un bucle que continuase hasta que estuviese vacía en lugar de usar recursividad como tal pues podría agotar la pila de llamadas a funciones.
+
+Sin embargo esto no solucionaba los problemas con el hardware porque, aunque no se agotase la pila de llamadas, la pila de puntos que se utilizaba se hacía demasiado grande. Tanto que agotaba la memoria utilizada por el programa.
+
+Era necesario hacer un cambio y se pasó de extenderse en 3D a extenderse en 2D imagen por imagen. Pasando de introducir 26 puntos en cada iteración a 8 con un tamaño total de $ res_{x} \times res_{y} $ que hace que las coordenadas de una imagen de $ 1024px \times 1024px $ tenga espacio de sobra en la memoria de la pila sin desbordarse.
+
+Este cambio no solo era más óptimo en cuanto a utilización de memoria, sino que resultaba bastante más rápido. Y, aunque en ocasiones, no borre la isla con un solo click, el proceso de borrado tarda escasos segundos (Código \ref{code:pseudo_delete}).
+
+\begin{lstlisting}[style=C, label=code:pseudo_delete, caption={Pseudocódigo del borrado}]
+void deletByImages(data, point, bounds) {
+	deleteImage(data, point, bounds)
+	z = point.z + 1
+	while (z < bounds.z.max) {
+		point.z = z
+		deleteImage(data, point, bounds)
+		z++
+	}
+	z = point.z - 1
+	while (z >= bounds.z.min) {
+		point.z = z
+		deleteImage(data, point, bounds)
+		z--
+	}
+}
+
+void deleteImage(data, point, bounds) {
+	z = point.z
+	xy = {point.x, point.y}
+	if (data(point) < AIR_HU) {
+		point = searchInitialVoxel(data, point, bounds)
+	}
+	stack.push(xy)
+	while (!stack.empty()) {
+		xy = stack.pop()
+		if (isInside(xy, bounds)) {
+			point = {xy.x, xy.y, z}
+			if (data(point) >= MIN_AIR) {
+				data(point) = AIR_HU
+				stack.push(pointsAround(point))
+			}
+		}
+	}
+}
+\end{lstlisting}
+
+Gracias a este algoritmo de borrado se puede eliminar fácil y rápidamente la camilla que no está pegada a la figura y, al ser la capa que está pegada muy fina y tener activada la opacidad gradiente, se puede ver las espaldas de la figura a diferencia de antes (Figura \ref{fig:camilla_borrada}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8cm]{imagenes/camilla_borrada}
+	\caption{La camilla ha sido eliminada y permite ver la espalda a diferencia de antes (Figura \ref{fig:necesario_borrar})}
+	\label{fig:camilla_borrada}
+\end{figure}
+
+No obstante, y aunque esta capa que se sigue viendo no molesta tanto, a la hora de realizar el escáner podría resultar útil colocar un material que se sepa que tiene un valor de densidad similar al aire entre la figura y la camilla para que así pueda ser borrada por completa la camilla.
 
 \subsection{Exportar malla de triángulos}
 
-Lalala
+Una de las últimas ideas de funcionalidad a introducir en el software es la de la \textbf{generación de una malla de triángulos} del modelo que pudiese ser exportada en formato STL.
+
+Para ello, como se avanzó con anterioridad, se utiliza la técnica de \textit{marching cubes} y la clase \texttt{vtkMarchingCubes} que VTK proporciona para ello.
+
+Por lo que se introduce otro \textit{widget} en la aplicación para visualizar la malla generada a partir de un valor de isosuperficie dado por el usuario.
+
+De esta forma se puede obtener, por ejemplo, un modelo de los clavos de una figura \ref{fig:malla_clavos} que luego podrían imprimirse con una impresora 3D.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8cm]{imagenes/malla_clavos}
+	\caption{Malla generada con un valor de isosuperfice de 2976 HU para poder extraer los clavos}
+	\label{fig:malla_clavos}
+\end{figure}
+
+\subsection{Mostrar valor de densidad de voxel}
+
+Al empezar a crear la función de transferencia, ya se comentó la utilización de otro software para comprobar \textbf{el valor escalar de cada voxel} de la imagen para poder ver entre qué valores se movía cada material. Es por ello que pareció interesante añadir en la interfaz esta información.
+
+Por lo que, como última idea de mejora, y aprovechando lo aprendido de los \textit{pickers} durante la implementación del borrado, se añadió a la interfaz una etiqueta donde se muestra el valor del voxel sobre el que el ratón está posicionado.
 
 \subsection{Realizar varias medidas}
 
-Lalala
+Dada por finalizada la lluvia de ideas que añadir como mejoras, había que realizar todo aquello que se decidió implementar más adelante.
+
+Hablo principalmente de la \textbf{gestión de reglas para realizar varias medidas} en cualquiera de los dos visores principales. Para ello había que dotar a la interfaz de un cuadro con las reglas con opciones para añadir, eliminar y habilitar o deshabilitar.
+
+Para ello, dado que contaba con la experiencia justa con Qt, se realizó en primer lugar la gestión de elementos de la interfaz para poder posteriormente mapear cada item de las cajas a un \texttt{vtkDistanceWidget} distinto.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12.5cm]{imagenes/varias_reglas}
+	\caption{A la derecha, barra de las reglas y en los visores cada una de ellas midiendo algo distinto}
+	\label{fig:varias_reglas}
+\end{figure}
 
 \subsection{Cambiar color de fondo de los visores}
 
-Lalala
+Una de las primeras ideas que se pensaron fue la de poder permitir cambiar al usuario el \textbf{color de fondo de los \textit{widget}} donde se visualizan tanto el volumen como la malla generada. Pero no se realizó hasta al final pues había cosas más importantes que implementar.
+
+Con esta pequeña mejora junto a otras menores en la interfaz, se dio por terminada la fase de desarrollo del software. Cumpliendo los requisitos iniciales y añadiendo múltiples mejoras que han acabado formando un software bastante completo pero al mismo tiempo sencillo de utilizar.

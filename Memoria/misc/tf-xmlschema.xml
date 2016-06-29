@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ <xs:element name="tf">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element name="color">
+     <xs:complexType>
+      <xs:sequence>
+       <xs:element name="point" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+         <xs:sequence>
+          <xs:element name="x" type="xs:decimal"/>
+          <xs:element name="r" type="xs:decimal"/>
+          <xs:element name="g" type="xs:decimal"/>
+          <xs:element name="b" type="xs:decimal"/>
+         </xs:sequence>
+        </xs:complexType>
+       </xs:element>
+      </xs:sequence>
+     </xs:complexType>
+    </xs:element>
+    <xs:element name="scalar">
+     <xs:complexType>
+      <xs:sequence>
+       <xs:element name="point" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+         <xs:sequence>
+          <xs:element name="x" type="xs:decimal"/>
+          <xs:element name="y" type="xs:decimal"/>
+         </xs:sequence>
+        </xs:complexType>
+       </xs:element>
+      </xs:sequence>
+     </xs:complexType>
+    </xs:element>
+    <xs:element name="gradient">
+     <xs:complexType>
+      <xs:sequence>
+       <xs:element name="point" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+         <xs:sequence>
+          <xs:element name="x" type="xs:decimal"/>
+          <xs:element name="y" type="xs:decimal"/>
+         </xs:sequence>
+        </xs:complexType>
+       </xs:element>
+      </xs:sequence>
+     </xs:complexType>
+    </xs:element>
+   </xs:sequence>
+   <xs:attribute name="name" type="xs:string" use="required"/>
+   <xs:attribute name="description" type="xs:string" use="required"/>
+  </xs:complexType>
+ </xs:element>
+</xs:schema>

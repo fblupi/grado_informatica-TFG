@@ -64,7 +64,7 @@ Para interactuar con el plano hay que hacer click derecho sobre éste y moverlo.
 
 La visualización de cortes es tal vez la funcionalidad más útil para un restaurador y es que puede ver el interior de la figura sin tener que dañarla.
 
-En el caso de la Inmaculada Concepción, por ejemplo, en la zona inferior (Figura \ref{fig:corte_inmaculada_concepcion_agujero}) se pueden apreciar hasta cinco piezas de madera distintas: las dos principales base de la escultura,  dos en los laterales y una frontal en la que está la cabeza de un ángel esculpido. Además en este corte se aprecia menos cantidad de estuco que en las zonas donde se encuentra el manto. Se puede observar también el agujero en el centro utilizado para colocar la figura así como los anillos de la madera, útil para determinar la edad de ésta.
+En el caso de la Inmaculada Concepción, por ejemplo, en la zona inferior (Figura \ref{fig:corte_inmaculada_concepcion_agujero}) se pueden apreciar hasta cinco piezas de madera distintas: las dos principales base de la escultura,  dos en los laterales y una frontal en la que está la cabeza de un ángel esculpido. Además en este corte se aprecia menos cantidad de estuco que en las zonas donde se encuentra el manto. Se puede observar también el agujero en el centro utilizado para colocar la figura en su soporte, así como los anillos de la madera, útil para determinar la edad de ésta.
 
 \begin{figure}[H]
 	\centering
@@ -93,8 +93,42 @@ En el corte anterior se puede ver algo de distorsión producida por el metal, pe
 
 \section{Reglas}
 
-Lalala
+Una vez obtenidos los cortes, es muy útil tener una herramienta para poder hacer medidas. para así conocer el tamaño de las piezas, agujeros, capas de estuco, clavos...
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12.5cm]{imagenes/medidas_inmaculada_concepcion_agujero}
+	\caption{A la izquierda el diámetro y a la derecha la altura del agujero en el que se introduce el soporte donde se coloca la Inmaculada Concepción}
+	\label{fig:medidas_inmaculada_concepcion_agujero}
+\end{figure}
+
+Por ejemplo se podrían obtener las dimensiones del agujero de la Inmaculada Concepción (Figura \ref{fig:medidas_inmaculada_concepcion_agujero}).
+
+En el caso de el San Juan Evangelista se podrían medir, por ejemplo, los clavos (Figura\ref{fig:medidas_san_juan_evangelista_clavo}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12.5cm]{imagenes/medidas_san_juan_evangelista_clavo}
+	\caption{A la izquierda tamaño en profundidad de la pieza y el clavo central y a la derecha tamaño del clavo del pie izquierdo}
+	\label{fig:medidas_san_juan_evangelista_clavo}
+\end{figure}
 
 \section{Extraer malla}
 
-Lalala
+Para extraer la malla de triángulos el usuario puede elegir entre los presets con los valores de isosuperficie de la madera (que incluye estuco y metal), el estuco (que incluye el metal) y el metal. También puede utilizar un valor personalizado desplazando un \textit{slider} (Figura\ref{fig:pestana_malla}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12.5cm]{imagenes/pestana_malla}
+	\caption{Pestaña de la GUI para extraer la malla de triángulos}
+	\label{fig:pestana_malla}
+\end{figure}
+
+Una vez extraída la malla en formato STL se puede usar otro software para trabajar con ella (Figura\ref{fig:malla_clavos_meshlab}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8cm]{imagenes/malla_clavos_meshlab}
+	\caption{Malla de los clavos del San Juan Evangelista importada en MeshLab \cite{meshlab}}
+	\label{fig:malla_clavos_meshlab}
+\end{figure}

@@ -13,3 +13,4 @@
 /desktop.ini
 /Proyectos auxiliares/3DReconstructionFromDICOM/build
 /Proyectos auxiliares/ReadDICOMSeriesQt/build
+*.vux

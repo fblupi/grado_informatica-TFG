@@ -725,7 +725,18 @@ void MainWindow::on_actionExportSliceImage_triggered() {
 }
 
 void MainWindow::on_actionExit_triggered() {
-	exit(0);
+	// crea mensaje de advertencia
+	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
+	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
+	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+	confirmBox->setIcon(QMessageBox::Information);
+	confirmBox->setText(QString::fromLatin1("¿Seguro que desea salir?"));
+	confirmBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+	confirmBox->button(QMessageBox::Yes)->setText(QString::fromLatin1("Sí"));
+	confirmBox->button(QMessageBox::No)->setText(QString::fromLatin1("No"));
+	if (confirmBox->exec() == QMessageBox::Yes) { // lo lanza
+		exit(0); // si la respuesta es afirmativa se sale
+	}
 }
 
 void MainWindow::on_actionEnableDisablePlane_triggered() {

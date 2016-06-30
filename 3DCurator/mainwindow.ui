@@ -36,6 +36,9 @@
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <widget class="QPushButton" name="openDICOM">
+         <property name="toolTip">
+          <string>Abrir directorio DICOM</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -66,6 +69,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="deleteVolumeParts">
+         <property name="toolTip">
+          <string>Borrar partes</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -83,6 +89,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="exportVolumeImage">
+         <property name="toolTip">
+          <string>Guardar imagen volumen</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -121,6 +130,9 @@
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="6" column="0">
         <widget class="QPushButton" name="enableDisableSliceRule">
+         <property name="toolTip">
+          <string>Mostrar/Esconder regla</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -138,6 +150,9 @@
        </item>
        <item row="6" column="3">
         <widget class="QPushButton" name="addSliceRule">
+         <property name="toolTip">
+          <string>Añadir regla</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -168,6 +183,9 @@
        </item>
        <item row="6" column="2">
         <widget class="QPushButton" name="deleteSliceRule">
+         <property name="toolTip">
+          <string>Eliminar regla</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -188,6 +206,9 @@
        </item>
        <item row="2" column="3">
         <widget class="QPushButton" name="addVolumeRule">
+         <property name="toolTip">
+          <string>Añadir regla</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -208,6 +229,9 @@
        </item>
        <item row="2" column="2">
         <widget class="QPushButton" name="deleteVolumeRule">
+         <property name="toolTip">
+          <string>Eliminar regla</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -225,6 +249,9 @@
        </item>
        <item row="2" column="0">
         <widget class="QPushButton" name="enableDisableVolumeRule">
+         <property name="toolTip">
+          <string>Mostrar/Esconder regla</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -345,6 +372,9 @@
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
             <widget class="QPushButton" name="enableDisablePlane">
+             <property name="toolTip">
+              <string>Mosrtar/Esconder plano</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -381,6 +411,9 @@
                <height>40</height>
               </size>
              </property>
+             <property name="toolTip">
+              <string>Plano sagital</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -404,6 +437,9 @@
                <height>40</height>
               </size>
              </property>
+             <property name="toolTip">
+              <string>Plano axial</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -426,6 +462,9 @@
                <width>0</width>
                <height>40</height>
               </size>
+             </property>
+             <property name="toolTip">
+              <string>Plano coronal</string>
              </property>
              <property name="text">
               <string/>
@@ -457,6 +496,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="exportSliceImage">
+             <property name="toolTip">
+              <string>Guardar imagen corte</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -507,6 +549,9 @@
        <layout class="QGridLayout" name="gridLayout_84">
         <item row="1" column="7">
          <widget class="QPushButton" name="exportPreset">
+          <property name="toolTip">
+           <string>Exportar preset</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -549,6 +594,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="completePreset">
+             <property name="toolTip">
+              <string>Preset completo</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -566,6 +614,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="woodPreset">
+             <property name="toolTip">
+              <string>Preset madera</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -583,6 +634,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="stuccoPreset">
+             <property name="toolTip">
+              <string>Preset estuco</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -600,6 +654,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="metalPreset">
+             <property name="toolTip">
+              <string>Preset metal</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -693,7 +750,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>131</width>
+             <width>360</width>
              <height>693</height>
             </rect>
            </property>
@@ -851,6 +908,9 @@
         </item>
         <item row="1" column="2">
          <widget class="QPushButton" name="importPreset">
+          <property name="toolTip">
+           <string>Importar preset</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -875,6 +935,9 @@
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="3" column="4">
          <widget class="QPushButton" name="extractMesh">
+          <property name="toolTip">
+           <string>Exportar malla</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -946,6 +1009,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="extractMeshWood">
+             <property name="toolTip">
+              <string>Isosuperficie madera</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -963,6 +1029,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="extractMeshStucco">
+             <property name="toolTip">
+              <string>Isosuperficie estuco</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -980,6 +1049,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="extractMeshMetal">
+             <property name="toolTip">
+              <string>Isosuperficie metal</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -1171,6 +1243,9 @@
            </item>
            <item row="5" column="1">
             <widget class="QPushButton" name="restoreMaterial">
+             <property name="toolTip">
+              <string>Restaurar material por defecto</string>
+             </property>
              <property name="text">
               <string>Restaurar</string>
              </property>
@@ -1178,6 +1253,9 @@
            </item>
            <item row="5" column="2" colspan="2">
             <widget class="QPushButton" name="updateProperties">
+             <property name="toolTip">
+              <string>Actualizar material</string>
+             </property>
              <property name="text">
               <string>Actualizar</string>
              </property>
@@ -1228,6 +1306,9 @@
            </item>
            <item row="3" column="2">
             <widget class="QPushButton" name="meshBackground">
+             <property name="toolTip">
+              <string>Color de fondo malla</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -1235,6 +1316,9 @@
            </item>
            <item row="2" column="2">
             <widget class="QPushButton" name="volumeDeletingBackground">
+             <property name="toolTip">
+              <string>Color de fondo borrado</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -1249,6 +1333,9 @@
            </item>
            <item row="4" column="0">
             <widget class="QPushButton" name="restoreBackgrounds">
+             <property name="toolTip">
+              <string>Restaurar colores de fondo por defecto</string>
+             </property>
              <property name="text">
               <string>Restaurar</string>
              </property>
@@ -1261,6 +1348,9 @@
                <width>0</width>
                <height>0</height>
               </size>
+             </property>
+             <property name="toolTip">
+              <string>Color de fondo volumen</string>
              </property>
              <property name="autoFillBackground">
               <bool>true</bool>
@@ -1434,25 +1524,40 @@
    <property name="text">
     <string>Exportar figura...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
   </action>
   <action name="actionExportSliceImage">
    <property name="text">
     <string>Exportar corte...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionImportPreset">
    <property name="text">
     <string>Importar preset...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+I</string>
+   </property>
   </action>
   <action name="actionExportPreset">
    <property name="text">
     <string>Exportar preset...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+E</string>
+   </property>
   </action>
   <action name="actionDeleteVolumeParts">
    <property name="text">
     <string>Borrar partes</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+D</string>
    </property>
   </action>
   <action name="actionOpenDICOM_2">
@@ -1473,40 +1578,64 @@
    <property name="text">
     <string>Mostrar/Esconder plano</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+H</string>
+   </property>
   </action>
   <action name="actionSagitalPlane">
    <property name="text">
     <string>Plano sagital</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionAxialPlane">
    <property name="text">
     <string>Plano axial</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
+   </property>
   </action>
   <action name="actionCoronalPlane">
    <property name="text">
     <string>Plano coronal</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+C</string>
    </property>
   </action>
   <action name="actionWoodPreset">
    <property name="text">
     <string>Preset madera</string>
    </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
   </action>
   <action name="actionStuccoPreset">
    <property name="text">
     <string>Preset estuco</string>
+   </property>
+   <property name="shortcut">
+    <string>F3</string>
    </property>
   </action>
   <action name="actionMetalPreset">
    <property name="text">
     <string>Preset metal</string>
    </property>
+   <property name="shortcut">
+    <string>F4</string>
+   </property>
   </action>
   <action name="actionCompletePreset">
    <property name="text">
     <string>Preset completo</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
   <action name="actionWoodMesh">

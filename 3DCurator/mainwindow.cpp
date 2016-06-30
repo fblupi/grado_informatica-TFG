@@ -783,6 +783,10 @@ void MainWindow::on_actionDeleteVolumeParts_triggered() {
 	deleteVolumeParts();
 }
 
+void MainWindow::on_actionExtractMesh_triggered() {
+	exportMesh();
+}
+
 void MainWindow::on_actionWoodMesh_triggered() {
 	ui->isoValueSlider->setValue(WOOD_ISOVALUE);
 }

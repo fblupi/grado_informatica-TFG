@@ -84,6 +84,7 @@ private slots:
 	void on_actionStuccoPreset_triggered();
 	void on_actionMetalPreset_triggered();
 	void on_actionDeleteVolumeParts_triggered();
+	void on_actionExtractMesh_triggered();
 	void on_actionWoodMesh_triggered();
 	void on_actionStuccoMesh_triggered();
 	void on_actionMetalMesh_triggered();

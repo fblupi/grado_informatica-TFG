@@ -1479,6 +1479,7 @@
     <addaction name="separator"/>
     <addaction name="actionDeleteVolumeParts"/>
     <addaction name="separator"/>
+    <addaction name="actionExtractMesh"/>
     <addaction name="actionWoodMesh"/>
     <addaction name="actionStuccoMesh"/>
     <addaction name="actionMetalMesh"/>
@@ -1651,6 +1652,14 @@
   <action name="actionMetalMesh">
    <property name="text">
     <string>Malla metal</string>
+   </property>
+  </action>
+  <action name="actionExtractMesh">
+   <property name="text">
+    <string>Extraer malla</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+M</string>
    </property>
   </action>
  </widget>

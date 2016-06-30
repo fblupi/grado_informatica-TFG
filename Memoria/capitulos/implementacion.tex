@@ -121,7 +121,7 @@ Una vez generado el proyecto realizar los siguientes cambios en la configuració
 A la hora de renderizar un conjunto de datos volumétricos para obtener una imagen en 3D, se pueden utilizar distintas técnicas y VTK proporciona una serie de clases para su uso:
 
 \begin{itemize}
-	\item \textbf{\textit{Marching Cubes}}: Con este algoritmo se obtiene una malla poligonal de una isosuperficie a partir de un conjunto de datos volumétrico (Figura \ref{fig:marching_cubes_head}) \cite{marching_cubes}. Se puede usar en VTK con \texttt{vtkMarchingCubes}.
+	\item \textbf{\textit{Marching cubes}}: Con este algoritmo se obtiene una malla poligonal de una isosuperficie a partir de un conjunto de datos volumétrico (Figura \ref{fig:marching_cubes_head}) \cite{marching_cubes}. Se puede usar en VTK con \texttt{vtkMarchingCubes}.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=6cm]{imagenes/marching_cubes_head}
@@ -145,7 +145,7 @@ A la hora de renderizar un conjunto de datos volumétricos para obtener una imag
 		\label{fig:texturas3d}
 	\end{figure}
 	
-	\item \textbf{\textit{Volume Ray Casting}}: Es una técnica en el que para cada pixel de la imagen se lanza un rayo que atraviesa el volumen. Para cada voxel se obtiene su color y opacidad usando una función de transferencia. Cuando el rayo sale del volumen se calcula el color y opacidad del pixel como el acumulado por el rayo. Existe una versión de este algoritmo que hace uso de la GPU para acelerar ostensiblemente el tiempo de la operación (Figura \ref{fig:volume_ray_casting}) \cite{intro_medical_vtk_bioimage}. Se puede usar en VTK con \texttt{vtkFixedVolumeRayCastMapper}, \texttt{vtkVolumeRayCastMapper} (usan CPU), \texttt{vtkGPUVolumeRayCastMapper} (usa GPU) y \texttt{vtkSmartVolumeMapper} (según el contexto usa CPU o GPU).
+	\item \textbf{\textit{Ray casting}}: Es una técnica en la que para cada pixel de la imagen se lanza un rayo que atraviesa el volumen. Para cada voxel se obtiene su color y opacidad usando una función de transferencia. Cuando el rayo sale del volumen se calcula el color y opacidad del pixel como el acumulado por el rayo. Existe una versión de este algoritmo que hace uso de la GPU para acelerar ostensiblemente el tiempo de la operación (Figura \ref{fig:volume_ray_casting}) \cite{intro_medical_vtk_bioimage}. Se puede usar en VTK con \texttt{vtkFixedVolumeRayCastMapper}, \texttt{vtkVolumeRayCastMapper} (usan CPU), \texttt{vtkGPUVolumeRayCastMapper} (usa GPU) y \texttt{vtkSmartVolumeMapper} (según el contexto usa CPU o GPU).
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=12.5cm]{imagenes/volume_ray_casting}
@@ -290,9 +290,9 @@ Tras migrar a Windows y lograr crear un \textbf{pequeño programa en Qt} (Figura
 
 \subsection{Reconstrucción volumétrica}
 
-El primer paso de esta fase fue elegir cómo \textbf{renderizar el volumen}. Como ya se ha explicado detalladamente con anterioridad, se eligió el \textit{ray-casting} que usa GPU haciendo uso de \texttt{vtkSmartVolumeMapper}.
+El primer paso de esta fase fue elegir cómo \textbf{renderizar el volumen}. Como ya se ha explicado detalladamente con anterioridad, se eligió el \textit{ray casting} que usa GPU haciendo uso de \texttt{vtkSmartVolumeMapper}.
 
-Una parte fundamental del \textit{ray-casting} es la \textbf{función de transferencia} con la que mapea valores. Para poder crearla se ha hecho uso del software 3DSlicer \cite{slicer} para poder ver los valores de densidad de los distintos materiales de la escultura. Con esto se creó una función de transferencia bastante básica con la que poder hacer el primer renderizado (Figura  \ref{fig:primer_renderizado}).
+Una parte fundamental del \textit{ray casting} es la \textbf{función de transferencia} con la que mapea valores. Para poder crearla se ha hecho uso del software 3DSlicer \cite{slicer} para poder ver los valores de densidad de los distintos materiales de la escultura. Con esto se creó una función de transferencia bastante básica con la que poder hacer el primer renderizado (Figura  \ref{fig:primer_renderizado}).
 
 \begin{figure}[H]
 	\centering
@@ -392,7 +392,7 @@ Lo ideal sería poder añadir más de una regla, pero antes de llevar esta mejor
 
 \subsection{Borrar partes innecesarias}
 
-Al hacer \textit{ray-casting} se mapean los datos de la imagen en valores de color y opacidad gracias a la función de transferencia. Esto hace que se puedan diferenciar distintos materiales. Pero hay materiales con compuestos similares que pueden aparecer pues se encontraban en el escáner a la hora de realizarse la tomografía.
+Al hacer \textit{ray casting} se mapean los datos de la imagen en valores de color y opacidad gracias a la función de transferencia. Esto hace que se puedan diferenciar distintos materiales. Pero hay materiales con compuestos similares que pueden aparecer pues se encontraban en el escáner a la hora de realizarse la tomografía.
 
 Hablo de \textbf{la camilla donde está apoyada la figura} que tiene zonas en las que hay un material con una densidad similar al estuco y otra con uno similar a la madera. Por lo que, al visualizarse, aparecen. Aunque no tienen nada que ver con la figura. Y no solo sobran, también molestan pues en el caso de una capa de la camilla, impide ver la figura a las espaldas (Figura \ref{fig:necesario_borrar}).
 

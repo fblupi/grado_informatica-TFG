@@ -1,10 +1,10 @@
 \chapter{Introducción}
 
-El objetivo de este proyecto es construir un software con el que poder visualizar e interactuar con los datos DICOM obtenidos al someter a una escultura a una Tomografía Computerizada (TAC o TC). 
+El objetivo de este proyecto es construir un software con el que poder visualizar e interactuar con los datos DICOM obtenidos al someter a una escultura a una Tomografía Computarizada (TAC o TC). 
 
 Para ello se hará uso de VTK, que proporciona una serie de librerías en C++ para facilitar operaciones sobre datos DICOM, y de Qt, para la Interfaz Gráfica de Usuario (GUI).
 
-Antes de empezar con el proyecto en sí, se definirán conceptos como DICOM o TC que se usarán a lo largo de éste y conviene saber lo que son, así como las distintas herramientas que se utilizarán. 
+Antes de empezar con el proyecto en sí, se definirán conceptos como DICOM o TC que se usarán a lo largo de éste y conviene saber lo que son. 
 
 También se comentará brevemente qué materiales se utilizan en las esculturas de madera policromadas así como su proceso de elaboración y los posibles factores de deterioro que pueden presentar.
 
@@ -36,7 +36,7 @@ El cómo se obtienen las imágenes con una TC no es objeto de estudio de este pr
 	\label{fig:brain_dicom_serie}
 \end{figure}
 
-Para renderizar la imagen con una técnica de Direct Volume Rendering (DVR) hay que darle a cada voxel un valor de color y opacidad. Esto se realizará con lo que se denomina función de transferencia (de la que se hablará exhaustivamente más adelante) que a partir de los valores de densidad y gradiente de cada voxel obtiene un valor de color y opacidad y mediante \textit{ray-casting} o cualquier otra técnica de DVR se consigue el color para un pixel. Aquí es donde entrará en juego VTK, una librería que ayudará enormemente en la realización de estas tareas.
+Para renderizar la imagen con una técnica de Direct Volume Rendering (DVR) hay que darle a cada voxel un valor de color y opacidad. Esto se realizará con lo que se denomina función de transferencia (de la que se hablará exhaustivamente más adelante) que a partir de los valores de densidad y gradiente de cada voxel obtiene un valor de color y opacidad y mediante \textit{ray casting} o cualquier otra técnica de DVR se consigue el color para un pixel. Aquí es donde entrará en juego VTK, una librería que ayudará enormemente en la realización de estas tareas.
 
 \section{VTK} 
 
@@ -48,7 +48,7 @@ VTK es una librería gráfica orientada a objetos de alto nivel desarrollada por
 
 El tallado es el método de elaboración de esculturas más antiguo conocido. Se ha tallado en distintos materiales (madera, piedra, marfil...). Pero la madera, por condiciones como su ligereza o la facilidad de ensamblado entre distintas piezas, ha sido uno de los materiales más utilizados.
 
-Se conoce que desde el Antiguo Egipto ya se realizaban esculturas de madera y siguen utilizándose hasta la Alta Edad Media, pero a partir del siglo XI comienza su proliferación. Y desde este momento comienzan a producirse mejoras en las técnicas y herramientas utilizadas durante el proceso del tallado \cite{tc_esculturas}.
+Se conoce que desde el Antiguo Egipto ya se realizaban esculturas de madera pero es a partir del siglo XI cuando comienza su proliferación. Y desde este momento comienzan a producirse mejoras en las técnicas y herramientas utilizadas durante el proceso del tallado \cite{tc_esculturas}.
 
 \subsection{Maderas más utilizadas}
 
@@ -70,7 +70,7 @@ Además de la madera, una escultura de madera policromada, puede contener varios
 Entre los defectos de la madera se pueden encontrar \cite{tc_esculturas}:
 
 \subsubsection{Grietas o fendas}
-Según la UNE-EN 844-9 se denomina fenda a ``toda separación de las fibras (raja o hendidura) en dirección longitudinal". Según su origen, pueden ser de distintos tipos: 
+Según la UNE-EN 844-9 se denomina grieta o fenda a ``toda separación de las fibras (raja o hendidura) en dirección longitudinal". Según su origen, pueden ser de distintos tipos: 
 
 \begin{itemize}
 	\item \textbf{Acebolladuras o \textit{colainas}}: Hay una discontinuidad entre los anillos de crecimiento.
@@ -102,7 +102,7 @@ Son cavidades entre los anillos de crecimiento producidos frecuentemente por nud
 
 Además de las alteraciones que ya presenta la madera, existen otros factores que también influyen como la humedad y la temperatura o el ataque de insectos xilófagos y hongos.
 
-Los insectos xilófagos se nutren de madera seca y favorecen su desarrollo una humedad relativa y temperaturas no muy bajas. Estos producen daños rompiendo las fibras de la madera.
+Los insectos xilófagos se nutren de madera seca y favorecen a su desarrollo una humedad relativa y temperaturas no muy bajas. Estos producen daños rompiendo las fibras de la madera.
 
 Los hongos son microorganismos que pueden desarrollarse en la superficie o en el interior de la madera, haciendo que pierda humedad, reduciendo su tamaño y deformándose. Existen tres tipos distintos de degradación tras una ataque de hongos: pudrición blanca, parda o seca y blanda.
 
@@ -116,8 +116,6 @@ A partir del siglo XVI empieza a utilizarse con más frecuencia otro método en 
 
 A partir del Barroco se mejora esta técnica realizando ensamblados en hueco para evitar el posterior ahuecado \cite{tc_esculturas}.
 
-
-
 \section{Trabajos previos}
 
 Como ya se ha comentado anteriormente, el uso de las imágenes obtenidas con las TCs está muy extendido en el campo de la medicina, aunque puede ser usado en otros. 
@@ -126,9 +124,9 @@ Ha tenido bastante repercusión en estudios anatómicos del estado actual de mom
 
 En el caso de estudio de este proyecto, la restauración de bienes culturales, obviamente, también puede aplicarse.
 
-Tradicionalmente, se han utilizado radiografías para examinar el estado de las esculturas, pero tenía sus limitaciones (superposición de planos) el uso de TCs hace que se puedan obtener resultados que permitan realizar exámenes más precisos y exhaustivos a los restauradores \cite{tc_esculturas}.
+Tradicionalmente, se han utilizado radiografías para examinar el estado de las esculturas, pero tenía sus limitaciones como la superposición de planos. El uso de TCs como técnica de estudio no destructiva hace que se puedan obtener resultados que permitan realizar exámenes más precisos y exhaustivos a los restauradores sin dañar la escultura \cite{tc_esculturas}.
 
-Se podría hacer uso de herramientas médicas como OsiriX \cite{osirix}, AMILab \cite{amilab} o RadiAnt; pero proporcionan presets para visualizar materiales de los que están compuestos el organismo humano y la mayoría de ellas tienen un precio de licencia bastante elevado.
+Se podría hacer uso de herramientas médicas como OsiriX \cite{osirix}, AMILab \cite{amilab} o RadiAnt; pero proporcionan \textit{presets} para visualizar materiales de los que están compuestos el organismo humano y la mayoría de ellas tienen un precio de licencia bastante elevado.
 
 También se podrían utilizar herramientas más genéricas como 3DSlicer \cite{slicer}, desarrollada por la misma compañía que VTK. No obstante, tiene muchas funcionalidades que no utilizarían los restauradores y hacen de ella una herramienta demasiado compleja.
 
@@ -138,7 +136,7 @@ Incluso podrían hacer uso de software específico para la visualización de esc
 	\centering
 	\includegraphics[height=9cm]{imagenes/inmaculada_concepcion_real}
 	\includegraphics[height=9cm]{imagenes/inmaculada_concepcion_hyper3d}
-	\caption{A la izquierda escultura de la Inmaculada Concepción. A la derecha su reconstrucción volumétrica usando Hyper3D y su preset para madera}
+	\caption{A la izquierda escultura de la Inmaculada Concepción. A la derecha su reconstrucción volumétrica usando Hyper3D y su \textit{preset} para madera}
 	\label{fig:hyper3d_results}
 \end{figure}
 
@@ -148,4 +146,4 @@ El resultado insatisfactorio obtenido con las herramientas disponibles ha motiva
 
 Conocer la estructura interna de la escultura que se somete a examen es de gran ayuda para realizar tareas de conservación y restauración de más calidad sobre esta \cite{tc_esculturas}.
 
-Se incluirán también una serie de presets para poder visualizar unos u otros materiales sin que el usuario tenga por qué conocer los valores de densidad de estos para crear una función de transferencia que los visualice, pero proporcionando también un editor de funciones de transferencias con el que los usuarios más avezados puedan crear sus propios presets y exportarlos para que puedan ser utilizados por los demás.
+El software incluirá una serie de \textit{presets} para poder visualizar unos u otros materiales sin que el usuario tenga por qué conocer los valores de densidad de estos para crear una función de transferencia que los visualice, pero proporcionando también un editor de funciones de transferencias con el que los usuarios más avezados puedan crear sus propios \textit{presets} y exportarlos para que puedan ser utilizados por los demás.

@@ -1470,8 +1470,6 @@
     <addaction name="actionAxialPlane"/>
     <addaction name="actionCoronalPlane"/>
     <addaction name="separator"/>
-    <addaction name="actionImportPreset"/>
-    <addaction name="actionExportPreset"/>
     <addaction name="actionCompletePreset"/>
     <addaction name="actionWoodPreset"/>
     <addaction name="actionStuccoPreset"/>
@@ -1479,13 +1477,22 @@
     <addaction name="separator"/>
     <addaction name="actionDeleteVolumeParts"/>
     <addaction name="separator"/>
-    <addaction name="actionExtractMesh"/>
     <addaction name="actionWoodMesh"/>
     <addaction name="actionStuccoMesh"/>
     <addaction name="actionMetalMesh"/>
    </widget>
+   <widget class="QMenu" name="menuHerramientas">
+    <property name="title">
+     <string>Herramientas</string>
+    </property>
+    <addaction name="actionImportPreset"/>
+    <addaction name="actionExportPreset"/>
+    <addaction name="separator"/>
+    <addaction name="actionExtractMesh"/>
+   </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuEditar"/>
+   <addaction name="menuHerramientas"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenDICOM">
@@ -1656,7 +1663,7 @@
   </action>
   <action name="actionExtractMesh">
    <property name="text">
-    <string>Extraer malla</string>
+    <string>Extraer malla...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+M</string>

@@ -8,7 +8,7 @@ Esta especificación de requisitos contiene aquellos \textbf{requisitos iniciale
 
 	\subsection{Propósito}
 	
-	Este capítulo de especificación de requisitos tiene como objetivo definir las especificaciones funcionales y no funcionales para el desarrollo de un software que permitirá visualizar e interactuar con los datos DICOM obtenidos al someter a una escultura a una TC. Éste software será utilizado principalmente por restauradores.
+	Este capítulo de especificación de requisitos tiene como objetivo definir las especificaciones funcionales y no funcionales para el desarrollo de un software que permitirá visualizar e interactuar con los datos DICOM obtenidos al someter a una escultura a una TC. Este software será utilizado principalmente por restauradores.
 	
 	\subsection{Ámbito del sistema}
 	
@@ -20,20 +20,20 @@ Esta especificación de requisitos contiene aquellos \textbf{requisitos iniciale
 		\item \textbf{ERS}: Especificación de Requisitos Software.
 		\item \textbf{GUI} (\textit{Graphic User Interface}): Interfaz gráfica de usuario.
 		\item \textbf{DICOM} (\textit{Digital Imaging and Comunication in Medicine}): Datos de donde se obtienen las imágenes.
-		\item \textbf{TAC o TC} (Tomografía Axial Computerizada): Escáner en el que se obtienen los datos DICOM.
-		\item \textbf{GPU} (\textit{Graphic Precessor Unit}): Tarjeta gráfica.
+		\item \textbf{TAC o TC} (Tomografía Axial Computarizada): Escáner en el que se obtienen los datos DICOM.
+		\item \textbf{GPU} (\textit{Graphic Processor Unit}): Tarjeta gráfica.
 		\item \textbf{VTK} (\textit{The Visualization ToolKit}): Librería gráfica que se utilizará.
 		\item \textbf{CMake} (\textit{Cross platform Make}): Herramienta para generar código compilable en distintas plataformas.
 		\item \textbf{Qt}: Librería que se utilizará para realizar la GUI.
 		\item \textbf{\textit{Widget}}: Elemento de la GUI.
 		\item \textbf{Volumen}: Conjunto de datos en los que para cada posición XYZ se tiene un valor determinado.
-		\item \textbf{\textit{Voxel}} \textit{VOlumentric piXEL}: celda en la matriz 3D del conjunto de datos del volumen.
+		\item \textbf{\textit{Voxel}} (\textit{VOlumentric piXEL}): celda en la matriz 3D del conjunto de datos del volumen.
 		\item \textbf{Corte}: Vista de la figura a través de un plano. Por ejemplo, al cortar con una sierra un tronco por la mitad, se puede ver cómo es por dentro en esa posición por donde se ha cortado.
 		\item \textbf{TF} (Función de transferencia): Función utilizada para visualizar los datos deseados de un volumen.
 		\item \textbf{Preset}: Función de transferencia previamente configurada.
 		\item \textbf{\textit{Direct Volume Rendering}}: Visualización directa de volúmenes en la que cada valor del volumen se mapea con un determinado color y opacidad dado por una función de transferencia.
-		\item \textbf{\textit{Ray-Casting}}: Técnica de \textit{Direct Volume Rendering} utilizada para la visualización de volúmenes.
-		\item \textbf{\textit{Marching-Cubes}}: Técnica para generar malla de polígonos a partir de un volumen y un valor de isosuperficie.
+		\item \textbf{\textit{Ray casting}}: Técnica de \textit{Direct Volume Rendering} utilizada para la visualización de volúmenes.
+		\item \textbf{\textit{Marching cubes}}: Técnica para generar malla de polígonos a partir de un volumen y un valor de isosuperficie.
 		\item \textbf{HU \textit{(Hounsfield Units)}}: Unidad de medida escalar del valor de densidad en un \textit{voxel} del voluen
 	\end{itemize}
 	
@@ -75,15 +75,13 @@ Esta especificación de requisitos contiene aquellos \textbf{requisitos iniciale
 	
 	Se llevará a cabo un desarrollo evolutivo basado en un prototipo funcional en el que no están definidos todos los requisitos desde un principio y se irán añadiendo conforme se vayan completando y ocurriendo nuevos.
 	
-	El software será libre, por lo que el código estará accesible en un repositorio de GitHub.
-	
 	Se programará en C++ usando las librerías VTK para la visualización de gráficos y Qt para la GUI.
 	
 	Aprovechando que se debe usar CMake para compilar las librerías mencionadas, se utilizará también para generar el proyecto, pues se puede generar código compilable en distintas plataformas.
 	
 	\subsection{Suposiciones y dependencias}
 	
-	El software se utilizará para poder visualizar esculturas de madera por lo que se tendrán en cuenta los materiales con los que están hechas la mayoría de estas. Si se introducen los datos DICOM de cualquier otra cosa con materiales distintos a los utilizados en las esculturas no se visualizará correctamente.
+	El software se utilizará para poder visualizar esculturas de madera por lo que se tendrán en cuenta los materiales con los que están hechas la mayoría de estas (madera, estuco y metal). Si se introducen los datos DICOM de cualquier otra cosa con materiales distintos a los utilizados en las esculturas no se visualizará correctamente.
 
 \section{Requisitos específicos}
 
@@ -135,7 +133,7 @@ Esta especificación de requisitos contiene aquellos \textbf{requisitos iniciale
 	
 		\subsubsection{Visualización}
 		\begin{itemize}
-			\item \textbf{Visualizar en 3D}: Cuando el usuario haya seleccionado una carpeta con datos DICOM, se mostrará en 3D en el \textit{widget} izquierdo pudiendo rotar y hacer zoom interactuando con el ratón. Para visualizar el volumen se utilizarán técnicas de \textit{Direct Volume Rendering} que proporcionan VTK como puede ser el \textit{Ray-Casting}.
+			\item \textbf{Visualizar en 3D}: Cuando el usuario haya seleccionado una carpeta con datos DICOM, se mostrará en 3D en el \textit{widget} izquierdo pudiendo rotar y hacer zoom interactuando con el ratón. Para visualizar el volumen se utilizarán técnicas de DVR que proporcionan VTK como puede ser el \textit{ray casting}.
 			\item \textbf{Visualizar corte}: Cuando el usuario haya cargado los datos DICOM y haya establecido un plano de corte, se podrá generar un corte a la figura por éste. Este corte se visualizará en el \textit{widget} derecho.
 			\item \textbf{Guardar imagen}: El usuario en todo momento podrá guardar una imagen (en formatos comunes JPG o PNG) de lo que está viendo en cada uno de los \textit{widgets} seleccionando en una ventana que aparecerá cuando se elija la opción la dirección donde se guardará y el nombre del archivo. 
 		\end{itemize}
@@ -157,7 +155,7 @@ Esta especificación de requisitos contiene aquellos \textbf{requisitos iniciale
 	
 	Sin embargo, hay que tener en cuenta otros factores, como pueden ser el uso eficiente de memoria y no tener cargadas todas las figuras que se han estado visualizando, desechando la anterior cuando se carga una nueva.
 	
-	El rendimiento gráfico también es importante, por eso y para obtener imágenes de mayor calidad, se utilizarán técnicas de \textit{Direct Volume Rendering} como el \textit{Ray-Casting}. Estas técnicas necesitan una gran cantidad de procesamiento, pero la velocidad de procesamiento de las GPUs actuales no deberían resultar un problema.
+	El rendimiento gráfico también es importante, por eso y para obtener imágenes de mayor calidad, se utilizarán técnicas de DVR como el \textit{ray casting}. Estas técnicas necesitan una gran cantidad de procesamiento, pero la velocidad de procesamiento de las GPU actuales no deberían resultar un problema.
 	
 	\subsection{Restricciones de diseño}
 	
@@ -169,4 +167,4 @@ Esta especificación de requisitos contiene aquellos \textbf{requisitos iniciale
 	
 	El software generado deberá ser fiable, porque aunque no trabaje con datos sensibles cuya pérdida pueda ser grave, siempre resulta molesto utilizar un software con fallos que interrumpan durante su uso.
 	
-	También se debe tener en cuenta que el software sea mantenible pues, al ser libre, otros desarrolladores pueden colaborar en su desarrollo y debe estar bien documentado para que esto sea una tarea fácil.
+	También se debe tener en cuenta que el software sea mantenible pues, en el futuro, otros desarrolladores pueden colaborar y debe estar bien documentado para que esto sea una tarea fácil.

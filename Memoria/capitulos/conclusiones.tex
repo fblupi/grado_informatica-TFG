@@ -1,0 +1,40 @@
+\chapter{Conclusiones y trabajos futuros}
+
+En este último capítulos se comentarán las conclusiones a las que se han llegado así como las posibles mejoras en el futuro que se podrían realizar.
+
+\section{Conclusiones}
+
+El uso de la \textbf{TC médica como técnica para examinar las esculturas} de madera policromada en lugar de la radiografía tradicional hemos visto que puede tener muchas ventajas pues puede examinarse el interior de la figura en un espacio 3D sin los problemas de superposición de planos que se daban con la radiografía.
+
+\textbf{Conocer la estructura interna de la escultura es primordial} a la hora de realizar un posterior proceso de conservación y restauración por parte de los restauradores, pero la escasez de herramientas para ello puede ser uno de los motivos por el que esta técnica no ha proliferado todavía.
+
+Durante este proyecto se ha desarrollado un software completo con el que examinar los datos DICOM obtenidos al someter a una escultura a una TC.
+
+Se ha procurado realizar una herramienta \textbf{sencilla de utilizar}, que sea amigable a usuarios que pueden no estar muy habituados al uso de ordenadores para realizar su trabajo. Pero no por ello carente de funcionalidad. Y es que se ha logrado implementar todo lo que se planteó en un principio además de numerosas mejoras.
+
+Por lo que ahora el software cuenta principalmente con la siguiente funcionalidad:
+
+\begin{itemize}
+	\item Leer datos DICOM.
+	\item Reconstruir volumen a partir de datos DICOM.
+	\item Generar y visualizar cortes producidos en la figura por un plano.
+	\item Guardar imágenes del volumen y los cortes.
+	\item Cambiar de función de transferencia para visualizar unos u otros materiales.
+	\item Importar y exportar funciones de transferencia.
+	\item Eliminar partes innecesarias del volumen a la hora de la visualización.
+	\item Realizar medidas tanto en el volumen como en los cortes.
+	\item Generar y exportar una malla de triángulos que contenga un material específico para poder ser posteriormente imprimida.
+\end{itemize}
+
+\section{Trabajos futuros}
+
+Las perspectivas futuras del software son altas y pueden realizarse diversas mejoras. En el apartado de nueva funcionalidad:
+
+\begin{itemize}
+	\item Además de medir distancias entre dos puntos como se mide ahora se podrían \textbf{medir ángulos} de piezas o definir y \textbf{medir áreas y volúmenes}.
+	\item También se podrían \textbf{detectar y definir subvolúmenes de partes} de la escultura con los que trabajar de forma independiente.
+	\item Se podría agregar funcionalidad para permitir \textbf{realizar anotaciones} a los restauradores y así no tener que usar lápiz y papel o un software adicional para realizar esta tarea.
+	\item Para no tener que escoger la misma carpeta con los datos DICOM cada vez que se importa una escultura, se podría tener una \textbf{base de datos persistente local} donde importar los distintos conjuntos de datos y poder seleccionarlos directamente desde ahí abstrayéndose de dónde están almacenados.
+\end{itemize}
+
+También, aprovechando que VTK está disponible para Android (aunque todavía no es estable) se podría migrar la aplicación a \textbf{dispositivos móviles} aprovechando el auge de estos.

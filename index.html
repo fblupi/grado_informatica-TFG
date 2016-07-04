@@ -9,6 +9,14 @@
 
   <title>3DCurator</title>
 
+  <!-- Favicon -->
+  <link href="img/icon.png" rel="icon" sizes="192x192">
+
+  <!-- Mobile Web App -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#795548">
+
   <!-- Bootstrap Core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -38,19 +46,19 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand topnav" href="#"><img height="25px" src="img/mini-banner.png" alt="logo de 3DCurator"/></a>
+        <a class="navbar-brand topnav" href="#home"><img id="banner-logo" src="img/mini-banner.png" alt="Banner con logo de 3DCurator"/></a>
       </div> <!-- /.navbar-header -->
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="#about">About</a>
-          </li>
-          <li>
-            <a href="#funcionalidad">Funcionalidad</a>
+            <a href="#acercade">Acerca de</a>
           </li>
           <li>
             <a href="#descargar">Descargar</a>
+          </li>
+          <li>
+            <a href="#contacto">Contacto</a>
           </li>
         </ul>
       </div> <!-- /.navbar-collapse -->
@@ -58,7 +66,7 @@
   </nav> <!-- /.navbar -->
 
   <!-- Header -->
-  <a name="about"></a>
+  <a name="home"></a>
   <div class="intro-header">
     <div class="container">
       <div class="row">
@@ -74,7 +82,16 @@
   </div> <!-- /.intro-header -->
 
   <!-- Page Content -->
-  <a  name="funcionalidad"></a>
+  <a  name="acercade"></a>
+
+  <div class="content-section-b">
+    <div class="container">
+      <img id="about-software-logo" src="img/icon.png" alt="logo de 3DCurator"/>
+      <p class="lead"><br></p>
+      <p class="lead">3DCurator es un software para visualizar datos volumétricos de <strong>esculturas de madera policromada</strong> a las que se les ha sometido a una Tomografía Computacional (TC).</p>
+      <p class="lead">Se ha desarrollado utilizando VTK como librería gráfica de alto nivel y Qt como librería para desarrollar la interfaz gráfica de usuario.</p>
+    </div> <!-- /.container -->
+  </div> <!-- /.content-section-b -->
 
   <div class="content-section-a">
     <div class="container">
@@ -86,7 +103,7 @@
           <p class="lead">Realiza una reconstrucción volumétrica en 3D de la escultura usando disintos presets o creando el tuyo propio para visualizar los distintos materiales. Extrae tus propios presets y compártelos para que los puedan importar otros usuarios.</p>
         </div>
         <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-          <img class="img-responsive" src="img/ipad.png" alt="">
+          <img class="img-responsive" src="img/san-juan-evangelista.png" alt="Escultura de San Juan Evangelista reconstruida con distintos presets">
         </div>
       </div> <!-- /.row -->
     </div> <!-- /.container -->
@@ -102,7 +119,7 @@
           <p class="lead">Realiza cortes con un plano arbitrario para poder ver el interior de la escultura.</p>
         </div>
         <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-          <img class="img-responsive" src="img/dog.png" alt="">
+          <img class="img-responsive" src="img/corte-inmaculada-concepcion.png" alt="Visualización de un corte sobre la escultura de Inmaculada Concepción">
         </div>
       </div> <!-- /.row -->
     </div> <!-- /.container -->
@@ -118,7 +135,7 @@
           <p class="lead">Realiza cualquier medida tanto en la reconstrucción volumétrica en 3D como en los cortes generados y guarda las imágenes de lo que puedes ver por pantalla en formato JPEG o PNG.</p>
         </div>
         <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-          <img class="img-responsive" src="img/phones.png" alt="">
+          <img class="img-responsive" src="img/reglas.png" alt="Distintas reglas midiendo elementos de un corte en la escultura de Inmaculada Concepción">
         </div>
       </div> <!-- /.row -->
     </div> <!-- /.container -->
@@ -134,7 +151,7 @@
           <p class="lead">Extrae la malla poligonal de cualquier material en formato STL para poder imprimirla posteriormente en 3D.</p>
         </div>
         <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-          <img class="img-responsive" src="img/dog.png" alt="">
+          <img class="img-responsive" src="img/malla-clavos.png" alt="Malla poligonal con los clavos extraídos de la escultura de San Juan Evangelista">
         </div>
       </div> <!-- /.row -->
     </div> <!-- /.container -->
@@ -158,6 +175,31 @@
     </div> <!-- /.container -->
   </div> <!-- /.banner -->
 
+  <!-- Contacto -->
+  <a name="contacto"></a>
+  <div class="content-section-b">
+    <div class="container">
+      <h2 class="section-heading">Contacto</h2>
+      <ul class="list-inline banner-social-buttons">
+        <li>
+          <a href="http://fblupi.github.io/" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-home fa-fw"></i> <span class="network-name">Web personal</span></a>
+        </li>
+        <li>
+          <a href="mailto:mailto:fboli94@gmail.com?subject=Feedback%203DCurator" class="btn btn-default btn-lg"><i class="fa fa-envelope fa-fw"></i> <span class="network-name">Email</span></a>
+        </li>
+        <li>
+          <a href="https://github.com/fblupi" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">GitHub</span></a>
+        </li>
+        <li>
+          <a href="https://es.linkedin.com/in/fblupi" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">LinkedIn</span></a>
+        </li>
+        <li>
+          <a href="https://twitter.com/fblupi" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+        </li>
+      </ul>
+    </div> <!-- /.container -->
+  </div> <!-- /.content-section-b -->
+
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -165,22 +207,22 @@
         <div class="col-lg-12">
           <ul class="list-inline">
             <li>
-              <a href="#">Home</a>
+              <a href="#home">Home</a>
             </li>
             <li class="footer-menu-divider">&sdot;</li>
             <li>
-              <a href="#about">About</a>
-            </li>
-            <li class="footer-menu-divider">&sdot;</li>
-            <li>
-              <a href="#funcionalidad">Funcionalidad</a>
+              <a href="#acercade">Acerca de</a>
             </li>
             <li class="footer-menu-divider">&sdot;</li>
             <li>
               <a href="#descargar">Descargar</a>
             </li>
+            <li class="footer-menu-divider">&sdot;</li>
+            <li>
+              <a href="#contacto">Contacto</a>
+            </li>
           </ul>
-          <p class="copyright text-muted small">Copyright &copy; 3DCurator 2016. All Rights Reserved</p>
+          <p class="copyright text-muted small">Copyright &copy; 3DCurator 2016</p>
         </div>
       </div> <!-- /.row -->
     </div> <!-- /.container -->

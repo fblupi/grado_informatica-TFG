@@ -114,8 +114,10 @@ h6 {
 }
 
 .banner {
-    background-color: #f8f8f8;
     padding: 100px 0;
+    color: #f8f8f8;
+    background: url(../img/intro-bg.png) no-repeat center center;
+    background-size: cover;
 }
 
 .banner h2 {
@@ -127,13 +129,18 @@ h6 {
     margin-bottom: 0;
 }
 
-.banner-social-buttons {
+.banner-download {
     float: right;
     margin-top: 0;
 }
 
+.banner-social-buttons {
+    float: left;
+    margin-top: 0;
+}
+
 @media(max-width:1199px) {
-    ul.banner-social-buttons {
+    ul.banner-social-buttons, ul.banner-download {
         float: left;
         margin-top: 15px;
     }
@@ -146,13 +153,13 @@ h6 {
         font-size: 3em;
     }
 
-    ul.banner-social-buttons > li {
+    ul.banner-social-buttons > li, ul.banner-download > li {
         display: block;
         margin-bottom: 20px;
         padding: 0;
     }
 
-    ul.banner-social-buttons > li:last-child {
+    ul.banner-social-buttons > li:last-child, ul.banner-download > li:last-child {
         margin-bottom: 0;
     }
 }

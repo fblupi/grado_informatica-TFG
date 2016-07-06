@@ -6,7 +6,7 @@ En este capítulo se hablará del desarrollo del software describiendo la plataf
 
 En un principio, la idea fue desarrollar usando una distribución Linux un \textbf{software multiplataforma} ayudándose, para ello, de CMake \cite{cmake} que a partir de los archivos fuentes puede crear \textit{makefiles} para distintas plataformas.
 
-No obstante, unos problemas detectados con los \textit{drivers} de la GPU provocaban que no se pudiese integrar Qt \cite{qt} con VTK \cite{vtk} ya que el \textit{widget} especializado para esta tarea \texttt{QVTKWidget} no funcionaba. Tras unos días intentando solucionar los problemas sin éxito se decidió migrar a Windows donde no surgió ningún problema parecido al que se dio en Linux.
+No obstante, unos problemas detectados con los \textit{drivers} de mi GPU provocaban que no se pudiese integrar Qt \cite{qt} con VTK \cite{vtk} ya que el \textit{widget} especializado para esta tarea (\texttt{QVTKWidget}) no funcionaba. Tras unos días intentando solucionar los problemas sin éxito se decidió migrar a Windows donde no surgió ningún problema parecido al que se dio en Linux.
 
 Más tarde además de Qt y VTK se decidió utilizar la librería Boost \cite{boost} para facilitar el tratamiento de ficheros XML.
 
@@ -20,7 +20,7 @@ Se ha utilizado \textbf{Windows 10 Pro} (64 bits) con el siguiente software y li
 	\item Boost 1.60.0
 \end{itemize}
 
-Cuando se empezó a desarrollar el software la versión más nueva de VTK era la \textbf{6.3.0} y se empezó utilizando ésta. No obstante, tenía un pequeño fallo que afectaba mucho a la aplicación y es que si se hacía uso de la GPU en el \textit{ray-casting} al renderizar el volumen, \textbf{la opacidad gradiente no se computaba}. Por suerte, a principios del mes de Febrero, se lanzó una nueva versión de VTK, la \textbf{7.0.0}, que solucionaba este fallo.
+Cuando se empezó a desarrollar el software la versión más nueva de VTK era la \textbf{6.3.0} y se empezó utilizando ésta. No obstante, tenía un pequeño fallo que afectaba mucho a la aplicación y es que si se hacía uso de la GPU en el \textit{ray casting} al renderizar el volumen, \textbf{la opacidad gradiente no se computaba}. Por suerte, a principios del mes de Febrero, se lanzó una nueva versión de VTK, la \textbf{7.0.0}, que solucionaba este fallo.
 
 Pero los problemas no acababan aquí, y es que, con la nueva versión, el programa no llegaba a funcionar y \textbf{se bloqueaba nada más iniciarse}. Detectar el fallo era complicado y al no ser todavía demasiado complejo era más rápido detectar de dónde venía el error si se volvía a crear desde cero agregando uno a uno cada componente.
 
@@ -110,7 +110,7 @@ Una vez generado el proyecto realizar los siguientes cambios en la configuració
 	\item En \textit{Project Properties} ir a \textit{Configuration Properties $ \rangle $ Linker $ \rangle $ System} y:
 	\begin{itemize}
 		\item En \textit{Subsystem} seleccionar la opción: \\ \texttt{Windows (/SUBSYSTEM:WINDOWS)}.
-		\item  En \textit{Enable Large Adresses} seleccionar la opción: \\ \texttt{Yes (/LARGEADRESSESAWARE)}.
+		\item En \textit{Enable Large Adresses} seleccionar la opción: \\ \texttt{Yes (/LARGEADRESSESAWARE)}.
 	\end{itemize}
 \end{itemize}
 
@@ -133,7 +133,7 @@ A la hora de renderizar un conjunto de datos volumétricos para obtener una imag
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=10cm]{imagenes/texturas2d}
-		\caption{Esquema del proceso de renderizado usando texturas 2D. Imagen extraída del apéndice B del libro \textit{An Introduction to Programming for Medical Image Analysis with the Visualization Toolkit }\cite{intro_medical_vtk_bioimage}}
+		\caption{Esquema del proceso de renderizado usando texturas 2D. Imagen extraída del apéndice B del libro \textit{An Introduction to Programming for Medical Image Analysis with the Visualization Toolkit} \cite{intro_medical_vtk_bioimage}}
 		\label{fig:texturas2d}
 	\end{figure}
 	
@@ -271,7 +271,7 @@ El rango de valores de la escala va desde -1024 HU hasta 3071 HU. 4096 valores r
 
 \section{Fases de desarrollo}
 
-Al seguirse un desarrollo evolutivo basado en un prototipo funcional, se ha ido creando poco a poco y añadiendo componentes conforme se iban completando y testando lo que ya se había desarrollado:
+Al seguirse un desarrollo evolutivo basado en un prototipo funcional, se ha ido creando poco a poco y añadiendo componentes conforme se iban completando y probando lo que ya se había desarrollado:
 
 \subsection{Lectura de imágenes DICOM}
 
@@ -319,7 +319,7 @@ Pero de esta forma no se estaban generando cortes sino visualizando las propias 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm]{imagenes/primer_plano_de_corte}
-	\caption{Primera implementación del pano que corta la figura y renderiza el corte en otro \textit{widget}}
+	\caption{Primera implementación del plano que corta la figura y renderiza el corte en otro \textit{widget}}
 	\label{fig:primer_plano_de_corte}
 \end{figure}
 
@@ -329,7 +329,7 @@ Además se reescribieron métodos de eventos de ratón para eliminar los inneces
 
 \subsection{Guardar imágenes}
 
-Otra funcionalidad básica era la de poder \textbf{guardar imágenes de ambos visores}. VTK ofrece con las distintas subclases de \texttt{vtkImageWriter} una serie de clases con las que exportar imágenes en distintos formatos. Se han utilizado tanto \texttt{vtkJPEGWriter} como \texttt{vtkPNGWriter} para darle al usuario la posibilidad de guardar la imagen tanto en JPEG como en PNG. 
+Otra funcionalidad básica era la de poder \textbf{guardar imágenes de ambos visores}. VTK ofrece con las distintas subclases de \texttt{vtkImageWriter} una serie de clases con las que exportar imágenes en distintos formatos. Se han utilizado tanto \texttt{vtkJPEGWriter} como \texttt{vtkPNGWriter} para darle al usuario la posibilidad de guardar la imagen tanto en JPG como en PNG. 
 
 \subsection{Editar función de transferencia}
 
@@ -346,7 +346,7 @@ Explorando entre las clases que proporcionaba VTK se encontraron:
 	\item \texttt{vtkPiecewiseControlPointsItem}: Muestra y permite modificar los puntos de la función de transferencia de opacidad como un \texttt{vtkPlot} que se puede añadir a una \texttt{vtkChartXY}.
 \end{itemize}
 
-No obstante, había que reescribir algunos métodos de estas clases para poder adaptarlas al software. Había que eliminar algunos eventos innecesarios y agregar nuevos acciones a otros como volver a renderizar el volumen cada vez que se cambie algún punto.
+No obstante, había que reescribir algunos métodos de estas clases para poder adaptarlas al software. Había que eliminar algunos eventos innecesarios y agregar nuevas acciones a otros como volver a renderizar el volumen cada vez que se cambie algún punto.
 
 Llevar a cabo este trabajo fue bastante costoso pero finalmente se logró proporcionar al usuario una interfaz gráfica para editar la función de transferencia intuitiva y fácil de utilizar (Figura \ref{fig:gui_final_tf}).
 
@@ -369,7 +369,7 @@ Por ejemplo, la función de transferencia principal utilizada en este formato XM
 
 \lstinputlisting[caption={Ejemplo de función de transferencia en el formato XML descrito}, label=code:xmltf, style=XML]{misc/ct-woodsculpture.xml}
 
-Para poder\textbf{ gestionar estos ficheros}, se decidió utilizar una librería. Había muchas opciones, pero lo que se quería gestionar era bastante básico por lo que utilizar una demasiado compleja podría resultar contraproducente ya que se tardaría bastante tiempo en aprender a utilizarla.
+Para poder \textbf{gestionar estos ficheros}, se decidió utilizar una librería. Había muchas opciones, pero lo que se quería gestionar era bastante básico por lo que utilizar una demasiado compleja podría resultar contraproducente ya que se tardaría bastante tiempo en aprender a utilizarla.
 
 Finalmente se optó por \textbf{Boost}, una librería muy extensa que cuenta con un pequeño gestor de ficheros XML. 
 
@@ -480,7 +480,7 @@ De esta forma se puede obtener, por ejemplo, un modelo de los clavos de una figu
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=8cm]{imagenes/malla_clavos}
-	\caption{Malla generada con un valor de isosuperfice de 2976 HU para poder extraer los clavos}
+	\caption{Malla generada con un valor de isosuperficie de 2976 HU para poder extraer los clavos}
 	\label{fig:malla_clavos}
 \end{figure}
 
@@ -496,11 +496,11 @@ Dada por finalizada la lluvia de ideas que añadir como mejoras, había que real
 
 Hablo principalmente de la \textbf{gestión de reglas para realizar varias medidas} en cualquiera de los dos visores principales. Para ello había que dotar a la interfaz de un cuadro con las reglas con opciones para añadir, eliminar y habilitar o deshabilitar.
 
-Para ello, dado que contaba con la experiencia justa con Qt, se realizó en primer lugar la gestión de elementos de la interfaz para poder posteriormente mapear cada item de las cajas a un \texttt{vtkDistanceWidget} distinto.
+Dado que contaba con la experiencia justa con Qt, se realizó en primer lugar la gestión de elementos de la interfaz para poder posteriormente mapear cada item de las cajas a un \texttt{vtkDistanceWidget} distinto.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12.5cm]{imagenes/varias_reglas}
+	\includegraphics[width=12cm]{imagenes/varias_reglas}
 	\caption{A la derecha, barra de las reglas y en los visores cada una de ellas midiendo algo distinto}
 	\label{fig:varias_reglas}
 \end{figure}
@@ -510,3 +510,7 @@ Para ello, dado que contaba con la experiencia justa con Qt, se realizó en prim
 Una de las primeras ideas que se pensaron fue la de poder permitir cambiar al usuario el \textbf{color de fondo de los \textit{widget}} donde se visualizan tanto el volumen como la malla generada. Pero no se realizó hasta al final pues había cosas más importantes que implementar.
 
 Con esta pequeña mejora junto a otras menores en la interfaz, se dio por terminada la fase de desarrollo del software. Cumpliendo los requisitos iniciales y añadiendo múltiples mejoras que han acabado formando un software bastante completo pero al mismo tiempo sencillo de utilizar.
+
+\subsection{Web de presentación}
+
+Una vez acabado el software y creado un instalador para Windows, aprovechando la funcionalidad de \textit{GitHub Pages} que permite alojar gratuitamente una web para un repositorio, se creó una \textbf{web estática} en la que presentar el software y proporcionar un enlace de descarga, así como enlaces para poder contactar conmigo. La dirección a ésta es: \href{http://fblupi.github.io/3DCurator/}{http://fblupi.github.io/3DCurator/}.

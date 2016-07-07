@@ -221,7 +221,7 @@ void MainWindow::importDICOM() {
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
 		progressDialog->setWindowTitle(QString("Cargando..."));
 		progressDialog->setLabelText(QString::fromLatin1("Cargando los datos DICOM especificados"));
-		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
 		progressDialog->setBar(bar);
@@ -294,7 +294,7 @@ void MainWindow::exportMeshToFile(const QString filename) {
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
 		progressDialog->setWindowTitle(QString("Extrayendo..."));
 		progressDialog->setLabelText(QString::fromLatin1("Extrayendo la malla del modelo"));
-		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
 		progressDialog->setBar(bar);
@@ -395,7 +395,7 @@ void MainWindow::updateMesh() {
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
 		progressDialog->setWindowTitle(QString("Actualizando..."));
 		progressDialog->setLabelText(QString::fromLatin1("Generando el modelo con la isosuperficie especificada"));
-		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
 		progressDialog->setBar(bar);
@@ -687,7 +687,7 @@ void MainWindow::launchWarning(const std::string message) {
 	// crea mensaje de advertencia
 	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
 	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
-	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 	confirmBox->setIcon(QMessageBox::Information);
 	confirmBox->setText(QString::fromLatin1(message.c_str()));
 	confirmBox->setStandardButtons(QMessageBox::Ok);
@@ -728,7 +728,7 @@ void MainWindow::on_actionExit_triggered() {
 	// crea mensaje de advertencia
 	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
 	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
-	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 	confirmBox->setIcon(QMessageBox::Information);
 	confirmBox->setText(QString::fromLatin1("¿Seguro que desea salir?"));
 	confirmBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);

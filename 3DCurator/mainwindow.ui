@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="assets/resources.qrc">
-    <normaloff>:/icons/3DCurator.ico</normaloff>:/icons/3DCurator.ico</iconset>
+    <normaloff>:/icons/3DCurator.png</normaloff>:/icons/3DCurator.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -750,7 +750,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>360</width>
+             <width>131</width>
              <height>693</height>
             </rect>
            </property>

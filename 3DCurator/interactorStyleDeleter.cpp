@@ -22,7 +22,7 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
 			progressDialog->setWindowTitle(QString("Borrando..."));
 			progressDialog->setLabelText(QString::fromLatin1("Extrayendo la malla del objeto"));
-			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 			progressDialog->setCancelButton(0);
 			progressDialog->setBar(bar);
@@ -44,7 +44,7 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			// crea mensaje de confirmación
 			QPointer<QMessageBox> confirmBox = new QMessageBox(0);
 			confirmBox->setWindowTitle(QString::fromLatin1("Confirmar"));
-			confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.ico"));
+			confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 			confirmBox->setIcon(QMessageBox::Question);
 			confirmBox->setText(QString::fromLatin1("¿Actualizar cambios?"));
 			confirmBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);

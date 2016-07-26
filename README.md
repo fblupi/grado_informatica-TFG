@@ -9,10 +9,10 @@ Software para visualizar e interactuar con los datos DICOM de esculturas.
 ### Software utilizado
 
 * CMake 3.4.1
-* Visual Studio Community 2013
-* Qt5.5.1
+* Visual Studio Community 2015
+* Qt5.7.0
 * VTK 7.0.0
-* Boost 1.60.0
+* Boost 1.61.0
 
 ### Instalación y configuración
 
@@ -20,19 +20,19 @@ Software para visualizar e interactuar con los datos DICOM de esculturas.
 
 ##### Entorno de desarrollo
 
-###### Visual Studio Community 2013
+###### Visual Studio Community 2015
 
-* Descargar Visual Studio Community 2013 desde su [web oficial](https://www.visualstudio.com/es-es/downloads/download-visual-studio-vs.aspx) e instalar.
+* Descargar Visual Studio Community 2015 desde su [web oficial](https://www.visualstudio.com/es-es/downloads/download-visual-studio-vs.aspx) e instalar.
 
-###### Qt5.5.1
+###### Qt5.7.0
 
-* Descargar Qt5.5.1 desde [este enlace](http://download.qt.io/official_releases/qt/5.5/5.5.1/qt-opensource-windows-x86-msvc2013-5.5.1.exe) de su web e instalar.
-* Crear una nueva variable de entorno con nombre: `QTDIR` y valor: `C:\Qt\Qt5.5.1` (directorio raiz de la versión instalada).
-* Agregar al Path la siguiente dirección: `C:\Qt\Qt5.5.1\5.5\msvc2013\bin`
+* Descargar Qt5.7.0 desde [este enlace](http://download.qt.io/official_releases/qt/5.7/5.7.0/qt-opensource-windows-x86-msvc2015-5.7.0.exe) de su web e instalar.
+* Crear una nueva variable de entorno con nombre: `QTDIR` y valor: `C:\Qt\Qt5.7.0` (directorio raiz de la versión instalada).
+* Agregar al Path la siguiente dirección: `C:\Qt\Qt5.7.0\5.7\msvc2015\bin`
 
-###### CMake 3.4.1
+###### CMake 3.6.1
 
-* Descargar CMake 3.4.1 desde [este enlace](https://cmake.org/files/v3.4/cmake-3.4.1-win32-x86.exe) de su web e instalar (al instalar recomiendo marcar la opción de agregar al PATH de todos los usuarios para no tener que hacerlo manualmente).
+* Descargar CMake 3.6.1 desde [este enlace](https://cmake.org/files/v3.6/cmake-3.6.1-win64-x64.msi) de su web e instalar (al instalar recomiendo marcar la opción de agregar al PATH de todos los usuarios para no tener que hacerlo manualmente).
 
 ##### Compilar librerías
 
@@ -74,8 +74,8 @@ De esta forma es más fácil organizar versiones para una u otra plataforma de d
 * Descargar VTK 7.0.0 desde [este enlace](http://www.vtk.org/files/release/7.0/VTK-7.0.0.zip) de su web oficial.
 * Abrir CMake y completar:
   + src: `C:\VTK\7.0.0\src`
-  + build: `C:\VTK\7.0.0\build\vs12`
-* Elegir como generador `Visual Studio 12 2013`.
+  + build: `C:\VTK\7.0.0\build\vs14`
+* Elegir como generador `Visual Studio 14 2015`.
 * Presionar en configurar.
 * Una vez haya generado seleccionar los siguientes campos:
   + `BUILD_SHARED_LIBS`
@@ -86,27 +86,28 @@ De esta forma es más fácil organizar versiones para una u otra plataforma de d
   + `Module_vtkRenderingQt`
   + `Module_vtkViewsQt`
   + `VTK_Group_Qt`
+  + `Module_vtkDICOM`
 * Agregar dos entradas:
-  + `QT_QMAKE_EXECUTABLE:PATHFILE=C:/Qt/Qt5.5.1/5.5/msvc2013/bin/qmake.exe`
-  + `CMAKE_PREFIX_PATH:PATH=C:/Qt/Qt5.5.1/5.5/msvc2013/`
+  + `QT_QMAKE_EXECUTABLE:PATHFILE=C:/Qt/Qt5.7.0/5.7/msvc2015/bin/qmake.exe`
+  + `CMAKE_PREFIX_PATH:PATH=C:/Qt/Qt5.7.0/5.7/msvc2015/`
 * Presionar en configurar y aparecerá un error, habrá que elegir como versión de Qt la 5. Elegirla y volver a configurar.
 * Configurar hasta que no aparezca ningún campo en rojo.
-* Una vez configurado todo, pulsar en generar. Esto creará una serie de archivos en `C:\VTK\7.0.0\build\vs12`.
+* Una vez configurado todo, pulsar en generar. Esto creará una serie de archivos en `C:\VTK\7.0.0\build\vs14`.
 * Abrir `VTK.sln`.
 * Construir en modo *Release* y esperar unos minutos a que termine (en mi caso tardó unos 20 minutos).
-* Copiar los archivos `QVTKWidgetPlugin.lib` y `QVTKWidgetPlugin.dll` que se encuentran en `C:\VTK\7.0.0\build\vs12\lib\Release` y  `C:\VTK\7.0.0\build\vs12\bin\Release` respectivamente en `C:\Qt\Qt5.5.1\5.5\msvc2013\plugins\designer` (Si no se encuentran los archivos, comprobar que en CMake se marcó la opción `BUILD_SHARED_LIBS`) . Esto hará que desde Qt Designer se pueda crea un `QVTKWidget`.´
+* Copiar los archivos `QVTKWidgetPlugin.lib` y `QVTKWidgetPlugin.dll` que se encuentran en `C:\VTK\7.0.0\build\vs14\lib\Release` y  `C:\VTK\7.0.0\build\vs14\bin\Release` respectivamente en `C:\Qt\Qt5.7.0\5.7\msvc2015\plugins\designer` (Si no se encuentran los archivos, comprobar que en CMake se marcó la opción `BUILD_SHARED_LIBS`) . Esto hará que desde Qt Designer se pueda crea un `QVTKWidget`.´
 * Construir en modo *Debug*.
-* Crear una nueva variable de entorno con nombre: `VTK_DIR` y valor: `C:\VTK\7.0.0\build\vs12`.
-* Agregar al Path la siguiente dirección: `C:\VTK\7.0.0\build\vs12\bin\Release`
+* Crear una nueva variable de entorno con nombre: `VTK_DIR` y valor: `C:\VTK\7.0.0\build\vs14`.
+* Agregar al Path la siguiente dirección: `C:\VTK\7.0.0\build\vs14\bin\Release`
 
-###### Boost 1.60.0
+###### Boost 1.61.0
 
-* Descargar Boost 1.60.0 desde [este enlace](http://sourceforge.net/projects/boost/files/boost/1.60.0/) de su web oficial.
+* Descargar Boost 1.61.0 desde [este enlace](http://sourceforge.net/projects/boost/files/boost/1.61.0/) de su web oficial.
 * Descomprimir en cualquier lugar, abrir la consola de comandos de Visual Studio y moverse al lugar donde ha sido extraído.
-* Escribir `boostrap.bat` para generar el Boost.Build.
-* Compilar con: `b2 toolset=msvc-12.0 --build-type=complete --abbreviate-paths architecture=x86 address-model=64 install -j4`.
+* Escribir `bootstrap.bat` para generar el Boost.Build.
+* Compilar con: `b2 toolset=msvc --build-type=complete --abbreviate-paths address-model=64 install -j4`.
 * Agregar al proyecto de Visual Studio:
-  + En *Project Properties* ir a *Configuration Properties > C/C++ > General > Additional Include Directories* y añadir el directorio `C:\Boost\include\boost-1_60`.
+  + En *Project Properties* ir a *Configuration Properties > C/C++ > General > Additional Include Directories* y añadir el directorio `C:\Boost\include\boost-1_61`.
   + En *Project Properties* ir a *Configuration Properties > Linker > Additional Library Directories* y añadir el directorio `C:\Boost\lib`.
   
 ##### Configurar proyecto

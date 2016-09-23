@@ -317,8 +317,8 @@
      <widget class="QVTKWidget" name="volumeWidget">
       <property name="minimumSize">
        <size>
-        <width>550</width>
-        <height>550</height>
+        <width>400</width>
+        <height>400</height>
        </size>
       </property>
      </widget>
@@ -750,7 +750,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>131</width>
+             <width>452</width>
              <height>693</height>
             </rect>
            </property>

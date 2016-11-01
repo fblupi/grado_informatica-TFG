@@ -97,6 +97,7 @@ De esta forma es más fácil organizar versiones para una u otra plataforma de d
 * Presionar en configurar.
 * Una vez haya generado seleccionar el siguiente campo:
   + `Module_ITKVtkGlue`
+* Configurar y aparecerá un error de que no encuentra `VTK_DIR`. Darle valor de `C:\VTK\7.0.0\build`.
 * Configurar hasta que no aparezca ningún campo en rojo.
 * Una vez configurado todo, pulsar en generar. Esto creará una serie de archivos en `C:\ITK\4.10.1\build`.
 
@@ -105,17 +106,18 @@ De esta forma es más fácil organizar versiones para una u otra plataforma de d
 ##### VTK 7.0.0
 
 * Abrir `VTK.sln`.
-* Construir en modo *Release* y esperar unos minutos a que termine (en mi caso tardó unos 20 minutos).
+* Construir `ALL_BUILD` en modo *Release* y esperar unos minutos a que termine (en mi caso tardó unos 20 minutos).
+* Construir `INSTALL` en modoe *Release*.
 * Copiar los archivos `QVTKWidgetPlugin.lib` y `QVTKWidgetPlugin.dll` que se encuentran en `C:\VTK\7.0.0\build\lib\Release` y  `C:\VTK\7.0.0\build\bin\Release` respectivamente en `C:\Qt\Qt5.7.0\5.7\msvc2015\plugins\designer` (Si no se encuentran los archivos, comprobar que en CMake se marcó la opción `BUILD_SHARED_LIBS`) . Esto hará que desde Qt Designer se pueda crea un `QVTKWidget`.´
 * Crear una nueva variable de entorno con nombre: `VTK_DIR` y valor: `C:\VTK\7.0.0\build`.
-* Agregar al Path la siguiente dirección: `C:\VTK\7.0.0\build\bin\Release`
+* Agregar al Path la siguiente dirección: `%VTK_DIR%\bin\Release`
 
 ##### ITK 4.10.1
 
 * Abrir `ITK.sln`.
 * Construir en modo *Release* y esperar unos minutos a que termine (en mi caso tardó unos 20 minutos).
 * Crear una nueva variable de entorno con nombre: `ITK_DIR` y valor: `C:\ITK\4.10.1\build`.
-* Agregar al Path la siguiente dirección: `C:\VTK\4.10.1\build\bin\Release`
+* Agregar al Path la siguiente dirección: `%ITK_DIR%\bin\Release`
 
 ##### Boost 1.61.0
 
